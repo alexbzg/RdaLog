@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace RdaLog
 {
-    public class QsoClient
+    public class RdaLog
     {
         private FormMain formMain;
-        private QsoConfig config;
+        private RdaLogConfig config;
         private string _rafa;
         public string rafa { get { return _rafa; } }
         private string _rda;

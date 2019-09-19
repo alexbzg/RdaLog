@@ -16,7 +16,7 @@ namespace RdaLog
 {
 
     [DataContract]
-    public class QsoConfig : XmlConfig
+    public class RdaLogConfig : XmlConfig
     {
         static readonly string[] OptionalColumnsList = new string[] { "RDA", "RAFA", "WFF", "Locator" };
 
@@ -57,7 +57,7 @@ namespace RdaLog
         }
 
 
-        public QsoConfig() : base()
+        public RdaLogConfig() : base()
         {
             try
             {
@@ -97,7 +97,7 @@ namespace RdaLog
 
         public string toJSON()
         {
-            return JSONSerializer.Serialize<QsoConfig>(this);
+            return JSONSerializer.Serialize<RdaLogConfig>(this);
         }
 
 

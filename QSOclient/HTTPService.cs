@@ -50,11 +50,11 @@ namespace RdaLog
         //private DXpConfig config;
         public EventHandler<LocationChangedEventArgs> locationChanged;
         private HTTPServiceConfig config;
-        private QsoClient qsoClient;
+        private RdaLog qsoClient;
         public bool gpsServerLoad;
 
 
-        public HTTPService(GPSReader _gpsReader, HTTPServiceConfig _config, QsoClient _client)
+        public HTTPService(GPSReader _gpsReader, HTTPServiceConfig _config, RdaLog _client)
         {
             gpsReader = _gpsReader;
             config = _config;
@@ -361,7 +361,7 @@ namespace RdaLog
     class LocationData : JSONToken
     {
         [IgnoreDataMember]
-        QsoClient qsoClient;
+        RdaLog qsoClient;
         [DataMember]
         public double[] location { get {
                 if ((bool)qsoClient.coords?.valid)
@@ -381,7 +381,7 @@ namespace RdaLog
         [DataMember]
         public string userFields { get { return qsoClient.userField; } set { } }
 
-        internal LocationData(HTTPServiceConfig _config, QsoClient _qsoClient) : base(_config)
+        internal LocationData(HTTPServiceConfig _config, RdaLog _qsoClient) : base(_config)
         {
             qsoClient = _qsoClient;  
         }

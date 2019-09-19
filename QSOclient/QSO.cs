@@ -113,12 +113,12 @@ namespace RdaLog
 
     public class QSOFactory
     {
-        private QsoClient qsoClient;
+        private RdaLog qsoClient;
         public int no = 1;
 
 
 
-        public QSOFactory(QsoClient _qsoClient)
+        public QSOFactory(RdaLog _qsoClient)
         {
             qsoClient = _qsoClient;
         }
