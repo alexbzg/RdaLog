@@ -16,7 +16,8 @@ namespace RdaLog
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMain());
+            RdaLog rdaLog = new RdaLog();
+            Application.Run(rdaLog.formMain);
         }
     }
 }

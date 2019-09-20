@@ -28,6 +28,7 @@ namespace RdaLog
         [DataMember]
         public string token;
 
+        public HTTPServiceConfig(XmlConfig _parent) : base(_parent) { }
     }
     public class HTTPService
     {

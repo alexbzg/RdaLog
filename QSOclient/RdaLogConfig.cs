@@ -18,17 +18,6 @@ namespace RdaLog
     [DataContract]
     public class RdaLogConfig : XmlConfig
     {
-        static readonly string[] OptionalColumnsList = new string[] { "RDA", "RAFA", "WFF", "Locator" };
-
-        [XmlIgnore]
-        string _gpsReaderDeviceID;
-        public string gpsReaderDeviceID
-        {
-            get { return _gpsReaderDeviceID; }
-            set { _gpsReaderDeviceID = value; }
-        }
-        public bool gpsReaderWirelessGW;
-        public bool gpsServerLoad;
 
         [XmlIgnore]
         Dictionary<string, string> rafaData = new Dictionary<string, string>();
@@ -55,6 +44,9 @@ namespace RdaLog
                 }
             }
         }
+
+        [DataMember]
+        public FormMainConfig formMain;
 
 
         public RdaLogConfig() : base()
@@ -91,8 +83,12 @@ namespace RdaLog
 
         }
 
-        public void initialize()
+        public override void initialize()
         {
+            if (formMain == null)
+                formMain = new FormMainConfig(this);
+            else
+                formMain.parent = this;
         }
 
         public string toJSON()

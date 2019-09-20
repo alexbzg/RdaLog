@@ -15,13 +15,23 @@ namespace XmlConfigNS
     {
         private string fname;
 
-        public static T create<T>() where T : XmlConfig
+        public XmlConfig(string _fname)
+        {
+            fname = _fname;
+        }
+
+        public XmlConfig()
+        {
+            fname = Application.StartupPath + "\\config.xml";
+        }
+
+        public static T create<T>() where T : XmlConfig, new()
         {
             return create<T>(Application.StartupPath + "\\config.xml");
         }
 
 
-        public static T create<T>(string fname) where T : XmlConfig
+        public static T create<T>(string fname) where T : XmlConfig, new()
         {
             T result = null;
             if (File.Exists(fname) )
@@ -39,10 +49,17 @@ namespace XmlConfigNS
                     }
                 }
             }
+            if (result == null)
+            {
+                result = new T();
+                result.fname = fname;
+            }
+            result.initialize();
             return result;
         }
 
-        public void write()
+        public virtual void initialize() { }
+        public virtual void write()
         {
             using (StreamWriter sw = new StreamWriter(fname))
             {
@@ -59,14 +76,24 @@ namespace XmlConfigNS
         }
     }
 
-    public class ConfigSection
+    public class ConfigSection : XmlConfig
     {
-        [IgnoreDataMember]
-        XmlConfig parent;
+        [IgnoreDataMember, XmlIgnore]
+        public XmlConfig parent;
 
-        public void write()
+        public ConfigSection(XmlConfig _parent)
         {
-            parent.write();
+            parent = _parent;
+        }
+
+        public ConfigSection() : base() { }
+
+        public override void write()
+        {
+            if (parent == null)
+                base.write();
+            else
+                parent.write();
         }
     }
 }

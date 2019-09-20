@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XmlConfigNS;
 
 namespace RdaLog
 {
     public class RdaLog
     {
-        private FormMain formMain;
+        private FormMain _formMain;
+        public FormMain formMain { get { return _formMain; } }
         private RdaLogConfig config;
         private string _rafa;
         public string rafa { get { return _rafa; } }
@@ -25,6 +27,16 @@ namespace RdaLog
         private Coords _coords;
         public Coords coords { get { return _coords.clone(); } }
 
+        public RdaLog()
+        {
+            config = XmlConfig.create<RdaLogConfig>();
+            _formMain = new FormMain(config.formMain, this);
+        }
 
+        public void showSettings()
+        {
+            FormSettings formSettings = new FormSettings();
+            formSettings.ShowDialog(this.formMain);
+        }
     }
 }

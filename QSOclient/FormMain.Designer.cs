@@ -94,6 +94,7 @@
             this.statusStrip.Location = new System.Drawing.Point(0, 439);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(364, 22);
+            this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 0;
             // 
             // toolStrip
@@ -119,6 +120,7 @@
             this.toolStripLabelSettings.Name = "toolStripLabelSettings";
             this.toolStripLabelSettings.Size = new System.Drawing.Size(49, 22);
             this.toolStripLabelSettings.Text = "Settings";
+            this.toolStripLabelSettings.Click += new System.EventHandler(this.ToolStripLabelSettings_Click);
             // 
             // toolStripLabelLog
             // 
@@ -472,7 +474,7 @@
             this.labelStatQso.Text = "125";
             this.labelStatQso.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label13
+            // labelStatQsoCaption
             // 
             this.labelStatQsoCaption.AutoSize = true;
             this.labelStatQsoCaption.BackColor = System.Drawing.Color.Transparent;
@@ -483,7 +485,7 @@
             this.labelStatQsoCaption.TabIndex = 40;
             this.labelStatQsoCaption.Text = "QSO";
             // 
-            // label14
+            // labelStatCallsignsCaption
             // 
             this.labelStatCallsignsCaption.AutoSize = true;
             this.labelStatCallsignsCaption.BackColor = System.Drawing.Color.Transparent;
@@ -494,7 +496,7 @@
             this.labelStatCallsignsCaption.TabIndex = 41;
             this.labelStatCallsignsCaption.Text = "Calls";
             // 
-            // tableLayoutPanel1
+            // tableLayoutPanel
             // 
             this.tableLayoutPanel.BackColor = System.Drawing.Color.White;
             this.tableLayoutPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
@@ -508,7 +510,7 @@
             this.tableLayoutPanel.Size = new System.Drawing.Size(344, 100);
             this.tableLayoutPanel.TabIndex = 42;
             // 
-            // label15
+            // labelHotKeyF1
             // 
             this.labelHotKeyF1.AutoSize = true;
             this.labelHotKeyF1.BackColor = System.Drawing.Color.Transparent;
@@ -519,7 +521,7 @@
             this.labelHotKeyF1.TabIndex = 43;
             this.labelHotKeyF1.Text = "F1";
             // 
-            // label16
+            // labelHotKeyF2
             // 
             this.labelHotKeyF2.AutoSize = true;
             this.labelHotKeyF2.BackColor = System.Drawing.Color.Transparent;
@@ -530,7 +532,7 @@
             this.labelHotKeyF2.TabIndex = 44;
             this.labelHotKeyF2.Text = "F2";
             // 
-            // label17
+            // labelHotKeyF3
             // 
             this.labelHotKeyF3.AutoSize = true;
             this.labelHotKeyF3.BackColor = System.Drawing.Color.Transparent;
@@ -541,7 +543,7 @@
             this.labelHotKeyF3.TabIndex = 45;
             this.labelHotKeyF3.Text = "F3";
             // 
-            // label18
+            // labelHotKeyF4
             // 
             this.labelHotKeyF4.AutoSize = true;
             this.labelHotKeyF4.BackColor = System.Drawing.Color.Transparent;
@@ -552,7 +554,7 @@
             this.labelHotKeyF4.TabIndex = 46;
             this.labelHotKeyF4.Text = "F4";
             // 
-            // label19
+            // labelHotKeyF5
             // 
             this.labelHotKeyF5.AutoSize = true;
             this.labelHotKeyF5.BackColor = System.Drawing.Color.Transparent;
@@ -563,7 +565,7 @@
             this.labelHotKeyF5.TabIndex = 47;
             this.labelHotKeyF5.Text = "F5";
             // 
-            // label20
+            // labelHotKeyF6
             // 
             this.labelHotKeyF6.AutoSize = true;
             this.labelHotKeyF6.BackColor = System.Drawing.Color.Transparent;
@@ -574,7 +576,7 @@
             this.labelHotKeyF6.TabIndex = 48;
             this.labelHotKeyF6.Text = "F6";
             // 
-            // label21
+            // labelHotKeyF7
             // 
             this.labelHotKeyF7.AutoSize = true;
             this.labelHotKeyF7.BackColor = System.Drawing.Color.Transparent;
@@ -585,7 +587,7 @@
             this.labelHotKeyF7.TabIndex = 49;
             this.labelHotKeyF7.Text = "F7";
             // 
-            // label22
+            // labelHotKeyF8
             // 
             this.labelHotKeyF8.AutoSize = true;
             this.labelHotKeyF8.BackColor = System.Drawing.Color.Transparent;
@@ -596,7 +598,7 @@
             this.labelHotKeyF8.TabIndex = 50;
             this.labelHotKeyF8.Text = "F8";
             // 
-            // label23
+            // labelHotKeyF9
             // 
             this.labelHotKeyF9.AutoSize = true;
             this.labelHotKeyF9.BackColor = System.Drawing.Color.Transparent;
@@ -607,7 +609,7 @@
             this.labelHotKeyF9.TabIndex = 51;
             this.labelHotKeyF9.Text = "F9";
             // 
-            // label24
+            // labelHotKeyF9Bind
             // 
             this.labelHotKeyF9Bind.AutoSize = true;
             this.labelHotKeyF9Bind.BackColor = System.Drawing.Color.Transparent;
@@ -618,7 +620,7 @@
             this.labelHotKeyF9Bind.TabIndex = 60;
             this.labelHotKeyF9Bind.Text = "...";
             // 
-            // label25
+            // labelHotKeyF8Bind
             // 
             this.labelHotKeyF8Bind.AutoSize = true;
             this.labelHotKeyF8Bind.BackColor = System.Drawing.Color.Transparent;
@@ -629,7 +631,7 @@
             this.labelHotKeyF8Bind.TabIndex = 59;
             this.labelHotKeyF8Bind.Text = "RAFA";
             // 
-            // label26
+            // labelHotKeyF7Bind
             // 
             this.labelHotKeyF7Bind.AutoSize = true;
             this.labelHotKeyF7Bind.BackColor = System.Drawing.Color.Transparent;
@@ -640,7 +642,7 @@
             this.labelHotKeyF7Bind.TabIndex = 58;
             this.labelHotKeyF7Bind.Text = "RDA";
             // 
-            // label27
+            // labelHotKeyF6Bind
             // 
             this.labelHotKeyF6Bind.AutoSize = true;
             this.labelHotKeyF6Bind.BackColor = System.Drawing.Color.Transparent;
@@ -651,7 +653,7 @@
             this.labelHotKeyF6Bind.TabIndex = 57;
             this.labelHotKeyF6Bind.Text = "...";
             // 
-            // label28
+            // labelHotKeyF5Bind
             // 
             this.labelHotKeyF5Bind.AutoSize = true;
             this.labelHotKeyF5Bind.BackColor = System.Drawing.Color.Transparent;
@@ -662,7 +664,7 @@
             this.labelHotKeyF5Bind.TabIndex = 56;
             this.labelHotKeyF5Bind.Text = "HIS";
             // 
-            // label29
+            // labelHotKeyF4Bind
             // 
             this.labelHotKeyF4Bind.AutoSize = true;
             this.labelHotKeyF4Bind.BackColor = System.Drawing.Color.Transparent;
@@ -673,7 +675,7 @@
             this.labelHotKeyF4Bind.TabIndex = 55;
             this.labelHotKeyF4Bind.Text = "MY";
             // 
-            // label30
+            // labelHotKeyF3Bind
             // 
             this.labelHotKeyF3Bind.AutoSize = true;
             this.labelHotKeyF3Bind.BackColor = System.Drawing.Color.Transparent;
@@ -684,7 +686,7 @@
             this.labelHotKeyF3Bind.TabIndex = 54;
             this.labelHotKeyF3Bind.Text = "TU";
             // 
-            // label31
+            // labelHotKeyF2Bind
             // 
             this.labelHotKeyF2Bind.AutoSize = true;
             this.labelHotKeyF2Bind.BackColor = System.Drawing.Color.Transparent;
@@ -695,7 +697,7 @@
             this.labelHotKeyF2Bind.TabIndex = 53;
             this.labelHotKeyF2Bind.Text = "599";
             // 
-            // label32
+            // labelHotKeyF1Bind
             // 
             this.labelHotKeyF1Bind.AutoSize = true;
             this.labelHotKeyF1Bind.BackColor = System.Drawing.Color.Transparent;
@@ -765,6 +767,7 @@
             this.Controls.Add(this.labelDateTime);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.statusStrip);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormMain";
             this.Text = "TNXQSO log - R7AB_08dec2019";
             this.toolStrip.ResumeLayout(false);

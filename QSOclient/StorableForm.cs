@@ -63,10 +63,14 @@ namespace StorableForm
 
 
     [DataContractAttribute]
-    public class StorableFormConfig : XmlConfig
+    public class StorableFormConfig : ConfigSection
     {
         public System.Drawing.Point formLocation;
         public System.Drawing.Size formSize;
+
+        public StorableFormConfig(XmlConfig _parent) : base(_parent) { }
+        public StorableFormConfig() : base() { }
+
     }
 
 }
