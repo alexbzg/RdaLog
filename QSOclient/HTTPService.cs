@@ -15,22 +15,40 @@ using GPSReaderNS;
 using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace RdaLog
 {
     [DataContract]
-    public class HTTPServiceConfig : ConfigSection
+    public class HttpServiceConfig : ConfigSection
     {
         [DataMember]
         public string callsign;
         [DataMember]
         public string password;
-        [DataMember]
-        public string token;
+        [XmlIgnore]
+        private string _token;
+        [XmlIgnore]
+        public EventHandler<EventArgs> logInOout;
 
-        public HTTPServiceConfig(XmlConfig _parent) : base(_parent) { }
+        [DataMember]
+        public string token
+        {
+            get { return _token; }
+            set
+            {
+                if (_token != value)
+                {
+                    _token = value;
+                    write();
+                    logInOout?.Invoke(this, new EventArgs());
+                }
+            }
+        }
+
+        public HttpServiceConfig(XmlConfig _parent) : base(_parent) { }
     }
-    public class HTTPService
+    public class HttpPService
     {
         private static int pingIntervalDef = 60 * 1000;
         private static int pingIntervalNoConnection = 5 * 1000;
@@ -50,16 +68,14 @@ namespace RdaLog
         private GPSReader gpsReader;
         //private DXpConfig config;
         public EventHandler<LocationChangedEventArgs> locationChanged;
-        private HTTPServiceConfig config;
+        private HttpServiceConfig config;
         private RdaLog qsoClient;
         public bool gpsServerLoad;
 
 
-        public HTTPService(GPSReader _gpsReader, HTTPServiceConfig _config, RdaLog _client)
+        public HttpPService(HttpServiceConfig _config)
         {
-            gpsReader = _gpsReader;
             config = _config;
-            qsoClient = _client;
             schedulePingTimer();
             List<QSO> unsentQSOs = ProtoBufSerialization.Read<List<QSO>>(unsentFilePath);
             if (unsentQSOs != null && unsentQSOs.Count > 0)
@@ -214,17 +230,17 @@ namespace RdaLog
             pingTimer.Change(response != null && response.IsSuccessStatusCode ? pingIntervalDef : pingIntervalNoConnection, Timeout.Infinite);
         }
 
-        public async Task<System.Net.HttpStatusCode?> login(string login, string password)
+        public async Task<System.Net.HttpStatusCode?> login()
         {
-            HttpResponseMessage response = await post("login", new LoginRequest() { login = login, password = password }, false);
+            if (config.callsign.Equals(string.Empty) || config.password.Equals(string.Empty))
+                return null;
+            HttpResponseMessage response = await post("login", new LoginRequest() { login = config.callsign, password = config.password }, false);
             if (response != null)
             {
                 if (response.IsSuccessStatusCode)
                 {
                     DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(LoginResponse));
                     LoginResponse userData = (LoginResponse)serializer.ReadObject(await response.Content.ReadAsStreamAsync());
-                    config.callsign = userData.callsign;
-                    config.password = password;
                     config.token = userData.token;
                     schedulePingTimer();
                     Task.Run(() => processQueue());
@@ -289,11 +305,11 @@ namespace RdaLog
     public class JSONToken : JSONSerializable
     {
         [IgnoreDataMember]
-        internal HTTPServiceConfig config;
+        internal HttpServiceConfig config;
         [DataMember]
         internal string token { get { return config.token; } set { } }
 
-        public JSONToken(HTTPServiceConfig _config)
+        public JSONToken(HttpServiceConfig _config)
         {
             config = _config;
         }
@@ -352,7 +368,7 @@ namespace RdaLog
         [DataMember]
         internal QSO qso;
 
-        internal QSOtoken(HTTPServiceConfig _config, QSO _qso) : base(_config)
+        internal QSOtoken(HttpServiceConfig _config, QSO _qso) : base(_config)
         {
             qso = _qso;
         }
@@ -382,7 +398,7 @@ namespace RdaLog
         [DataMember]
         public string userFields { get { return qsoClient.userField; } set { } }
 
-        internal LocationData(HTTPServiceConfig _config, RdaLog _qsoClient) : base(_config)
+        internal LocationData(HttpServiceConfig _config, RdaLog _qsoClient) : base(_config)
         {
             qsoClient = _qsoClient;  
         }

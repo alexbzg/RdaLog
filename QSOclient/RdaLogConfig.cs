@@ -18,35 +18,41 @@ namespace RdaLog
     [DataContract]
     public class RdaLogConfig : XmlConfig
     {
-
+        public static readonly List<Tuple<string, string>> HotKeysDefaults = new List<Tuple<string, string>>
+        {
+            Tuple.Create("CQ", "CQ {MY_CALL} {MY_CALL}"),
+            Tuple.Create("5NN", "5NN"),
+            Tuple.Create("TU", "{CALL} TU"),
+            Tuple.Create("MY", "{MY_CALL} {MY_CALL}"),
+            Tuple.Create("HIS", "{CALL} {CALL}"),
+            Tuple.Create("", ""),
+            Tuple.Create("RDA", "RDA {RDA}"),
+            Tuple.Create("RAFA", "RAFA {RAFA}"),
+            Tuple.Create("", "")
+        };
         [XmlIgnore]
         Dictionary<string, string> rafaData = new Dictionary<string, string>();
-        [XmlIgnore]
-        public EventHandler<EventArgs> logIO;
 
-
-        [DataMember]
-        public string callsign;
-        [DataMember]
-        public string password;
-        [XmlIgnore]
-        private string _token;
-        [DataMember]
-        public string token
-        {
-            get { return _token; }
-            set
-            {
-                if (_token != value)
-                {
-                    _token = value;
-                    logIO?.Invoke(this, new EventArgs());
-                }
-            }
-        }
 
         [DataMember]
         public FormMainConfig formMain;
+        [DataMember]
+        public HttpServiceConfig httpService;
+
+        [DataMember]
+        public bool showFields = true;
+        [DataMember]
+        public bool showCallsignId = true;
+        [DataMember]
+        public bool showStatFilter = true;
+        [DataMember]
+        public bool showMacros = true;
+        [DataMember]
+        public bool enableMacros = true;
+        [DataMember]
+        public bool autoLogin = true;
+        [DataMember]
+        public List<string[]> hotKeys;
 
 
         public RdaLogConfig() : base()
@@ -89,6 +95,18 @@ namespace RdaLog
                 formMain = new FormMainConfig(this);
             else
                 formMain.parent = this;
+
+            if (httpService == null)
+                httpService = new HttpServiceConfig(this);
+            else
+                httpService.parent = this;
+
+            if (hotKeys == null)
+            {
+                hotKeys = new List<string[]>();
+            }
+            for (int co = hotKeys.Count; co < HotKeysDefaults.Count; co++)
+                hotKeys.Add(new string[] { HotKeysDefaults[co].Item1, HotKeysDefaults[co].Item2 });
         }
 
         public string toJSON()

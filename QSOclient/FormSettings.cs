@@ -12,6 +12,24 @@ namespace RdaLog
 {
     public partial class FormSettings : Form
     {
+        internal List<Tuple<TextBox, TextBox>> HotKeyBindings
+        {
+            get
+            {
+                return new List<Tuple<TextBox, TextBox>>()
+                {
+                    Tuple.Create(textBoxHotKeyF1Title, textBoxHotKeyF1Bindings),
+                    Tuple.Create(textBoxHotKeyF2Title, textBoxHotKeyF2Bindings),
+                    Tuple.Create(textBoxHotKeyF3Title, textBoxHotKeyF3Bindings),
+                    Tuple.Create(textBoxHotKeyF4Title, textBoxHotKeyF4Bindings),
+                    Tuple.Create(textBoxHotKeyF5Title, textBoxHotKeyF5Bindings),
+                    Tuple.Create(textBoxHotKeyF6Title, textBoxHotKeyF6Bindings),
+                    Tuple.Create(textBoxHotKeyF7Title, textBoxHotKeyF7Bindings),
+                    Tuple.Create(textBoxHotKeyF8Title, textBoxHotKeyF8Bindings),
+                    Tuple.Create(textBoxHotKeyF9Title, textBoxHotKeyF9Bindings)
+                };
+            }
+        }
         public FormSettings()
         {
             InitializeComponent();

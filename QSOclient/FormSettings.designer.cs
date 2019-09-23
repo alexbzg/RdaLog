@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textLogin = new System.Windows.Forms.TextBox();
+            this.textBoxLogin = new System.Windows.Forms.TextBox();
             this.labelLogin = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
@@ -67,17 +67,19 @@
             this.checkBoxViewCallsignId = new System.Windows.Forms.CheckBox();
             this.checkBoxViewCwMacro = new System.Windows.Forms.CheckBox();
             this.checkBoxEnableCwMacro = new System.Windows.Forms.CheckBox();
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // textLogin
+            // textBoxLogin
             // 
-            this.textLogin.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textLogin.Location = new System.Drawing.Point(6, 24);
-            this.textLogin.Name = "textLogin";
-            this.textLogin.Size = new System.Drawing.Size(120, 23);
-            this.textLogin.TabIndex = 12;
-            this.textLogin.Text = "R7AB";
-            this.textLogin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxLogin.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
+            this.textBoxLogin.Location = new System.Drawing.Point(6, 24);
+            this.textBoxLogin.Name = "textBoxLogin";
+            this.textBoxLogin.Size = new System.Drawing.Size(120, 23);
+            this.textBoxLogin.TabIndex = 12;
+            this.textBoxLogin.Text = "R7AB";
+            this.textBoxLogin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // labelLogin
             // 
@@ -155,16 +157,16 @@
             this.textBoxHotKeyF1Bindings.TabIndex = 33;
             this.textBoxHotKeyF1Bindings.Text = "CQ {MY_CALL} {MY_CALL}";
             // 
-            // textBoxHotKeyF1Title
+            // textBoxHotKeyF2Bindings
             // 
             this.textBoxHotKeyF2Bindings.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.textBoxHotKeyF2Bindings.Location = new System.Drawing.Point(132, 191);
-            this.textBoxHotKeyF2Bindings.Name = "textBoxHotKeyF1Title";
+            this.textBoxHotKeyF2Bindings.Name = "textBoxHotKeyF2Bindings";
             this.textBoxHotKeyF2Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxHotKeyF2Bindings.TabIndex = 35;
             this.textBoxHotKeyF2Bindings.Text = "5NN";
             // 
-            // label2
+            // labelHotKeyF2
             // 
             this.labelHotKeyF2.AutoSize = true;
             this.labelHotKeyF2.BackColor = System.Drawing.Color.Transparent;
@@ -185,7 +187,7 @@
             this.textBoxHotKeyF3Bindings.TabIndex = 37;
             this.textBoxHotKeyF3Bindings.Text = "{CALL} TU";
             // 
-            // label4
+            // labelHotKeyF3
             // 
             this.labelHotKeyF3.AutoSize = true;
             this.labelHotKeyF3.BackColor = System.Drawing.Color.Transparent;
@@ -206,7 +208,7 @@
             this.textBoxHotKeyF4Bindings.TabIndex = 39;
             this.textBoxHotKeyF4Bindings.Text = "{MY_CALL} {MY_CALL}";
             // 
-            // label7
+            // labelHotKeyF4
             // 
             this.labelHotKeyF4.AutoSize = true;
             this.labelHotKeyF4.BackColor = System.Drawing.Color.Transparent;
@@ -227,7 +229,7 @@
             this.textBoxHotKeyF5Bindings.TabIndex = 41;
             this.textBoxHotKeyF5Bindings.Text = "{CALL} {CALL}";
             // 
-            // label8
+            // labelHotKeyF5
             // 
             this.labelHotKeyF5.AutoSize = true;
             this.labelHotKeyF5.BackColor = System.Drawing.Color.Transparent;
@@ -247,7 +249,7 @@
             this.textBoxHotKeyF6Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxHotKeyF6Bindings.TabIndex = 43;
             // 
-            // label9
+            // labelHotKeyF6
             // 
             this.labelHotKeyF6.AutoSize = true;
             this.labelHotKeyF6.BackColor = System.Drawing.Color.Transparent;
@@ -268,7 +270,7 @@
             this.textBoxHotKeyF7Bindings.TabIndex = 45;
             this.textBoxHotKeyF7Bindings.Text = "RDA {RDA}";
             // 
-            // label10
+            // labelHotKeyF7
             // 
             this.labelHotKeyF7.AutoSize = true;
             this.labelHotKeyF7.BackColor = System.Drawing.Color.Transparent;
@@ -289,7 +291,7 @@
             this.textBoxHotKeyF8Bindings.TabIndex = 47;
             this.textBoxHotKeyF8Bindings.Text = "RAFA {RAFA}";
             // 
-            // label11
+            // labelHotKeyF8
             // 
             this.labelHotKeyF8.AutoSize = true;
             this.labelHotKeyF8.BackColor = System.Drawing.Color.Transparent;
@@ -309,7 +311,7 @@
             this.textBoxHotKeyF9Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxHotKeyF9Bindings.TabIndex = 49;
             // 
-            // label12
+            // labelHotKeyF9
             // 
             this.labelHotKeyF9.AutoSize = true;
             this.labelHotKeyF9.BackColor = System.Drawing.Color.Transparent;
@@ -321,7 +323,7 @@
             this.labelHotKeyF9.TabIndex = 48;
             this.labelHotKeyF9.Text = "F9";
             // 
-            // textBox12
+            // textBoxHotKeyF9Title
             // 
             this.textBoxHotKeyF9Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.textBoxHotKeyF9Title.Location = new System.Drawing.Point(28, 394);
@@ -329,7 +331,7 @@
             this.textBoxHotKeyF9Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxHotKeyF9Title.TabIndex = 58;
             // 
-            // textBox13
+            // textBoxHotKeyF8Title
             // 
             this.textBoxHotKeyF8Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.textBoxHotKeyF8Title.Location = new System.Drawing.Point(28, 365);
@@ -338,7 +340,7 @@
             this.textBoxHotKeyF8Title.TabIndex = 57;
             this.textBoxHotKeyF8Title.Text = "RAFA";
             // 
-            // textBox14
+            // textBoxHotKeyF7Title
             // 
             this.textBoxHotKeyF7Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.textBoxHotKeyF7Title.Location = new System.Drawing.Point(28, 336);
@@ -347,7 +349,7 @@
             this.textBoxHotKeyF7Title.TabIndex = 56;
             this.textBoxHotKeyF7Title.Text = "RDA";
             // 
-            // textBox15
+            // textBoxHotKeyF6Title
             // 
             this.textBoxHotKeyF6Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.textBoxHotKeyF6Title.Location = new System.Drawing.Point(28, 307);
@@ -355,7 +357,7 @@
             this.textBoxHotKeyF6Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxHotKeyF6Title.TabIndex = 55;
             // 
-            // textBox16
+            // textBoxHotKeyF5Title
             // 
             this.textBoxHotKeyF5Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.textBoxHotKeyF5Title.Location = new System.Drawing.Point(28, 278);
@@ -364,7 +366,7 @@
             this.textBoxHotKeyF5Title.TabIndex = 54;
             this.textBoxHotKeyF5Title.Text = "HIS";
             // 
-            // textBox17
+            // textBoxHotKeyF4Title
             // 
             this.textBoxHotKeyF4Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.textBoxHotKeyF4Title.Location = new System.Drawing.Point(28, 249);
@@ -476,11 +478,33 @@
             this.checkBoxEnableCwMacro.Text = "Enable CW macros";
             this.checkBoxEnableCwMacro.UseVisualStyleBackColor = true;
             // 
+            // buttonOK
+            // 
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonOK.Location = new System.Drawing.Point(196, 426);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.TabIndex = 65;
+            this.buttonOK.Text = "OK";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Location = new System.Drawing.Point(277, 426);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.TabIndex = 66;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(364, 461);
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.checkBoxEnableCwMacro);
             this.Controls.Add(this.checkBoxViewCwMacro);
             this.Controls.Add(this.checkBoxViewCallsignId);
@@ -519,7 +543,7 @@
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.textBoxPassword);
             this.Controls.Add(this.labelLogin);
-            this.Controls.Add(this.textLogin);
+            this.Controls.Add(this.textBoxLogin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FormSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -531,12 +555,12 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textLogin;
+        internal System.Windows.Forms.TextBox textBoxLogin;
         private System.Windows.Forms.Label labelLogin;
         private System.Windows.Forms.Label labelPassword;
-        private System.Windows.Forms.TextBox textBoxPassword;
-        private System.Windows.Forms.Button buttonLogin;
-        private System.Windows.Forms.CheckBox checkBoxAutoLogin;
+        internal System.Windows.Forms.TextBox textBoxPassword;
+        internal System.Windows.Forms.Button buttonLogin;
+        internal System.Windows.Forms.CheckBox checkBoxAutoLogin;
         private System.Windows.Forms.Label labelHotKeyF1;
         private System.Windows.Forms.TextBox textBoxHotKeyF1Bindings;
         private System.Windows.Forms.TextBox textBoxHotKeyF2Bindings;
@@ -565,10 +589,12 @@
         private System.Windows.Forms.TextBox textBoxHotKeyF2Title;
         private System.Windows.Forms.TextBox textBoxHotKeyF1Title;
         private System.Windows.Forms.Label labelView;
-        private System.Windows.Forms.CheckBox checkBoxViewStatFilter;
-        private System.Windows.Forms.CheckBox checkBoxViewFields;
-        private System.Windows.Forms.CheckBox checkBoxViewCallsignId;
-        private System.Windows.Forms.CheckBox checkBoxViewCwMacro;
-        private System.Windows.Forms.CheckBox checkBoxEnableCwMacro;
+        internal System.Windows.Forms.CheckBox checkBoxViewStatFilter;
+        internal System.Windows.Forms.CheckBox checkBoxViewFields;
+        internal System.Windows.Forms.CheckBox checkBoxViewCallsignId;
+        internal System.Windows.Forms.CheckBox checkBoxViewCwMacro;
+        internal System.Windows.Forms.CheckBox checkBoxEnableCwMacro;
+        private System.Windows.Forms.Button buttonOK;
+        private System.Windows.Forms.Button buttonCancel;
     }
 }
