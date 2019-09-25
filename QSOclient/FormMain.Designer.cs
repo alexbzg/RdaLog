@@ -86,7 +86,17 @@
             this.labelHotKeyF3Bind = new System.Windows.Forms.Label();
             this.labelHotKeyF2Bind = new System.Windows.Forms.Label();
             this.labelHotKeyF1Bind = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.panelStatusFields = new System.Windows.Forms.Panel();
+            this.panelStatFilter = new System.Windows.Forms.Panel();
+            this.panelCwMacro = new System.Windows.Forms.Panel();
+            this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.toolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.panelStatusFields.SuspendLayout();
+            this.panelStatFilter.SuspendLayout();
+            this.panelCwMacro.SuspendLayout();
+            this.flowLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -274,7 +284,7 @@
             this.labelRda.AutoSize = true;
             this.labelRda.BackColor = System.Drawing.Color.Transparent;
             this.labelRda.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelRda.Location = new System.Drawing.Point(11, 137);
+            this.labelRda.Location = new System.Drawing.Point(11, 5);
             this.labelRda.Name = "labelRda";
             this.labelRda.Size = new System.Drawing.Size(30, 13);
             this.labelRda.TabIndex = 18;
@@ -284,7 +294,7 @@
             // 
             this.textBoxRda.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.textBoxRda.ForeColor = System.Drawing.Color.Navy;
-            this.textBoxRda.Location = new System.Drawing.Point(12, 153);
+            this.textBoxRda.Location = new System.Drawing.Point(12, 21);
             this.textBoxRda.Name = "textBoxRda";
             this.textBoxRda.Size = new System.Drawing.Size(171, 23);
             this.textBoxRda.TabIndex = 17;
@@ -296,7 +306,7 @@
             this.labelRafa.AutoSize = true;
             this.labelRafa.BackColor = System.Drawing.Color.Transparent;
             this.labelRafa.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelRafa.Location = new System.Drawing.Point(188, 137);
+            this.labelRafa.Location = new System.Drawing.Point(188, 5);
             this.labelRafa.Name = "labelRafa";
             this.labelRafa.Size = new System.Drawing.Size(35, 13);
             this.labelRafa.TabIndex = 20;
@@ -306,7 +316,7 @@
             // 
             this.textBoxRafa.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.textBoxRafa.ForeColor = System.Drawing.Color.Navy;
-            this.textBoxRafa.Location = new System.Drawing.Point(189, 153);
+            this.textBoxRafa.Location = new System.Drawing.Point(189, 21);
             this.textBoxRafa.Name = "textBoxRafa";
             this.textBoxRafa.Size = new System.Drawing.Size(168, 23);
             this.textBoxRafa.TabIndex = 19;
@@ -318,7 +328,7 @@
             this.labelUserField.AutoSize = true;
             this.labelUserField.BackColor = System.Drawing.Color.Transparent;
             this.labelUserField.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelUserField.Location = new System.Drawing.Point(188, 186);
+            this.labelUserField.Location = new System.Drawing.Point(188, 54);
             this.labelUserField.Name = "labelUserField";
             this.labelUserField.Size = new System.Drawing.Size(51, 13);
             this.labelUserField.TabIndex = 24;
@@ -328,7 +338,7 @@
             // 
             this.textBoxUserField.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.textBoxUserField.ForeColor = System.Drawing.Color.Navy;
-            this.textBoxUserField.Location = new System.Drawing.Point(189, 202);
+            this.textBoxUserField.Location = new System.Drawing.Point(189, 70);
             this.textBoxUserField.Name = "textBoxUserField";
             this.textBoxUserField.Size = new System.Drawing.Size(168, 23);
             this.textBoxUserField.TabIndex = 23;
@@ -339,7 +349,7 @@
             this.labelLocator.AutoSize = true;
             this.labelLocator.BackColor = System.Drawing.Color.Transparent;
             this.labelLocator.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelLocator.Location = new System.Drawing.Point(11, 186);
+            this.labelLocator.Location = new System.Drawing.Point(11, 54);
             this.labelLocator.Name = "labelLocator";
             this.labelLocator.Size = new System.Drawing.Size(43, 13);
             this.labelLocator.TabIndex = 22;
@@ -349,7 +359,7 @@
             // 
             this.textBoxLocator.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxLocator.ForeColor = System.Drawing.Color.Navy;
-            this.textBoxLocator.Location = new System.Drawing.Point(12, 202);
+            this.textBoxLocator.Location = new System.Drawing.Point(12, 70);
             this.textBoxLocator.Name = "textBoxLocator";
             this.textBoxLocator.Size = new System.Drawing.Size(171, 22);
             this.textBoxLocator.TabIndex = 21;
@@ -362,7 +372,7 @@
             this.checkBoxAutoRda.Checked = true;
             this.checkBoxAutoRda.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxAutoRda.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.checkBoxAutoRda.Location = new System.Drawing.Point(44, 136);
+            this.checkBoxAutoRda.Location = new System.Drawing.Point(44, 4);
             this.checkBoxAutoRda.Name = "checkBoxAutoRda";
             this.checkBoxAutoRda.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoRda.TabIndex = 25;
@@ -373,7 +383,7 @@
             // 
             this.checkBoxAutoRafa.AutoSize = true;
             this.checkBoxAutoRafa.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.checkBoxAutoRafa.Location = new System.Drawing.Point(225, 136);
+            this.checkBoxAutoRafa.Location = new System.Drawing.Point(225, 4);
             this.checkBoxAutoRafa.Name = "checkBoxAutoRafa";
             this.checkBoxAutoRafa.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoRafa.TabIndex = 26;
@@ -384,7 +394,7 @@
             // 
             this.checkBoxAutoLocator.AutoSize = true;
             this.checkBoxAutoLocator.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.checkBoxAutoLocator.Location = new System.Drawing.Point(55, 185);
+            this.checkBoxAutoLocator.Location = new System.Drawing.Point(55, 53);
             this.checkBoxAutoLocator.Name = "checkBoxAutoLocator";
             this.checkBoxAutoLocator.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoLocator.TabIndex = 27;
@@ -397,7 +407,7 @@
             this.checkBoxAutoStatFilter.Checked = true;
             this.checkBoxAutoStatFilter.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxAutoStatFilter.ForeColor = System.Drawing.Color.DarkGreen;
-            this.checkBoxAutoStatFilter.Location = new System.Drawing.Point(83, 237);
+            this.checkBoxAutoStatFilter.Location = new System.Drawing.Point(83, 1);
             this.checkBoxAutoStatFilter.Name = "checkBoxAutoStatFilter";
             this.checkBoxAutoStatFilter.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoStatFilter.TabIndex = 30;
@@ -409,7 +419,7 @@
             this.comboBoxStatFilterMode.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxStatFilterMode.ForeColor = System.Drawing.Color.DarkGreen;
             this.comboBoxStatFilterMode.FormattingEnabled = true;
-            this.comboBoxStatFilterMode.Location = new System.Drawing.Point(83, 253);
+            this.comboBoxStatFilterMode.Location = new System.Drawing.Point(83, 17);
             this.comboBoxStatFilterMode.Name = "comboBoxStatFilterMode";
             this.comboBoxStatFilterMode.Size = new System.Drawing.Size(67, 24);
             this.comboBoxStatFilterMode.TabIndex = 34;
@@ -420,7 +430,7 @@
             this.comboBoxStatFilterRda.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxStatFilterRda.ForeColor = System.Drawing.Color.DarkGreen;
             this.comboBoxStatFilterRda.FormattingEnabled = true;
-            this.comboBoxStatFilterRda.Location = new System.Drawing.Point(12, 253);
+            this.comboBoxStatFilterRda.Location = new System.Drawing.Point(12, 17);
             this.comboBoxStatFilterRda.Name = "comboBoxStatFilterRda";
             this.comboBoxStatFilterRda.Size = new System.Drawing.Size(67, 24);
             this.comboBoxStatFilterRda.TabIndex = 35;
@@ -431,7 +441,7 @@
             this.labelStatFilter.AutoSize = true;
             this.labelStatFilter.BackColor = System.Drawing.Color.Transparent;
             this.labelStatFilter.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatFilter.Location = new System.Drawing.Point(11, 238);
+            this.labelStatFilter.Location = new System.Drawing.Point(11, 2);
             this.labelStatFilter.Name = "labelStatFilter";
             this.labelStatFilter.Size = new System.Drawing.Size(66, 13);
             this.labelStatFilter.TabIndex = 29;
@@ -442,7 +452,7 @@
             this.comboBoxStatFilterBand.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxStatFilterBand.ForeColor = System.Drawing.Color.DarkGreen;
             this.comboBoxStatFilterBand.FormattingEnabled = true;
-            this.comboBoxStatFilterBand.Location = new System.Drawing.Point(156, 253);
+            this.comboBoxStatFilterBand.Location = new System.Drawing.Point(156, 17);
             this.comboBoxStatFilterBand.Name = "comboBoxStatFilterBand";
             this.comboBoxStatFilterBand.Size = new System.Drawing.Size(70, 24);
             this.comboBoxStatFilterBand.TabIndex = 36;
@@ -454,7 +464,7 @@
             this.labelStatCallsigns.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labelStatCallsigns.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.labelStatCallsigns.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatCallsigns.Location = new System.Drawing.Point(296, 254);
+            this.labelStatCallsigns.Location = new System.Drawing.Point(296, 18);
             this.labelStatCallsigns.Name = "labelStatCallsigns";
             this.labelStatCallsigns.Size = new System.Drawing.Size(60, 23);
             this.labelStatCallsigns.TabIndex = 61;
@@ -467,7 +477,7 @@
             this.labelStatQso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labelStatQso.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.labelStatQso.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatQso.Location = new System.Drawing.Point(232, 254);
+            this.labelStatQso.Location = new System.Drawing.Point(232, 18);
             this.labelStatQso.Name = "labelStatQso";
             this.labelStatQso.Size = new System.Drawing.Size(60, 23);
             this.labelStatQso.TabIndex = 61;
@@ -479,7 +489,7 @@
             this.labelStatQsoCaption.AutoSize = true;
             this.labelStatQsoCaption.BackColor = System.Drawing.Color.Transparent;
             this.labelStatQsoCaption.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatQsoCaption.Location = new System.Drawing.Point(247, 241);
+            this.labelStatQsoCaption.Location = new System.Drawing.Point(247, 5);
             this.labelStatQsoCaption.Name = "labelStatQsoCaption";
             this.labelStatQsoCaption.Size = new System.Drawing.Size(30, 13);
             this.labelStatQsoCaption.TabIndex = 40;
@@ -490,7 +500,7 @@
             this.labelStatCallsignsCaption.AutoSize = true;
             this.labelStatCallsignsCaption.BackColor = System.Drawing.Color.Transparent;
             this.labelStatCallsignsCaption.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatCallsignsCaption.Location = new System.Drawing.Point(309, 240);
+            this.labelStatCallsignsCaption.Location = new System.Drawing.Point(309, 4);
             this.labelStatCallsignsCaption.Name = "labelStatCallsignsCaption";
             this.labelStatCallsignsCaption.Size = new System.Drawing.Size(29, 13);
             this.labelStatCallsignsCaption.TabIndex = 41;
@@ -503,7 +513,7 @@
             this.tableLayoutPanel.ColumnCount = 2;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.Location = new System.Drawing.Point(12, 290);
+            this.tableLayoutPanel.Location = new System.Drawing.Point(12, 54);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -515,7 +525,7 @@
             this.labelHotKeyF1.AutoSize = true;
             this.labelHotKeyF1.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF1.Location = new System.Drawing.Point(9, 401);
+            this.labelHotKeyF1.Location = new System.Drawing.Point(6, 8);
             this.labelHotKeyF1.Name = "labelHotKeyF1";
             this.labelHotKeyF1.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF1.TabIndex = 43;
@@ -526,7 +536,7 @@
             this.labelHotKeyF2.AutoSize = true;
             this.labelHotKeyF2.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF2.Location = new System.Drawing.Point(50, 401);
+            this.labelHotKeyF2.Location = new System.Drawing.Point(43, 8);
             this.labelHotKeyF2.Name = "labelHotKeyF2";
             this.labelHotKeyF2.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF2.TabIndex = 44;
@@ -537,7 +547,7 @@
             this.labelHotKeyF3.AutoSize = true;
             this.labelHotKeyF3.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF3.Location = new System.Drawing.Point(91, 401);
+            this.labelHotKeyF3.Location = new System.Drawing.Point(80, 8);
             this.labelHotKeyF3.Name = "labelHotKeyF3";
             this.labelHotKeyF3.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF3.TabIndex = 45;
@@ -548,7 +558,7 @@
             this.labelHotKeyF4.AutoSize = true;
             this.labelHotKeyF4.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF4.Location = new System.Drawing.Point(132, 401);
+            this.labelHotKeyF4.Location = new System.Drawing.Point(117, 8);
             this.labelHotKeyF4.Name = "labelHotKeyF4";
             this.labelHotKeyF4.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF4.TabIndex = 46;
@@ -559,7 +569,7 @@
             this.labelHotKeyF5.AutoSize = true;
             this.labelHotKeyF5.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF5.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF5.Location = new System.Drawing.Point(173, 401);
+            this.labelHotKeyF5.Location = new System.Drawing.Point(154, 8);
             this.labelHotKeyF5.Name = "labelHotKeyF5";
             this.labelHotKeyF5.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF5.TabIndex = 47;
@@ -570,7 +580,7 @@
             this.labelHotKeyF6.AutoSize = true;
             this.labelHotKeyF6.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF6.Location = new System.Drawing.Point(214, 401);
+            this.labelHotKeyF6.Location = new System.Drawing.Point(191, 8);
             this.labelHotKeyF6.Name = "labelHotKeyF6";
             this.labelHotKeyF6.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF6.TabIndex = 48;
@@ -581,7 +591,7 @@
             this.labelHotKeyF7.AutoSize = true;
             this.labelHotKeyF7.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF7.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF7.Location = new System.Drawing.Point(255, 401);
+            this.labelHotKeyF7.Location = new System.Drawing.Point(228, 8);
             this.labelHotKeyF7.Name = "labelHotKeyF7";
             this.labelHotKeyF7.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF7.TabIndex = 49;
@@ -592,7 +602,7 @@
             this.labelHotKeyF8.AutoSize = true;
             this.labelHotKeyF8.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF8.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF8.Location = new System.Drawing.Point(296, 401);
+            this.labelHotKeyF8.Location = new System.Drawing.Point(265, 8);
             this.labelHotKeyF8.Name = "labelHotKeyF8";
             this.labelHotKeyF8.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF8.TabIndex = 50;
@@ -603,7 +613,7 @@
             this.labelHotKeyF9.AutoSize = true;
             this.labelHotKeyF9.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF9.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF9.Location = new System.Drawing.Point(337, 401);
+            this.labelHotKeyF9.Location = new System.Drawing.Point(290, 8);
             this.labelHotKeyF9.Name = "labelHotKeyF9";
             this.labelHotKeyF9.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF9.TabIndex = 51;
@@ -614,7 +624,7 @@
             this.labelHotKeyF9Bind.AutoSize = true;
             this.labelHotKeyF9Bind.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF9Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF9Bind.Location = new System.Drawing.Point(337, 416);
+            this.labelHotKeyF9Bind.Location = new System.Drawing.Point(301, 23);
             this.labelHotKeyF9Bind.Name = "labelHotKeyF9Bind";
             this.labelHotKeyF9Bind.Size = new System.Drawing.Size(16, 13);
             this.labelHotKeyF9Bind.TabIndex = 60;
@@ -625,7 +635,7 @@
             this.labelHotKeyF8Bind.AutoSize = true;
             this.labelHotKeyF8Bind.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF8Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF8Bind.Location = new System.Drawing.Point(288, 416);
+            this.labelHotKeyF8Bind.Location = new System.Drawing.Point(253, 23);
             this.labelHotKeyF8Bind.Name = "labelHotKeyF8Bind";
             this.labelHotKeyF8Bind.Size = new System.Drawing.Size(35, 13);
             this.labelHotKeyF8Bind.TabIndex = 59;
@@ -636,7 +646,7 @@
             this.labelHotKeyF7Bind.AutoSize = true;
             this.labelHotKeyF7Bind.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF7Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF7Bind.Location = new System.Drawing.Point(249, 416);
+            this.labelHotKeyF7Bind.Location = new System.Drawing.Point(210, 23);
             this.labelHotKeyF7Bind.Name = "labelHotKeyF7Bind";
             this.labelHotKeyF7Bind.Size = new System.Drawing.Size(30, 13);
             this.labelHotKeyF7Bind.TabIndex = 58;
@@ -647,7 +657,7 @@
             this.labelHotKeyF6Bind.AutoSize = true;
             this.labelHotKeyF6Bind.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF6Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF6Bind.Location = new System.Drawing.Point(214, 416);
+            this.labelHotKeyF6Bind.Location = new System.Drawing.Point(181, 23);
             this.labelHotKeyF6Bind.Name = "labelHotKeyF6Bind";
             this.labelHotKeyF6Bind.Size = new System.Drawing.Size(16, 13);
             this.labelHotKeyF6Bind.TabIndex = 57;
@@ -658,7 +668,7 @@
             this.labelHotKeyF5Bind.AutoSize = true;
             this.labelHotKeyF5Bind.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF5Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF5Bind.Location = new System.Drawing.Point(170, 416);
+            this.labelHotKeyF5Bind.Location = new System.Drawing.Point(143, 23);
             this.labelHotKeyF5Bind.Name = "labelHotKeyF5Bind";
             this.labelHotKeyF5Bind.Size = new System.Drawing.Size(25, 13);
             this.labelHotKeyF5Bind.TabIndex = 56;
@@ -669,7 +679,7 @@
             this.labelHotKeyF4Bind.AutoSize = true;
             this.labelHotKeyF4Bind.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF4Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF4Bind.Location = new System.Drawing.Point(130, 416);
+            this.labelHotKeyF4Bind.Location = new System.Drawing.Point(107, 23);
             this.labelHotKeyF4Bind.Name = "labelHotKeyF4Bind";
             this.labelHotKeyF4Bind.Size = new System.Drawing.Size(23, 13);
             this.labelHotKeyF4Bind.TabIndex = 55;
@@ -680,7 +690,7 @@
             this.labelHotKeyF3Bind.AutoSize = true;
             this.labelHotKeyF3Bind.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF3Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF3Bind.Location = new System.Drawing.Point(89, 416);
+            this.labelHotKeyF3Bind.Location = new System.Drawing.Point(72, 23);
             this.labelHotKeyF3Bind.Name = "labelHotKeyF3Bind";
             this.labelHotKeyF3Bind.Size = new System.Drawing.Size(22, 13);
             this.labelHotKeyF3Bind.TabIndex = 54;
@@ -691,7 +701,7 @@
             this.labelHotKeyF2Bind.AutoSize = true;
             this.labelHotKeyF2Bind.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF2Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF2Bind.Location = new System.Drawing.Point(47, 416);
+            this.labelHotKeyF2Bind.Location = new System.Drawing.Point(34, 23);
             this.labelHotKeyF2Bind.Name = "labelHotKeyF2Bind";
             this.labelHotKeyF2Bind.Size = new System.Drawing.Size(25, 13);
             this.labelHotKeyF2Bind.TabIndex = 53;
@@ -702,56 +712,104 @@
             this.labelHotKeyF1Bind.AutoSize = true;
             this.labelHotKeyF1Bind.BackColor = System.Drawing.Color.Transparent;
             this.labelHotKeyF1Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF1Bind.Location = new System.Drawing.Point(9, 416);
+            this.labelHotKeyF1Bind.Location = new System.Drawing.Point(-1, 23);
             this.labelHotKeyF1Bind.Name = "labelHotKeyF1Bind";
             this.labelHotKeyF1Bind.Size = new System.Drawing.Size(22, 13);
             this.labelHotKeyF1Bind.TabIndex = 52;
             this.labelHotKeyF1Bind.Text = "CQ";
             // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(317, 6);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(37, 20);
+            this.numericUpDown1.TabIndex = 62;
+            // 
+            // panelStatusFields
+            // 
+            this.panelStatusFields.Controls.Add(this.checkBoxAutoLocator);
+            this.panelStatusFields.Controls.Add(this.checkBoxAutoRafa);
+            this.panelStatusFields.Controls.Add(this.checkBoxAutoRda);
+            this.panelStatusFields.Controls.Add(this.labelUserField);
+            this.panelStatusFields.Controls.Add(this.textBoxUserField);
+            this.panelStatusFields.Controls.Add(this.labelLocator);
+            this.panelStatusFields.Controls.Add(this.textBoxLocator);
+            this.panelStatusFields.Controls.Add(this.labelRafa);
+            this.panelStatusFields.Controls.Add(this.textBoxRafa);
+            this.panelStatusFields.Controls.Add(this.labelRda);
+            this.panelStatusFields.Controls.Add(this.textBoxRda);
+            this.panelStatusFields.Location = new System.Drawing.Point(0, 0);
+            this.panelStatusFields.Margin = new System.Windows.Forms.Padding(0);
+            this.panelStatusFields.Name = "panelStatusFields";
+            this.panelStatusFields.Size = new System.Drawing.Size(364, 102);
+            this.panelStatusFields.TabIndex = 63;
+            // 
+            // panelStatFilter
+            // 
+            this.panelStatFilter.Controls.Add(this.tableLayoutPanel);
+            this.panelStatFilter.Controls.Add(this.labelStatCallsignsCaption);
+            this.panelStatFilter.Controls.Add(this.labelStatQsoCaption);
+            this.panelStatFilter.Controls.Add(this.labelStatQso);
+            this.panelStatFilter.Controls.Add(this.labelStatCallsigns);
+            this.panelStatFilter.Controls.Add(this.comboBoxStatFilterBand);
+            this.panelStatFilter.Controls.Add(this.comboBoxStatFilterRda);
+            this.panelStatFilter.Controls.Add(this.comboBoxStatFilterMode);
+            this.panelStatFilter.Controls.Add(this.checkBoxAutoStatFilter);
+            this.panelStatFilter.Controls.Add(this.labelStatFilter);
+            this.panelStatFilter.Location = new System.Drawing.Point(0, 102);
+            this.panelStatFilter.Margin = new System.Windows.Forms.Padding(0);
+            this.panelStatFilter.Name = "panelStatFilter";
+            this.panelStatFilter.Size = new System.Drawing.Size(363, 160);
+            this.panelStatFilter.TabIndex = 28;
+            // 
+            // panelCwMacro
+            // 
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF5);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF1);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF2);
+            this.panelCwMacro.Controls.Add(this.numericUpDown1);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF3);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF9Bind);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF4);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF8Bind);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF6);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF7Bind);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF7);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF6Bind);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF8);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF5Bind);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF9);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF4Bind);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF1Bind);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF3Bind);
+            this.panelCwMacro.Controls.Add(this.labelHotKeyF2Bind);
+            this.panelCwMacro.Location = new System.Drawing.Point(0, 262);
+            this.panelCwMacro.Margin = new System.Windows.Forms.Padding(0);
+            this.panelCwMacro.Name = "panelCwMacro";
+            this.panelCwMacro.Size = new System.Drawing.Size(364, 45);
+            this.panelCwMacro.TabIndex = 62;
+            // 
+            // flowLayoutPanel
+            // 
+            this.flowLayoutPanel.AutoSize = true;
+            this.flowLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.flowLayoutPanel.Controls.Add(this.panelStatusFields);
+            this.flowLayoutPanel.Controls.Add(this.panelStatFilter);
+            this.flowLayoutPanel.Controls.Add(this.panelCwMacro);
+            this.flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel.Location = new System.Drawing.Point(0, 129);
+            this.flowLayoutPanel.Name = "flowLayoutPanel";
+            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 307);
+            this.flowLayoutPanel.TabIndex = 63;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(364, 461);
-            this.Controls.Add(this.labelHotKeyF9Bind);
-            this.Controls.Add(this.labelHotKeyF8Bind);
-            this.Controls.Add(this.labelHotKeyF7Bind);
-            this.Controls.Add(this.labelHotKeyF6Bind);
-            this.Controls.Add(this.labelHotKeyF5Bind);
-            this.Controls.Add(this.labelHotKeyF4Bind);
-            this.Controls.Add(this.labelHotKeyF3Bind);
-            this.Controls.Add(this.labelHotKeyF2Bind);
-            this.Controls.Add(this.labelHotKeyF1Bind);
-            this.Controls.Add(this.labelHotKeyF9);
-            this.Controls.Add(this.labelHotKeyF8);
-            this.Controls.Add(this.labelHotKeyF7);
-            this.Controls.Add(this.labelHotKeyF6);
-            this.Controls.Add(this.labelHotKeyF5);
-            this.Controls.Add(this.labelHotKeyF4);
-            this.Controls.Add(this.labelHotKeyF3);
-            this.Controls.Add(this.labelHotKeyF2);
-            this.Controls.Add(this.labelHotKeyF1);
-            this.Controls.Add(this.tableLayoutPanel);
-            this.Controls.Add(this.labelStatCallsignsCaption);
-            this.Controls.Add(this.labelStatQsoCaption);
-            this.Controls.Add(this.labelStatQso);
-            this.Controls.Add(this.labelStatCallsigns);
-            this.Controls.Add(this.comboBoxStatFilterBand);
-            this.Controls.Add(this.comboBoxStatFilterRda);
-            this.Controls.Add(this.comboBoxStatFilterMode);
-            this.Controls.Add(this.checkBoxAutoStatFilter);
-            this.Controls.Add(this.labelStatFilter);
-            this.Controls.Add(this.checkBoxAutoLocator);
-            this.Controls.Add(this.checkBoxAutoRafa);
-            this.Controls.Add(this.checkBoxAutoRda);
-            this.Controls.Add(this.labelUserField);
-            this.Controls.Add(this.textBoxUserField);
-            this.Controls.Add(this.labelLocator);
-            this.Controls.Add(this.textBoxLocator);
-            this.Controls.Add(this.labelRafa);
-            this.Controls.Add(this.textBoxRafa);
-            this.Controls.Add(this.labelRda);
-            this.Controls.Add(this.textBoxRda);
+            this.Controls.Add(this.flowLayoutPanel);
             this.Controls.Add(this.labelMode);
             this.Controls.Add(this.comboBoxMode);
             this.Controls.Add(this.labelFreq);
@@ -770,8 +828,17 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormMain";
             this.Text = "TNXQSO log - R7AB_08dec2019";
+            this.Load += new System.EventHandler(this.FormMain_Load);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.panelStatusFields.ResumeLayout(false);
+            this.panelStatusFields.PerformLayout();
+            this.panelStatFilter.ResumeLayout(false);
+            this.panelStatFilter.PerformLayout();
+            this.panelCwMacro.ResumeLayout(false);
+            this.panelCwMacro.PerformLayout();
+            this.flowLayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -837,6 +904,11 @@
         private System.Windows.Forms.Label labelHotKeyF2Bind;
         private System.Windows.Forms.Label labelHotKeyF1Bind;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Panel panelStatusFields;
+        private System.Windows.Forms.Panel panelStatFilter;
+        private System.Windows.Forms.Panel panelCwMacro;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel;
     }
 }
 

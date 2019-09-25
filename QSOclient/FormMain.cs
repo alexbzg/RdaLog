@@ -80,6 +80,10 @@ namespace RdaLog
             rdaLog.showSettings();
         }
 
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 
 
