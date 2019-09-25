@@ -47,8 +47,10 @@ namespace RdaLog
         }
 
         public HttpServiceConfig(XmlConfig _parent) : base(_parent) { }
+        public HttpServiceConfig() : base() { }
+
     }
-    public class HttpPService
+    public class HttpService
     {
         private static int pingIntervalDef = 60 * 1000;
         private static int pingIntervalNoConnection = 5 * 1000;
@@ -69,14 +71,15 @@ namespace RdaLog
         //private DXpConfig config;
         public EventHandler<LocationChangedEventArgs> locationChanged;
         private HttpServiceConfig config;
-        private RdaLog qsoClient;
+        private RdaLog rdaLog;
         public bool gpsServerLoad;
 
 
-        public HttpPService(HttpServiceConfig _config)
+        public HttpService(HttpServiceConfig _config, RdaLog _rdaLog)
         {
             config = _config;
-            schedulePingTimer();
+            _rdaLog = rdaLog;
+            //schedulePingTimer();
             List<QSO> unsentQSOs = ProtoBufSerialization.Read<List<QSO>>(unsentFilePath);
             if (unsentQSOs != null && unsentQSOs.Count > 0)
                 Task.Run(() =>
@@ -200,7 +203,7 @@ namespace RdaLog
                 {
                     DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(LocationResponse));
                     double[] location = ((LocationResponse)serializer.ReadObject(await response.Content.ReadAsStreamAsync())).location;
-                    Coords coords = qsoClient.coords;
+                    Coords coords = rdaLog.coords;
                     if (location != null && ( location[0] != coords.lat || location[1] != coords.lng))
                     {
                         coords.setLat(location[0]);
@@ -220,7 +223,7 @@ namespace RdaLog
         {
             if (config.token == null)
                 return;
-            HttpResponseMessage response = await post("location", new LocationData(config, qsoClient));
+            HttpResponseMessage response = await post("location", new StatusData(config));
             if (gpsServerLoad)
             {
                 if (stationCallsign != null)
@@ -375,33 +378,18 @@ namespace RdaLog
     }
 
     [DataContract]
-    class LocationData : JSONToken
+    class StatusData : JSONToken
     {
-        [IgnoreDataMember]
-        RdaLog qsoClient;
         [DataMember]
-        public double[] location { get {
-                if ((bool)qsoClient.coords?.valid)
-                    return new double[] { qsoClient.coords.lat, qsoClient.coords.lng };
-                else
-                    return null;
-            }
-            set { } }
+        public string loc { get { return ((RdaLogConfig)config.parent).getStatusFieldValue("locator"); } set { } }
         [DataMember]
-        public string loc { get { return qsoClient.loc; } set { } }
+        public string rafa { get { return ((RdaLogConfig)config.parent).getStatusFieldValue("rafa"); } set { } }
         [DataMember]
-        public string rafa { get { return qsoClient.rafa; } set { } }
+        public string rda { get { return ((RdaLogConfig)config.parent).getStatusFieldValue("rda"); } set { } }
         [DataMember]
-        public string rda { get { return qsoClient.rda; } set { } }
-        [DataMember]
-        public string wff { get { return qsoClient.wff; } set { } }
-        [DataMember]
-        public string userFields { get { return qsoClient.userField; } set { } }
+        public string userField { get { return ((RdaLogConfig)config.parent).userField; } set { } }
 
-        internal LocationData(HttpServiceConfig _config, RdaLog _qsoClient) : base(_config)
-        {
-            qsoClient = _qsoClient;  
-        }
+        internal StatusData(HttpServiceConfig _config) : base(_config) { }
 
     }
 

@@ -14,8 +14,17 @@ using XmlConfigNS;
 
 namespace RdaLog
 {
+    public class StatusField
+    {
+        public bool auto = true;
+        public string value;
+    }
 
-    [DataContract]
+    public class SerStatusField : StatusField
+    {
+        public string field;
+    }
+
     public class RdaLogConfig : XmlConfig
     {
         public static readonly List<Tuple<string, string>> HotKeysDefaults = new List<Tuple<string, string>>
@@ -30,64 +39,59 @@ namespace RdaLog
             Tuple.Create("RAFA", "RAFA {RAFA}"),
             Tuple.Create("", "")
         };
-        [XmlIgnore]
-        Dictionary<string, string> rafaData = new Dictionary<string, string>();
+        public static readonly List<string> StatusFields = new List<string> { "rda", "rafa", "locator" };
 
-
-        [DataMember]
         public FormMainConfig formMain;
-        [DataMember]
         public HttpServiceConfig httpService;
 
-        [DataMember]
+        private Dictionary<string, StatusField> _statusFields;
+        public List<SerStatusField> serStatusFields;
+        public void setStatusFieldValue(string field, string value)
+        {
+            if (_statusFields[field].value != value)
+            {
+                _statusFields[field].value = value;
+                write();
+            }
+        }
+        public void setStatusFieldAuto(string field, bool value)
+        {
+            if (_statusFields[field].auto != value)
+            {
+                _statusFields[field].auto = value;
+                write();
+            }
+        }
+        public string getStatusFieldValue(string field)
+        {
+            return _statusFields[field].auto ? null : _statusFields[field].value;
+        }
+        public bool getStatusFieldAuto(string field)
+        {
+            return _statusFields[field].auto;
+        }
+
+        private string _userField;
+
+        public string userField
+        {
+            get { return _userField; }
+            set { if (_userField != value )
+                {
+                    _userField = value;
+                    write();
+                } }
+        }
+
         public bool showFields = true;
-        [DataMember]
         public bool showCallsignId = true;
-        [DataMember]
         public bool showStatFilter = true;
-        [DataMember]
         public bool showMacros = true;
-        [DataMember]
         public bool enableMacros = true;
-        [DataMember]
         public bool autoLogin = true;
-        [DataMember]
         public List<string[]> hotKeys;
 
-
-        public RdaLogConfig() : base()
-        {
-            try
-            {
-                using (StreamReader sr = new StreamReader(Application.StartupPath + "\\rafa.csv"))
-                {
-                    do
-                    {
-                        string line = sr.ReadLine();
-                        string[] lineData = line.Split(';');
-                        if (lineData[0] == "")
-                        {
-                            string[] keys = lineData[3].Split(',');
-                            foreach (string key in keys)
-                            {
-                                string entry = lineData[1];
-                                if (rafaData.ContainsKey(key))
-                                    rafaData[key] += ", " + entry;
-                                else
-                                    rafaData[key] = entry;
-                            }
-                        }
-                    } while (sr.Peek() >= 0);
-                    System.Diagnostics.Debug.WriteLine(rafaData["KN97TF"]);
-                }
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e.ToString());
-                MessageBox.Show("Rafa data could not be loaded: " + e.ToString(), "DXpedition", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-        }
+        public RdaLogConfig() : base() {}
 
         public override void initialize()
         {
@@ -107,44 +111,28 @@ namespace RdaLog
             }
             for (int co = hotKeys.Count; co < HotKeysDefaults.Count; co++)
                 hotKeys.Add(new string[] { HotKeysDefaults[co].Item1, HotKeysDefaults[co].Item2 });
+
+            _statusFields = serStatusFields.ToDictionary(item => item.field, item => new StatusField() { auto = item.auto, value = item.value });
+            foreach (string field in StatusFields)
+                if (!_statusFields.ContainsKey(field))
+                    _statusFields[field] = new StatusField() { auto = true, value = null };
+
+            base.initialize();
         }
 
-        public string toJSON()
+        public override void write()
         {
-            return JSONSerializer.Serialize<RdaLogConfig>(this);
+            if (initialized)
+            {
+                serStatusFields = _statusFields.Select(item => new SerStatusField()
+                {
+                    field = item.Key,
+                    auto = item.Value.auto,
+                    value = item.Value.value
+                }).ToList();
+                base.write();
+            }
         }
-
-
-
-        public static string qth(Coords c)
-        {
-            double lat = c.lat;
-            double lng = c.lng;
-            string qth = "";
-            lat += 90;
-            lng += 180;
-            lat = lat / 10 + 0.0000001;
-            lng = lng / 20 + 0.0000001;
-            qth += (char)(65 + lng);
-            qth += (char)(65 + lat);
-            lat = 10 * (lat - Math.Truncate(lat));
-            lng = 10 * (lng - Math.Truncate(lng));
-            qth += (char)(48 + lng);
-            qth += (char)(48 + lat);
-            lat = 24 * (lat - Math.Truncate(lat));
-            lng = 24 * (lng - Math.Truncate(lng));
-            qth += (char)(65 + lng);
-            qth += (char)(65 + lat);
-            lat = 10 * (lat - Math.Truncate(lat));
-            lng = 10 * (lng - Math.Truncate(lng));
-            /*            qth += (char)(48 + lng) + (char)(48 + lat);
-                        lat = 24 * (lat - Math.Truncate(lat));
-                        lng = 24 * (lng - Math.Truncate(lng));
-                        qth += (char)(65 + lng) + (char)(65 + lat);*/
-            System.Diagnostics.Debug.WriteLine(qth);
-            return qth;
-        } // returnQth()
-
 
     }
 }

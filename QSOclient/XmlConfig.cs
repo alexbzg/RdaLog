@@ -14,6 +14,7 @@ namespace XmlConfigNS
     public class XmlConfig
     {
         private string fname;
+        protected bool initialized;
 
         public XmlConfig(string _fname)
         {
@@ -58,21 +59,24 @@ namespace XmlConfigNS
             return result;
         }
 
-        public virtual void initialize() { }
-        public virtual void write()
-        {
-            using (StreamWriter sw = new StreamWriter(fname))
-            {
-                try
+        public virtual void initialize() {
+            initialized = true;
+        }
+        public virtual void write() { 
+        
+            if (initialized)
+                using (StreamWriter sw = new StreamWriter(fname))
                 {
-                    XmlSerializer ser = new XmlSerializer(this.GetType());
-                    ser.Serialize(sw, this);
+                    try
+                    {
+                        XmlSerializer ser = new XmlSerializer(this.GetType());
+                        ser.Serialize(sw, this);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine(ex.ToString());
+                    }
                 }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine(ex.ToString());
-                }
-            }
         }
     }
 

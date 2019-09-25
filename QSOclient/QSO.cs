@@ -113,14 +113,14 @@ namespace RdaLog
 
     public class QSOFactory
     {
-        private RdaLog qsoClient;
+        private RdaLog rdaLog;
         public int no = 1;
 
 
 
         public QSOFactory(RdaLog _qsoClient)
         {
-            qsoClient = _qsoClient;
+            rdaLog = _qsoClient;
         }
 
 
@@ -158,11 +158,10 @@ namespace RdaLog
                 _freqRx = QSO.formatFreq(root.SelectSingleNode("rxfreq").InnerText),
                 _oper = root.SelectSingleNode("operator").InnerText,
                 _no = no++,
-                _rda = qsoClient.rda,
-                _rafa = qsoClient.rafa,
-                _wff = qsoClient.wff,
-                _loc = qsoClient.loc,
-                _userField = qsoClient.userField
+                _rda = rdaLog.getStatusFieldValue("rda"),
+                _rafa = rdaLog.getStatusFieldValue("rafa"),
+                _loc = rdaLog.getStatusFieldValue("locator"),
+                _userField = rdaLog.userField
             };
         }
     }

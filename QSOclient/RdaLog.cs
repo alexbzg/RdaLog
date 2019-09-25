@@ -8,30 +8,50 @@ using XmlConfigNS;
 
 namespace RdaLog
 {
+    public class StatusFieldChangeEventArgs: EventArgs
+    {
+        public string field;
+        public string value;
+    }
+
     public class RdaLog
     {
         private FormMain _formMain;
         public FormMain formMain { get { return _formMain; } }
         private RdaLogConfig config;
-        private HttpPService httpService;
-        private string _rafa;
-        public string rafa { get { return _rafa; } }
-        private string _rda;
-        public string rda { get { return _rda; } }
-        private string _wff;
-        public string wff { get { return _wff; } }
-        private string _loc;
-        public string loc { get { return _loc; } }
-        private string _userField;
-        public string userField { get { return _userField; } }
+        private HttpService httpService;
+        public EventHandler<StatusFieldChangeEventArgs> statusFieldChange;
+        private Dictionary<string, string> _statusFields = new Dictionary<string, string>();
+        public void setStatusFieldValue(string field, string value)
+        {
+            if (_statusFields[field] != value)
+            {
+                _statusFields[field] = value;
+                config.setStatusFieldValue(field, value);
+                statusFieldChange?.Invoke(this, new StatusFieldChangeEventArgs()
+                {
+                    field = field,
+                    value = value
+                });
+            }
+        }
+        public string getStatusFieldValue(string field)
+        {
+            return _statusFields[field];
+        }
+
+        public string userField { get { return config.userField; } }
 
         private Coords _coords;
         public Coords coords { get { return _coords.clone(); } }
 
+
         public RdaLog()
         {
             config = XmlConfig.create<RdaLogConfig>();
-            httpService = new HttpPService(config.httpService);
+            foreach (string field in RdaLogConfig.StatusFields)
+                _statusFields[field] = config.getStatusFieldValue(field);
+            httpService = new HttpService(config.httpService, this);
             _formMain = new FormMain(config.formMain, this);
             if (config.autoLogin)
                 Task.Run(() => { httpService.login(); });
