@@ -91,6 +91,22 @@ namespace RdaLog
                 } }
         }
 
+        private string _callsign;
+
+        public string callsign
+        {
+            get { return _callsign; }
+            set
+            {
+                if (_callsign != value)
+                {
+                    _callsign = value;
+                    write();
+                }
+            }
+        }
+
+
         private Dictionary<string, bool> _mainFormPanels;
         public List<SerPropEnable> serMainFormPanels;
         [XmlIgnore]

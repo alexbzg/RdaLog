@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelFile = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
@@ -92,6 +93,7 @@
             this.panelCwMacro = new System.Windows.Forms.Panel();
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.panelCallsignId = new System.Windows.Forms.Panel();
+            this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.panelStatusFields.SuspendLayout();
@@ -103,11 +105,22 @@
             // 
             // statusStrip
             // 
-            this.statusStrip.Location = new System.Drawing.Point(0, 439);
+            this.statusStrip.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.statusStrip.AutoSize = false;
+            this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip.Location = new System.Drawing.Point(0, 309);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(364, 22);
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 0;
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(30, 17);
+            this.toolStripStatusLabel1.Text = "blah";
             // 
             // toolStrip
             // 
@@ -163,6 +176,7 @@
             this.buttonPostFreq.Name = "buttonPostFreq";
             this.buttonPostFreq.Size = new System.Drawing.Size(23, 23);
             this.buttonPostFreq.TabIndex = 5;
+            this.buttonPostFreq.TabStop = false;
             this.buttonPostFreq.UseVisualStyleBackColor = true;
             // 
             // textBoxCorrespondent
@@ -172,9 +186,9 @@
             this.textBoxCorrespondent.Location = new System.Drawing.Point(12, 46);
             this.textBoxCorrespondent.Name = "textBoxCorrespondent";
             this.textBoxCorrespondent.Size = new System.Drawing.Size(229, 29);
-            this.textBoxCorrespondent.TabIndex = 6;
-            this.textBoxCorrespondent.Text = "OK/UZ6LWZ/P";
+            this.textBoxCorrespondent.TabIndex = 0;
             this.textBoxCorrespondent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxCorrespondent.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxCorrespondent_Validating);
             // 
             // textBoxRstSent
             // 
@@ -182,7 +196,7 @@
             this.textBoxRstSent.Location = new System.Drawing.Point(248, 52);
             this.textBoxRstSent.Name = "textBoxRstSent";
             this.textBoxRstSent.Size = new System.Drawing.Size(51, 23);
-            this.textBoxRstSent.TabIndex = 7;
+            this.textBoxRstSent.TabIndex = 1;
             this.textBoxRstSent.Text = "599";
             this.textBoxRstSent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -214,7 +228,7 @@
             this.textBoxRstRcvd.Location = new System.Drawing.Point(305, 52);
             this.textBoxRstRcvd.Name = "textBoxRstRcvd";
             this.textBoxRstRcvd.Size = new System.Drawing.Size(51, 23);
-            this.textBoxRstRcvd.TabIndex = 9;
+            this.textBoxRstRcvd.TabIndex = 2;
             this.textBoxRstRcvd.Text = "599";
             this.textBoxRstRcvd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -235,9 +249,11 @@
             this.textBoxCallsign.Location = new System.Drawing.Point(12, 100);
             this.textBoxCallsign.Name = "textBoxCallsign";
             this.textBoxCallsign.Size = new System.Drawing.Size(156, 23);
-            this.textBoxCallsign.TabIndex = 11;
+            this.textBoxCallsign.TabIndex = 3;
             this.textBoxCallsign.Text = "R7AB/P";
             this.textBoxCallsign.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxCallsign.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxCallsign_Validating);
+            this.textBoxCallsign.Validated += new System.EventHandler(this.TextBoxCallsign_Validated);
             // 
             // labelFreq
             // 
@@ -256,7 +272,7 @@
             this.textBoxFreq.Location = new System.Drawing.Point(248, 100);
             this.textBoxFreq.Name = "textBoxFreq";
             this.textBoxFreq.Size = new System.Drawing.Size(79, 23);
-            this.textBoxFreq.TabIndex = 13;
+            this.textBoxFreq.TabIndex = 5;
             this.textBoxFreq.Text = "14 177.3";
             this.textBoxFreq.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -267,8 +283,9 @@
             this.comboBoxMode.Location = new System.Drawing.Point(174, 99);
             this.comboBoxMode.Name = "comboBoxMode";
             this.comboBoxMode.Size = new System.Drawing.Size(67, 24);
-            this.comboBoxMode.TabIndex = 15;
+            this.comboBoxMode.TabIndex = 4;
             this.comboBoxMode.Text = "RTTY";
+            this.comboBoxMode.SelectedIndexChanged += new System.EventHandler(this.ComboBoxMode_SelectedIndexChanged);
             // 
             // labelMode
             // 
@@ -299,9 +316,10 @@
             this.textBoxRda.Location = new System.Drawing.Point(12, 21);
             this.textBoxRda.Name = "textBoxRda";
             this.textBoxRda.Size = new System.Drawing.Size(171, 23);
-            this.textBoxRda.TabIndex = 17;
+            this.textBoxRda.TabIndex = 6;
             this.textBoxRda.Text = "RA-25 RA-37 RA-27";
             this.textBoxRda.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxRda.TextChanged += new System.EventHandler(this.TextBoxRda_TextChanged);
             // 
             // labelRafa
             // 
@@ -321,7 +339,7 @@
             this.textBoxRafa.Location = new System.Drawing.Point(189, 21);
             this.textBoxRafa.Name = "textBoxRafa";
             this.textBoxRafa.Size = new System.Drawing.Size(168, 23);
-            this.textBoxRafa.TabIndex = 19;
+            this.textBoxRafa.TabIndex = 7;
             this.textBoxRafa.Text = "H4RT";
             this.textBoxRafa.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -343,7 +361,7 @@
             this.textBoxUserField.Location = new System.Drawing.Point(189, 70);
             this.textBoxUserField.Name = "textBoxUserField";
             this.textBoxUserField.Size = new System.Drawing.Size(168, 23);
-            this.textBoxUserField.TabIndex = 23;
+            this.textBoxUserField.TabIndex = 9;
             this.textBoxUserField.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // labelLocator
@@ -364,7 +382,7 @@
             this.textBoxLocator.Location = new System.Drawing.Point(12, 70);
             this.textBoxLocator.Name = "textBoxLocator";
             this.textBoxLocator.Size = new System.Drawing.Size(171, 22);
-            this.textBoxLocator.TabIndex = 21;
+            this.textBoxLocator.TabIndex = 8;
             this.textBoxLocator.Text = "KN96on";
             this.textBoxLocator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -378,8 +396,10 @@
             this.checkBoxAutoRda.Name = "checkBoxAutoRda";
             this.checkBoxAutoRda.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoRda.TabIndex = 25;
+            this.checkBoxAutoRda.TabStop = false;
             this.checkBoxAutoRda.Text = "auto";
             this.checkBoxAutoRda.UseVisualStyleBackColor = true;
+            this.checkBoxAutoRda.CheckedChanged += new System.EventHandler(this.CheckBoxAutoRda_CheckedChanged);
             // 
             // checkBoxAutoRafa
             // 
@@ -389,6 +409,7 @@
             this.checkBoxAutoRafa.Name = "checkBoxAutoRafa";
             this.checkBoxAutoRafa.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoRafa.TabIndex = 26;
+            this.checkBoxAutoRafa.TabStop = false;
             this.checkBoxAutoRafa.Text = "auto";
             this.checkBoxAutoRafa.UseVisualStyleBackColor = true;
             // 
@@ -400,6 +421,7 @@
             this.checkBoxAutoLocator.Name = "checkBoxAutoLocator";
             this.checkBoxAutoLocator.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoLocator.TabIndex = 27;
+            this.checkBoxAutoLocator.TabStop = false;
             this.checkBoxAutoLocator.Text = "auto";
             this.checkBoxAutoLocator.UseVisualStyleBackColor = true;
             // 
@@ -413,8 +435,10 @@
             this.checkBoxAutoStatFilter.Name = "checkBoxAutoStatFilter";
             this.checkBoxAutoStatFilter.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoStatFilter.TabIndex = 30;
+            this.checkBoxAutoStatFilter.TabStop = false;
             this.checkBoxAutoStatFilter.Text = "auto";
             this.checkBoxAutoStatFilter.UseVisualStyleBackColor = true;
+            this.checkBoxAutoStatFilter.CheckedChanged += new System.EventHandler(this.CheckBoxAutoStatFilter_CheckedChanged);
             // 
             // comboBoxStatFilterMode
             // 
@@ -425,7 +449,9 @@
             this.comboBoxStatFilterMode.Name = "comboBoxStatFilterMode";
             this.comboBoxStatFilterMode.Size = new System.Drawing.Size(67, 24);
             this.comboBoxStatFilterMode.TabIndex = 34;
+            this.comboBoxStatFilterMode.TabStop = false;
             this.comboBoxStatFilterMode.Text = "RTTY";
+            this.comboBoxStatFilterMode.SelectedIndexChanged += new System.EventHandler(this.ComboBoxStatFilterMode_SelectedIndexChanged);
             // 
             // comboBoxStatFilterRda
             // 
@@ -436,7 +462,9 @@
             this.comboBoxStatFilterRda.Name = "comboBoxStatFilterRda";
             this.comboBoxStatFilterRda.Size = new System.Drawing.Size(67, 24);
             this.comboBoxStatFilterRda.TabIndex = 35;
+            this.comboBoxStatFilterRda.TabStop = false;
             this.comboBoxStatFilterRda.Text = "RA-31";
+            this.comboBoxStatFilterRda.SelectedIndexChanged += new System.EventHandler(this.ComboBoxStatFilterRda_SelectedIndexChanged);
             // 
             // labelStatFilter
             // 
@@ -458,7 +486,9 @@
             this.comboBoxStatFilterBand.Name = "comboBoxStatFilterBand";
             this.comboBoxStatFilterBand.Size = new System.Drawing.Size(70, 24);
             this.comboBoxStatFilterBand.TabIndex = 36;
+            this.comboBoxStatFilterBand.TabStop = false;
             this.comboBoxStatFilterBand.Text = "14 MHz";
+            this.comboBoxStatFilterBand.SelectedIndexChanged += new System.EventHandler(this.ComboBoxStatFilterBand_SelectedIndexChanged);
             // 
             // labelStatCallsigns
             // 
@@ -726,6 +756,7 @@
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(37, 20);
             this.numericUpDown1.TabIndex = 62;
+            this.numericUpDown1.TabStop = false;
             // 
             // panelStatusFields
             // 
@@ -792,16 +823,19 @@
             // 
             // flowLayoutPanel
             // 
+            this.flowLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel.AutoSize = true;
             this.flowLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanel.Controls.Add(this.panelStatusFields);
             this.flowLayoutPanel.Controls.Add(this.panelStatFilter);
             this.flowLayoutPanel.Controls.Add(this.panelCallsignId);
             this.flowLayoutPanel.Controls.Add(this.panelCwMacro);
+            this.flowLayoutPanel.Controls.Add(this.statusStrip);
             this.flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel.Location = new System.Drawing.Point(0, 129);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 309);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 331);
             this.flowLayoutPanel.TabIndex = 63;
             // 
             // panelCallsignId
@@ -835,11 +869,14 @@
             this.Controls.Add(this.buttonPostFreq);
             this.Controls.Add(this.labelDateTime);
             this.Controls.Add(this.toolStrip);
-            this.Controls.Add(this.statusStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.Name = "FormMain";
             this.Text = "TNXQSO log - R7AB_08dec2019";
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormMain_KeyPress);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
@@ -922,6 +959,7 @@
         private System.Windows.Forms.Panel panelCwMacro;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel;
         private System.Windows.Forms.Panel panelCallsignId;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

@@ -89,7 +89,9 @@ namespace RdaLog
                         textBoxValue.Text = e.value;
                 };
             }
+
             textBoxUserField.Text = rdaLogConfig.userField;
+            textBoxCallsign.Text = rdaLogConfig.callsign;
         }
 
         private void arrangePanels()
@@ -105,6 +107,7 @@ namespace RdaLog
                 if (panels.ContainsKey(panel) && rdaLogConfig.getMainFormPanelVisible(panel))
                     flowLayoutPanel.Controls.Add(panels[panel]);
             }
+            statusStrip.SendToBack();
         }
 
         private void ToolStripLabelSettings_Click(object sender, EventArgs e)
@@ -113,6 +116,71 @@ namespace RdaLog
         }
 
         private void FormMain_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TextBoxCorrespondent_Validated(object sender, EventArgs e)
+        {
+        }
+
+        private void TextBoxCallsign_Validating(object sender, CancelEventArgs e)
+        {
+            textBoxCallsign.Text = textBoxCallsign.Text.ToUpper();
+        }
+
+        private void TextBoxCallsign_Validated(object sender, EventArgs e)
+        {
+            ((RdaLogConfig)config.parent).callsign = textBoxCallsign.Text;
+        }
+
+        private void TextBoxCorrespondent_Validating(object sender, CancelEventArgs e)
+        {
+            textBoxCorrespondent.Text = textBoxCorrespondent.Text.ToUpper();
+        }
+
+        private void FormMain_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == ' ')
+            {              
+                SelectNextControl(ActiveControl, true, true, true, true);
+                while (ActiveControl.GetType() != typeof(TextBox) || !((TextBox)ActiveControl).Text.Equals(string.Empty) )
+                    SelectNextControl(ActiveControl, true, true, true, true);
+                e.Handled = true;
+            }
+        }
+
+        private void ComboBoxMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBoxAutoRda_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TextBoxRda_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBoxAutoStatFilter_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboBoxStatFilterRda_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboBoxStatFilterMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboBoxStatFilterBand_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
