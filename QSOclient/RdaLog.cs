@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using XmlConfigNS;
 
 namespace RdaLog
@@ -66,11 +67,9 @@ namespace RdaLog
             formSettings.buttonLogin.Click += ButtonLogin_Click;
 
             formSettings.checkBoxAutoLogin.Checked = config.autoLogin;
-            formSettings.checkBoxViewCallsignId.Checked = config.showCallsignId;
-            formSettings.checkBoxViewFields.Checked = config.showFields;
-            formSettings.checkBoxViewStatFilter.Checked = config.showStatFilter;
-            formSettings.checkBoxViewCwMacro.Checked = config.showMacros;
-            formSettings.checkBoxEnableCwMacro.Checked = config.enableMacros;
+
+            foreach (KeyValuePair<string,CheckBox> item in formSettings.mainFormPanelCheckboxes)
+                item.Value.Checked = config.getMainFormPanelVisible(item.Key);
 
             for (int co = 0; co < formSettings.HotKeyBindings.Count; co++)
             {
@@ -84,10 +83,10 @@ namespace RdaLog
                 config.httpService.password = formSettings.textBoxPassword.Text;
 
                 config.autoLogin = formSettings.checkBoxAutoLogin.Checked;
-                config.showCallsignId = formSettings.checkBoxViewCallsignId.Checked;
-                config.showFields = formSettings.checkBoxViewFields.Checked;
-                config.showStatFilter = formSettings.checkBoxViewStatFilter.Checked;
-                config.showMacros = formSettings.checkBoxViewCwMacro.Checked;
+
+                foreach (KeyValuePair<string, CheckBox> item in formSettings.mainFormPanelCheckboxes)
+                     config.setMainFormPanelVisible(item.Key, item.Value.Checked);
+
                 config.enableMacros = formSettings.checkBoxEnableCwMacro.Checked;
 
                 for (int co = 0; co < formSettings.HotKeyBindings.Count; co++)

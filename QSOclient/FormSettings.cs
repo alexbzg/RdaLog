@@ -30,9 +30,18 @@ namespace RdaLog
                 };
             }
         }
+
+        internal Dictionary<string, CheckBox> mainFormPanelCheckboxes;
         public FormSettings()
         {
             InitializeComponent();
+            mainFormPanelCheckboxes = new Dictionary<string, CheckBox>()
+            {
+                {"statusFields", checkBoxViewFields },
+                {"statFilter", checkBoxViewStatFilter },
+                {"cwMacros", checkBoxViewCwMacro },
+                {"callsignId", checkBoxViewCallsignId }
+            };
         }
 
     }

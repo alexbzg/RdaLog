@@ -25,6 +25,12 @@ namespace RdaLog
         public string field;
     }
 
+    public class SerPropEnable
+    {
+        public string name;
+        public bool enabled;
+    }
+
     public class RdaLogConfig : XmlConfig
     {
         public static readonly List<Tuple<string, string>> HotKeysDefaults = new List<Tuple<string, string>>
@@ -40,6 +46,8 @@ namespace RdaLog
             Tuple.Create("", "")
         };
         public static readonly List<string> StatusFields = new List<string> { "rda", "rafa", "locator" };
+
+        public static readonly List<string> MainFormPanels = new List<string> { "statusFields", "statFilter", "callsignId", "cwMacros" };
 
         public FormMainConfig formMain;
         public HttpServiceConfig httpService;
@@ -83,10 +91,24 @@ namespace RdaLog
                 } }
         }
 
-        public bool showFields = true;
-        public bool showCallsignId = true;
-        public bool showStatFilter = true;
-        public bool showMacros = true;
+        private Dictionary<string, bool> _mainFormPanels;
+        public List<SerPropEnable> serMainFormPanels;
+        [XmlIgnore]
+        public EventHandler mainFormPanelVisibleChange;
+        public void setMainFormPanelVisible(string panel, bool value)
+        {
+            if (_mainFormPanels[panel] != value)
+            {
+                _mainFormPanels[panel] = value;
+                write();
+                mainFormPanelVisibleChange?.Invoke(this, new EventArgs());
+            }
+        }
+        public bool getMainFormPanelVisible(string panel)
+        {
+            return _mainFormPanels[panel];
+        }
+
         public bool enableMacros = true;
         public bool autoLogin = true;
         public List<string[]> hotKeys;
@@ -117,6 +139,11 @@ namespace RdaLog
                 if (!_statusFields.ContainsKey(field))
                     _statusFields[field] = new StatusField() { auto = true, value = null };
 
+            _mainFormPanels = serMainFormPanels.ToDictionary(item => item.name, item => item.enabled);
+            foreach (string panel in MainFormPanels)
+                if (!_mainFormPanels.ContainsKey(panel))
+                    _mainFormPanels[panel] = true;
+
             base.initialize();
         }
 
@@ -130,6 +157,13 @@ namespace RdaLog
                     auto = item.Value.auto,
                     value = item.Value.value
                 }).ToList();
+
+                serMainFormPanels = _mainFormPanels.Select(item => new SerPropEnable()
+                {
+                    name = item.Key,
+                    enabled = item.Value
+                }).ToList();
+
                 base.write();
             }
         }

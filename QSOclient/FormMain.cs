@@ -23,10 +23,15 @@ namespace RdaLog
 
         private RdaLog rdaLog;
         private Dictionary<string, StatusFieldControls> statusFieldsControls;
+        private Dictionary<string, Panel> panels;
         public FormMain(FormMainConfig _config, RdaLog _rdaLog) : base(_config)
         {
             rdaLog = _rdaLog;
+
             InitializeComponent();
+
+            RdaLogConfig rdaLogConfig = (RdaLogConfig)config.parent;
+
             statusFieldsControls = new Dictionary<string, StatusFieldControls>()
                 {
                     {"rda", new StatusFieldControls(){
@@ -42,7 +47,20 @@ namespace RdaLog
                         value = textBoxLocator
                     } }
                 };
-            RdaLogConfig rdaLogConfig = (RdaLogConfig)config.parent;
+
+            panels = new Dictionary<string, Panel>()
+            {
+                {"statusFields", panelStatusFields },
+                {"statFilter", panelStatFilter },
+                {"callsignId", panelCallsignId },
+                {"cwMacros", panelCwMacro }
+            };
+            arrangePanels();
+            rdaLogConfig.mainFormPanelVisibleChange += delegate (object sender, EventArgs e)
+            {
+                arrangePanels();
+            };
+
             foreach (KeyValuePair<string, StatusFieldControls> item in statusFieldsControls)
             {
                 string field = item.Key;
@@ -74,6 +92,20 @@ namespace RdaLog
             textBoxUserField.Text = rdaLogConfig.userField;
         }
 
+        private void arrangePanels()
+        {
+            foreach (Panel panel in panels.Values)
+            {
+                if (panel.Parent == flowLayoutPanel)
+                    flowLayoutPanel.Controls.Remove(panel);
+            }
+            RdaLogConfig rdaLogConfig = ((RdaLogConfig)config.parent);
+            foreach (string panel in RdaLogConfig.MainFormPanels)
+            {
+                if (panels.ContainsKey(panel) && rdaLogConfig.getMainFormPanelVisible(panel))
+                    flowLayoutPanel.Controls.Add(panels[panel]);
+            }
+        }
 
         private void ToolStripLabelSettings_Click(object sender, EventArgs e)
         {
