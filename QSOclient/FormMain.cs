@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using XmlConfigNS;
@@ -20,6 +21,14 @@ namespace RdaLog
             internal CheckBox auto;
             internal TextBox value;
         }
+
+        static bool CallsignChar(char c)
+        {
+            return char.IsWhiteSpace(c) || char.IsLetterOrDigit(c) || c == '/';
+        }
+
+        //static Regex CallsignRegex = new Regex(@"^(:?[A - Z\d]+\/)?\d?[A - Z]+\d+[A-Z]+(:?\/[A-Z\d]+)*$", RegexOptions.Compiled);
+        static Regex CallsignRegex = new Regex(@"^(:?[A-Z\d]+\/)?\d?[A-Z]+\d+[A-Z]+(:?\/[A-Z\d]+)*$", RegexOptions.Compiled);
 
         private RdaLog rdaLog;
         private Dictionary<string, StatusFieldControls> statusFieldsControls;
@@ -115,19 +124,6 @@ namespace RdaLog
             rdaLog.showSettings();
         }
 
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TextBoxCorrespondent_Validated(object sender, EventArgs e)
-        {
-        }
-
-        private void TextBoxCallsign_Validating(object sender, CancelEventArgs e)
-        {
-            textBoxCallsign.Text = textBoxCallsign.Text.ToUpper();
-        }
 
         private void TextBoxCallsign_Validated(object sender, EventArgs e)
         {
@@ -141,48 +137,34 @@ namespace RdaLog
 
         private void FormMain_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == ' ')
+            if (e.KeyChar == (char)13)
             {              
-                SelectNextControl(ActiveControl, true, true, true, true);
-                while (ActiveControl.GetType() != typeof(TextBox) || !((TextBox)ActiveControl).Text.Equals(string.Empty) )
-                    SelectNextControl(ActiveControl, true, true, true, true);
                 e.Handled = true;
             }
         }
 
-        private void ComboBoxMode_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void TextBoxCallsign_TextChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void CheckBoxAutoRda_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TextBoxRda_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CheckBoxAutoStatFilter_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ComboBoxStatFilterRda_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ComboBoxStatFilterMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ComboBoxStatFilterBand_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            TextBox textBox = ((TextBox)sender);
+            textBox.TextChanged -= TextBoxCallsign_TextChanged;
+            int selStart = textBox.SelectionStart;
+            int newSelStart = 0;
+            string newText = "";
+            textBox.Text = textBox.Text.ToUpper();
+            for (int co = 0; co < textBox.Text.Length; co++)
+                if (CallsignChar(textBox.Text[co]))
+                {
+                    if (co < selStart)
+                        newSelStart++;
+                    newText += textBox.Text[co];
+                }
+            textBox.Text = newText;
+            textBox.BackColor = CallsignRegex.IsMatch(textBox.Text) || textBox.Text.Equals(string.Empty) ? 
+                (textBox == textBoxCorrespondent ? SystemColors.Info : SystemColors.Window) : 
+                Color.IndianRed;
+            textBox.SelectionStart = newSelStart;
+            textBox.TextChanged += TextBoxCallsign_TextChanged;
         }
     }
 

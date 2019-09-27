@@ -188,6 +188,7 @@
             this.textBoxCorrespondent.Size = new System.Drawing.Size(229, 29);
             this.textBoxCorrespondent.TabIndex = 0;
             this.textBoxCorrespondent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxCorrespondent.TextChanged += new System.EventHandler(this.TextBoxCallsign_TextChanged);
             this.textBoxCorrespondent.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxCorrespondent_Validating);
             // 
             // textBoxRstSent
@@ -252,7 +253,7 @@
             this.textBoxCallsign.TabIndex = 3;
             this.textBoxCallsign.Text = "R7AB/P";
             this.textBoxCallsign.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxCallsign.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxCallsign_Validating);
+            this.textBoxCallsign.TextChanged += new System.EventHandler(this.TextBoxCallsign_TextChanged);
             this.textBoxCallsign.Validated += new System.EventHandler(this.TextBoxCallsign_Validated);
             // 
             // labelFreq
@@ -285,7 +286,6 @@
             this.comboBoxMode.Size = new System.Drawing.Size(67, 24);
             this.comboBoxMode.TabIndex = 4;
             this.comboBoxMode.Text = "RTTY";
-            this.comboBoxMode.SelectedIndexChanged += new System.EventHandler(this.ComboBoxMode_SelectedIndexChanged);
             // 
             // labelMode
             // 
@@ -319,7 +319,6 @@
             this.textBoxRda.TabIndex = 6;
             this.textBoxRda.Text = "RA-25 RA-37 RA-27";
             this.textBoxRda.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxRda.TextChanged += new System.EventHandler(this.TextBoxRda_TextChanged);
             // 
             // labelRafa
             // 
@@ -399,7 +398,6 @@
             this.checkBoxAutoRda.TabStop = false;
             this.checkBoxAutoRda.Text = "auto";
             this.checkBoxAutoRda.UseVisualStyleBackColor = true;
-            this.checkBoxAutoRda.CheckedChanged += new System.EventHandler(this.CheckBoxAutoRda_CheckedChanged);
             // 
             // checkBoxAutoRafa
             // 
@@ -438,7 +436,6 @@
             this.checkBoxAutoStatFilter.TabStop = false;
             this.checkBoxAutoStatFilter.Text = "auto";
             this.checkBoxAutoStatFilter.UseVisualStyleBackColor = true;
-            this.checkBoxAutoStatFilter.CheckedChanged += new System.EventHandler(this.CheckBoxAutoStatFilter_CheckedChanged);
             // 
             // comboBoxStatFilterMode
             // 
@@ -451,7 +448,6 @@
             this.comboBoxStatFilterMode.TabIndex = 34;
             this.comboBoxStatFilterMode.TabStop = false;
             this.comboBoxStatFilterMode.Text = "RTTY";
-            this.comboBoxStatFilterMode.SelectedIndexChanged += new System.EventHandler(this.ComboBoxStatFilterMode_SelectedIndexChanged);
             // 
             // comboBoxStatFilterRda
             // 
@@ -464,7 +460,6 @@
             this.comboBoxStatFilterRda.TabIndex = 35;
             this.comboBoxStatFilterRda.TabStop = false;
             this.comboBoxStatFilterRda.Text = "RA-31";
-            this.comboBoxStatFilterRda.SelectedIndexChanged += new System.EventHandler(this.ComboBoxStatFilterRda_SelectedIndexChanged);
             // 
             // labelStatFilter
             // 
@@ -488,7 +483,6 @@
             this.comboBoxStatFilterBand.TabIndex = 36;
             this.comboBoxStatFilterBand.TabStop = false;
             this.comboBoxStatFilterBand.Text = "14 MHz";
-            this.comboBoxStatFilterBand.SelectedIndexChanged += new System.EventHandler(this.ComboBoxStatFilterBand_SelectedIndexChanged);
             // 
             // labelStatCallsigns
             // 
@@ -873,7 +867,6 @@
             this.KeyPreview = true;
             this.Name = "FormMain";
             this.Text = "TNXQSO log - R7AB_08dec2019";
-            this.Load += new System.EventHandler(this.FormMain_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormMain_KeyPress);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
