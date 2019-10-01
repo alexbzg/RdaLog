@@ -1,9 +1,11 @@
-﻿using StorableForm;
+﻿using Newtonsoft.Json;
+using StorableForm;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -27,12 +29,13 @@ namespace RdaLog
             return char.IsWhiteSpace(c) || char.IsLetterOrDigit(c) || c == '/';
         }
 
-        //static Regex CallsignRegex = new Regex(@"^(:?[A - Z\d]+\/)?\d?[A - Z]+\d+[A-Z]+(:?\/[A-Z\d]+)*$", RegexOptions.Compiled);
         static Regex CallsignRegex = new Regex(@"^(:?[A-Z\d]+\/)?\d?[A-Z]+\d+[A-Z]+(:?\/[A-Z\d]+)*$", RegexOptions.Compiled);
+        static Regex RdaRegex = new Regex(@"[A-Z][A-Z][\- ]?\d\d", RegexOptions.Compiled);
 
         private RdaLog rdaLog;
         private Dictionary<string, StatusFieldControls> statusFieldsControls;
         private Dictionary<string, Panel> panels;
+        private string[] rdaValues;
         public FormMain(FormMainConfig _config, RdaLog _rdaLog) : base(_config)
         {
             rdaLog = _rdaLog;
@@ -40,6 +43,9 @@ namespace RdaLog
             InitializeComponent();
 
             RdaLogConfig rdaLogConfig = (RdaLogConfig)config.parent;
+
+            string rdaValuesStr = File.ReadAllText(Application.StartupPath + @"\rdaValues.json");
+            rdaValues = JsonConvert.DeserializeObject<string[]>(rdaValuesStr);
 
             statusFieldsControls = new Dictionary<string, StatusFieldControls>()
                 {
@@ -88,10 +94,11 @@ namespace RdaLog
                 {
                     rdaLog.setStatusFieldValue(field, textBoxValue.Text);
                 };
-                textBoxValue.Validating += delegate (object sender, CancelEventArgs e)
-                {
-                    textBoxValue.Text = textBoxValue.Text.ToUpper();
-                };
+                if (textBoxValue != textBoxRda)
+                    textBoxValue.Validating += delegate (object sender, CancelEventArgs e)
+                    {
+                        textBoxValue.Text = textBoxValue.Text.ToUpper();
+                    };
                 rdaLog.statusFieldChange += delegate (object sender, StatusFieldChangeEventArgs e)
                 {
                     if (e.field == field)
@@ -165,6 +172,56 @@ namespace RdaLog
                 Color.IndianRed;
             textBox.SelectionStart = newSelStart;
             textBox.TextChanged += TextBoxCallsign_TextChanged;
+        }
+
+        private void TextBoxRda_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void TextBoxRda_Validating(object sender, CancelEventArgs e)
+        {
+            string txt = textBoxRda.Text.ToUpper().Trim();
+            List<string> rdas = new List<string>();
+            MatchCollection rdaMatches = RdaRegex.Matches(txt);
+            foreach (Match rdaMatch in rdaMatches)
+            {
+                string rdaMatchStr = rdaMatch.Value;
+                if (rdaMatchStr.Length < 5)
+                    rdaMatchStr = rdaMatchStr.Insert(2, "-");
+                if (rdaValues.Contains(rdaMatchStr))
+                {
+                    rdas.Add(rdaMatchStr);
+                    txt = txt.Replace(rdaMatch.Value, "");
+                } else
+                {
+                    MessageBox.Show("Invalid rda: " + rdaMatch.Value, "Rda Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    e.Cancel = true;
+                    return;
+                }
+            }
+            textBoxRda.Text = String.Join(" ", rdas);
+            if (txt.Length > 0)
+            {
+                int trimBegin = 0;
+                for (int co = 0; co < txt.Length; co++)
+                    if (char.IsLetterOrDigit(txt[co]))
+                        break;
+                    else
+                        trimBegin++;
+                int trimEnd = txt.Length - 1;
+                for (int co = trimEnd; co > trimBegin; co--)
+                    if (char.IsLetterOrDigit(txt[co]))
+                        break;
+                    else
+                        trimEnd--;
+                if (trimEnd > trimBegin)
+                {
+                    txt = txt.Substring(trimBegin, trimEnd - trimBegin);
+                    MessageBox.Show("Invalid rda: " + txt, "Rda Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    e.Cancel = true;
+                }
+            }
+
         }
     }
 
