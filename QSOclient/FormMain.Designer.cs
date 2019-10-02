@@ -319,7 +319,6 @@
             this.textBoxRda.TabIndex = 6;
             this.textBoxRda.Text = "RA-25 RA-37 RA-27";
             this.textBoxRda.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxRda.TextChanged += new System.EventHandler(this.TextBoxRda_TextChanged);
             this.textBoxRda.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxRda_Validating);
             // 
             // labelRafa
@@ -343,6 +342,7 @@
             this.textBoxRafa.TabIndex = 7;
             this.textBoxRafa.Text = "H4RT";
             this.textBoxRafa.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxRafa.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxRafa_Validating);
             // 
             // labelUserField
             // 
@@ -386,6 +386,7 @@
             this.textBoxLocator.TabIndex = 8;
             this.textBoxLocator.Text = "KN96on";
             this.textBoxLocator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxLocator.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxLocator_Validating);
             // 
             // checkBoxAutoRda
             // 
