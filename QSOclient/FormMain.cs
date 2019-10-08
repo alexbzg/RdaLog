@@ -154,7 +154,10 @@ namespace RdaLog
                 rdaLog.statusFieldChange += delegate (object sender, StatusFieldChangeEventArgs e)
                 {
                     if (e.field == field)
-                        textBoxValue.Text = e.value;
+                        DoInvoke(() =>
+                        {
+                            textBoxValue.Text = e.value;
+                        });
                 };
             }
 

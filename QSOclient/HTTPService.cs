@@ -16,6 +16,7 @@ using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
 using System.IO;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace RdaLog
 {
@@ -78,7 +79,7 @@ namespace RdaLog
         public HttpService(HttpServiceConfig _config, RdaLog _rdaLog)
         {
             config = _config;
-            _rdaLog = rdaLog;
+            rdaLog = _rdaLog;
             //schedulePingTimer();
             List<QSO> unsentQSOs = ProtoBufSerialization.Read<List<QSO>>(unsentFilePath);
             if (unsentQSOs != null && unsentQSOs.Count > 0)
@@ -95,14 +96,14 @@ namespace RdaLog
             pingTimer = new System.Threading.Timer(obj => ping(), null, 5000, Timeout.Infinite);
         }
 
-        private async Task<HttpResponseMessage> post(string _URI, JSONSerializable data)
+        private async Task<HttpResponseMessage> post(string _URI, object data)
         {
             return await post(_URI, data, true);
         }
 
-        private async Task<HttpResponseMessage> post(string _URI, JSONSerializable data, bool warnings)
+        private async Task<HttpResponseMessage> post(string _URI, object data, bool warnings)
         {
-            string sContent = data.serialize();
+            string sContent = JsonConvert.SerializeObject(data);
             System.Diagnostics.Debug.WriteLine(sContent);
             string URI = srvURI + _URI;
 #if DEBUG && DISABLE_HTTP
@@ -201,16 +202,10 @@ namespace RdaLog
                 System.Diagnostics.Debug.WriteLine(response.ToString());
                 if (response.IsSuccessStatusCode)
                 {
-                    DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(LocationResponse));
-                    double[] location = ((LocationResponse)serializer.ReadObject(await response.Content.ReadAsStreamAsync())).location;
-                    Coords coords = rdaLog.coords;
-                    if (location != null && ( location[0] != coords.lat || location[1] != coords.lng))
-                    {
-                        coords.setLat(location[0]);
-                        coords.setLng(location[1]);
-                        System.Diagnostics.Debug.WriteLine("New location: " + coords.ToString());
-                        locationChanged?.Invoke(this, new LocationChangedEventArgs() { coords = coords });
-                    }
+                    LocationResponse location = JsonConvert.DeserializeObject<LocationResponse>(await response.Content.ReadAsStringAsync());
+                    rdaLog.setStatusFieldValue("rafa", location.rafa);
+                    rdaLog.setStatusFieldValue("rda", location.rda);
+                    rdaLog.setStatusFieldValue("locator", location.loc);
                 }
             }
             catch (Exception e)
@@ -224,12 +219,10 @@ namespace RdaLog
             if (config.token == null)
                 return;
             HttpResponseMessage response = await post("location", new StatusData(config));
-            if (gpsServerLoad)
-            {
-                if (stationCallsign != null)
-                    await getLocation();
+            if (stationCallsign == null)
                 await getUserData();
-            }
+            if (stationCallsign != null)
+                await getLocation();
             pingTimer.Change(response != null && response.IsSuccessStatusCode ? pingIntervalDef : pingIntervalNoConnection, Timeout.Infinite);
         }
 
@@ -242,8 +235,7 @@ namespace RdaLog
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(LoginResponse));
-                    LoginResponse userData = (LoginResponse)serializer.ReadObject(await response.Content.ReadAsStreamAsync());
+                    LoginResponse userData = JsonConvert.DeserializeObject<LoginResponse>(await response.Content.ReadAsStringAsync());
                     config.token = userData.token;
                     schedulePingTimer();
                     Task.Run(() => processQueue());
@@ -263,8 +255,7 @@ namespace RdaLog
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(UserDataResponse));
-                    UserDataResponse userData = (UserDataResponse)serializer.ReadObject(await response.Content.ReadAsStreamAsync());
+                    UserDataResponse userData = JsonConvert.DeserializeObject<UserDataResponse>(await response.Content.ReadAsStringAsync());
                     stationCallsign = userData.settings.station.callsign.ToLower().Replace( '/', '-' );
                 }
             }
@@ -278,39 +269,12 @@ namespace RdaLog
         }
     }
 
-    [DataContract]
-    public class JSONSerializable
-    {
-        public string serialize()
-        {
-            try
-            {
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(this.GetType());
-                string output = string.Empty;
 
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    ser.WriteObject(ms, this);
-                    output = Encoding.UTF8.GetString(ms.ToArray());
-                }
-                return output;
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e.ToString());
-            }
-            return string.Empty;
-        }
-
-    }
-
-    [DataContract]
-    public class JSONToken : JSONSerializable
+    public class JSONToken
     {
         [IgnoreDataMember]
         internal HttpServiceConfig config;
-        [DataMember]
-        internal string token { get { return config.token; } set { } }
+        public string token { get { return config.token; } set { } }
 
         public JSONToken(HttpServiceConfig _config)
         {
@@ -318,57 +282,43 @@ namespace RdaLog
         }
     }
 
-    [DataContract]
-    public class LoginRequest : JSONSerializable
+    public class LoginRequest
     {
-        [DataMember]
         public string login;
-        [DataMember]
         public string password;
     }
 
-    [DataContract]
     public class LocationResponse
     {
-        [DataMember]
-        public double[] location;
+        public string rafa;
+        public string rda;
+        public string loc;
     }
 
-    [DataContract]
     public class LoginResponse
     {
-        [DataMember]
         public string token;
-        [DataMember]
         public string callsign;
     }
 
-    [DataContract]
     public class StationSettings
     {
-        [DataMember]
         public string callsign;
     }
 
-    [DataContract]
     public class UserSettings
     {
-        [DataMember]
         public StationSettings station;
     }
 
 
-    [DataContract]
     public class UserDataResponse
     {
-        [DataMember]
         public UserSettings settings;
     }
 
-    [DataContract]
     class QSOtoken : JSONToken
     {
-        [DataMember]
         internal QSO qso;
 
         internal QSOtoken(HttpServiceConfig _config, QSO _qso) : base(_config)
@@ -377,16 +327,25 @@ namespace RdaLog
         }
     }
 
-    [DataContract]
     class StatusData : JSONToken
     {
-        [DataMember]
         public string loc { get { return ((RdaLogConfig)config.parent).getStatusFieldValue("locator"); } set { } }
-        [DataMember]
+        public bool ShouldSerializeloc()
+        {
+            return !((RdaLogConfig)config.parent).getStatusFieldAuto("locator");
+        }
         public string rafa { get { return ((RdaLogConfig)config.parent).getStatusFieldValue("rafa"); } set { } }
-        [DataMember]
+        public bool ShouldSerializerafa()
+        {
+            return !((RdaLogConfig)config.parent).getStatusFieldAuto("rafa");
+        }
+
         public string rda { get { return ((RdaLogConfig)config.parent).getStatusFieldValue("rda"); } set { } }
-        [DataMember]
+        public bool ShouldSerializerda()
+        {
+            return !((RdaLogConfig)config.parent).getStatusFieldAuto("rda");
+        }
+
         public string userField { get { return ((RdaLogConfig)config.parent).userField; } set { } }
 
         internal StatusData(HttpServiceConfig _config) : base(_config) { }
