@@ -10,6 +10,7 @@ using System.Xml;
 using ProtoBuf;
 using SerializationNS;
 using System.Globalization;
+using HamRadio;
 
 namespace RdaLog
 {
@@ -31,7 +32,7 @@ namespace RdaLog
         internal string _freqRx;
         internal string _oper;
         internal int _no;
-        internal string _userField;
+        internal string[] _userFields;
 
         [DataMember, ProtoMember(1)]
         public string ts { get { return _ts; } set { _ts = value; } }
@@ -60,9 +61,7 @@ namespace RdaLog
         [DataMember, ProtoMember(13)]
         public string loc { get { return _loc; } set { _loc = value; } }
         [DataMember, ProtoMember(14)]
-        public string userField { get { return _userField; } set { _userField = value; } }
-        public string freqRx { get { return _freqRx == null ? _freq : _freqRx; } set { _freqRx = value; } }
-        public string oper { get { return _oper == null ? _myCS : _oper; } set { _oper = value; } }
+        public string[] userFields { get { return _userFields; } set { _userFields = value; } }
 
 
         public string toJSON()
@@ -98,15 +97,12 @@ namespace RdaLog
                 adifField("BAND", band) +
                 adifField("STATION_CALLSIGN", myCS) +
                 adifField("FREQ", adifFormatFreq(freq)) +
-                adifField("FREQ_RX", adifFormatFreq(freqRx)) +
                 adifField("MODE", mode) +
                 adifField("RST_RCVD", rcv) +
                 adifField("RST_SENT", snt) +
-                adifField("OPERATOR", oper) +
                 adifField("GRIDSQUARE", loc) +
                 adifField("RDA", rda) +
                 adifField("RAFA", adifParams.ContainsKey("RAFA") ? adifParams["RAFA"] : rafa) +
-                adifField("WFF", wff) +
                 " <EOR>";
         }
     }
@@ -125,43 +121,23 @@ namespace RdaLog
 
 
 
-        public QSO create( string xml )
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml);
-            XmlElement root = doc.DocumentElement;
-
-            if (root.Name != "contactinfo")
-                return null;
-
-            string mode = root.SelectSingleNode("mode").InnerText;
-            if (mode.Equals("RTTY")) mode = "FT8";
-
-            string snt = root.SelectSingleNode("snt").InnerText;
-            string rcv = root.SelectSingleNode("rcv").InnerText;
-
-            if (mode.Equals("FT8"))
-            {
-                snt = "-10";
-                rcv = "-10";
-            }
-
+        public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, DateTime? timestamp)
+        {           
             return new QSO {
-                _ts = root.SelectSingleNode("timestamp").InnerText,
-                _myCS = root.SelectSingleNode("mycall").InnerText,
-                _band = root.SelectSingleNode("band").InnerText,
-                _freq = QSO.formatFreq(root.SelectSingleNode("txfreq").InnerText),
+                _ts = (timestamp == null ? DateTime.Now : (DateTime)timestamp).ToString("yyyy-MM-dd HH:mm:ss"),
+                _myCS = myCallsign,
+                _band = Band.fromFreq(freq),
+                _freq = freq.ToString(),
                 _mode = mode,
-                _cs = root.SelectSingleNode("call").InnerText,
-                _snt = snt,
-                _rcv = snt,
-                _freqRx = QSO.formatFreq(root.SelectSingleNode("rxfreq").InnerText),
-                _oper = root.SelectSingleNode("operator").InnerText,
+                _cs = callsign,
+                _snt = rstSnt,
+                _rcv = rstRcvd,
+                _freqRx = freq.ToString(),
                 _no = no++,
                 _rda = rdaLog.getStatusFieldValue("rda"),
                 _rafa = rdaLog.getStatusFieldValue("rafa"),
                 _loc = rdaLog.getStatusFieldValue("locator"),
-                _userField = rdaLog.userField
+                _userFields = new string[] { rdaLog.userField }
             };
         }
     }

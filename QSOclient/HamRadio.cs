@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace HamRadio
 
 {
-    class Band
+    public class Band
     {
         internal class BandEntry
         {
@@ -36,5 +36,22 @@ namespace HamRadio
                     return entry.name;
             return string.Empty;
         }
+    }
+
+    public class Qso
+    {
+        public string ts;
+        public string myCallsign;
+        public string band;
+        public string freq;
+        public string mode;
+        public string callsign;
+        public string rstSnt;
+        public string rstRcvd;
+        public string rda;
+        public int no;
+        public string rafa;
+        public string loc;
+        public string[] userFields;
     }
 }

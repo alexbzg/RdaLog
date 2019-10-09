@@ -1,4 +1,5 @@
 ﻿using GPSReaderNS;
+using HamRadio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,9 @@ namespace RdaLog
         public FormMain formMain { get { return _formMain; } }
         private RdaLogConfig config;
         private HttpService httpService;
+        private List<QSO> qsoList = new List<QSO>();
+        private int qsoNo = 0;
+        private QSOFactory qsoFactory;
         public EventHandler<StatusFieldChangeEventArgs> statusFieldChange;
         private Dictionary<string, string> _statusFields = new Dictionary<string, string>();
         public void setStatusFieldValue(string field, string value)
@@ -54,8 +58,16 @@ namespace RdaLog
                 _statusFields[field] = config.getStatusFieldValue(field);
             httpService = new HttpService(config.httpService, this);
             _formMain = new FormMain(config.formMain, this);
+            qsoFactory = new QSOFactory(this);
             if (config.autoLogin)
                 Task.Run(() => { httpService.login(); });
+        }
+
+        public async Task newQso(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt)
+        {
+            QSO qso = qsoFactory.create(callsign, myCallsign, freq, mode, rstRcvd, rstSnt, null);
+            qsoList.Add(qso);
+            await httpService.postQso(qso);
         }
 
         public void showSettings()

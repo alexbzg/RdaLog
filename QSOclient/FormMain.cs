@@ -197,10 +197,12 @@ namespace RdaLog
             textBoxCorrespondent.Text = textBoxCorrespondent.Text.ToUpper();
         }
 
-        private void FormMain_KeyPress(object sender, KeyPressEventArgs e)
+        private async void FormMain_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
-            {              
+            {
+                Validate();
+                await rdaLog.newQso(textBoxCorrespondent.Text, textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text);
                 e.Handled = true;
             }
         }
