@@ -45,7 +45,7 @@
             this.labelCallsign = new System.Windows.Forms.Label();
             this.textBoxCallsign = new System.Windows.Forms.TextBox();
             this.labelFreq = new System.Windows.Forms.Label();
-            this.textBoxFreq = new System.Windows.Forms.TextBox();
+            this.numericUpDownFreq = new System.Windows.Forms.NumericUpDown();
             this.comboBoxMode = new System.Windows.Forms.ComboBox();
             this.labelMode = new System.Windows.Forms.Label();
             this.labelRda = new System.Windows.Forms.Label();
@@ -95,6 +95,7 @@
             this.panelCallsignId = new System.Windows.Forms.Panel();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
@@ -263,29 +264,55 @@
             this.labelFreq.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.labelFreq.Location = new System.Drawing.Point(247, 84);
             this.labelFreq.Name = "labelFreq";
-            this.labelFreq.Size = new System.Drawing.Size(29, 13);
+            this.labelFreq.Size = new System.Drawing.Size(26, 13);
             this.labelFreq.TabIndex = 14;
-            this.labelFreq.Text = "MHz";
+            this.labelFreq.Text = "kHz";
             // 
-            // textBoxFreq
+            // numericUpDownFreq
             // 
-            this.textBoxFreq.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxFreq.Location = new System.Drawing.Point(248, 100);
-            this.textBoxFreq.Name = "textBoxFreq";
-            this.textBoxFreq.Size = new System.Drawing.Size(79, 23);
-            this.textBoxFreq.TabIndex = 5;
-            this.textBoxFreq.Text = "14 177.3";
-            this.textBoxFreq.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownFreq.DecimalPlaces = 1;
+            this.numericUpDownFreq.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
+            this.numericUpDownFreq.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericUpDownFreq.Location = new System.Drawing.Point(248, 100);
+            this.numericUpDownFreq.Maximum = new decimal(new int[] {
+            29000,
+            0,
+            0,
+            0});
+            this.numericUpDownFreq.Minimum = new decimal(new int[] {
+            1800,
+            0,
+            0,
+            0});
+            this.numericUpDownFreq.Name = "numericUpDownFreq";
+            this.numericUpDownFreq.Size = new System.Drawing.Size(79, 23);
+            this.numericUpDownFreq.TabIndex = 5;
+            this.numericUpDownFreq.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownFreq.ThousandsSeparator = true;
+            this.numericUpDownFreq.Value = new decimal(new int[] {
+            144437,
+            0,
+            0,
+            65536});
+            this.numericUpDownFreq.ValueChanged += new System.EventHandler(this.NumericUpDownFreq_ValueChanged);
             // 
             // comboBoxMode
             // 
             this.comboBoxMode.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxMode.FormattingEnabled = true;
+            this.comboBoxMode.Items.AddRange(new object[] {
+            "SSB",
+            "CW",
+            "FT8"});
             this.comboBoxMode.Location = new System.Drawing.Point(174, 99);
             this.comboBoxMode.Name = "comboBoxMode";
             this.comboBoxMode.Size = new System.Drawing.Size(67, 24);
             this.comboBoxMode.TabIndex = 4;
-            this.comboBoxMode.Text = "RTTY";
+            this.comboBoxMode.Text = "CW";
             // 
             // labelMode
             // 
@@ -855,7 +882,7 @@
             this.Controls.Add(this.labelMode);
             this.Controls.Add(this.comboBoxMode);
             this.Controls.Add(this.labelFreq);
-            this.Controls.Add(this.textBoxFreq);
+            this.Controls.Add(this.numericUpDownFreq);
             this.Controls.Add(this.labelCallsign);
             this.Controls.Add(this.textBoxCallsign);
             this.Controls.Add(this.labelRstRcvd);
@@ -875,6 +902,7 @@
             this.statusStrip.PerformLayout();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.panelStatusFields.ResumeLayout(false);
             this.panelStatusFields.PerformLayout();
@@ -906,7 +934,7 @@
         private System.Windows.Forms.Label labelCallsign;
         private System.Windows.Forms.TextBox textBoxCallsign;
         private System.Windows.Forms.Label labelFreq;
-        private System.Windows.Forms.TextBox textBoxFreq;
+        private System.Windows.Forms.NumericUpDown numericUpDownFreq;
         private System.Windows.Forms.ComboBox comboBoxMode;
         private System.Windows.Forms.Label labelMode;
         private System.Windows.Forms.Label labelRda;

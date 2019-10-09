@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HamRadio
+
+{
+    class Band
+    {
+        internal class BandEntry
+        {
+            internal string name;
+            internal int[] limits;
+        }
+        static BandEntry[] Bands = new BandEntry[]
+        {
+            new BandEntry() { name = "1.8", limits = new int[] {1800, 2000 } },
+            new BandEntry() { name = "3.5", limits = new int[] { 3500, 4000 } },
+            new BandEntry() { name = "7", limits = new int[] { 7000, 7300 } },
+            new BandEntry() { name = "10", limits = new int[] { 10000, 10150 } },
+            new BandEntry() { name = "14", limits = new int[] { 14000, 14350 } },
+            new BandEntry() { name = "18", limits = new int[] { 18068, 18168 } },
+            new BandEntry() { name = "21", limits = new int[] {21000, 21450 } },
+            new BandEntry() { name = "24", limits = new int[] { 24890, 24990 } },
+            new BandEntry() { name = "28", limits = new int[] { 28000, 29700 } },
+            new BandEntry() { name = "50", limits = new int[] { 50000, 54000 } },
+            new BandEntry() { name = "144", limits = new int[] {144000, 148000 } },
+            new BandEntry() { name = "UHF", limits = new int[] { 150000, 2000000 } }
+        };
+        public static string fromFreq(decimal freq)
+        {
+            foreach (BandEntry entry in Bands)
+                if (freq >= entry.limits[0] && freq <= entry.limits[1])
+                    return entry.name;
+            return string.Empty;
+        }
+    }
+}

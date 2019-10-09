@@ -331,6 +331,11 @@ namespace RdaLog
             }
 
         }
+
+        private void NumericUpDownFreq_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 
