@@ -202,8 +202,9 @@ namespace RdaLog
             if (e.KeyChar == (char)13)
             {
                 Validate();
-                await rdaLog.newQso(textBoxCorrespondent.Text, textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text);
                 e.Handled = true;
+                textBoxCorrespondent.Text = "";
+                await rdaLog.newQso(textBoxCorrespondent.Text, textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text);
             }
         }
 

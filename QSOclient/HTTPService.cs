@@ -319,7 +319,7 @@ namespace RdaLog
 
     class QSOtoken : JSONToken
     {
-        internal QSO qso;
+        public QSO qso;
 
         internal QSOtoken(HttpServiceConfig _config, QSO _qso) : base(_config)
         {

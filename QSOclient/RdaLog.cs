@@ -1,5 +1,6 @@
 ﻿using GPSReaderNS;
 using HamRadio;
+using SerializationNS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,8 @@ namespace RdaLog
         public FormMain formMain { get { return _formMain; } }
         private RdaLogConfig config;
         private HttpService httpService;
-        private List<QSO> qsoList = new List<QSO>();
+        private readonly string qsoFilePath = Application.StartupPath + "\\qso.dat";
+        private List<QSO> qsoList;
         private int qsoNo = 0;
         private QSOFactory qsoFactory;
         public EventHandler<StatusFieldChangeEventArgs> statusFieldChange;
@@ -59,6 +61,9 @@ namespace RdaLog
             httpService = new HttpService(config.httpService, this);
             _formMain = new FormMain(config.formMain, this);
             qsoFactory = new QSOFactory(this);
+            qsoList = ProtoBufSerialization.Read<List<QSO>>(qsoFilePath);
+            if (qsoList == null)
+                qsoList = new List<QSO>();
             if (config.autoLogin)
                 Task.Run(() => { httpService.login(); });
         }
@@ -67,6 +72,7 @@ namespace RdaLog
         {
             QSO qso = qsoFactory.create(callsign, myCallsign, freq, mode, rstRcvd, rstSnt, null);
             qsoList.Add(qso);
+            ProtoBufSerialization.Write<List<QSO>>(qsoFilePath, qsoList);
             await httpService.postQso(qso);
         }
 
