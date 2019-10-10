@@ -339,6 +339,11 @@ namespace RdaLog
         {
 
         }
+
+        private void ToolStripLabelLog_Click(object sender, EventArgs e)
+        {
+            rdaLog.showFormLog();
+        }
     }
 
 

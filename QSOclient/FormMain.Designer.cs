@@ -153,6 +153,7 @@
             this.toolStripLabelLog.Name = "toolStripLabelLog";
             this.toolStripLabelLog.Size = new System.Drawing.Size(27, 22);
             this.toolStripLabelLog.Text = "Log";
+            this.toolStripLabelLog.Click += new System.EventHandler(this.ToolStripLabelLog_Click);
             // 
             // toolStripLabel3
             // 

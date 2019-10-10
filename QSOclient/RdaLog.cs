@@ -21,6 +21,7 @@ namespace RdaLog
     {
         private FormMain _formMain;
         public FormMain formMain { get { return _formMain; } }
+        private FormLog formLog;
         private RdaLogConfig config;
         private HttpService httpService;
         private readonly string qsoFilePath = Application.StartupPath + "\\qso.dat";
@@ -66,6 +67,24 @@ namespace RdaLog
                 qsoList = new List<QSO>();
             if (config.autoLogin)
                 Task.Run(() => { httpService.login(); });
+        }
+
+        public void showFormLog()
+        {
+            if (formLog == null)
+            {
+                formLog = new FormLog(config.formLog, this);
+                formLog.FormClosed += FormLog_FormClosed;
+                formLog.Show();
+            }
+            else
+                formLog.Focus();
+        }
+
+        private void FormLog_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            formLog.Dispose();
+            formLog = null;
         }
 
         public async Task newQso(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt)

@@ -51,6 +51,7 @@ namespace RdaLog
 
         public FormMainConfig formMain;
         public HttpServiceConfig httpService;
+        public FormLogConfig formLog;
 
         private Dictionary<string, StatusField> _statusFields;
         public List<SerStatusField> serStatusFields;
@@ -137,6 +138,11 @@ namespace RdaLog
                 formMain = new FormMainConfig(this);
             else
                 formMain.parent = this;
+
+            if (formLog == null)
+                formLog = new FormLogConfig(this);
+            else
+                formLog.parent = this;
 
             if (httpService == null)
                 httpService = new HttpServiceConfig(this);
