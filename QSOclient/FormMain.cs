@@ -203,8 +203,9 @@ namespace RdaLog
             {
                 Validate();
                 e.Handled = true;
+                string correspondent = textBoxCorrespondent.Text;
                 textBoxCorrespondent.Text = "";
-                await rdaLog.newQso(textBoxCorrespondent.Text, textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text);
+                await rdaLog.newQso(correspondent, textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text);
             }
         }
 

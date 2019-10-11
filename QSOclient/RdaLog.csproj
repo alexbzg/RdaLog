@@ -91,6 +91,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="XmlConfig.cs" />
+    <EmbeddedResource Include="FormLog.resx">
+      <DependentUpon>FormLog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSettings.resx">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </EmbeddedResource>

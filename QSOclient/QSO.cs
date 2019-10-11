@@ -121,7 +121,7 @@ namespace RdaLog
 
 
 
-        public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, DateTime? timestamp)
+        public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, DateTime? timestamp = null)
         {           
             return new QSO {
                 _ts = (timestamp == null ? DateTime.Now : (DateTime)timestamp).ToString("yyyy-MM-dd HH:mm:ss"),

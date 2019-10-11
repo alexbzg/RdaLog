@@ -221,8 +221,13 @@ namespace RdaLog
             HttpResponseMessage response = await post("location", new StatusData(config));
             if (stationCallsign == null)
                 await getUserData();
-            if (stationCallsign != null)
-                await getLocation();
+            if (stationCallsign != null && response.IsSuccessStatusCode)
+            {
+                LocationResponse location = JsonConvert.DeserializeObject<LocationResponse>(await response.Content.ReadAsStringAsync());
+                rdaLog.setStatusFieldValue("rafa", location.rafa);
+                rdaLog.setStatusFieldValue("rda", location.rda);
+                rdaLog.setStatusFieldValue("locator", location.loc);
+            }
             pingTimer.Change(response != null && response.IsSuccessStatusCode ? pingIntervalDef : pingIntervalNoConnection, Timeout.Infinite);
         }
 

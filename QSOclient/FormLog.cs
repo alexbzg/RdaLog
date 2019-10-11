@@ -16,10 +16,14 @@ namespace RdaLog
     public partial class FormLog : StorableForm.StorableForm
     {
         private RdaLog rdaLog;
+        private BindingSource bsQSO;
         public FormLog(FormLogConfig _config, RdaLog _rdaLog) : base(_config)
         {
             rdaLog = _rdaLog;
             InitializeComponent();
+            bsQSO = new BindingSource(rdaLog.qsoList, null);
+            dataGridView.AutoGenerateColumns = false;
+            dataGridView.DataSource = bsQSO;
         }
     }
 

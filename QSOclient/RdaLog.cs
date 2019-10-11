@@ -3,6 +3,7 @@ using HamRadio;
 using SerializationNS;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace RdaLog
         private RdaLogConfig config;
         private HttpService httpService;
         private readonly string qsoFilePath = Application.StartupPath + "\\qso.dat";
-        private List<QSO> qsoList;
+        internal BindingList<QSO> qsoList;
         private int qsoNo = 0;
         private QSOFactory qsoFactory;
         public EventHandler<StatusFieldChangeEventArgs> statusFieldChange;
@@ -62,9 +63,9 @@ namespace RdaLog
             httpService = new HttpService(config.httpService, this);
             _formMain = new FormMain(config.formMain, this);
             qsoFactory = new QSOFactory(this);
-            qsoList = ProtoBufSerialization.Read<List<QSO>>(qsoFilePath);
+            qsoList = ProtoBufSerialization.Read<BindingList<QSO>>(qsoFilePath);
             if (qsoList == null)
-                qsoList = new List<QSO>();
+                qsoList = new BindingList<QSO>();
             if (config.autoLogin)
                 Task.Run(() => { httpService.login(); });
         }
@@ -89,9 +90,9 @@ namespace RdaLog
 
         public async Task newQso(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt)
         {
-            QSO qso = qsoFactory.create(callsign, myCallsign, freq, mode, rstRcvd, rstSnt, null);
+            QSO qso = qsoFactory.create(callsign, myCallsign, freq, mode, rstRcvd, rstSnt);
             qsoList.Add(qso);
-            ProtoBufSerialization.Write<List<QSO>>(qsoFilePath, qsoList);
+            ProtoBufSerialization.Write<BindingList<QSO>>(qsoFilePath, qsoList);
             await httpService.postQso(qso);
         }
 
