@@ -24,12 +24,27 @@ namespace RdaLog
             bsQSO = new BindingSource(rdaLog.qsoList, null);
             dataGridView.AutoGenerateColumns = false;
             dataGridView.DataSource = bsQSO;
+            for (int co = 0; co < _config.dataGridColumnsWidth.Count; co++)
+                if (co < dataGridView.Columns.Count)
+                    dataGridView.Columns[co].Width = _config.dataGridColumnsWidth[co];
+                else
+                    break;
+            if (_config.dataGridColumnsWidth.Count < dataGridView.Columns.Count)
+                for (int co = _config.dataGridColumnsWidth.Count; co < dataGridView.Columns.Count; co++)
+                    _config.dataGridColumnsWidth.Add(dataGridView.Columns[co].Width);
+        }
+
+        private void DataGridView_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            ((FormLogConfig)config).dataGridColumnsWidth[e.Column.Index] = e.Column.Width;
+            config.write();
         }
     }
 
     [DataContract]
     public class FormLogConfig : StorableFormConfig
     {
+        public List<int> dataGridColumnsWidth = new List<int>();
         public FormLogConfig(XmlConfig _parent) : base(_parent) { }
 
         public FormLogConfig() : base() { }

@@ -91,7 +91,7 @@ namespace RdaLog
         public async Task newQso(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt)
         {
             QSO qso = qsoFactory.create(callsign, myCallsign, freq, mode, rstRcvd, rstSnt);
-            qsoList.Add(qso);
+            qsoList.Insert(0, qso);
             ProtoBufSerialization.Write<BindingList<QSO>>(qsoFilePath, qsoList);
             await httpService.postQso(qso);
         }
