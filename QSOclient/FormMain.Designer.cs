@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabelFile = new System.Windows.Forms.ToolStripLabel();
+            this.dropDownButtonFile = new System.Windows.Forms.ToolStripDropDownButton();
+            this.menuItemAdifExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemAdifExportRda = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemAdifExportRafa = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
@@ -93,6 +97,7 @@
             this.panelCwMacro = new System.Windows.Forms.Panel();
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.panelCallsignId = new System.Windows.Forms.Panel();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).BeginInit();
@@ -126,7 +131,7 @@
             // toolStrip
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabelFile,
+            this.dropDownButtonFile,
             this.toolStripLabelSettings,
             this.toolStripLabelLog,
             this.toolStripLabel3});
@@ -135,11 +140,39 @@
             this.toolStrip.Size = new System.Drawing.Size(364, 25);
             this.toolStrip.TabIndex = 1;
             // 
-            // toolStripLabelFile
+            // dropDownButtonFile
             // 
-            this.toolStripLabelFile.Name = "toolStripLabelFile";
-            this.toolStripLabelFile.Size = new System.Drawing.Size(25, 22);
-            this.toolStripLabelFile.Text = "File";
+            this.dropDownButtonFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.dropDownButtonFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemAdifExport});
+            this.dropDownButtonFile.Image = ((System.Drawing.Image)(resources.GetObject("dropDownButtonFile.Image")));
+            this.dropDownButtonFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.dropDownButtonFile.Name = "dropDownButtonFile";
+            this.dropDownButtonFile.Size = new System.Drawing.Size(38, 22);
+            this.dropDownButtonFile.Text = "File";
+            // 
+            // menuItemAdifExport
+            // 
+            this.menuItemAdifExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemAdifExportRda,
+            this.menuItemAdifExportRafa});
+            this.menuItemAdifExport.Name = "menuItemAdifExport";
+            this.menuItemAdifExport.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExport.Text = "ADIF export";
+            // 
+            // menuItemAdifExportRda
+            // 
+            this.menuItemAdifExportRda.Name = "menuItemAdifExportRda";
+            this.menuItemAdifExportRda.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportRda.Text = "RDA";
+            this.menuItemAdifExportRda.Click += new System.EventHandler(this.MenuItemAdifExportRda_Click);
+            // 
+            // menuItemAdifExportRafa
+            // 
+            this.menuItemAdifExportRafa.Name = "menuItemAdifExportRafa";
+            this.menuItemAdifExportRafa.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportRafa.Text = "RAFA";
+            this.menuItemAdifExportRafa.Click += new System.EventHandler(this.MenuItemAdifExportRafa_Click);
             // 
             // toolStripLabelSettings
             // 
@@ -923,7 +956,6 @@
 
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.ToolStripLabel toolStripLabelFile;
         private System.Windows.Forms.ToolStripLabel toolStripLabelSettings;
         private System.Windows.Forms.ToolStripLabel toolStripLabelLog;
         private System.Windows.Forms.Label labelDateTime;
@@ -986,6 +1018,11 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel;
         private System.Windows.Forms.Panel panelCallsignId;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripDropDownButton dropDownButtonFile;
+        private System.Windows.Forms.ToolStripMenuItem menuItemAdifExport;
+        private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportRda;
+        private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportRafa;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
     }
 }
 

@@ -89,9 +89,9 @@ namespace RdaLog
             set { }
         }
 
-        public static string formatFreq(string freq)
+        public static string formatFreq(decimal freq)
         {
-            return (Convert.ToDouble(Convert.ToInt32(freq)) / 100).ToString("0.00", System.Globalization.NumberFormatInfo.InvariantInfo);
+            return freq.ToString("0.00", System.Globalization.NumberFormatInfo.InvariantInfo);
         }
 
         public static string adifField( string name, string value )
@@ -121,7 +121,7 @@ namespace RdaLog
                 adifField("RST_RCVD", rcv) +
                 adifField("RST_SENT", snt) +
                 adifField("GRIDSQUARE", loc) +
-                adifField("RDA", rda) +
+                adifField("MY_CNTY", rda) +
                 adifField("RAFA", adifParams.ContainsKey("RAFA") ? adifParams["RAFA"] : rafa) +
                 " <EOR>";
         }
@@ -144,10 +144,10 @@ namespace RdaLog
         public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, DateTime? timestamp = null)
         {           
             return new QSO {
-                _ts = (timestamp == null ? DateTime.Now : (DateTime)timestamp).ToString("yyyy-MM-dd HH:mm:ss"),
+                _ts = (timestamp == null ? DateTime.UtcNow : (DateTime)timestamp).ToString("yyyy-MM-dd HH:mm:ss"),
                 _myCS = myCallsign,
                 _band = Band.fromFreq(freq),
-                _freq = freq.ToString(),
+                _freq = QSO.formatFreq(freq),
                 _mode = mode,
                 _cs = callsign,
                 _snt = rstSnt,

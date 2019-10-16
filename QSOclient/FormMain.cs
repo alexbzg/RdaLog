@@ -345,6 +345,76 @@ namespace RdaLog
         {
             rdaLog.showFormLog();
         }
+
+        private void MenuItemAdifExportRda_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                Dictionary<string, List<QSO>> data = new Dictionary<string, List<QSO>>();
+                rdaLog.qsoList
+                    .Where(qso => qso.rda != null).ToList()
+                    .ForEach(qso =>
+                    {
+                        string[] rdas = qso.rda.Split(new string[] { " " }, StringSplitOptions.None);
+                        foreach (string rda in rdas)
+                        {
+                            if (!data.ContainsKey(rda))
+                                data[rda] = new List<QSO>();
+                            data[rda].Add(qso);
+                        }
+                    });
+                data.Keys.ToList().ForEach(val =>
+                {
+                    writeADIF(Path.Combine(folderBrowserDialog.SelectedPath, val + ".adi"), data[val], new Dictionary<string, string>() { { "RDA", val } });
+                });
+            }
+        }
+
+        private void MenuItemAdifExportRafa_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                Dictionary<string, List<QSO>> data = new Dictionary<string, List<QSO>>();
+                rdaLog.qsoList
+                    .Where(qso => qso.rafa != null).ToList()
+                    .ForEach(qso =>
+                    {
+                        string[] rafas = qso.rafa.Split(new string[] { " " }, StringSplitOptions.None);
+                        foreach (string rafa in rafas)
+                        {
+                            if (!data.ContainsKey(rafa))
+                                data[rafa] = new List<QSO>();
+                            data[rafa].Add(qso);
+                        }
+                    });
+                data.Keys.ToList().ForEach(val =>
+                {
+                    writeADIF(Path.Combine(folderBrowserDialog.SelectedPath, val + ".adi"), data[val], new Dictionary<string, string>() { { "RAFA", val } });
+                });
+            }
+        }
+
+        private void writeADIF(string fileName, List<QSO> data, Dictionary<string, string> adifParams)
+        {
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(fileName))
+                {
+                    DateTime ts = DateTime.UtcNow;
+                    sw.WriteLine("ADIF Export from RDA Log");
+                    sw.WriteLine("Logs generated @ {0:yyyy-MM-dd HH:mm:ssZ}", ts);
+                    sw.WriteLine("<EOH>");
+                    foreach (QSO qso in data)
+                        sw.WriteLine(qso.adif(adifParams));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.TraceInformation(ex.ToString());
+                MessageBox.Show("Can not export to text file: " + ex.ToString(), "DXpedition", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
     }
 
 
