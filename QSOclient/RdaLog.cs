@@ -61,11 +61,17 @@ namespace RdaLog
             foreach (string field in RdaLogConfig.StatusFields)
                 _statusFields[field] = config.getStatusFieldValue(field);
             httpService = new HttpService(config.httpService, this);
-            _formMain = new FormMain(config.formMain, this);
             qsoFactory = new QSOFactory(this);
             qsoList = ProtoBufSerialization.Read<BindingList<QSO>>(qsoFilePath);
             if (qsoList == null)
                 qsoList = new BindingList<QSO>();
+            else if (qsoList.Count > 0)
+            {
+                QSO last = qsoList.Last();
+                if (!string.IsNullOrEmpty(last.rda))
+                    qsoFactory.no = last.no + 1;
+            }
+            _formMain = new FormMain(config.formMain, this);
             if (config.autoLogin)
                 Task.Run(() => { httpService.login(); });
         }

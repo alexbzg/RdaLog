@@ -24,10 +24,6 @@ namespace RdaLog
             internal TextBox value;
         }
 
-        static bool CallsignChar(char c)
-        {
-            return char.IsWhiteSpace(c) || char.IsLetterOrDigit(c) || c == '/';
-        }
 
         class RegexReplace
         {
@@ -40,7 +36,6 @@ namespace RdaLog
             }
         }
 
-        static Regex CallsignRegex = new Regex(@"^(:?[A-Z\d]+\/)?\d?[A-Z]+\d+[A-Z]+(:?\/[A-Z\d]+)*$", RegexOptions.Compiled);
         static Regex RdaMatchRegex = new Regex(@"[A-Z][A-Z][\- ]?\d\d", RegexOptions.Compiled);
         static Regex LocatorRegex = new Regex(@"[A-Z][A-Z]\d\d[A-Z][A-Z]", RegexOptions.Compiled);
         static Regex RafaRegex = new Regex(@"[A-Z\d]{4}", RegexOptions.Compiled);
@@ -165,6 +160,7 @@ namespace RdaLog
             textBoxCallsign.Text = rdaLogConfig.callsign;
         }
 
+
         private void arrangePanels()
         {
             foreach (Panel panel in panels.Values)
@@ -249,28 +245,7 @@ namespace RdaLog
             return result;
         }
 
-        private void TextBoxCallsign_TextChanged(object sender, EventArgs e)
-        {
-            TextBox textBox = ((TextBox)sender);
-            textBox.TextChanged -= TextBoxCallsign_TextChanged;
-            int selStart = textBox.SelectionStart;
-            int newSelStart = 0;
-            string newText = "";
-            textBox.Text = textBox.Text.ToUpper();
-            for (int co = 0; co < textBox.Text.Length; co++)
-                if (CallsignChar(textBox.Text[co]))
-                {
-                    if (co < selStart)
-                        newSelStart++;
-                    newText += textBox.Text[co];
-                }
-            textBox.Text = newText;
-            textBox.BackColor = CallsignRegex.IsMatch(textBox.Text) || textBox.Text.Equals(string.Empty) ? 
-                (textBox == textBoxCorrespondent ? SystemColors.Info : SystemColors.Window) : 
-                Color.IndianRed;
-            textBox.SelectionStart = newSelStart;
-            textBox.TextChanged += TextBoxCallsign_TextChanged;
-        }
+       
 
 
         private void TextBoxRda_Validating(object sender, CancelEventArgs e)
@@ -333,11 +308,6 @@ namespace RdaLog
                 MessageBox.Show("Invalid locator: " + txt, "Rda Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Cancel = true;
             }
-
-        }
-
-        private void NumericUpDownFreq_ValueChanged(object sender, EventArgs e)
-        {
 
         }
 

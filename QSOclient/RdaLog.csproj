@@ -56,6 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncSocket.cs" />
+    <Compile Include="System\Windows\Forms\TextBoxCallsign.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FormLog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +92,9 @@
     <Compile Include="SerialPortTester.cs" />
     <Compile Include="StorableForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="System\Windows\Forms\ToolStripTextBoxCallsign.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="XmlConfig.cs" />
     <EmbeddedResource Include="FormLog.resx">

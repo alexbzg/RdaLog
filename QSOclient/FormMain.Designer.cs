@@ -1,4 +1,5 @@
-﻿namespace RdaLog
+﻿using HamRadio;
+namespace RdaLog
 {
     partial class FormMain
     {
@@ -41,13 +42,13 @@
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.labelDateTime = new System.Windows.Forms.Label();
             this.buttonPostFreq = new System.Windows.Forms.Button();
-            this.textBoxCorrespondent = new System.Windows.Forms.TextBox();
+            this.textBoxCorrespondent = new System.Windows.Forms.TextBoxCallsign();
             this.textBoxRstSent = new System.Windows.Forms.TextBox();
             this.labelRstSent = new System.Windows.Forms.Label();
             this.labelRstRcvd = new System.Windows.Forms.Label();
             this.textBoxRstRcvd = new System.Windows.Forms.TextBox();
             this.labelCallsign = new System.Windows.Forms.Label();
-            this.textBoxCallsign = new System.Windows.Forms.TextBox();
+            this.textBoxCallsign = new System.Windows.Forms.TextBoxCallsign();
             this.labelFreq = new System.Windows.Forms.Label();
             this.numericUpDownFreq = new System.Windows.Forms.NumericUpDown();
             this.comboBoxMode = new System.Windows.Forms.ComboBox();
@@ -223,7 +224,6 @@
             this.textBoxCorrespondent.Size = new System.Drawing.Size(229, 29);
             this.textBoxCorrespondent.TabIndex = 0;
             this.textBoxCorrespondent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxCorrespondent.TextChanged += new System.EventHandler(this.TextBoxCallsign_TextChanged);
             this.textBoxCorrespondent.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxCorrespondent_Validating);
             // 
             // textBoxRstSent
@@ -288,7 +288,6 @@
             this.textBoxCallsign.TabIndex = 3;
             this.textBoxCallsign.Text = "R7AB/P";
             this.textBoxCallsign.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxCallsign.TextChanged += new System.EventHandler(this.TextBoxCallsign_TextChanged);
             this.textBoxCallsign.Validated += new System.EventHandler(this.TextBoxCallsign_Validated);
             // 
             // labelFreq
@@ -332,7 +331,6 @@
             0,
             0,
             65536});
-            this.numericUpDownFreq.ValueChanged += new System.EventHandler(this.NumericUpDownFreq_ValueChanged);
             // 
             // comboBoxMode
             // 
@@ -960,13 +958,13 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabelLog;
         private System.Windows.Forms.Label labelDateTime;
         private System.Windows.Forms.Button buttonPostFreq;
-        private System.Windows.Forms.TextBox textBoxCorrespondent;
+        private System.Windows.Forms.TextBoxCallsign textBoxCorrespondent;
         private System.Windows.Forms.TextBox textBoxRstSent;
         private System.Windows.Forms.Label labelRstSent;
         private System.Windows.Forms.Label labelRstRcvd;
         private System.Windows.Forms.TextBox textBoxRstRcvd;
         private System.Windows.Forms.Label labelCallsign;
-        private System.Windows.Forms.TextBox textBoxCallsign;
+        private System.Windows.Forms.TextBoxCallsign textBoxCallsign;
         private System.Windows.Forms.Label labelFreq;
         private System.Windows.Forms.NumericUpDown numericUpDownFreq;
         private System.Windows.Forms.ComboBox comboBoxMode;
