@@ -73,7 +73,6 @@ namespace RdaLog
             this.labelStatQso = new System.Windows.Forms.Label();
             this.labelStatQsoCaption = new System.Windows.Forms.Label();
             this.labelStatCallsignsCaption = new System.Windows.Forms.Label();
-            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.labelHotKeyF1 = new System.Windows.Forms.Label();
             this.labelHotKeyF2 = new System.Windows.Forms.Label();
             this.labelHotKeyF3 = new System.Windows.Forms.Label();
@@ -98,6 +97,8 @@ namespace RdaLog
             this.panelCwMacro = new System.Windows.Forms.Panel();
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.panelCallsignId = new System.Windows.Forms.Panel();
+            this.listBoxCallsignsDb = new System.Windows.Forms.ListBox();
+            this.listBoxCallsignsQso = new System.Windows.Forms.ListBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -158,20 +159,20 @@ namespace RdaLog
             this.menuItemAdifExportRda,
             this.menuItemAdifExportRafa});
             this.menuItemAdifExport.Name = "menuItemAdifExport";
-            this.menuItemAdifExport.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExport.Size = new System.Drawing.Size(135, 22);
             this.menuItemAdifExport.Text = "ADIF export";
             // 
             // menuItemAdifExportRda
             // 
             this.menuItemAdifExportRda.Name = "menuItemAdifExportRda";
-            this.menuItemAdifExportRda.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportRda.Size = new System.Drawing.Size(102, 22);
             this.menuItemAdifExportRda.Text = "RDA";
             this.menuItemAdifExportRda.Click += new System.EventHandler(this.MenuItemAdifExportRda_Click);
             // 
             // menuItemAdifExportRafa
             // 
             this.menuItemAdifExportRafa.Name = "menuItemAdifExportRafa";
-            this.menuItemAdifExportRafa.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportRafa.Size = new System.Drawing.Size(102, 22);
             this.menuItemAdifExportRafa.Text = "RAFA";
             this.menuItemAdifExportRafa.Click += new System.EventHandler(this.MenuItemAdifExportRafa_Click);
             // 
@@ -224,6 +225,7 @@ namespace RdaLog
             this.textBoxCorrespondent.Size = new System.Drawing.Size(229, 29);
             this.textBoxCorrespondent.TabIndex = 0;
             this.textBoxCorrespondent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxCorrespondent.TextChanged += new System.EventHandler(this.TextBoxCorrespondent_TextChanged);
             this.textBoxCorrespondent.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxCorrespondent_Validating);
             // 
             // textBoxRstSent
@@ -281,6 +283,7 @@ namespace RdaLog
             // 
             // textBoxCallsign
             // 
+            this.textBoxCallsign.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxCallsign.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.textBoxCallsign.Location = new System.Drawing.Point(12, 100);
             this.textBoxCallsign.Name = "textBoxCallsign";
@@ -594,20 +597,6 @@ namespace RdaLog
             this.labelStatCallsignsCaption.TabIndex = 41;
             this.labelStatCallsignsCaption.Text = "Calls";
             // 
-            // tableLayoutPanel
-            // 
-            this.tableLayoutPanel.BackColor = System.Drawing.Color.White;
-            this.tableLayoutPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel.ColumnCount = 2;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.Location = new System.Drawing.Point(9, 11);
-            this.tableLayoutPanel.Name = "tableLayoutPanel";
-            this.tableLayoutPanel.RowCount = 1;
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(344, 100);
-            this.tableLayoutPanel.TabIndex = 42;
-            // 
             // labelHotKeyF1
             // 
             this.labelHotKeyF1.AutoSize = true;
@@ -896,12 +885,31 @@ namespace RdaLog
             // 
             // panelCallsignId
             // 
-            this.panelCallsignId.Controls.Add(this.tableLayoutPanel);
+            this.panelCallsignId.Controls.Add(this.listBoxCallsignsDb);
+            this.panelCallsignId.Controls.Add(this.listBoxCallsignsQso);
             this.panelCallsignId.Location = new System.Drawing.Point(0, 152);
             this.panelCallsignId.Margin = new System.Windows.Forms.Padding(0);
             this.panelCallsignId.Name = "panelCallsignId";
             this.panelCallsignId.Size = new System.Drawing.Size(363, 121);
             this.panelCallsignId.TabIndex = 63;
+            // 
+            // listBoxCallsignsDb
+            // 
+            this.listBoxCallsignsDb.FormattingEnabled = true;
+            this.listBoxCallsignsDb.Location = new System.Drawing.Point(184, 7);
+            this.listBoxCallsignsDb.Name = "listBoxCallsignsDb";
+            this.listBoxCallsignsDb.Size = new System.Drawing.Size(170, 108);
+            this.listBoxCallsignsDb.TabIndex = 1;
+            this.listBoxCallsignsDb.SelectedIndexChanged += new System.EventHandler(this.ListBoxCallsigns_SelectedIndexChanged);
+            // 
+            // listBoxCallsignsQso
+            // 
+            this.listBoxCallsignsQso.FormattingEnabled = true;
+            this.listBoxCallsignsQso.Location = new System.Drawing.Point(9, 7);
+            this.listBoxCallsignsQso.Name = "listBoxCallsignsQso";
+            this.listBoxCallsignsQso.Size = new System.Drawing.Size(174, 108);
+            this.listBoxCallsignsQso.TabIndex = 0;
+            this.listBoxCallsignsQso.SelectedIndexChanged += new System.EventHandler(this.ListBoxCallsigns_SelectedIndexChanged);
             // 
             // FormMain
             // 
@@ -929,7 +937,8 @@ namespace RdaLog
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "TNXQSO log - R7AB_08dec2019";
+            this.Text = "RDA Log";
+            this.TopMost = true;
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormMain_KeyPress);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
@@ -989,7 +998,6 @@ namespace RdaLog
         private System.Windows.Forms.Label labelStatQso;
         private System.Windows.Forms.Label labelStatQsoCaption;
         private System.Windows.Forms.Label labelStatCallsignsCaption;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.Label labelHotKeyF1;
         private System.Windows.Forms.Label labelHotKeyF2;
         private System.Windows.Forms.Label labelHotKeyF3;
@@ -1021,6 +1029,8 @@ namespace RdaLog
         private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportRda;
         private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportRafa;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.ListBox listBoxCallsignsDb;
+        private System.Windows.Forms.ListBox listBoxCallsignsQso;
     }
 }
 

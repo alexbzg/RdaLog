@@ -121,7 +121,7 @@ namespace RdaLog
                 adifField("RST_RCVD", rcv) +
                 adifField("RST_SENT", snt) +
                 adifField("GRIDSQUARE", loc) +
-                adifField("MY_CNTY", rda) +
+                adifField("MY_CNTY", adifParams.ContainsKey("RDA") ? adifParams["RDA"] : rda) +
                 adifField("RAFA", adifParams.ContainsKey("RAFA") ? adifParams["RAFA"] : rafa) +
                 " <EOR>";
         }

@@ -48,8 +48,11 @@ namespace RdaLog
         private RdaLog rdaLog;
         private Dictionary<string, StatusFieldControls> statusFieldsControls;
         private Dictionary<string, Panel> panels;
-        private string[] rdaValues;
-        private string[] rafaValues;
+        private HashSet<string> rdaValues;
+        private HashSet<string> rafaValues;
+        private HashSet<string> callsignsDb;
+        private HashSet<string> callsignsQso;
+
         public FormMain(FormMainConfig _config, RdaLog _rdaLog) : base(_config)
         {
             rdaLog = _rdaLog;
@@ -61,11 +64,23 @@ namespace RdaLog
             try
             {
                 string rdaValuesStr = File.ReadAllText(Application.StartupPath + @"\rdaValues.json");
-                rdaValues = JsonConvert.DeserializeObject<string[]>(rdaValuesStr);
+                rdaValues = new HashSet<string>(JsonConvert.DeserializeObject<string[]>(rdaValuesStr));
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 System.Diagnostics.Trace.TraceInformation(e.ToString());
                 MessageBox.Show("RDA data could not be loaded: " + e.ToString(), "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            try
+            {
+                string callsignsStr = File.ReadAllText(Application.StartupPath + @"\callsigns.json");
+                callsignsDb = new HashSet<string>(JsonConvert.DeserializeObject<string[]>(callsignsStr));
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Trace.TraceInformation(e.ToString());
+                MessageBox.Show("Callsigns list could not be loaded: " + e.ToString(), "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
@@ -90,7 +105,7 @@ namespace RdaLog
                         }
                     } while (sr.Peek() >= 0);
                     if (values.Count > 0)
-                        rafaValues = values.ToArray();
+                        rafaValues = new HashSet<string>(values);
                 }
             }
             catch (Exception e)
@@ -158,8 +173,16 @@ namespace RdaLog
 
             textBoxUserField.Text = rdaLogConfig.userField;
             textBoxCallsign.Text = rdaLogConfig.callsign;
+
+            callsignsQso = new HashSet<string>(rdaLog.qsoList.Select(item => item.cs));
+            rdaLog.qsoList.ListChanged += QsoList_ListChanged;
         }
 
+        private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (e.ListChangedType == ListChangedType.ItemAdded)
+                callsignsQso.Add(rdaLog.qsoList[e.NewIndex].cs);
+        }
 
         private void arrangePanels()
         {
@@ -205,16 +228,17 @@ namespace RdaLog
             }
         }
 
-        private List<string> parseValues(Regex reMatch, ref string values, string[] valuesList, RegexReplace reReplace)
+        private List<string> parseValues(Regex reMatch, ref string values, HashSet<string> valuesSet, RegexReplace reReplace)
         {
             values = values.ToUpper().Trim();
             List<string> result = new List<string>();
             Match match = reMatch.Match(values);
-            while (match.Success) { 
+            while (match.Success)
+            {
                 string matchStr = match.Value;
                 if (reReplace != null)
                     matchStr = reReplace.replace(matchStr);
-                if (valuesList == null || valuesList.Contains(matchStr))
+                if (valuesSet == null || valuesSet.Contains(matchStr))
                 {
                     result.Add(matchStr);
                     values = values.Replace(match.Value, "");
@@ -245,7 +269,7 @@ namespace RdaLog
             return result;
         }
 
-       
+
 
 
         private void TextBoxRda_Validating(object sender, CancelEventArgs e)
@@ -297,7 +321,7 @@ namespace RdaLog
                 {
                     textBoxLocator.Text = locators[0];
                     ok = true;
-                }                
+                }
             }
             catch (ArgumentException ex)
             {
@@ -385,8 +409,35 @@ namespace RdaLog
             }
 
         }
-    }
 
+        private void updateListBoxCallsigns(ListBox box, HashSet<string> callsignsSet)
+        {
+            box.ClearSelected();
+            box.Items.Clear();
+            if (callsignsSet != null && textBoxCorrespondent.Text.Length > 2)
+                box.Items.AddRange(callsignsSet.Where(item => item.Contains(textBoxCorrespondent.Text)).ToArray());
+        }
+
+        private void TextBoxCorrespondent_TextChanged(object sender, EventArgs e)
+        {
+            if (((RdaLogConfig)config.parent).getMainFormPanelVisible("callsignId"))
+            {
+                updateListBoxCallsigns(listBoxCallsignsDb, callsignsDb);
+                updateListBoxCallsigns(listBoxCallsignsQso, callsignsQso);
+            }
+        }
+
+        private void ListBoxCallsigns_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListBox box = (ListBox)sender;
+            if (box.SelectedItem != null)
+            {
+                textBoxCorrespondent.Text = box.SelectedItem.ToString();
+                box.ClearSelected();
+            }
+
+        }
+    }
 
     [DataContract]
     public class FormMainConfig: StorableFormConfig
