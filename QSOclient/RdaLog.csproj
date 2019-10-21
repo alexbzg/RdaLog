@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncSocket.cs" />
+    <Compile Include="StringIndex.cs" />
     <Compile Include="System\Windows\Forms\TextBoxCallsign.cs">
       <SubType>Component</SubType>
     </Compile>

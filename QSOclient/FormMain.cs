@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using XmlConfigNS;
+using StringIndexNS;
 
 namespace RdaLog
 {
@@ -50,8 +51,8 @@ namespace RdaLog
         private Dictionary<string, Panel> panels;
         private HashSet<string> rdaValues;
         private HashSet<string> rafaValues;
-        private HashSet<string> callsignsDb;
-        private HashSet<string> callsignsQso;
+        private StringIndex callsignsDb = new StringIndex();
+        private StringIndex callsignsQso = new StringIndex();
 
         public FormMain(FormMainConfig _config, RdaLog _rdaLog) : base(_config)
         {
@@ -75,7 +76,8 @@ namespace RdaLog
             try
             {
                 string callsignsStr = File.ReadAllText(Application.StartupPath + @"\callsigns.json");
-                callsignsDb = new HashSet<string>(JsonConvert.DeserializeObject<string[]>(callsignsStr));
+                foreach (string callsign in JsonConvert.DeserializeObject<string[]>(callsignsStr))
+                    callsignsDb.add(callsign);
             }
             catch (Exception e)
             {
@@ -174,14 +176,15 @@ namespace RdaLog
             textBoxUserField.Text = rdaLogConfig.userField;
             textBoxCallsign.Text = rdaLogConfig.callsign;
 
-            callsignsQso = new HashSet<string>(rdaLog.qsoList.Select(item => item.cs));
+            foreach (QSO qso in rdaLog.qsoList)
+                callsignsQso.add(qso.cs);
             rdaLog.qsoList.ListChanged += QsoList_ListChanged;
         }
 
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
         {
             if (e.ListChangedType == ListChangedType.ItemAdded)
-                callsignsQso.Add(rdaLog.qsoList[e.NewIndex].cs);
+                callsignsQso.add(rdaLog.qsoList[e.NewIndex].cs);
         }
 
         private void arrangePanels()
@@ -410,12 +413,28 @@ namespace RdaLog
 
         }
 
-        private void updateListBoxCallsigns(ListBox box, HashSet<string> callsignsSet)
+        private void updateListBoxCallsigns(ListBox box, StringIndex callsignsIndex)
         {
             box.ClearSelected();
             box.Items.Clear();
-            if (callsignsSet != null && textBoxCorrespondent.Text.Length > 2)
-                box.Items.AddRange(callsignsSet.Where(item => item.Contains(textBoxCorrespondent.Text)).ToArray());
+            if (callsignsIndex != null && textBoxCorrespondent.Text.Length > 2)
+            {
+                string value = textBoxCorrespondent.Text;
+                List<string> found = callsignsIndex.search(value);
+                if (found != null)
+                {
+                    found.Sort((a, b) =>
+                    {
+                        if (a.StartsWith(value) && !b.StartsWith(value))
+                            return -1;
+                        else if (!a.StartsWith(value) && b.StartsWith(value))
+                            return 1;
+                        else
+                            return a.CompareTo(b);
+                    });
+                    box.Items.AddRange(found.ToArray());
+                }
+            }
         }
 
         private void TextBoxCorrespondent_TextChanged(object sender, EventArgs e)
