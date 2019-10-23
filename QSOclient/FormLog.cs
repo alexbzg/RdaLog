@@ -13,7 +13,7 @@ using XmlConfigNS;
 
 namespace RdaLog
 { 
-    public partial class FormLog : StorableForm.StorableForm
+    public partial class FormLog : StorableForm.StorableForm<FormLogConfig>
     {
         private RdaLog rdaLog;
         private BindingSource bsQSO;

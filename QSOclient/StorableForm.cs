@@ -10,9 +10,9 @@ using System.Runtime.Serialization;
 
 namespace StorableForm
 {
-    public class StorableForm : InvokeForm
+    public class StorableForm<ConfigType> : InvokeForm where ConfigType : StorableFormConfig, new()
     {
-        public StorableFormConfig config;
+        public ConfigType config;
         public virtual void writeConfig() {
             config.write();
         }
@@ -32,7 +32,7 @@ namespace StorableForm
                           new Rectangle(config.formLocation, config.formSize);
         }
 
-        public StorableForm(StorableFormConfig _config)
+        public StorableForm(ConfigType _config)
         {
             config = _config;
             Load += FormWStorableState_Load;
@@ -40,8 +40,8 @@ namespace StorableForm
             Move += FormWStorableState_MoveResize;
         }
 
-        public StorableForm(string fname) : this(XmlConfig.create<StorableFormConfig>(fname)) { }
-        public StorableForm() : this(XmlConfig.create<StorableFormConfig>()) { }
+        public StorableForm(string fname) : this(XmlConfig.create<ConfigType>(fname)) { }
+        public StorableForm() : this(XmlConfig.create<ConfigType>()) { }
 
         private void FormWStorableState_MoveResize(object sender, EventArgs e)
         {

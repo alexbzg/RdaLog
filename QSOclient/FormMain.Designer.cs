@@ -100,6 +100,7 @@ namespace RdaLog
             this.listBoxCallsignsDb = new System.Windows.Forms.ListBox();
             this.listBoxCallsignsQso = new System.Windows.Forms.ListBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.checkBoxTop = new System.Windows.Forms.CheckBox();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).BeginInit();
@@ -209,12 +210,13 @@ namespace RdaLog
             // 
             // buttonPostFreq
             // 
+            this.buttonPostFreq.BackColor = System.Drawing.SystemColors.Control;
             this.buttonPostFreq.Location = new System.Drawing.Point(333, 100);
             this.buttonPostFreq.Name = "buttonPostFreq";
             this.buttonPostFreq.Size = new System.Drawing.Size(23, 23);
             this.buttonPostFreq.TabIndex = 5;
             this.buttonPostFreq.TabStop = false;
-            this.buttonPostFreq.UseVisualStyleBackColor = true;
+            this.buttonPostFreq.UseVisualStyleBackColor = false;
             // 
             // textBoxCorrespondent
             // 
@@ -334,20 +336,18 @@ namespace RdaLog
             0,
             0,
             65536});
+            this.numericUpDownFreq.ValueChanged += new System.EventHandler(this.NumericUpDownFreq_ValueChanged);
             // 
             // comboBoxMode
             // 
             this.comboBoxMode.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxMode.FormattingEnabled = true;
-            this.comboBoxMode.Items.AddRange(new object[] {
-            "SSB",
-            "CW",
-            "FT8"});
             this.comboBoxMode.Location = new System.Drawing.Point(174, 99);
             this.comboBoxMode.Name = "comboBoxMode";
             this.comboBoxMode.Size = new System.Drawing.Size(67, 24);
             this.comboBoxMode.TabIndex = 4;
             this.comboBoxMode.Text = "CW";
+            this.comboBoxMode.SelectedIndexChanged += new System.EventHandler(this.ComboBoxMode_SelectedIndexChanged);
             // 
             // labelMode
             // 
@@ -507,24 +507,30 @@ namespace RdaLog
             this.comboBoxStatFilterMode.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxStatFilterMode.ForeColor = System.Drawing.Color.DarkGreen;
             this.comboBoxStatFilterMode.FormattingEnabled = true;
+            this.comboBoxStatFilterMode.Items.AddRange(new object[] {
+            "All"});
             this.comboBoxStatFilterMode.Location = new System.Drawing.Point(83, 17);
             this.comboBoxStatFilterMode.Name = "comboBoxStatFilterMode";
             this.comboBoxStatFilterMode.Size = new System.Drawing.Size(67, 24);
             this.comboBoxStatFilterMode.TabIndex = 34;
             this.comboBoxStatFilterMode.TabStop = false;
-            this.comboBoxStatFilterMode.Text = "RTTY";
+            this.comboBoxStatFilterMode.Text = "All";
+            this.comboBoxStatFilterMode.SelectedIndexChanged += new System.EventHandler(this.StatFilter_SelectedIndexChanged);
             // 
             // comboBoxStatFilterRda
             // 
             this.comboBoxStatFilterRda.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxStatFilterRda.ForeColor = System.Drawing.Color.DarkGreen;
             this.comboBoxStatFilterRda.FormattingEnabled = true;
+            this.comboBoxStatFilterRda.Items.AddRange(new object[] {
+            "All"});
             this.comboBoxStatFilterRda.Location = new System.Drawing.Point(12, 17);
             this.comboBoxStatFilterRda.Name = "comboBoxStatFilterRda";
             this.comboBoxStatFilterRda.Size = new System.Drawing.Size(67, 24);
             this.comboBoxStatFilterRda.TabIndex = 35;
             this.comboBoxStatFilterRda.TabStop = false;
-            this.comboBoxStatFilterRda.Text = "RA-31";
+            this.comboBoxStatFilterRda.Text = "All";
+            this.comboBoxStatFilterRda.SelectedIndexChanged += new System.EventHandler(this.StatFilter_SelectedIndexChanged);
             // 
             // labelStatFilter
             // 
@@ -542,12 +548,15 @@ namespace RdaLog
             this.comboBoxStatFilterBand.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxStatFilterBand.ForeColor = System.Drawing.Color.DarkGreen;
             this.comboBoxStatFilterBand.FormattingEnabled = true;
+            this.comboBoxStatFilterBand.Items.AddRange(new object[] {
+            "All"});
             this.comboBoxStatFilterBand.Location = new System.Drawing.Point(156, 17);
             this.comboBoxStatFilterBand.Name = "comboBoxStatFilterBand";
             this.comboBoxStatFilterBand.Size = new System.Drawing.Size(70, 24);
             this.comboBoxStatFilterBand.TabIndex = 36;
             this.comboBoxStatFilterBand.TabStop = false;
-            this.comboBoxStatFilterBand.Text = "14 MHz";
+            this.comboBoxStatFilterBand.Text = "All";
+            this.comboBoxStatFilterBand.SelectedIndexChanged += new System.EventHandler(this.StatFilter_SelectedIndexChanged);
             // 
             // labelStatCallsigns
             // 
@@ -559,7 +568,7 @@ namespace RdaLog
             this.labelStatCallsigns.Name = "labelStatCallsigns";
             this.labelStatCallsigns.Size = new System.Drawing.Size(60, 23);
             this.labelStatCallsigns.TabIndex = 61;
-            this.labelStatCallsigns.Text = "75";
+            this.labelStatCallsigns.Text = "0";
             this.labelStatCallsigns.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelStatQso
@@ -572,7 +581,7 @@ namespace RdaLog
             this.labelStatQso.Name = "labelStatQso";
             this.labelStatQso.Size = new System.Drawing.Size(60, 23);
             this.labelStatQso.TabIndex = 61;
-            this.labelStatQso.Text = "125";
+            this.labelStatQso.Text = "0";
             this.labelStatQso.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelStatQsoCaption
@@ -911,6 +920,17 @@ namespace RdaLog
             this.listBoxCallsignsQso.TabIndex = 0;
             this.listBoxCallsignsQso.SelectedIndexChanged += new System.EventHandler(this.ListBoxCallsigns_SelectedIndexChanged);
             // 
+            // checkBoxTop
+            // 
+            this.checkBoxTop.AutoSize = true;
+            this.checkBoxTop.Location = new System.Drawing.Point(312, 8);
+            this.checkBoxTop.Name = "checkBoxTop";
+            this.checkBoxTop.Size = new System.Drawing.Size(45, 17);
+            this.checkBoxTop.TabIndex = 64;
+            this.checkBoxTop.Text = "Top";
+            this.checkBoxTop.UseVisualStyleBackColor = true;
+            this.checkBoxTop.CheckedChanged += new System.EventHandler(this.CheckBoxTop_CheckedChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -918,6 +938,7 @@ namespace RdaLog
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(364, 461);
+            this.Controls.Add(this.checkBoxTop);
             this.Controls.Add(this.flowLayoutPanel);
             this.Controls.Add(this.labelMode);
             this.Controls.Add(this.comboBoxMode);
@@ -939,6 +960,7 @@ namespace RdaLog
             this.Name = "FormMain";
             this.Text = "RDA Log";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.FormMain_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormMain_KeyPress);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
@@ -1031,6 +1053,7 @@ namespace RdaLog
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.ListBox listBoxCallsignsDb;
         private System.Windows.Forms.ListBox listBoxCallsignsQso;
+        private System.Windows.Forms.CheckBox checkBoxTop;
     }
 }
 

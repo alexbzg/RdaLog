@@ -14,10 +14,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using XmlConfigNS;
 using StringIndexNS;
+using HamRadio;
 
 namespace RdaLog
 {
-    public partial class FormMain : StorableForm.StorableForm
+    public partial class FormMain : StorableForm.StorableForm<FormMainConfig>
     {
         class StatusFieldControls
         {
@@ -145,6 +146,19 @@ namespace RdaLog
                 arrangePanels();
             };
 
+            comboBoxStatFilterBand.Items.AddRange(Band.Names);
+            comboBoxStatFilterMode.Items.AddRange(Mode.Names);
+            comboBoxMode.Items.AddRange(Mode.Names);
+
+            HashSet<string> rdas = new HashSet<string>();
+            foreach (QSO qso in rdaLog.qsoList)
+                foreach (string rda in qso.rda.Split(' '))
+                    rdas.Add(rda);
+            comboBoxStatFilterRda.Items.AddRange(rdas.ToArray());
+            setStatFilter();
+
+            checkBoxTop.Checked = config.topmost;
+
             foreach (KeyValuePair<string, StatusFieldControls> item in statusFieldsControls)
             {
                 string field = item.Key;
@@ -174,7 +188,7 @@ namespace RdaLog
             }
 
             textBoxUserField.Text = rdaLogConfig.userField;
-            textBoxCallsign.Text = rdaLogConfig.callsign;
+            textBoxCallsign.Text = config.callsign;
 
             foreach (QSO qso in rdaLog.qsoList)
                 callsignsQso.add(qso.cs);
@@ -211,7 +225,8 @@ namespace RdaLog
 
         private void TextBoxCallsign_Validated(object sender, EventArgs e)
         {
-            ((RdaLogConfig)config.parent).callsign = textBoxCallsign.Text;
+            config.callsign = textBoxCallsign.Text;
+            config.write();
         }
 
         private void TextBoxCorrespondent_Validating(object sender, CancelEventArgs e)
@@ -271,9 +286,6 @@ namespace RdaLog
             }
             return result;
         }
-
-
-
 
         private void TextBoxRda_Validating(object sender, CancelEventArgs e)
         {
@@ -345,8 +357,12 @@ namespace RdaLog
 
         private void MenuItemAdifExportRda_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(config.exportPathRda))
+                folderBrowserDialog.SelectedPath = config.exportPathRda;
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
+                config.exportPathRda = folderBrowserDialog.SelectedPath;
+                config.write();
                 Dictionary<string, List<QSO>> data = new Dictionary<string, List<QSO>>();
                 rdaLog.qsoList
                     .Where(qso => qso.rda != null).ToList()
@@ -369,8 +385,12 @@ namespace RdaLog
 
         private void MenuItemAdifExportRafa_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(config.exportPathRafa))
+                folderBrowserDialog.SelectedPath = config.exportPathRafa;
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
+                config.exportPathRafa = folderBrowserDialog.SelectedPath;
+                config.write();
                 Dictionary<string, List<QSO>> data = new Dictionary<string, List<QSO>>();
                 rdaLog.qsoList
                     .Where(qso => qso.rafa != null).ToList()
@@ -456,11 +476,99 @@ namespace RdaLog
             }
 
         }
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NumericUpDownFreq_ValueChanged(object sender, EventArgs e)
+        {
+            config.freq = numericUpDownFreq.Value;
+            config.write();
+            setStatFilter();
+        }
+
+        private void ComboBoxMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            config.mode = comboBoxMode.SelectedItem.ToString();
+            config.write();
+            setStatFilter();
+        }
+
+        private void setStatFilter()
+        {
+            if (checkBoxAutoStatFilter.Checked)
+            {
+                object selection = comboBoxStatFilterRda.SelectedItem;
+                if (!string.IsNullOrEmpty(textBoxRda.Text) && (selection == null || string.IsNullOrEmpty(selection.ToString()) ||
+                    !textBoxRda.Text.Contains(selection.ToString())))
+                {
+                    string[] rdas = textBoxRda.Text.Split(' ');
+                    bool flag = false;
+                    foreach (string rda in rdas)
+                        if (comboBoxStatFilterRda.Items.Contains(rda))
+                        {
+                            comboBoxStatFilterRda.SelectedItem = rda;
+                            flag = true;
+                            break;
+                        }
+                    if (!flag)
+                        comboBoxStatFilterRda.SelectedIndex = 0;
+                }
+                comboBoxStatFilterMode.SelectedItem = comboBoxMode.Text;
+                comboBoxStatFilterBand.SelectedItem = Band.fromFreq(numericUpDownFreq.Value);
+            }
+        }
+
+        private void ComboBoxStatFilterBand_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void StatFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            HashSet<string> callsigns = new HashSet<string>();
+            int qsoCount = 0;
+            foreach (QSO qso in rdaLog.qsoList)
+                if ((comboBoxStatFilterRda.SelectedIndex == 0 || comboBoxStatFilterRda.SelectedItem == null || qso.rda.Contains(comboBoxStatFilterRda.SelectedItem.ToString())) &&
+                    (comboBoxStatFilterMode.SelectedIndex == 0 || comboBoxStatFilterMode.SelectedItem == null || comboBoxStatFilterMode.SelectedItem.ToString() == qso.mode) &&
+                    (comboBoxStatFilterBand.SelectedIndex == 0 || comboBoxStatFilterBand.SelectedItem == null || comboBoxStatFilterBand.SelectedItem.ToString() == qso.band))
+                {
+                    qsoCount++;
+                    callsigns.Add(qso.cs);
+                }
+            labelStatQso.Text = qsoCount.ToString();
+            labelStatCallsigns.Text = callsigns.Count.ToString();
+        }
+
+        private void CheckBoxTop_CheckedChanged(object sender, EventArgs e)
+        {
+            config.topmost = checkBoxTop.Checked;
+            config.write();
+            TopMost = checkBoxTop.Checked;
+        }
     }
 
     [DataContract]
     public class FormMainConfig: StorableFormConfig
     {
+        public bool topmost = false;
+        public bool statFilterAuto = true;
+        public decimal freq = 14000;
+        public string exportPathRda;
+        public string exportPathRafa;
+        public string statFilterRda;
+        public string statFilterBand;
+        public string statFilterMode;
+        public string mode;
+        public string callsign;
+
         public FormMainConfig(XmlConfig _parent) : base(_parent) { }
 
         public FormMainConfig() : base() { }

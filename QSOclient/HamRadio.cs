@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 namespace HamRadio
 
 {
+
+    public class Mode
+    {
+        public static string[] Names = new string[] {"CW", "SSB", "FT8", "RTTY"};
+    }
     public class Band
     {
         internal class BandEntry
@@ -29,6 +34,14 @@ namespace HamRadio
             new BandEntry() { name = "144", limits = new int[] {144000, 148000 } },
             new BandEntry() { name = "UHF", limits = new int[] { 150000, 2000000 } }
         };
+
+        public static string[] Names
+        {
+            get
+            {
+                return Bands.Select(item => item.name).ToArray();
+            }
+        }
         public static string fromFreq(decimal freq)
         {
             foreach (BandEntry entry in Bands)
