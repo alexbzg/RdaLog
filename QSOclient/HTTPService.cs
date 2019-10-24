@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using XmlConfigNS;
 using System.Windows.Forms;
 using SerializationNS;
-using GPSReaderNS;
 using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
 using System.IO;
@@ -68,9 +67,7 @@ namespace RdaLog
         private volatile bool _connected;
         public bool connected { get { return _connected; } }
         public EventHandler<EventArgs> connectionStateChanged;
-        private GPSReader gpsReader;
         //private DXpConfig config;
-        public EventHandler<LocationChangedEventArgs> locationChanged;
         private HttpServiceConfig config;
         private RdaLog rdaLog;
         public bool gpsServerLoad;
@@ -253,6 +250,11 @@ namespace RdaLog
             return response?.StatusCode;
         }
 
+        public async Task postFreq(decimal freq)
+        {
+            await post("location", new FreqData(config, freq));
+        }
+
         private async Task<System.Net.HttpStatusCode?> getUserData()
         {
             HttpResponseMessage response = await post("userData", new JSONToken(config), false);
@@ -330,6 +332,14 @@ namespace RdaLog
         {
             qso = _qso;
         }
+    }
+
+    class FreqData : JSONToken
+    {
+        internal FreqData(HttpServiceConfig _config, decimal _freq) : base(_config) {
+            freq = _freq;
+        }
+        public decimal freq;
     }
 
     class StatusData : JSONToken

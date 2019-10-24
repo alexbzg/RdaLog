@@ -1,5 +1,4 @@
-﻿using GPSReaderNS;
-using SerializationNS;
+﻿using SerializationNS;
 using StorableForm;
 using System;
 using System.Collections.Generic;

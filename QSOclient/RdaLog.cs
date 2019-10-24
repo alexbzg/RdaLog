@@ -1,5 +1,4 @@
-﻿using GPSReaderNS;
-using HamRadio;
+﻿using HamRadio;
 using SerializationNS;
 using System;
 using System.Collections.Generic;
@@ -51,8 +50,6 @@ namespace RdaLog
 
         public string userField { get { return config.userField; } }
 
-        private Coords _coords;
-        public Coords coords { get { return _coords.clone(); } }
 
 
         public RdaLog()
@@ -100,6 +97,11 @@ namespace RdaLog
             qsoList.Insert(0, qso);
             ProtoBufSerialization.Write<BindingList<QSO>>(qsoFilePath, qsoList);
             await httpService.postQso(qso);
+        }
+
+        public async Task postFreq(decimal freq)
+        {
+            await httpService.postFreq(freq);
         }
 
         public void showSettings()

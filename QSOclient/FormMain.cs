@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using XmlConfigNS;
 using StringIndexNS;
 using HamRadio;
+using AutoUpdaterDotNET;
 
 namespace RdaLog
 {
@@ -47,6 +48,7 @@ namespace RdaLog
             rplcmnt = "$1-$2"
         };
 
+        static readonly string AutoUpdaterURI = "http://tnxqso.com/static/files/rda_log.xml";
         private RdaLog rdaLog;
         private Dictionary<string, StatusFieldControls> statusFieldsControls;
         private Dictionary<string, Panel> panels;
@@ -147,8 +149,8 @@ namespace RdaLog
             };
 
             comboBoxStatFilterBand.Items.AddRange(Band.Names);
-            comboBoxStatFilterMode.Items.AddRange(Mode.Names);
-            comboBoxMode.Items.AddRange(Mode.Names);
+            comboBoxStatFilterMode.Items.AddRange(HamRadio.Mode.Names);
+            comboBoxMode.Items.AddRange(HamRadio.Mode.Names);
 
             HashSet<string> rdas = new HashSet<string>();
             foreach (QSO qso in rdaLog.qsoList)
@@ -198,7 +200,27 @@ namespace RdaLog
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
         {
             if (e.ListChangedType == ListChangedType.ItemAdded)
-                callsignsQso.add(rdaLog.qsoList[e.NewIndex].cs);
+            {
+                QSO qso = rdaLog.qsoList[e.NewIndex];
+                callsignsQso.add(qso.cs);
+                if (!string.IsNullOrEmpty(qso.rda))
+                {
+                    bool flag = false;
+                    string[] rdas = qso.rda.Split(' ');
+                    foreach (string rda in rdas)
+                        if (!comboBoxStatFilterRda.Items.Contains(rda))
+                        {
+                            comboBoxStatFilterRda.Items.Add(rda);
+                            if (!flag)
+                            {
+                                flag = true;
+                                comboBoxStatFilterRda.SelectedItem = rda;
+                            }
+                        }
+                    if (!flag)
+                        updateStats();
+                }
+            }
         }
 
         private void arrangePanels()
@@ -479,7 +501,7 @@ namespace RdaLog
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-
+            AutoUpdater.Start(AutoUpdaterURI);
         }
 
         private void NumericUpDownFreq_ValueChanged(object sender, EventArgs e)
@@ -531,7 +553,7 @@ namespace RdaLog
 
         }
 
-        private void StatFilter_SelectedIndexChanged(object sender, EventArgs e)
+        private void updateStats()
         {
             HashSet<string> callsigns = new HashSet<string>();
             int qsoCount = 0;
@@ -547,11 +569,21 @@ namespace RdaLog
             labelStatCallsigns.Text = callsigns.Count.ToString();
         }
 
+        private void StatFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            updateStats();
+        }
+
         private void CheckBoxTop_CheckedChanged(object sender, EventArgs e)
         {
             config.topmost = checkBoxTop.Checked;
             config.write();
             TopMost = checkBoxTop.Checked;
+        }
+
+        private async void ButtonPostFreq_Click(object sender, EventArgs e)
+        {
+            await rdaLog.postFreq(numericUpDownFreq.Value);
         }
     }
 

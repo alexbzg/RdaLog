@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("QSOclient")]
+[assembly: AssemblyTitle("RDA Log")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("QSOclient")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyProduct("RDA Log")]
+[assembly: AssemblyCopyright("Copyright ©  2019 Chat icon made by Gregor Cresnar from flaicons.com")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

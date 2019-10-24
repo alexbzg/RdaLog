@@ -41,7 +41,6 @@ namespace RdaLog
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.labelDateTime = new System.Windows.Forms.Label();
-            this.buttonPostFreq = new System.Windows.Forms.Button();
             this.textBoxCorrespondent = new System.Windows.Forms.TextBoxCallsign();
             this.textBoxRstSent = new System.Windows.Forms.TextBox();
             this.labelRstSent = new System.Windows.Forms.Label();
@@ -101,6 +100,7 @@ namespace RdaLog
             this.listBoxCallsignsQso = new System.Windows.Forms.ListBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.checkBoxTop = new System.Windows.Forms.CheckBox();
+            this.buttonPostFreq = new System.Windows.Forms.Button();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).BeginInit();
@@ -207,16 +207,6 @@ namespace RdaLog
             this.labelDateTime.Size = new System.Drawing.Size(110, 13);
             this.labelDateTime.TabIndex = 4;
             this.labelDateTime.Text = "15 May 2019   15:12z";
-            // 
-            // buttonPostFreq
-            // 
-            this.buttonPostFreq.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonPostFreq.Location = new System.Drawing.Point(333, 100);
-            this.buttonPostFreq.Name = "buttonPostFreq";
-            this.buttonPostFreq.Size = new System.Drawing.Size(23, 23);
-            this.buttonPostFreq.TabIndex = 5;
-            this.buttonPostFreq.TabStop = false;
-            this.buttonPostFreq.UseVisualStyleBackColor = false;
             // 
             // textBoxCorrespondent
             // 
@@ -930,6 +920,18 @@ namespace RdaLog
             this.checkBoxTop.Text = "Top";
             this.checkBoxTop.UseVisualStyleBackColor = true;
             this.checkBoxTop.CheckedChanged += new System.EventHandler(this.CheckBoxTop_CheckedChanged);
+            // 
+            // buttonPostFreq
+            // 
+            this.buttonPostFreq.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonPostFreq.Image = global::QSOclient.Properties.Resources.chat;
+            this.buttonPostFreq.Location = new System.Drawing.Point(330, 99);
+            this.buttonPostFreq.Name = "buttonPostFreq";
+            this.buttonPostFreq.Size = new System.Drawing.Size(24, 24);
+            this.buttonPostFreq.TabIndex = 5;
+            this.buttonPostFreq.TabStop = false;
+            this.buttonPostFreq.UseVisualStyleBackColor = false;
+            this.buttonPostFreq.Click += new System.EventHandler(this.ButtonPostFreq_Click);
             // 
             // FormMain
             // 
