@@ -501,7 +501,18 @@ namespace RdaLog
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            AutoUpdater.CheckForUpdateEvent += AutoUpdater_CheckForUpdateEvent;
             AutoUpdater.Start(AutoUpdaterURI);
+        }
+
+        private void AutoUpdater_CheckForUpdateEvent(UpdateInfoEventArgs args)
+        {
+            if (args != null && args.IsUpdateAvailable)
+            {
+                TopMost = false;
+                AutoUpdater.ShowUpdateForm();
+                TopMost = config.topmost;
+            }
         }
 
         private void NumericUpDownFreq_ValueChanged(object sender, EventArgs e)

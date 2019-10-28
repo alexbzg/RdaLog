@@ -110,7 +110,14 @@ namespace RdaLog
 
             formSettings.textBoxLogin.Text = config.httpService.callsign;
             formSettings.textBoxPassword.Text = config.httpService.password;
-            formSettings.buttonLogin.Click += ButtonLogin_Click;
+            formSettings.buttonLogin.Click += async delegate (object sender, EventArgs e)
+            {
+                config.httpService.callsign = formSettings.textBoxLogin.Text;
+                config.httpService.password = formSettings.textBoxPassword.Text;
+                System.Net.HttpStatusCode? loginStatusCode = await httpService.login();
+                if (loginStatusCode == System.Net.HttpStatusCode.OK)
+                    MessageBox.Show("Logged in successfully.", "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            };
 
             formSettings.checkBoxAutoLogin.Checked = config.autoLogin;
 
@@ -145,9 +152,5 @@ namespace RdaLog
             }
         }
 
-        private async void ButtonLogin_Click(object sender, EventArgs e)
-        {
-            await httpService.login();
-        }
     }
 }

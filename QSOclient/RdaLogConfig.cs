@@ -139,12 +139,18 @@ namespace RdaLog
             for (int co = hotKeys.Count; co < HotKeysDefaults.Count; co++)
                 hotKeys.Add(new string[] { HotKeysDefaults[co].Item1, HotKeysDefaults[co].Item2 });
 
-            _statusFields = serStatusFields.ToDictionary(item => item.field, item => new StatusField() { auto = item.auto, value = item.value });
+            if (serStatusFields != null)
+                _statusFields = serStatusFields.ToDictionary(item => item.field, item => new StatusField() { auto = item.auto, value = item.value });
+            else
+                _statusFields = new Dictionary<string, StatusField>();
             foreach (string field in StatusFields)
                 if (!_statusFields.ContainsKey(field))
                     _statusFields[field] = new StatusField() { auto = true, value = null };
 
-            _mainFormPanels = serMainFormPanels.ToDictionary(item => item.name, item => item.enabled);
+            if (serMainFormPanels != null)
+                _mainFormPanels = serMainFormPanels.ToDictionary(item => item.name, item => item.enabled);
+            else
+                _mainFormPanels = new Dictionary<string, bool>();
             foreach (string panel in MainFormPanels)
                 if (!_mainFormPanels.ContainsKey(panel))
                     _mainFormPanels[panel] = true;

@@ -230,7 +230,7 @@ namespace RdaLog
 
         public async Task<System.Net.HttpStatusCode?> login()
         {
-            if (config.callsign.Equals(string.Empty) || config.password.Equals(string.Empty))
+            if (string.IsNullOrEmpty(config.callsign) || string.IsNullOrEmpty(config.password))
                 return null;
             HttpResponseMessage response = await post("login", new LoginRequest() { login = config.callsign, password = config.password }, false);
             if (response != null)
@@ -244,7 +244,7 @@ namespace RdaLog
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
-                    MessageBox.Show(await response.Content.ReadAsStringAsync(), "Bad request to server");
+                    MessageBox.Show(await response.Content.ReadAsStringAsync(), "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             return response?.StatusCode;
