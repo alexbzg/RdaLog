@@ -147,6 +147,7 @@
             this.labelHotKeyF1.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF1.TabIndex = 32;
             this.labelHotKeyF1.Text = "F1";
+            this.labelHotKeyF1.Visible = false;
             // 
             // textBoxHotKeyF1Bindings
             // 
@@ -156,6 +157,7 @@
             this.textBoxHotKeyF1Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxHotKeyF1Bindings.TabIndex = 33;
             this.textBoxHotKeyF1Bindings.Text = "CQ {MY_CALL} {MY_CALL}";
+            this.textBoxHotKeyF1Bindings.Visible = false;
             // 
             // textBoxHotKeyF2Bindings
             // 
@@ -165,6 +167,7 @@
             this.textBoxHotKeyF2Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxHotKeyF2Bindings.TabIndex = 35;
             this.textBoxHotKeyF2Bindings.Text = "5NN";
+            this.textBoxHotKeyF2Bindings.Visible = false;
             // 
             // labelHotKeyF2
             // 
@@ -177,6 +180,7 @@
             this.labelHotKeyF2.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF2.TabIndex = 34;
             this.labelHotKeyF2.Text = "F2";
+            this.labelHotKeyF2.Visible = false;
             // 
             // textBoxHotKeyF3Bindings
             // 
@@ -186,6 +190,7 @@
             this.textBoxHotKeyF3Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxHotKeyF3Bindings.TabIndex = 37;
             this.textBoxHotKeyF3Bindings.Text = "{CALL} TU";
+            this.textBoxHotKeyF3Bindings.Visible = false;
             // 
             // labelHotKeyF3
             // 
@@ -198,6 +203,7 @@
             this.labelHotKeyF3.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF3.TabIndex = 36;
             this.labelHotKeyF3.Text = "F3";
+            this.labelHotKeyF3.Visible = false;
             // 
             // textBoxHotKeyF4Bindings
             // 
@@ -207,6 +213,7 @@
             this.textBoxHotKeyF4Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxHotKeyF4Bindings.TabIndex = 39;
             this.textBoxHotKeyF4Bindings.Text = "{MY_CALL} {MY_CALL}";
+            this.textBoxHotKeyF4Bindings.Visible = false;
             // 
             // labelHotKeyF4
             // 
@@ -219,6 +226,7 @@
             this.labelHotKeyF4.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF4.TabIndex = 38;
             this.labelHotKeyF4.Text = "F4";
+            this.labelHotKeyF4.Visible = false;
             // 
             // textBoxHotKeyF5Bindings
             // 
@@ -228,6 +236,7 @@
             this.textBoxHotKeyF5Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxHotKeyF5Bindings.TabIndex = 41;
             this.textBoxHotKeyF5Bindings.Text = "{CALL} {CALL}";
+            this.textBoxHotKeyF5Bindings.Visible = false;
             // 
             // labelHotKeyF5
             // 
@@ -240,6 +249,7 @@
             this.labelHotKeyF5.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF5.TabIndex = 40;
             this.labelHotKeyF5.Text = "F5";
+            this.labelHotKeyF5.Visible = false;
             // 
             // textBoxHotKeyF6Bindings
             // 
@@ -248,6 +258,7 @@
             this.textBoxHotKeyF6Bindings.Name = "textBoxHotKeyF6Bindings";
             this.textBoxHotKeyF6Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxHotKeyF6Bindings.TabIndex = 43;
+            this.textBoxHotKeyF6Bindings.Visible = false;
             // 
             // labelHotKeyF6
             // 
@@ -260,6 +271,7 @@
             this.labelHotKeyF6.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF6.TabIndex = 42;
             this.labelHotKeyF6.Text = "F6";
+            this.labelHotKeyF6.Visible = false;
             // 
             // textBoxHotKeyF7Bindings
             // 
@@ -269,6 +281,7 @@
             this.textBoxHotKeyF7Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxHotKeyF7Bindings.TabIndex = 45;
             this.textBoxHotKeyF7Bindings.Text = "RDA {RDA}";
+            this.textBoxHotKeyF7Bindings.Visible = false;
             // 
             // labelHotKeyF7
             // 
@@ -281,6 +294,7 @@
             this.labelHotKeyF7.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF7.TabIndex = 44;
             this.labelHotKeyF7.Text = "F7";
+            this.labelHotKeyF7.Visible = false;
             // 
             // textBoxHotKeyF8Bindings
             // 
@@ -290,6 +304,7 @@
             this.textBoxHotKeyF8Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxHotKeyF8Bindings.TabIndex = 47;
             this.textBoxHotKeyF8Bindings.Text = "RAFA {RAFA}";
+            this.textBoxHotKeyF8Bindings.Visible = false;
             // 
             // labelHotKeyF8
             // 
@@ -302,6 +317,7 @@
             this.labelHotKeyF8.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF8.TabIndex = 46;
             this.labelHotKeyF8.Text = "F8";
+            this.labelHotKeyF8.Visible = false;
             // 
             // textBoxHotKeyF9Bindings
             // 
@@ -310,6 +326,7 @@
             this.textBoxHotKeyF9Bindings.Name = "textBoxHotKeyF9Bindings";
             this.textBoxHotKeyF9Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxHotKeyF9Bindings.TabIndex = 49;
+            this.textBoxHotKeyF9Bindings.Visible = false;
             // 
             // labelHotKeyF9
             // 
@@ -322,6 +339,7 @@
             this.labelHotKeyF9.Size = new System.Drawing.Size(19, 13);
             this.labelHotKeyF9.TabIndex = 48;
             this.labelHotKeyF9.Text = "F9";
+            this.labelHotKeyF9.Visible = false;
             // 
             // textBoxHotKeyF9Title
             // 
@@ -330,6 +348,7 @@
             this.textBoxHotKeyF9Title.Name = "textBoxHotKeyF9Title";
             this.textBoxHotKeyF9Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxHotKeyF9Title.TabIndex = 58;
+            this.textBoxHotKeyF9Title.Visible = false;
             // 
             // textBoxHotKeyF8Title
             // 
@@ -348,6 +367,7 @@
             this.textBoxHotKeyF7Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxHotKeyF7Title.TabIndex = 56;
             this.textBoxHotKeyF7Title.Text = "RDA";
+            this.textBoxHotKeyF7Title.Visible = false;
             // 
             // textBoxHotKeyF6Title
             // 
@@ -356,6 +376,7 @@
             this.textBoxHotKeyF6Title.Name = "textBoxHotKeyF6Title";
             this.textBoxHotKeyF6Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxHotKeyF6Title.TabIndex = 55;
+            this.textBoxHotKeyF6Title.Visible = false;
             // 
             // textBoxHotKeyF5Title
             // 
@@ -365,6 +386,7 @@
             this.textBoxHotKeyF5Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxHotKeyF5Title.TabIndex = 54;
             this.textBoxHotKeyF5Title.Text = "HIS";
+            this.textBoxHotKeyF5Title.Visible = false;
             // 
             // textBoxHotKeyF4Title
             // 
@@ -374,6 +396,7 @@
             this.textBoxHotKeyF4Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxHotKeyF4Title.TabIndex = 53;
             this.textBoxHotKeyF4Title.Text = "MY";
+            this.textBoxHotKeyF4Title.Visible = false;
             // 
             // textBoxHotKeyF3Title
             // 
@@ -383,6 +406,7 @@
             this.textBoxHotKeyF3Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxHotKeyF3Title.TabIndex = 52;
             this.textBoxHotKeyF3Title.Text = "TU";
+            this.textBoxHotKeyF3Title.Visible = false;
             // 
             // textBoxHotKeyF2Title
             // 
@@ -392,6 +416,7 @@
             this.textBoxHotKeyF2Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxHotKeyF2Title.TabIndex = 51;
             this.textBoxHotKeyF2Title.Text = "5NN";
+            this.textBoxHotKeyF2Title.Visible = false;
             // 
             // textBoxHotKeyF1Title
             // 
@@ -401,6 +426,7 @@
             this.textBoxHotKeyF1Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxHotKeyF1Title.TabIndex = 50;
             this.textBoxHotKeyF1Title.Text = "CQ";
+            this.textBoxHotKeyF1Title.Visible = false;
             // 
             // labelView
             // 
@@ -464,6 +490,7 @@
             this.checkBoxViewCwMacro.TabIndex = 63;
             this.checkBoxViewCwMacro.Text = "CW macros notes";
             this.checkBoxViewCwMacro.UseVisualStyleBackColor = true;
+            this.checkBoxViewCwMacro.Visible = false;
             // 
             // checkBoxEnableCwMacro
             // 
@@ -477,6 +504,7 @@
             this.checkBoxEnableCwMacro.TabIndex = 64;
             this.checkBoxEnableCwMacro.Text = "Enable CW macros";
             this.checkBoxEnableCwMacro.UseVisualStyleBackColor = true;
+            this.checkBoxEnableCwMacro.Visible = false;
             // 
             // buttonOK
             // 

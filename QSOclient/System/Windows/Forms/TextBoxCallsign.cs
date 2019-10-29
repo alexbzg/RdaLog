@@ -7,6 +7,10 @@ namespace System.Windows.Forms
     {
         private Color _backColor;
         private string _prevText;
+        private static readonly Color ErrorBackColor = System.Drawing.ColorTranslator.FromHtml("#FFE1E1");
+        private bool _validCallsign = false;
+
+        public bool validCallsign { get { return _validCallsign; } }
         static bool CallsignChar(char c)
         {
             return char.IsWhiteSpace(c) || char.IsLetterOrDigit(c) || c == '/';
@@ -41,8 +45,9 @@ namespace System.Windows.Forms
             Text = newText;
 
             BackColorChanged -= TextBoxCallsign_BackColorChanged;
-            BackColor = CallsignRegex.IsMatch(Text) || Text.Equals(string.Empty) ?
-                _backColor : Color.IndianRed;
+            _validCallsign = CallsignRegex.IsMatch(Text);
+            BackColor =  _validCallsign || Text.Equals(string.Empty) ?
+                _backColor : ErrorBackColor;
             BackColorChanged += TextBoxCallsign_BackColorChanged;
 
             SelectionStart = newSelStart;

@@ -154,8 +154,9 @@ namespace RdaLog
 
             HashSet<string> rdas = new HashSet<string>();
             foreach (QSO qso in rdaLog.qsoList)
-                foreach (string rda in qso.rda.Split(' '))
-                    rdas.Add(rda);
+                if (!string.IsNullOrEmpty(qso.rda))
+                    foreach (string rda in qso.rda.Split(' '))
+                        rdas.Add(rda);
             comboBoxStatFilterRda.Items.AddRange(rdas.ToArray());
             setStatFilter();
 
@@ -179,6 +180,13 @@ namespace RdaLog
                 {
                     rdaLog.setStatusFieldValue(field, textBoxValue.Text);
                 };
+                textBoxValue.TextChanged += delegate (object sender, EventArgs e)
+                {
+                    int selStart = textBoxValue.SelectionStart;
+                    textBoxValue.Text = textBoxValue.Text.ToUpper();
+                    textBoxValue.SelectionStart = selStart;
+                };
+
                 rdaLog.statusFieldChange += delegate (object sender, StatusFieldChangeEventArgs e)
                 {
                     if (e.field == field)
@@ -242,7 +250,8 @@ namespace RdaLog
             RdaLogConfig rdaLogConfig = ((RdaLogConfig)config.parent);
             foreach (string panel in RdaLogConfig.MainFormPanels)
             {
-                if (panels.ContainsKey(panel) && rdaLogConfig.getMainFormPanelVisible(panel))
+                //cwMacros temporary disabled
+                if (panels.ContainsKey(panel) && panel != "cwMacros" && rdaLogConfig.getMainFormPanelVisible(panel))
                     flowLayoutPanel.Controls.Add(panels[panel]);
             }
             statusStrip.SendToBack();
@@ -260,19 +269,25 @@ namespace RdaLog
             config.write();
         }
 
-        private void TextBoxCorrespondent_Validating(object sender, CancelEventArgs e)
-        {
-            textBoxCorrespondent.Text = textBoxCorrespondent.Text.ToUpper();
-        }
 
         private async void FormMain_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
             {
-                Validate();
                 e.Handled = true;
+                if (!textBoxCorrespondent.validCallsign)
+                {
+                    textBoxCorrespondent.Focus();
+                    return;
+                }
+                if (!textBoxCallsign.validCallsign)
+                {
+                    textBoxCallsign.Focus();
+                    return;
+                }
                 string correspondent = textBoxCorrespondent.Text;
                 textBoxCorrespondent.Text = "";
+                textBoxCorrespondent.Focus();
                 await rdaLog.newQso(correspondent, textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text);
             }
         }
@@ -561,16 +576,6 @@ namespace RdaLog
                 comboBoxStatFilterMode.SelectedItem = comboBoxMode.Text;
                 comboBoxStatFilterBand.SelectedItem = Band.fromFreq(numericUpDownFreq.Value);
             }
-        }
-
-        private void ComboBoxStatFilterBand_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void updateStats()

@@ -437,6 +437,7 @@ namespace RdaLog
             this.listBoxCallsignsDb.Size = new System.Drawing.Size(170, 108);
             this.listBoxCallsignsDb.TabIndex = 1;
             this.listBoxCallsignsDb.SelectedIndexChanged += new System.EventHandler(this.ListBoxCallsigns_SelectedIndexChanged);
+            this.listBoxCallsignsDb.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             // 
             // listBoxCallsignsQso
             // 
@@ -444,6 +445,7 @@ namespace RdaLog
             this.listBoxCallsignsQso.Location = new System.Drawing.Point(9, 7);
             this.listBoxCallsignsQso.Name = "listBoxCallsignsQso";
             this.listBoxCallsignsQso.Size = new System.Drawing.Size(174, 108);
+            this.listBoxCallsignsQso.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxCallsignsQso.TabIndex = 0;
             this.listBoxCallsignsQso.SelectedIndexChanged += new System.EventHandler(this.ListBoxCallsigns_SelectedIndexChanged);
             // 
@@ -831,7 +833,6 @@ namespace RdaLog
             this.textBoxCorrespondent.TabIndex = 0;
             this.textBoxCorrespondent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxCorrespondent.TextChanged += new System.EventHandler(this.TextBoxCorrespondent_TextChanged);
-            this.textBoxCorrespondent.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxCorrespondent_Validating);
             // 
             // buttonPostFreq
             // 
