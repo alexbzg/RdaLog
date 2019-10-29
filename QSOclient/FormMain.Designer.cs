@@ -847,14 +847,14 @@ namespace RdaLog
             // 
             // labelDateTime
             // 
-            this.labelDateTime.AutoSize = true;
             this.labelDateTime.BackColor = System.Drawing.Color.Transparent;
             this.labelDateTime.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.labelDateTime.Location = new System.Drawing.Point(12, 30);
             this.labelDateTime.Name = "labelDateTime";
-            this.labelDateTime.Size = new System.Drawing.Size(110, 13);
+            this.labelDateTime.Size = new System.Drawing.Size(229, 13);
             this.labelDateTime.TabIndex = 4;
             this.labelDateTime.Text = "15 May 2019   15:12z";
+            this.labelDateTime.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // toolStrip
             // 
@@ -884,7 +884,7 @@ namespace RdaLog
             this.menuItemAdifExportRda,
             this.menuItemAdifExportRafa});
             this.menuItemAdifExport.Name = "menuItemAdifExport";
-            this.menuItemAdifExport.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExport.Size = new System.Drawing.Size(135, 22);
             this.menuItemAdifExport.Text = "ADIF export";
             // 
             // menuItemAdifExportRda

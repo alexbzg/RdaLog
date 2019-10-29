@@ -56,7 +56,7 @@ namespace RdaLog
         private HashSet<string> rafaValues;
         private StringIndex callsignsDb = new StringIndex();
         private StringIndex callsignsQso = new StringIndex();
-
+        private Timer timer = new Timer();
         public FormMain(FormMainConfig _config, RdaLog _rdaLog) : base(_config)
         {
             rdaLog = _rdaLog;
@@ -195,6 +195,15 @@ namespace RdaLog
             foreach (QSO qso in rdaLog.qsoList)
                 callsignsQso.add(qso.cs);
             rdaLog.qsoList.ListChanged += QsoList_ListChanged;
+
+            timer.Tick += Timer_Tick;
+            timer.Interval = 500;
+            timer.Enabled = true;
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            labelDateTime.Text = string.Format("{0:dd MMMM yyyy HH:mm'z'}", DateTime.UtcNow);
         }
 
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
