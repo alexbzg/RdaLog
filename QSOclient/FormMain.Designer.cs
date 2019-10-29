@@ -97,8 +97,11 @@ namespace RdaLog
             this.menuItemAdifExport = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExportRda = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExportRafa = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemAdifExportAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemFileClear = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
@@ -431,21 +434,23 @@ namespace RdaLog
             // 
             // listBoxCallsignsDb
             // 
+            this.listBoxCallsignsDb.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxCallsignsDb.FormattingEnabled = true;
+            this.listBoxCallsignsDb.ItemHeight = 22;
             this.listBoxCallsignsDb.Location = new System.Drawing.Point(184, 7);
             this.listBoxCallsignsDb.Name = "listBoxCallsignsDb";
-            this.listBoxCallsignsDb.Size = new System.Drawing.Size(170, 108);
+            this.listBoxCallsignsDb.Size = new System.Drawing.Size(170, 92);
             this.listBoxCallsignsDb.TabIndex = 1;
             this.listBoxCallsignsDb.SelectedIndexChanged += new System.EventHandler(this.ListBoxCallsigns_SelectedIndexChanged);
-            this.listBoxCallsignsDb.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             // 
             // listBoxCallsignsQso
             // 
+            this.listBoxCallsignsQso.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxCallsignsQso.FormattingEnabled = true;
+            this.listBoxCallsignsQso.ItemHeight = 22;
             this.listBoxCallsignsQso.Location = new System.Drawing.Point(9, 7);
             this.listBoxCallsignsQso.Name = "listBoxCallsignsQso";
-            this.listBoxCallsignsQso.Size = new System.Drawing.Size(174, 108);
-            this.listBoxCallsignsQso.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listBoxCallsignsQso.Size = new System.Drawing.Size(174, 92);
             this.listBoxCallsignsQso.TabIndex = 0;
             this.listBoxCallsignsQso.SelectedIndexChanged += new System.EventHandler(this.ListBoxCallsigns_SelectedIndexChanged);
             // 
@@ -872,7 +877,8 @@ namespace RdaLog
             // 
             this.dropDownButtonFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.dropDownButtonFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemAdifExport});
+            this.menuItemAdifExport,
+            this.menuItemFileClear});
             this.dropDownButtonFile.Image = ((System.Drawing.Image)(resources.GetObject("dropDownButtonFile.Image")));
             this.dropDownButtonFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.dropDownButtonFile.Name = "dropDownButtonFile";
@@ -883,7 +889,8 @@ namespace RdaLog
             // 
             this.menuItemAdifExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemAdifExportRda,
-            this.menuItemAdifExportRafa});
+            this.menuItemAdifExportRafa,
+            this.menuItemAdifExportAll});
             this.menuItemAdifExport.Name = "menuItemAdifExport";
             this.menuItemAdifExport.Size = new System.Drawing.Size(135, 22);
             this.menuItemAdifExport.Text = "ADIF export";
@@ -891,16 +898,30 @@ namespace RdaLog
             // menuItemAdifExportRda
             // 
             this.menuItemAdifExportRda.Name = "menuItemAdifExportRda";
-            this.menuItemAdifExportRda.Size = new System.Drawing.Size(102, 22);
-            this.menuItemAdifExportRda.Text = "RDA";
+            this.menuItemAdifExportRda.Size = new System.Drawing.Size(118, 22);
+            this.menuItemAdifExportRda.Text = "By RDA";
             this.menuItemAdifExportRda.Click += new System.EventHandler(this.MenuItemAdifExportRda_Click);
             // 
             // menuItemAdifExportRafa
             // 
             this.menuItemAdifExportRafa.Name = "menuItemAdifExportRafa";
-            this.menuItemAdifExportRafa.Size = new System.Drawing.Size(102, 22);
-            this.menuItemAdifExportRafa.Text = "RAFA";
+            this.menuItemAdifExportRafa.Size = new System.Drawing.Size(118, 22);
+            this.menuItemAdifExportRafa.Text = "By RAFA";
             this.menuItemAdifExportRafa.Click += new System.EventHandler(this.MenuItemAdifExportRafa_Click);
+            // 
+            // menuItemAdifExportAll
+            // 
+            this.menuItemAdifExportAll.Name = "menuItemAdifExportAll";
+            this.menuItemAdifExportAll.Size = new System.Drawing.Size(118, 22);
+            this.menuItemAdifExportAll.Text = "All QSO";
+            this.menuItemAdifExportAll.Click += new System.EventHandler(this.MenuItemAdifExportAll_Click);
+            // 
+            // menuItemFileClear
+            // 
+            this.menuItemFileClear.Name = "menuItemFileClear";
+            this.menuItemFileClear.Size = new System.Drawing.Size(135, 22);
+            this.menuItemFileClear.Text = "New";
+            this.menuItemFileClear.Click += new System.EventHandler(this.MenuItemFileClear_Click);
             // 
             // toolStripLabelSettings
             // 
@@ -940,6 +961,7 @@ namespace RdaLog
             this.Controls.Add(this.labelDateTime);
             this.Controls.Add(this.toolStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "FormMain";
@@ -1034,6 +1056,9 @@ namespace RdaLog
         private System.Windows.Forms.ListBox listBoxCallsignsDb;
         private System.Windows.Forms.ListBox listBoxCallsignsQso;
         private System.Windows.Forms.CheckBox checkBoxTop;
+        private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportAll;
+        private System.Windows.Forms.ToolStripMenuItem menuItemFileClear;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }
 

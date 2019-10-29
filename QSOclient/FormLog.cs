@@ -33,9 +33,16 @@ namespace RdaLog
             if (_config.dataGridColumnsWidth.Count < dataGridView.Columns.Count)
                 for (int co = _config.dataGridColumnsWidth.Count; co < dataGridView.Columns.Count; co++)
                     _config.dataGridColumnsWidth.Add(dataGridView.Columns[co].Width);
+
+            buildIndex();
+            rdaLog.qsoList.ListChanged += QsoList_ListChanged;
+        }
+
+        private void buildIndex()
+        {
+            qsoIndex.Clear();
             foreach (QSO qso in rdaLog.qsoList)
                 addToIndex(qso);
-            rdaLog.qsoList.ListChanged += QsoList_ListChanged;
         }
 
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
@@ -57,6 +64,8 @@ namespace RdaLog
                 dataGridView.FirstDisplayedScrollingRowIndex = e.NewIndex;
                 dataGridView.Refresh();
             }
+            else if (e.ListChangedType == ListChangedType.Reset)
+                buildIndex();
         }
 
         private void setRowColors(DataGridViewRow r, Color f, Color b)

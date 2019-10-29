@@ -152,14 +152,6 @@ namespace RdaLog
             comboBoxStatFilterMode.Items.AddRange(HamRadio.Mode.Names);
             comboBoxMode.Items.AddRange(HamRadio.Mode.Names);
 
-            HashSet<string> rdas = new HashSet<string>();
-            foreach (QSO qso in rdaLog.qsoList)
-                if (!string.IsNullOrEmpty(qso.rda))
-                    foreach (string rda in qso.rda.Split(' '))
-                        rdas.Add(rda);
-            comboBoxStatFilterRda.Items.AddRange(rdas.ToArray());
-            setStatFilter();
-
             checkBoxTop.Checked = config.topmost;
 
             foreach (KeyValuePair<string, StatusFieldControls> item in statusFieldsControls)
@@ -200,8 +192,7 @@ namespace RdaLog
             textBoxUserField.Text = rdaLogConfig.userField;
             textBoxCallsign.Text = config.callsign;
 
-            foreach (QSO qso in rdaLog.qsoList)
-                callsignsQso.add(qso.cs);
+            buildQsoIndices();
             rdaLog.qsoList.ListChanged += QsoList_ListChanged;
 
             timer.Tick += Timer_Tick;
@@ -217,27 +208,40 @@ namespace RdaLog
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
         {
             if (e.ListChangedType == ListChangedType.ItemAdded)
+                indexQso(rdaLog.qsoList[e.NewIndex], true);
+            else if (e.ListChangedType == ListChangedType.Reset)
+                buildQsoIndices();
+        }
+
+        private void indexQso(QSO qso, bool updateStatsFlag = false)
+        {
+            callsignsQso.add(qso.cs);
+            if (!string.IsNullOrEmpty(qso.rda))
             {
-                QSO qso = rdaLog.qsoList[e.NewIndex];
-                callsignsQso.add(qso.cs);
-                if (!string.IsNullOrEmpty(qso.rda))
-                {
-                    bool flag = false;
-                    string[] rdas = qso.rda.Split(' ');
-                    foreach (string rda in rdas)
-                        if (!comboBoxStatFilterRda.Items.Contains(rda))
+                bool flag = false;
+                string[] rdas = qso.rda.Split(' ');
+                foreach (string rda in rdas)
+                    if (!comboBoxStatFilterRda.Items.Contains(rda))
+                    {
+                        comboBoxStatFilterRda.Items.Add(rda);
+                        if (!flag)
                         {
-                            comboBoxStatFilterRda.Items.Add(rda);
-                            if (!flag)
-                            {
-                                flag = true;
-                                comboBoxStatFilterRda.SelectedItem = rda;
-                            }
+                            flag = true;
+                            comboBoxStatFilterRda.SelectedItem = rda;
                         }
-                    if (!flag)
-                        updateStats();
-                }
+                    }
+                if (!flag && updateStatsFlag)
+                    updateStats();
             }
+        }
+
+        private void buildQsoIndices()
+        {
+            comboBoxStatFilterRda.Items.Clear();
+            callsignsQso.clear();
+            foreach (QSO qso in rdaLog.qsoList)
+                indexQso(qso);
+            setStatFilter();
         }
 
         private void arrangePanels()
@@ -610,6 +614,26 @@ namespace RdaLog
         {
             await rdaLog.postFreq(numericUpDownFreq.Value);
         }
+
+
+        private void MenuItemAdifExportAll_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(config.exportPath))
+                saveFileDialog.FileName = config.exportPath;
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                config.exportPath =  saveFileDialog.FileName;
+                config.write();
+                writeADIF(saveFileDialog.FileName, rdaLog.qsoList.ToList(), new Dictionary<string, string>());
+            }
+
+        }
+
+        private void MenuItemFileClear_Click(object sender, EventArgs e)
+        {
+            rdaLog.clearQso();
+            buildQsoIndices();
+        }
     }
 
     [DataContract]
@@ -620,6 +644,7 @@ namespace RdaLog
         public decimal freq = 14000;
         public string exportPathRda;
         public string exportPathRafa;
+        public string exportPath;
         public string statFilterRda;
         public string statFilterBand;
         public string statFilterMode;

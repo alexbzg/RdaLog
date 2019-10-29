@@ -51,10 +51,8 @@ namespace XmlConfigNS
                 }
             }
             if (result == null)
-            {
                 result = new T();
-                result.fname = fname;
-            }
+            result.fname = fname;
             result.initialize();
             return result;
         }

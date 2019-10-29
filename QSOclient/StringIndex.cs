@@ -33,6 +33,11 @@ namespace StringIndexNS
                 }
         }
 
+        public void clear()
+        {
+            index.Clear();
+        }
+
         public List<string> search(string value)
         {
             if (!string.IsNullOrEmpty(value) && value.Length > 2)

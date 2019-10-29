@@ -112,6 +112,11 @@ namespace RdaLog
             await httpService.postFreq(freq);
         }
 
+        public void clearQso()
+        {
+            qsoList.Clear();
+        }
+
         public void showSettings()
         {
             FormSettings formSettings = new FormSettings();

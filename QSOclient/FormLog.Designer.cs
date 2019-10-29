@@ -183,6 +183,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.dataGridView);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormLog";
             this.Text = "RDA Log - Log";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
