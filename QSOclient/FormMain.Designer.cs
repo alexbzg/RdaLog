@@ -434,7 +434,7 @@ namespace RdaLog
             // 
             // listBoxCallsignsDb
             // 
-            this.listBoxCallsignsDb.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listBoxCallsignsDb.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxCallsignsDb.FormattingEnabled = true;
             this.listBoxCallsignsDb.ItemHeight = 22;
             this.listBoxCallsignsDb.Location = new System.Drawing.Point(184, 7);
@@ -445,7 +445,7 @@ namespace RdaLog
             // 
             // listBoxCallsignsQso
             // 
-            this.listBoxCallsignsQso.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listBoxCallsignsQso.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxCallsignsQso.FormattingEnabled = true;
             this.listBoxCallsignsQso.ItemHeight = 22;
             this.listBoxCallsignsQso.Location = new System.Drawing.Point(9, 7);
@@ -831,7 +831,7 @@ namespace RdaLog
             // textBoxCorrespondent
             // 
             this.textBoxCorrespondent.BackColor = System.Drawing.SystemColors.Info;
-            this.textBoxCorrespondent.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxCorrespondent.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxCorrespondent.Location = new System.Drawing.Point(12, 46);
             this.textBoxCorrespondent.Name = "textBoxCorrespondent";
             this.textBoxCorrespondent.Size = new System.Drawing.Size(229, 29);
@@ -877,13 +877,14 @@ namespace RdaLog
             // 
             this.dropDownButtonFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.dropDownButtonFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemAdifExport,
-            this.menuItemFileClear});
+            this.menuItemFileClear,
+            this.menuItemAdifExport});
             this.dropDownButtonFile.Image = ((System.Drawing.Image)(resources.GetObject("dropDownButtonFile.Image")));
             this.dropDownButtonFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.dropDownButtonFile.Name = "dropDownButtonFile";
             this.dropDownButtonFile.Size = new System.Drawing.Size(38, 22);
             this.dropDownButtonFile.Text = "File";
+            this.dropDownButtonFile.ShowDropDownArrow = false;
             // 
             // menuItemAdifExport
             // 
@@ -892,8 +893,8 @@ namespace RdaLog
             this.menuItemAdifExportRafa,
             this.menuItemAdifExportAll});
             this.menuItemAdifExport.Name = "menuItemAdifExport";
-            this.menuItemAdifExport.Size = new System.Drawing.Size(135, 22);
-            this.menuItemAdifExport.Text = "ADIF export";
+            this.menuItemAdifExport.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExport.Text = "Export";
             // 
             // menuItemAdifExportRda
             // 
@@ -919,7 +920,7 @@ namespace RdaLog
             // menuItemFileClear
             // 
             this.menuItemFileClear.Name = "menuItemFileClear";
-            this.menuItemFileClear.Size = new System.Drawing.Size(135, 22);
+            this.menuItemFileClear.Size = new System.Drawing.Size(180, 22);
             this.menuItemFileClear.Text = "New";
             this.menuItemFileClear.Click += new System.EventHandler(this.MenuItemFileClear_Click);
             // 

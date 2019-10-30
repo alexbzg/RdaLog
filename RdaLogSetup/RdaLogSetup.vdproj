@@ -220,6 +220,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
     }
@@ -387,7 +395,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RDAlog, Version=0.0.0.1, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:RDAlog, Version=0.0.1.1, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_683B20C247D5425887FFD9E339B90558"
@@ -734,15 +742,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RDA Log"
-        "ProductCode" = "8:{2C79F3B0-2ECD-4BDE-88FC-463729B3814C}"
-        "PackageCode" = "8:{4A18C1EF-1DE7-4DF1-B899-385D429CD3C2}"
+        "ProductCode" = "8:{F2432B6C-83E1-4B6C-AD0B-62F0DDE19C5D}"
+        "PackageCode" = "8:{C317B566-464B-4040-9032-FC3A8B096AE0}"
         "UpgradeCode" = "8:{B0CA3AEB-7084-42FE-9464-94546D3CD25A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.1"
+        "ProductVersion" = "8:0.0.1"
         "Manufacturer" = "8:TNXqso"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

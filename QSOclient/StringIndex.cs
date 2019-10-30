@@ -13,7 +13,7 @@ namespace StringIndexNS
         public void add(string value)
         {
             if (!string.IsNullOrEmpty(value) && value.Length > 2) 
-                for (int co=0; co < value.Length - 3; co++)
+                for (int co=0; co < value.Length - 2; co++)
                 {
                     string key = value.Substring(co, 3);
                     if (!index.ContainsKey(key))
@@ -25,7 +25,7 @@ namespace StringIndexNS
         public void remove(string value)
         {
             if (!string.IsNullOrEmpty(value) && value.Length > 2)
-                for (int co = 0; co < value.Length - 3; co++)
+                for (int co = 0; co < value.Length - 2; co++)
                 {
                     string key = value.Substring(co, 3);
                     if (index.ContainsKey(key) && index[key].Contains(value))

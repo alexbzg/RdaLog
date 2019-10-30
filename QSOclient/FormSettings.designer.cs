@@ -358,6 +358,7 @@
             this.textBoxHotKeyF8Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxHotKeyF8Title.TabIndex = 57;
             this.textBoxHotKeyF8Title.Text = "RAFA";
+            this.textBoxHotKeyF8Title.Visible = false;
             // 
             // textBoxHotKeyF7Title
             // 
