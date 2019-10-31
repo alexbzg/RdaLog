@@ -73,8 +73,7 @@ namespace RdaLog
             else if (qsoList.Count > 0)
             {
                 QSO last = qsoList.Last();
-                if (!string.IsNullOrEmpty(last.rda))
-                    qsoFactory.no = last.no + 1;
+                qsoFactory.no = last.no + 1;
             }
             _formMain = new FormMain(config.formMain, this);
             if (config.autoLogin)

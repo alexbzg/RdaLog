@@ -17,6 +17,7 @@ namespace System.Windows.Forms
         }
 
         static Regex CallsignRegex = new Regex(@"^(:?[A-Z\d]+\/)?\d?[A-Z]+\d+[A-Z]+(:?\/[A-Z\d]+)*$", RegexOptions.Compiled);
+        static Regex ErrorBackColorRegex = new Regex(@"[A-Z]+\d+[A-Z]+", RegexOptions.Compiled);
 
         public TextBoxCallsign() : base()
         {
@@ -46,7 +47,7 @@ namespace System.Windows.Forms
 
             BackColorChanged -= TextBoxCallsign_BackColorChanged;
             _validCallsign = CallsignRegex.IsMatch(Text);
-            BackColor =  _validCallsign || Text.Equals(string.Empty) ?
+            BackColor =  _validCallsign || !ErrorBackColorRegex.IsMatch(Text) ?
                 _backColor : ErrorBackColor;
             BackColorChanged += TextBoxCallsign_BackColorChanged;
 

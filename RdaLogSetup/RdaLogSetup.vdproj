@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_00AE560AC083432FA5EE845B13D12970"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0ED09114E6A64336AB11B0C5B951D9D0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -33,8 +39,50 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_2AD4FFDB41035D8BA674214CF70946C8"
+        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2AD4FFDB41035D8BA674214CF70946C8"
+        "OwnerKey" = "8:_A1CE89A1629F4AE284AC5C871F58A901"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2AD4FFDB41035D8BA674214CF70946C8"
+        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_42E83918E05A440A8B11417971978C52"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_439091F2B9791EDEC6C4830D7C548C19"
         "OwnerKey" = "8:_683B20C247D5425887FFD9E339B90558"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_439091F2B9791EDEC6C4830D7C548C19"
+        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_439091F2B9791EDEC6C4830D7C548C19"
+        "OwnerKey" = "8:_A1CE89A1629F4AE284AC5C871F58A901"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_439091F2B9791EDEC6C4830D7C548C19"
+        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,7 +111,31 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_98DB5E31A40D40FF564C765244A099FF"
+        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_98DB5E31A40D40FF564C765244A099FF"
+        "OwnerKey" = "8:_A1CE89A1629F4AE284AC5C871F58A901"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_98DB5E31A40D40FF564C765244A099FF"
+        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9FB9A95E304B42C2A745B6C8EF1C685E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A1CE89A1629F4AE284AC5C871F58A901"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -77,6 +149,24 @@
         {
         "MsmKey" = "8:_BD1D69FF510AEBB99F77E5D3B8189CF8"
         "OwnerKey" = "8:_683B20C247D5425887FFD9E339B90558"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BD1D69FF510AEBB99F77E5D3B8189CF8"
+        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BD1D69FF510AEBB99F77E5D3B8189CF8"
+        "OwnerKey" = "8:_A1CE89A1629F4AE284AC5C871F58A901"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BD1D69FF510AEBB99F77E5D3B8189CF8"
+        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -119,6 +209,24 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_9FB9A95E304B42C2A745B6C8EF1C685E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A1CE89A1629F4AE284AC5C871F58A901"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -203,7 +311,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\RdaLog.msi"
+        "OutputFilename" = "8:Release\\rdalog.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -395,7 +503,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RDAlog, Version=0.0.1.1, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:RDAlog, Version=0.0.3.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_683B20C247D5425887FFD9E339B90558"
@@ -742,15 +850,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RDA Log"
-        "ProductCode" = "8:{F2432B6C-83E1-4B6C-AD0B-62F0DDE19C5D}"
-        "PackageCode" = "8:{C317B566-464B-4040-9032-FC3A8B096AE0}"
+        "ProductCode" = "8:{CB85DD94-D33B-45C2-888D-9C3997B0ABDD}"
+        "PackageCode" = "8:{B5C7C366-54EE-46B7-91CA-541A3212FC64}"
         "UpgradeCode" = "8:{B0CA3AEB-7084-42FE-9464-94546D3CD25A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.0.1"
+        "ProductVersion" = "8:0.0.3"
         "Manufacturer" = "8:TNXqso"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -863,7 +971,21 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4E3240894D6747C7905778986F3E0D21"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_3AF0441C494343BA93506D22C59F83E7"
+            {
+            "Name" = "8:RDA Log"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_683B20C247D5425887FFD9E339B90558"
+            "Folder" = "8:_3E20D49AF0964079B6D7D8A826FA58CD"
+            "WorkingFolder" = "8:_07A611DB238C4376884334BC497653C3"
+            "Icon" = "8:_683B20C247D5425887FFD9E339B90558"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A0804D4E139C45E78016BA4F15035CEB"
             {
             "Name" = "8:RDA Log"
             "Arguments" = "8:"
@@ -873,20 +995,6 @@
             "Transitive" = "11:FALSE"
             "Target" = "8:_683B20C247D5425887FFD9E339B90558"
             "Folder" = "8:_F4D22CABCED84429BE3B4A6C2E8AD782"
-            "WorkingFolder" = "8:_07A611DB238C4376884334BC497653C3"
-            "Icon" = "8:"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_99158F23CD584F5DAC12EAEF337E8D2C"
-            {
-            "Name" = "8:RDA Log"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_683B20C247D5425887FFD9E339B90558"
-            "Folder" = "8:_3E20D49AF0964079B6D7D8A826FA58CD"
             "WorkingFolder" = "8:_07A611DB238C4376884334BC497653C3"
             "Icon" = "8:"
             "Feature" = "8:"
@@ -1290,6 +1398,90 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_00AE560AC083432FA5EE845B13D12970"
+            {
+            "SourcePath" = "8:..\\QSOclient\\obj\\Release\\RDAlog.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{47BB38FF-680E-4790-9115-1052190565B5}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_42E83918E05A440A8B11417971978C52"
+            {
+            "SourcePath" = "8:..\\QSOclient\\obj\\Release\\RDAlog.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{47BB38FF-680E-4790-9115-1052190565B5}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A1CE89A1629F4AE284AC5C871F58A901"
+            {
+            "SourcePath" = "8:..\\QSOclient\\obj\\Release\\RDAlog.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{47BB38FF-680E-4790-9115-1052190565B5}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
         }
     }
 }

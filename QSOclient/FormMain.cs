@@ -16,6 +16,7 @@ using XmlConfigNS;
 using StringIndexNS;
 using HamRadio;
 using AutoUpdaterDotNET;
+using System.Reflection;
 
 namespace RdaLog
 {
@@ -189,6 +190,8 @@ namespace RdaLog
                 };
             }
 
+            rdaLog.statusFieldChange += rdaLog_statusFieldChange;
+
             textBoxUserField.Text = rdaLogConfig.userField;
             textBoxCallsign.Text = config.callsign;
 
@@ -198,6 +201,14 @@ namespace RdaLog
             timer.Tick += Timer_Tick;
             timer.Interval = 500;
             timer.Enabled = true;
+
+            Text += " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
+
+        private void rdaLog_statusFieldChange (object sender, StatusFieldChangeEventArgs e)
+        {
+            string value = string.IsNullOrEmpty(e.value) ? "N/A" : e.value;
+            showBalloon($"New {e.field}: {value}");
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -273,6 +284,22 @@ namespace RdaLog
             config.write();
         }
 
+        private void showBalloon(string text)
+        {
+            DoInvoke(() =>
+            {
+                NotifyIcon notifyIcon = new NotifyIcon();
+                notifyIcon.Visible = true;
+                notifyIcon.Icon = SystemIcons.Information;
+                notifyIcon.BalloonTipTitle = "RDA Log";
+                notifyIcon.BalloonTipText = text;
+                notifyIcon.ShowBalloonTip(0);
+                notifyIcon.BalloonTipClosed += delegate (object sender, EventArgs e)
+                {
+                    notifyIcon.Dispose();
+                };
+            });
+        }
 
         private async void FormMain_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -286,6 +313,8 @@ namespace RdaLog
                 }
                 if (!textBoxCallsign.validCallsign)
                 {
+                    MessageBox.Show(string.IsNullOrEmpty(textBoxCallsign.Text) ? "Please enter your callsign." : $"Your callsign {textBoxCallsign.Text} is invalid.",
+                        "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     textBoxCallsign.Focus();
                     return;
                 }
@@ -634,6 +663,7 @@ namespace RdaLog
             rdaLog.clearQso();
             buildQsoIndices();
         }
+
     }
 
     [DataContract]

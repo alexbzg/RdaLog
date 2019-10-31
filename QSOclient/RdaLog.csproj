@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>RDAlog.ico</ApplicationIcon>
+    <ApplicationIcon>rdalog_icon_128.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoUpdater.NET, Version=1.5.7.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
@@ -148,6 +148,7 @@
   <ItemGroup>
     <Content Include="chat.png" />
     <Content Include="RDAlog.ico" />
+    <Content Include="rdalog_icon_128.ico" />
     <None Include="Resources\chat.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -94,14 +94,16 @@ namespace RdaLog
             this.labelDateTime = new System.Windows.Forms.Label();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.dropDownButtonFile = new System.Windows.Forms.ToolStripDropDownButton();
+            this.menuItemFileClear = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExport = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExportRda = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExportRafa = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExportAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemFileClear = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.labelStatBand = new System.Windows.Forms.Label();
+            this.labelStatMode = new System.Windows.Forms.Label();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
@@ -289,6 +291,8 @@ namespace RdaLog
             // 
             // panelStatFilter
             // 
+            this.panelStatFilter.Controls.Add(this.labelStatMode);
+            this.panelStatFilter.Controls.Add(this.labelStatBand);
             this.panelStatFilter.Controls.Add(this.labelStatCallsignsCaption);
             this.panelStatFilter.Controls.Add(this.labelStatQsoCaption);
             this.panelStatFilter.Controls.Add(this.labelStatQso);
@@ -403,7 +407,7 @@ namespace RdaLog
             this.checkBoxAutoStatFilter.Checked = true;
             this.checkBoxAutoStatFilter.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxAutoStatFilter.ForeColor = System.Drawing.Color.DarkGreen;
-            this.checkBoxAutoStatFilter.Location = new System.Drawing.Point(83, 1);
+            this.checkBoxAutoStatFilter.Location = new System.Drawing.Point(43, 1);
             this.checkBoxAutoStatFilter.Name = "checkBoxAutoStatFilter";
             this.checkBoxAutoStatFilter.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoStatFilter.TabIndex = 30;
@@ -418,9 +422,9 @@ namespace RdaLog
             this.labelStatFilter.ForeColor = System.Drawing.Color.DarkGreen;
             this.labelStatFilter.Location = new System.Drawing.Point(11, 2);
             this.labelStatFilter.Name = "labelStatFilter";
-            this.labelStatFilter.Size = new System.Drawing.Size(66, 13);
+            this.labelStatFilter.Size = new System.Drawing.Size(31, 13);
             this.labelStatFilter.TabIndex = 29;
-            this.labelStatFilter.Text = "Statistic filter";
+            this.labelStatFilter.Text = "Stats";
             // 
             // panelCallsignId
             // 
@@ -831,7 +835,7 @@ namespace RdaLog
             // textBoxCorrespondent
             // 
             this.textBoxCorrespondent.BackColor = System.Drawing.SystemColors.Info;
-            this.textBoxCorrespondent.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxCorrespondent.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxCorrespondent.Location = new System.Drawing.Point(12, 46);
             this.textBoxCorrespondent.Name = "textBoxCorrespondent";
             this.textBoxCorrespondent.Size = new System.Drawing.Size(229, 29);
@@ -882,9 +886,16 @@ namespace RdaLog
             this.dropDownButtonFile.Image = ((System.Drawing.Image)(resources.GetObject("dropDownButtonFile.Image")));
             this.dropDownButtonFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.dropDownButtonFile.Name = "dropDownButtonFile";
-            this.dropDownButtonFile.Size = new System.Drawing.Size(38, 22);
-            this.dropDownButtonFile.Text = "File";
             this.dropDownButtonFile.ShowDropDownArrow = false;
+            this.dropDownButtonFile.Size = new System.Drawing.Size(29, 22);
+            this.dropDownButtonFile.Text = "File";
+            // 
+            // menuItemFileClear
+            // 
+            this.menuItemFileClear.Name = "menuItemFileClear";
+            this.menuItemFileClear.Size = new System.Drawing.Size(107, 22);
+            this.menuItemFileClear.Text = "New";
+            this.menuItemFileClear.Click += new System.EventHandler(this.MenuItemFileClear_Click);
             // 
             // menuItemAdifExport
             // 
@@ -893,7 +904,7 @@ namespace RdaLog
             this.menuItemAdifExportRafa,
             this.menuItemAdifExportAll});
             this.menuItemAdifExport.Name = "menuItemAdifExport";
-            this.menuItemAdifExport.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExport.Size = new System.Drawing.Size(107, 22);
             this.menuItemAdifExport.Text = "Export";
             // 
             // menuItemAdifExportRda
@@ -917,13 +928,6 @@ namespace RdaLog
             this.menuItemAdifExportAll.Text = "All QSO";
             this.menuItemAdifExportAll.Click += new System.EventHandler(this.MenuItemAdifExportAll_Click);
             // 
-            // menuItemFileClear
-            // 
-            this.menuItemFileClear.Name = "menuItemFileClear";
-            this.menuItemFileClear.Size = new System.Drawing.Size(180, 22);
-            this.menuItemFileClear.Text = "New";
-            this.menuItemFileClear.Click += new System.EventHandler(this.MenuItemFileClear_Click);
-            // 
             // toolStripLabelSettings
             // 
             this.toolStripLabelSettings.Name = "toolStripLabelSettings";
@@ -937,6 +941,28 @@ namespace RdaLog
             this.toolStripLabelLog.Size = new System.Drawing.Size(27, 22);
             this.toolStripLabelLog.Text = "Log";
             this.toolStripLabelLog.Click += new System.EventHandler(this.ToolStripLabelLog_Click);
+            // 
+            // labelStatBand
+            // 
+            this.labelStatBand.AutoSize = true;
+            this.labelStatBand.BackColor = System.Drawing.Color.Transparent;
+            this.labelStatBand.ForeColor = System.Drawing.Color.DarkGreen;
+            this.labelStatBand.Location = new System.Drawing.Point(153, 2);
+            this.labelStatBand.Name = "labelStatBand";
+            this.labelStatBand.Size = new System.Drawing.Size(29, 13);
+            this.labelStatBand.TabIndex = 62;
+            this.labelStatBand.Text = "MHz";
+            // 
+            // labelStatMode
+            // 
+            this.labelStatMode.AutoSize = true;
+            this.labelStatMode.BackColor = System.Drawing.Color.Transparent;
+            this.labelStatMode.ForeColor = System.Drawing.Color.DarkGreen;
+            this.labelStatMode.Location = new System.Drawing.Point(84, 2);
+            this.labelStatMode.Name = "labelStatMode";
+            this.labelStatMode.Size = new System.Drawing.Size(34, 13);
+            this.labelStatMode.TabIndex = 63;
+            this.labelStatMode.Text = "Mode";
             // 
             // FormMain
             // 
@@ -1060,6 +1086,8 @@ namespace RdaLog
         private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportAll;
         private System.Windows.Forms.ToolStripMenuItem menuItemFileClear;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.Label labelStatMode;
+        private System.Windows.Forms.Label labelStatBand;
     }
 }
 
