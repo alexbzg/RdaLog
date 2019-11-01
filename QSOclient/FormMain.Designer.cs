@@ -46,6 +46,8 @@ namespace RdaLog
             this.labelRda = new System.Windows.Forms.Label();
             this.textBoxRda = new System.Windows.Forms.TextBox();
             this.panelStatFilter = new System.Windows.Forms.Panel();
+            this.labelStatMode = new System.Windows.Forms.Label();
+            this.labelStatBand = new System.Windows.Forms.Label();
             this.labelStatCallsignsCaption = new System.Windows.Forms.Label();
             this.labelStatQsoCaption = new System.Windows.Forms.Label();
             this.labelStatQso = new System.Windows.Forms.Label();
@@ -102,8 +104,6 @@ namespace RdaLog
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.labelStatBand = new System.Windows.Forms.Label();
-            this.labelStatMode = new System.Windows.Forms.Label();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
@@ -307,6 +307,28 @@ namespace RdaLog
             this.panelStatFilter.Name = "panelStatFilter";
             this.panelStatFilter.Size = new System.Drawing.Size(363, 50);
             this.panelStatFilter.TabIndex = 28;
+            // 
+            // labelStatMode
+            // 
+            this.labelStatMode.AutoSize = true;
+            this.labelStatMode.BackColor = System.Drawing.Color.Transparent;
+            this.labelStatMode.ForeColor = System.Drawing.Color.DarkGreen;
+            this.labelStatMode.Location = new System.Drawing.Point(84, 2);
+            this.labelStatMode.Name = "labelStatMode";
+            this.labelStatMode.Size = new System.Drawing.Size(34, 13);
+            this.labelStatMode.TabIndex = 63;
+            this.labelStatMode.Text = "Mode";
+            // 
+            // labelStatBand
+            // 
+            this.labelStatBand.AutoSize = true;
+            this.labelStatBand.BackColor = System.Drawing.Color.Transparent;
+            this.labelStatBand.ForeColor = System.Drawing.Color.DarkGreen;
+            this.labelStatBand.Location = new System.Drawing.Point(153, 2);
+            this.labelStatBand.Name = "labelStatBand";
+            this.labelStatBand.Size = new System.Drawing.Size(29, 13);
+            this.labelStatBand.TabIndex = 62;
+            this.labelStatBand.Text = "MHz";
             // 
             // labelStatCallsignsCaption
             // 
@@ -941,28 +963,6 @@ namespace RdaLog
             this.toolStripLabelLog.Size = new System.Drawing.Size(27, 22);
             this.toolStripLabelLog.Text = "Log";
             this.toolStripLabelLog.Click += new System.EventHandler(this.ToolStripLabelLog_Click);
-            // 
-            // labelStatBand
-            // 
-            this.labelStatBand.AutoSize = true;
-            this.labelStatBand.BackColor = System.Drawing.Color.Transparent;
-            this.labelStatBand.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatBand.Location = new System.Drawing.Point(153, 2);
-            this.labelStatBand.Name = "labelStatBand";
-            this.labelStatBand.Size = new System.Drawing.Size(29, 13);
-            this.labelStatBand.TabIndex = 62;
-            this.labelStatBand.Text = "MHz";
-            // 
-            // labelStatMode
-            // 
-            this.labelStatMode.AutoSize = true;
-            this.labelStatMode.BackColor = System.Drawing.Color.Transparent;
-            this.labelStatMode.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatMode.Location = new System.Drawing.Point(84, 2);
-            this.labelStatMode.Name = "labelStatMode";
-            this.labelStatMode.Size = new System.Drawing.Size(34, 13);
-            this.labelStatMode.TabIndex = 63;
-            this.labelStatMode.Text = "Mode";
             // 
             // FormMain
             // 

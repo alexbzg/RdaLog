@@ -40,7 +40,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2AD4FFDB41035D8BA674214CF70946C8"
-        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
+        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -52,7 +52,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2AD4FFDB41035D8BA674214CF70946C8"
-        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
+        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -70,7 +70,7 @@
         "Entry"
         {
         "MsmKey" = "8:_439091F2B9791EDEC6C4830D7C548C19"
-        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
+        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -82,7 +82,7 @@
         "Entry"
         {
         "MsmKey" = "8:_439091F2B9791EDEC6C4830D7C548C19"
-        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
+        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -112,7 +112,7 @@
         "Entry"
         {
         "MsmKey" = "8:_98DB5E31A40D40FF564C765244A099FF"
-        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
+        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -124,7 +124,7 @@
         "Entry"
         {
         "MsmKey" = "8:_98DB5E31A40D40FF564C765244A099FF"
-        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
+        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -154,7 +154,7 @@
         "Entry"
         {
         "MsmKey" = "8:_BD1D69FF510AEBB99F77E5D3B8189CF8"
-        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
+        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -166,7 +166,7 @@
         "Entry"
         {
         "MsmKey" = "8:_BD1D69FF510AEBB99F77E5D3B8189CF8"
-        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
+        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -214,49 +214,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A1CE89A1629F4AE284AC5C871F58A901"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A3790AF570AB4BFCB410CD78A83190B6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_683B20C247D5425887FFD9E339B90558"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BD1D69FF510AEBB99F77E5D3B8189CF8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2AD4FFDB41035D8BA674214CF70946C8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_98DB5E31A40D40FF564C765244A099FF"
+        "OwnerKey" = "8:_0ED09114E6A64336AB11B0C5B951D9D0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -268,7 +226,49 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0ED09114E6A64336AB11B0C5B951D9D0"
+        "OwnerKey" = "8:_98DB5E31A40D40FF564C765244A099FF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2AD4FFDB41035D8BA674214CF70946C8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BD1D69FF510AEBB99F77E5D3B8189CF8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_683B20C247D5425887FFD9E339B90558"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A3790AF570AB4BFCB410CD78A83190B6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_00AE560AC083432FA5EE845B13D12970"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A1CE89A1629F4AE284AC5C871F58A901"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_42E83918E05A440A8B11417971978C52"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -424,11 +424,6 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_2AD4FFDB41035D8BA674214CF70946C8"
-                    {
-                    "Name" = "8:Newtonsoft.Json.DLL"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.DLL"
             "TargetName" = "8:"
@@ -557,11 +552,6 @@
             "AssemblyAsmDisplayName" = "8:AutoUpdater.NET, Version=1.5.7.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_98DB5E31A40D40FF564C765244A099FF"
-                    {
-                    "Name" = "8:AutoUpdater.NET.DLL"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:AutoUpdater.NET.DLL"
             "TargetName" = "8:"
@@ -650,11 +640,6 @@
             "AssemblyAsmDisplayName" = "8:protobuf-net, Version=2.4.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_BD1D69FF510AEBB99F77E5D3B8189CF8"
-                    {
-                    "Name" = "8:protobuf-net.DLL"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:protobuf-net.DLL"
             "TargetName" = "8:"
@@ -850,15 +835,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RDA Log"
-        "ProductCode" = "8:{4E9CC7B7-2D58-4D08-9279-FDAB0DE5434E}"
-        "PackageCode" = "8:{8CAF33C3-E117-4838-82BA-955CED704EF3}"
+        "ProductCode" = "8:{62336170-3AC0-405D-9B84-8A3411254D4B}"
+        "PackageCode" = "8:{4A5221BD-C361-47E0-B829-1BF0E1C4F935}"
         "UpgradeCode" = "8:{B0CA3AEB-7084-42FE-9464-94546D3CD25A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.0.4"
+        "ProductVersion" = "8:0.0.5"
         "Manufacturer" = "8:TNXqso"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1400,7 +1385,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_00AE560AC083432FA5EE845B13D12970"
             {
-            "SourcePath" = "8:..\\QSOclient\\obj\\Release\\RDAlog.exe"
+            "SourcePath" = "8:..\\QSOclient\\obj\\Debug\\RDAlog.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_07A611DB238C4376884334BC497653C3"
@@ -1428,7 +1413,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_42E83918E05A440A8B11417971978C52"
             {
-            "SourcePath" = "8:..\\QSOclient\\obj\\Release\\RDAlog.exe"
+            "SourcePath" = "8:..\\QSOclient\\obj\\Debug\\RDAlog.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_07A611DB238C4376884334BC497653C3"
@@ -1456,7 +1441,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A1CE89A1629F4AE284AC5C871F58A901"
             {
-            "SourcePath" = "8:..\\QSOclient\\obj\\Release\\RDAlog.exe"
+            "SourcePath" = "8:..\\QSOclient\\obj\\Debug\\RDAlog.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_07A611DB238C4376884334BC497653C3"

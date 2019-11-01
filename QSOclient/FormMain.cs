@@ -58,6 +58,8 @@ namespace RdaLog
         private StringIndex callsignsDb = new StringIndex();
         private StringIndex callsignsQso = new StringIndex();
         private Timer timer = new Timer();
+        private Control[] qsoControls;
+        private Object[] qsoValues;
         public FormMain(FormMainConfig _config, RdaLog _rdaLog) : base(_config)
         {
             rdaLog = _rdaLog;
@@ -203,6 +205,9 @@ namespace RdaLog
             timer.Enabled = true;
 
             Text += " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+            qsoControls = new Control[] { textBoxCallsign, numericUpDownFreq, comboBoxMode, textBoxRstRcvd, textBoxRstSent };
+            saveQsoValues();
         }
 
         private void rdaLog_statusFieldChange (object sender, StatusFieldChangeEventArgs e)
@@ -320,11 +325,30 @@ namespace RdaLog
                     textBoxCallsign.Focus();
                     return;
                 }
+                if (ActiveControl != textBoxCorrespondent)
+                {
+                    for (int co = 0; co < qsoControls.Length; co++)
+                    {
+                        if ((qsoControls[co].GetType() == typeof(NumericUpDown) && ((NumericUpDown)qsoControls[co]).Value != (decimal)qsoValues[co])
+                            || (qsoControls[co].GetType() != typeof(NumericUpDown) && qsoControls[co].Text != qsoValues[co].ToString()))
+                        {
+                            textBoxCorrespondent.Focus();
+                            saveQsoValues();
+                            return;
+                        }
+                    }
+                }
+                saveQsoValues();
                 string correspondent = textBoxCorrespondent.Text;
                 textBoxCorrespondent.Text = "";
                 textBoxCorrespondent.Focus();
                 await rdaLog.newQso(correspondent, textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text);
             }
+        }
+
+        private void saveQsoValues()
+        {
+            qsoValues = new object[] { textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text };
         }
 
         private List<string> parseValues(Regex reMatch, ref string values, HashSet<string> valuesSet, RegexReplace reReplace)
@@ -459,7 +483,7 @@ namespace RdaLog
                     });
                 data.Keys.ToList().ForEach(val =>
                 {
-                    writeADIF(Path.Combine(folderBrowserDialog.SelectedPath, val + ".adi"), data[val], new Dictionary<string, string>() { { "RDA", val } });
+                    writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>() { { "RDA", val } }, true);
                 });
             }
         }
@@ -487,23 +511,29 @@ namespace RdaLog
                     });
                 data.Keys.ToList().ForEach(val =>
                 {
-                    writeADIF(Path.Combine(folderBrowserDialog.SelectedPath, val + ".adi"), data[val], new Dictionary<string, string>() { { "RAFA", val } });
+                    writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>() { { "RAFA", val } }, true);
                 });
             }
         }
 
-        private void writeADIF(string fileName, List<QSO> data, Dictionary<string, string> adifParams)
+        private void writeADIF(string folder, string fileName, List<QSO> _data, Dictionary<string, string> adifParams, bool byCallsigns=false)
         {
+            var data = byCallsigns ? _data.GroupBy(item => item.myCS, item => item, (cs, items) => new { callsign = cs, qso = items.ToList() }) :
+                _data.GroupBy(item => "", item => item, (cs, items) => new { callsign = cs, qso = items.ToList() });
             try
             {
-                using (StreamWriter sw = new StreamWriter(fileName))
+                DateTime ts = DateTime.UtcNow;
+                foreach (var entry in data)
                 {
-                    DateTime ts = DateTime.UtcNow;
-                    sw.WriteLine("ADIF Export from RDA Log");
-                    sw.WriteLine("Logs generated @ {0:yyyy-MM-dd HH:mm:ssZ}", ts);
-                    sw.WriteLine("<EOH>");
-                    foreach (QSO qso in data)
-                        sw.WriteLine(qso.adif(adifParams));
+                    string entryFileName = string.IsNullOrEmpty(entry.callsign) ? fileName : entry.callsign + " " + fileName;
+                    using (StreamWriter sw = new StreamWriter(Path.Combine(folder, entryFileName)))
+                    {
+                        sw.WriteLine("ADIF Export from RDA Log");
+                        sw.WriteLine("Logs generated @ {0:yyyy-MM-dd HH:mm:ssZ}", ts);
+                        sw.WriteLine("<EOH>");
+                        foreach (QSO qso in entry.qso)
+                            sw.WriteLine(qso.adif(adifParams));
+                    }
                 }
             }
             catch (Exception ex)
@@ -583,7 +613,10 @@ namespace RdaLog
 
         private void ComboBoxMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            config.mode = comboBoxMode.SelectedItem.ToString();
+            string mode = comboBoxMode.SelectedItem.ToString();
+            config.mode = mode;
+            textBoxRstSent.Text = HamRadio.Mode.DefRst[mode];
+            textBoxRstRcvd.Text = HamRadio.Mode.DefRst[mode];
             config.write();
             setStatFilter();
         }
@@ -655,15 +688,18 @@ namespace RdaLog
             {
                 config.exportPath =  saveFileDialog.FileName;
                 config.write();
-                writeADIF(saveFileDialog.FileName, rdaLog.qsoList.ToList(), new Dictionary<string, string>());
+                writeADIF("", saveFileDialog.FileName, rdaLog.qsoList.ToList(), new Dictionary<string, string>());
             }
 
         }
 
         private void MenuItemFileClear_Click(object sender, EventArgs e)
         {
-            rdaLog.clearQso();
-            buildQsoIndices();
+            if (MessageBox.Show("All QSO will be deleted. Do you really want to continue?", "RDA Log", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            {
+                rdaLog.clearQso();
+                buildQsoIndices();
+            }
         }
 
     }
