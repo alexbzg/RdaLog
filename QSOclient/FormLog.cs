@@ -23,6 +23,7 @@ namespace RdaLog
             rdaLog = _rdaLog;
             InitializeComponent();
             bsQSO = new BindingSource(rdaLog.qsoList, null);
+            bsQSO.ListChanged += BsQSO_ListChanged;
             dataGridView.AutoGenerateColumns = false;
             dataGridView.DataSource = bsQSO;
             for (int co = 0; co < _config.dataGridColumnsWidth.Count; co++)
@@ -38,18 +39,10 @@ namespace RdaLog
             rdaLog.qsoList.ListChanged += QsoList_ListChanged;
         }
 
-        private void buildIndex()
-        {
-            qsoIndex.Clear();
-            foreach (QSO qso in rdaLog.qsoList)
-                addToIndex(qso);
-        }
-
-        private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
+        private void BsQSO_ListChanged(object sender, ListChangedEventArgs e)
         {
             if (e.ListChangedType == ListChangedType.ItemAdded)
             {
-                addToIndex(rdaLog.qsoList[e.NewIndex]);
                 DataGridViewRow r = dataGridView.Rows[e.NewIndex];
                 setRowColors(r, Color.White, Color.SteelBlue);
                 Task.Run(async () =>
@@ -64,6 +57,21 @@ namespace RdaLog
                 dataGridView.FirstDisplayedScrollingRowIndex = e.NewIndex;
                 dataGridView.Refresh();
             }
+        }
+
+        private void buildIndex()
+        {
+            qsoIndex.Clear();
+            foreach (QSO qso in rdaLog.qsoList)
+                addToIndex(qso);
+            if (filterButton.Checked)
+                filterQso();
+        }
+
+        private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (e.ListChangedType == ListChangedType.ItemAdded)
+                addToIndex(rdaLog.qsoList[e.NewIndex], true);
             else if (e.ListChangedType == ListChangedType.Reset)
                 buildIndex();
         }
@@ -77,11 +85,14 @@ namespace RdaLog
             }
         }
 
-        private void addToIndex(QSO qso)
+        private void addToIndex(QSO qso, bool reverse = false)
         {
             if (!qsoIndex.ContainsKey(qso.cs))
                 qsoIndex[qso.cs] = new BindingList<QSO>();
-            qsoIndex[qso.cs].Add(qso);
+            if (reverse)
+                qsoIndex[qso.cs].Insert(0, qso);
+            else
+                qsoIndex[qso.cs].Add(qso);
         }
 
         private void DataGridView_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
@@ -90,19 +101,24 @@ namespace RdaLog
             config.write();
         }
 
-        private void filterQso()
+        private void filterQso(bool warning=false)
         {
             if (filterTextBox.Text != "" && qsoIndex.ContainsKey(filterTextBox.Text))
                 bsQSO.DataSource = qsoIndex[filterTextBox.Text];
             else
-                MessageBox.Show("Callsign not found!", "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            {
+                if (warning)
+                    MessageBox.Show("Callsign not found!", "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                bsQSO.DataSource = rdaLog.qsoList;
+                filterButton.Checked = false;
+            }
         }
 
         private void FilterButton_CheckedChanged(object sender, EventArgs e)
         {
             if (filterButton.Checked)
             {
-                filterQso();
+                filterQso(true);
                 filterButton.BackColor = SystemColors.MenuHighlight;
             }
             else

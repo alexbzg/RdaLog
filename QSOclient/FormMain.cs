@@ -248,7 +248,9 @@ namespace RdaLog
 
         private void buildQsoIndices()
         {
-            comboBoxStatFilterRda.Items.Clear();
+            if (comboBoxStatFilterRda.Items.Count > 1)
+                for (int co = 1; co < comboBoxStatFilterRda.Items.Count; co++)
+                    comboBoxStatFilterRda.Items.RemoveAt(co);
             callsignsQso.clear();
             foreach (QSO qso in rdaLog.qsoList)
                 indexQso(qso);

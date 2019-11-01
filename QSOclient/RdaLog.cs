@@ -69,12 +69,12 @@ namespace RdaLog
             qsoFactory = new QSOFactory(this);
             qsoList = ProtoBufSerialization.Read<BindingList<QSO>>(qsoFilePath);
             if (qsoList == null)
-                qsoList = new BindingList<QSO>();
-            else if (qsoList.Count > 0)
             {
-                QSO last = qsoList.Last();
-                qsoFactory.no = last.no + 1;
+                qsoList = new BindingList<QSO>();
+                qsoFactory.no = 1;
             }
+            else if (qsoList.Count > 0)
+                qsoFactory.no = qsoList.First().no + 1;
             _formMain = new FormMain(config.formMain, this);
             if (config.autoLogin)
                 Task.Run(() => { httpService.login(); });
@@ -114,6 +114,7 @@ namespace RdaLog
         public void clearQso()
         {
             qsoList.Clear();
+            qsoFactory.no = 1;
         }
 
         public void showSettings()

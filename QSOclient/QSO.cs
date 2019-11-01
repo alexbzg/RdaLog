@@ -114,7 +114,7 @@ namespace RdaLog
                 adifField("CALL", cs) +
                 adifField("QSO_DATE", dt[0].Replace("-", "")) +
                 adifField("TIME_ON", dt[1].Replace(":", "")) +
-                adifField("BAND", band) +
+                adifField("BAND", band + "M") +
                 adifField("STATION_CALLSIGN", myCS) +
                 adifField("FREQ", adifFormatFreq(freq)) +
                 adifField("MODE", mode) +
