@@ -104,12 +104,14 @@ namespace RdaLog
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.connectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
             this.panelCallsignId.SuspendLayout();
             this.panelCwMacro.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).BeginInit();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -718,6 +720,8 @@ namespace RdaLog
             this.statusStrip.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.statusStrip.AutoSize = false;
             this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectionStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 309);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(364, 22);
@@ -964,6 +968,11 @@ namespace RdaLog
             this.toolStripLabelLog.Text = "Log";
             this.toolStripLabelLog.Click += new System.EventHandler(this.ToolStripLabelLog_Click);
             // 
+            // connectionStatusLabel
+            // 
+            this.connectionStatusLabel.Name = "connectionStatusLabel";
+            this.connectionStatusLabel.Size = new System.Drawing.Size(0, 17);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1004,6 +1013,8 @@ namespace RdaLog
             this.panelCwMacro.ResumeLayout(false);
             this.panelCwMacro.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).EndInit();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
@@ -1088,6 +1099,7 @@ namespace RdaLog
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.Label labelStatMode;
         private System.Windows.Forms.Label labelStatBand;
+        private System.Windows.Forms.ToolStripStatusLabel connectionStatusLabel;
     }
 }
 

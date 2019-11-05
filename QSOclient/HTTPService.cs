@@ -65,9 +65,16 @@ namespace RdaLog
         private string unsentFilePath = Application.StartupPath + "\\unsent.dat";
         private string stationCallsign = null;
         private volatile bool _connected;
-        public bool connected { get { return _connected; } }
+        public bool connected { get { return _connected; }
+            set {
+                if (value != _connected)
+                {
+                    _connected = value;
+                    connectionStateChanged?.Invoke(this, new EventArgs());
+                }
+            }
+        }
         public EventHandler<EventArgs> connectionStateChanged;
-        //private DXpConfig config;
         private HttpServiceConfig config;
         private RdaLog rdaLog;
         public bool gpsServerLoad;
@@ -119,12 +126,11 @@ namespace RdaLog
             {
                 System.Diagnostics.Debug.WriteLine(e.ToString());
             }
-            if (_connected != result)
+            if (connected != result)
             {
-                _connected = result;
-                if (_connected)
+                connected = result;
+                if (connected)
                     await processQueue();
-                connectionStateChanged?.Invoke(this, new EventArgs());
             }
             /*if (response?.StatusCode == System.Net.HttpStatusCode.BadRequest)
             {
@@ -244,6 +250,7 @@ namespace RdaLog
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
+                    config.token = null;
                     MessageBox.Show(await response.Content.ReadAsStringAsync(), "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }

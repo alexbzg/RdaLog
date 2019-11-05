@@ -24,7 +24,7 @@ namespace RdaLog
         public FormMain formMain { get { return _formMain; } }
         private FormLog formLog;
         private RdaLogConfig config;
-        private HttpService httpService;
+        public HttpService httpService;
         private string qsoFilePath;
         internal BindingList<QSO> qsoList;
         private int qsoNo = 0;

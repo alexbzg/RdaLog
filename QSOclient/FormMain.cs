@@ -68,6 +68,9 @@ namespace RdaLog
 
             RdaLogConfig rdaLogConfig = (RdaLogConfig)config.parent;
 
+            rdaLogConfig.httpService.logInOout += onLogInOut;
+            rdaLog.httpService.connectionStateChanged += onLogInOut;
+
             try
             {
                 string rdaValuesStr = File.ReadAllText(Application.StartupPath + @"\rdaValues.json");
@@ -208,6 +211,16 @@ namespace RdaLog
 
             qsoControls = new Control[] { textBoxCallsign, numericUpDownFreq, comboBoxMode, textBoxRstRcvd, textBoxRstSent };
             saveQsoValues();
+        }
+
+        private void onLogInOut(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(((RdaLogConfig)config.parent).httpService.token))
+                connectionStatusLabel.Text = "Not logged in.";
+            else if (rdaLog.httpService.connected)
+                connectionStatusLabel.Text = "Logged in as " + ((RdaLogConfig)config.parent).httpService.callsign + ".";
+            else
+                connectionStatusLabel.Text = "Logged in as " + ((RdaLogConfig)config.parent).httpService.callsign + ". No connection.";
         }
 
         private void rdaLog_statusFieldChange (object sender, StatusFieldChangeEventArgs e)
