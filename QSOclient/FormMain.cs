@@ -538,7 +538,7 @@ namespace RdaLog
                 DateTime ts = DateTime.UtcNow;
                 foreach (var entry in data)
                 {
-                    string entryFileName = string.IsNullOrEmpty(entry.callsign) ? fileName : entry.callsign + " " + fileName;
+                    string entryFileName = string.IsNullOrEmpty(entry.callsign) ? fileName : entry.callsign.Replace('/', '_') + " " + fileName;
                     using (StreamWriter sw = new StreamWriter(Path.Combine(folder, entryFileName)))
                     {
                         sw.WriteLine("ADIF Export from RDA Log");

@@ -91,7 +91,7 @@ namespace RdaLog
 
         public static string formatFreq(decimal freq)
         {
-            return freq.ToString("0.00", System.Globalization.NumberFormatInfo.InvariantInfo);
+            return freq.ToString("0.0", System.Globalization.NumberFormatInfo.InvariantInfo);
         }
 
         public static string adifField( string name, string value )

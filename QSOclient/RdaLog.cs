@@ -108,7 +108,7 @@ namespace RdaLog
 
         public async Task postFreq(decimal freq)
         {
-            await httpService.postFreq(freq);
+            await httpService.postFreq(QSO.formatFreq(freq));
         }
 
         private void writeQsoList()

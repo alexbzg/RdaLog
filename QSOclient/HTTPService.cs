@@ -257,7 +257,7 @@ namespace RdaLog
             return response?.StatusCode;
         }
 
-        public async Task postFreq(decimal freq)
+        public async Task postFreq(string freq)
         {
             await post("location", new FreqData(config, freq));
         }
@@ -343,10 +343,10 @@ namespace RdaLog
 
     class FreqData : JSONToken
     {
-        internal FreqData(HttpServiceConfig _config, decimal _freq) : base(_config) {
+        internal FreqData(HttpServiceConfig _config, string _freq) : base(_config) {
             freq = _freq;
         }
-        public decimal freq;
+        public string freq;
     }
 
     class StatusData : JSONToken
