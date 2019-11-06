@@ -1,5 +1,5 @@
 ﻿//#define DISABLE_HTTP
-#define TEST_SRV
+//#define TEST_SRV
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

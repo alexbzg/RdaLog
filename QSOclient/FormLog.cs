@@ -133,6 +133,13 @@ namespace RdaLog
             if (filterButton.Checked)
                 filterQso();
         }
+
+
+        private void FormLog_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            rdaLog.qsoList.ListChanged -= QsoList_ListChanged;
+            bsQSO.ListChanged -= BsQSO_ListChanged;
+        }
     }
 
     [DataContract]

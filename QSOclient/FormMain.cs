@@ -664,7 +664,8 @@ namespace RdaLog
             HashSet<string> callsigns = new HashSet<string>();
             int qsoCount = 0;
             foreach (QSO qso in rdaLog.qsoList)
-                if ((comboBoxStatFilterRda.SelectedIndex == 0 || comboBoxStatFilterRda.SelectedItem == null || qso.rda.Contains(comboBoxStatFilterRda.SelectedItem.ToString())) &&
+                if ((comboBoxStatFilterRda.SelectedIndex == 0 || comboBoxStatFilterRda.SelectedItem == null || 
+                    (!string.IsNullOrEmpty(qso.rda) && qso.rda.Contains(comboBoxStatFilterRda.SelectedItem.ToString()))) &&
                     (comboBoxStatFilterMode.SelectedIndex == 0 || comboBoxStatFilterMode.SelectedItem == null || comboBoxStatFilterMode.SelectedItem.ToString() == qso.mode) &&
                     (comboBoxStatFilterBand.SelectedIndex == 0 || comboBoxStatFilterBand.SelectedItem == null || comboBoxStatFilterBand.SelectedItem.ToString() == qso.band))
                 {

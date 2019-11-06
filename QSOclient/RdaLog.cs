@@ -102,7 +102,7 @@ namespace RdaLog
         {
             QSO qso = qsoFactory.create(callsign, myCallsign, freq, mode, rstRcvd, rstSnt);
             qsoList.Insert(0, qso);
-            ProtoBufSerialization.Write<BindingList<QSO>>(qsoFilePath, qsoList);
+            writeQsoList();
             await httpService.postQso(qso);
         }
 
@@ -111,9 +111,15 @@ namespace RdaLog
             await httpService.postFreq(freq);
         }
 
+        private void writeQsoList()
+        {
+            ProtoBufSerialization.Write<BindingList<QSO>>(qsoFilePath, qsoList);
+        }
+
         public void clearQso()
         {
             qsoList.Clear();
+            writeQsoList();
             qsoFactory.no = 1;
         }
 
@@ -163,6 +169,7 @@ namespace RdaLog
 
                 config.write();
             }
+            formSettings.Dispose();
         }
 
     }
