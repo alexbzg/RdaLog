@@ -701,8 +701,10 @@ namespace RdaLog
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 config.exportPath =  saveFileDialog.FileName;
+                if (!config.exportPath.EndsWith(".adi"))
+                    config.exportPath += ".adi";
                 config.write();
-                writeADIF("", saveFileDialog.FileName, rdaLog.qsoList.ToList(), new Dictionary<string, string>());
+                writeADIF("", config.exportPath, rdaLog.qsoList.ToList(), new Dictionary<string, string>());
             }
 
         }
