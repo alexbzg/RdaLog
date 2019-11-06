@@ -534,7 +534,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RDAlog, Version=0.0.7.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:RDAlog, Version=0.0.8.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_683B20C247D5425887FFD9E339B90558"
@@ -850,15 +850,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RDA Log"
-        "ProductCode" = "8:{10D920C5-4BC2-4974-A0BD-A90581F242FD}"
-        "PackageCode" = "8:{6B35FF0B-5E91-4456-AD7D-DA45D09839F0}"
+        "ProductCode" = "8:{91D2B9C0-2C78-46CB-BE67-69B28C865049}"
+        "PackageCode" = "8:{31F91C82-431E-4D8F-B611-C1FBFDC97B9B}"
         "UpgradeCode" = "8:{B0CA3AEB-7084-42FE-9464-94546D3CD25A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.0.8"
+        "ProductVersion" = "8:0.0.9"
         "Manufacturer" = "8:TNXqso"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
