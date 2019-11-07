@@ -17,6 +17,7 @@ using StringIndexNS;
 using HamRadio;
 using AutoUpdaterDotNET;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace RdaLog
 {
@@ -218,7 +219,7 @@ namespace RdaLog
             if (string.IsNullOrEmpty(((RdaLogConfig)config.parent).httpService.token))
                 connectionStatusLabel.Text = "Not logged in.";
             else if (rdaLog.httpService.connected)
-                connectionStatusLabel.Text = "Logged in as " + ((RdaLogConfig)config.parent).httpService.callsign + ".";
+                connectionStatusLabel.Text = "Logged in as " + ((RdaLogConfig)config.parent).httpService.callsign.ToUpper() + ".";
             else
                 connectionStatusLabel.Text = "Logged in as " + ((RdaLogConfig)config.parent).httpService.callsign + ". No connection.";
         }
@@ -354,9 +355,17 @@ namespace RdaLog
                 saveQsoValues();
                 string correspondent = textBoxCorrespondent.Text;
                 textBoxCorrespondent.Text = "";
+                setDefRst();
                 textBoxCorrespondent.Focus();
                 await rdaLog.newQso(correspondent, textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text);
             }
+        }
+
+        private void setDefRst()
+        {
+            string mode = comboBoxMode.SelectedItem.ToString();
+            textBoxRstSent.Text = HamRadio.Mode.DefRst[mode];
+            textBoxRstRcvd.Text = HamRadio.Mode.DefRst[mode];
         }
 
         private void saveQsoValues()
@@ -628,9 +637,8 @@ namespace RdaLog
         {
             string mode = comboBoxMode.SelectedItem.ToString();
             config.mode = mode;
-            textBoxRstSent.Text = HamRadio.Mode.DefRst[mode];
-            textBoxRstRcvd.Text = HamRadio.Mode.DefRst[mode];
             config.write();
+            setDefRst();
             setStatFilter();
         }
 
@@ -718,6 +726,14 @@ namespace RdaLog
             }
         }
 
+        private void FormMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Oemtilde || e.KeyData == (Keys.V | Keys.Alt))
+            {
+                e.Handled = true;
+                textBoxCorrespondent.Text = "";
+            }
+        }
     }
 
     [DataContract]

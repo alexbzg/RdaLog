@@ -81,6 +81,7 @@ namespace RdaLog
             this.labelHotKeyF3Bind = new System.Windows.Forms.Label();
             this.labelHotKeyF2Bind = new System.Windows.Forms.Label();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.connectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelMode = new System.Windows.Forms.Label();
             this.comboBoxMode = new System.Windows.Forms.ComboBox();
             this.labelFreq = new System.Windows.Forms.Label();
@@ -104,7 +105,6 @@ namespace RdaLog
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.connectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
@@ -728,6 +728,11 @@ namespace RdaLog
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 0;
             // 
+            // connectionStatusLabel
+            // 
+            this.connectionStatusLabel.Name = "connectionStatusLabel";
+            this.connectionStatusLabel.Size = new System.Drawing.Size(0, 17);
+            // 
             // labelMode
             // 
             this.labelMode.AutoSize = true;
@@ -968,11 +973,6 @@ namespace RdaLog
             this.toolStripLabelLog.Text = "Log";
             this.toolStripLabelLog.Click += new System.EventHandler(this.ToolStripLabelLog_Click);
             // 
-            // connectionStatusLabel
-            // 
-            this.connectionStatusLabel.Name = "connectionStatusLabel";
-            this.connectionStatusLabel.Size = new System.Drawing.Size(0, 17);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1003,6 +1003,7 @@ namespace RdaLog
             this.Name = "FormMain";
             this.Text = "RDA Log";
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormMain_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormMain_KeyPress);
             this.flowLayoutPanel.ResumeLayout(false);
             this.panelStatusFields.ResumeLayout(false);
