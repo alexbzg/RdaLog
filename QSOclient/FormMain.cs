@@ -61,6 +61,7 @@ namespace RdaLog
         private Timer timer = new Timer();
         private Control[] qsoControls;
         private Object[] qsoValues;
+        private InputLanguage englishInputLanguage;
         public FormMain(FormMainConfig _config, RdaLog _rdaLog) : base(_config)
         {
             rdaLog = _rdaLog;
@@ -71,6 +72,13 @@ namespace RdaLog
 
             rdaLogConfig.httpService.logInOout += onLogInOut;
             rdaLog.httpService.connectionStateChanged += onLogInOut;
+
+            foreach (InputLanguage iLang in InputLanguage.InstalledInputLanguages)
+                if (iLang.Culture.EnglishName.StartsWith("English"))
+                {
+                    englishInputLanguage = iLang;
+                    break;
+                }
 
             try
             {
@@ -160,6 +168,10 @@ namespace RdaLog
             comboBoxMode.Items.AddRange(HamRadio.Mode.Names);
 
             checkBoxTop.Checked = config.topmost;
+            if (!string.IsNullOrEmpty(config.mode))
+                comboBoxMode.SelectedItem = config.mode;
+            if (config.freq != 0)
+                numericUpDownFreq.Value = config.freq;
 
             foreach (KeyValuePair<string, StatusFieldControls> item in statusFieldsControls)
             {
@@ -733,6 +745,12 @@ namespace RdaLog
                 e.Handled = true;
                 textBoxCorrespondent.Text = "";
             }
+        }
+
+        private void FormMain_Activated(object sender, EventArgs e)
+        {
+            if (!InputLanguage.CurrentInputLanguage.Culture.EnglishName.StartsWith("English") && englishInputLanguage != null)
+                InputLanguage.CurrentInputLanguage = englishInputLanguage;
         }
     }
 

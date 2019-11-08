@@ -1002,6 +1002,7 @@ namespace RdaLog
             this.MaximizeBox = false;
             this.Name = "FormMain";
             this.Text = "RDA Log";
+            this.Activated += new System.EventHandler(this.FormMain_Activated);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormMain_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormMain_KeyPress);
