@@ -501,19 +501,7 @@ namespace tnxlog
             {
                 config.exportPathRda = folderBrowserDialog.SelectedPath;
                 config.write();
-                Dictionary<string, List<QSO>> data = new Dictionary<string, List<QSO>>();
-                tnxlog.qsoList
-                    .Where(qso => qso.rda != null).ToList()
-                    .ForEach(qso =>
-                    {
-                        string[] rdas = qso.rda.Split(new string[] { " " }, StringSplitOptions.None);
-                        foreach (string rda in rdas)
-                        {
-                            if (!data.ContainsKey(rda))
-                                data[rda] = new List<QSO>();
-                            data[rda].Add(qso);
-                        }
-                    });
+                Dictionary<string, List<QSO>> data = qsoByField("rda");
                 data.Keys.ToList().ForEach(val =>
                 {
                     writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>() { { "RDA", val } }, true);
@@ -542,33 +530,38 @@ namespace tnxlog
             Dictionary<string, List<QSO>> r = new Dictionary<string, List<QSO>>();
             foreach (QSO qso in tnxlog.qsoList)
             {
-                string fieldValFull = qso.GetType().GetProperty(field).GetValue(qso, null).ToString();
-                if (!string.IsNullOrEmpty(fieldValFull))
+                var varVal = qso.GetType().GetProperty(field).GetValue(qso, null);
+                if (varVal != null)
                 {
-                    string[] fieldValItems = fieldValFull.Split(new string[] { " " }, StringSplitOptions.None);
-                    for (int co=0; co < fieldValItems.Length; co++)
+                    string fieldValFull = varVal.ToString();
+                    if (!string.IsNullOrEmpty(fieldValFull))
                     {
-                        string valItem = fieldValItems[co];
-                        if (!r.ContainsKey(valItem))
-                            r[valItem] = new List<QSO>();
-                        r[valItem].Add(co == 0 ? qso :
-                            new QSO {
-                                _ts = DateTime.ParseExact(qso.ts, "yyyy-MM-dd HH:mm:ss", 
-                                    System.Globalization.CultureInfo.InvariantCulture).AddMinutes(co).ToString("yyyy-MM-dd HH:mm:ss"),
-                                _myCS = qso.myCS,
-                                _band = qso.band,
-                                _freq = qso.freq,
-                                _mode = qso.mode,
-                                _cs = qso.cs,
-                                _snt = qso.snt,
-                                _rcv = qso.rcv,
-                                _freqRx = qso.freq,
-                                _no = qso.no,
-                                _rda = qso.rda,
-                                _rafa = qso.rafa,
-                                _loc = qso.loc,
-                                _userFields = qso.userFields
-                            });
+                        string[] fieldValItems = fieldValFull.Split(new string[] { " " }, StringSplitOptions.None);
+                        for (int co = 0; co < fieldValItems.Length; co++)
+                        {
+                            string valItem = fieldValItems[co];
+                            if (!r.ContainsKey(valItem))
+                                r[valItem] = new List<QSO>();
+                            r[valItem].Add(co == 0 ? qso :
+                                new QSO
+                                {
+                                    _ts = DateTime.ParseExact(qso.ts, "yyyy-MM-dd HH:mm:ss",
+                                        System.Globalization.CultureInfo.InvariantCulture).AddMinutes(co).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    _myCS = qso.myCS,
+                                    _band = qso.band,
+                                    _freq = qso.freq,
+                                    _mode = qso.mode,
+                                    _cs = qso.cs,
+                                    _snt = qso.snt,
+                                    _rcv = qso.rcv,
+                                    _freqRx = qso.freq,
+                                    _no = qso.no,
+                                    _rda = qso.rda,
+                                    _rafa = qso.rafa,
+                                    _loc = qso.loc,
+                                    _userFields = qso.userFields
+                                });
+                        }
                     }
                 }
             }
