@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using XmlConfigNS;
 
-namespace RdaLog
+namespace tnxlog
 { 
     public partial class FormLog : StorableForm.StorableForm<FormLogConfig>
     {
-        private RdaLog rdaLog;
+        private Tnxlog tnxlog;
         private BindingSource bsQSO;
         private Dictionary<string, BindingList<QSO>> qsoIndex = new Dictionary<string, BindingList<QSO>>();
-        public FormLog(FormLogConfig _config, RdaLog _rdaLog) : base(_config)
+        public FormLog(FormLogConfig _config, Tnxlog _tnxlog) : base(_config)
         {
-            rdaLog = _rdaLog;
+            tnxlog = _tnxlog;
             InitializeComponent();
-            bsQSO = new BindingSource(rdaLog.qsoList, null);
+            bsQSO = new BindingSource(tnxlog.qsoList, null);
             bsQSO.ListChanged += BsQSO_ListChanged;
             dataGridView.AutoGenerateColumns = false;
             dataGridView.DataSource = bsQSO;
@@ -36,7 +36,7 @@ namespace RdaLog
                     _config.dataGridColumnsWidth.Add(dataGridView.Columns[co].Width);
 
             buildIndex();
-            rdaLog.qsoList.ListChanged += QsoList_ListChanged;
+            tnxlog.qsoList.ListChanged += QsoList_ListChanged;
         }
 
         private void BsQSO_ListChanged(object sender, ListChangedEventArgs e)
@@ -62,7 +62,7 @@ namespace RdaLog
         private void buildIndex()
         {
             qsoIndex.Clear();
-            foreach (QSO qso in rdaLog.qsoList)
+            foreach (QSO qso in tnxlog.qsoList)
                 addToIndex(qso);
             if (filterButton.Checked)
                 filterQso();
@@ -71,7 +71,7 @@ namespace RdaLog
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
         {
             if (e.ListChangedType == ListChangedType.ItemAdded)
-                addToIndex(rdaLog.qsoList[e.NewIndex], true);
+                addToIndex(tnxlog.qsoList[e.NewIndex], true);
             else if (e.ListChangedType == ListChangedType.Reset)
                 buildIndex();
         }
@@ -109,7 +109,7 @@ namespace RdaLog
             {
                 if (warning)
                     MessageBox.Show("Callsign not found!", "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                bsQSO.DataSource = rdaLog.qsoList;
+                bsQSO.DataSource = tnxlog.qsoList;
                 filterButton.Checked = false;
             }
         }
@@ -123,7 +123,7 @@ namespace RdaLog
             }
             else
             {
-                bsQSO.DataSource = rdaLog.qsoList;
+                bsQSO.DataSource = tnxlog.qsoList;
                 filterButton.BackColor = DefaultBackColor;
             }
         }
@@ -137,7 +137,7 @@ namespace RdaLog
 
         private void FormLog_FormClosed(object sender, FormClosedEventArgs e)
         {
-            rdaLog.qsoList.ListChanged -= QsoList_ListChanged;
+            tnxlog.qsoList.ListChanged -= QsoList_ListChanged;
             bsQSO.ListChanged -= BsQSO_ListChanged;
         }
     }

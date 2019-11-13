@@ -19,7 +19,7 @@ using AutoUpdaterDotNET;
 using System.Reflection;
 using System.Diagnostics;
 
-namespace RdaLog
+namespace tnxlog
 {
     public partial class FormMain : StorableForm.StorableForm<FormMainConfig>
     {
@@ -51,7 +51,7 @@ namespace RdaLog
         };
 
         static readonly string AutoUpdaterURI = "http://tnxqso.com/static/files/rda_log.xml";
-        private RdaLog rdaLog;
+        private Tnxlog tnxlog;
         private Dictionary<string, StatusFieldControls> statusFieldsControls;
         private Dictionary<string, Panel> panels;
         private HashSet<string> rdaValues;
@@ -62,16 +62,16 @@ namespace RdaLog
         private Control[] qsoControls;
         private Object[] qsoValues;
         private InputLanguage englishInputLanguage;
-        public FormMain(FormMainConfig _config, RdaLog _rdaLog) : base(_config)
+        public FormMain(FormMainConfig _config, Tnxlog _tnxlog) : base(_config)
         {
-            rdaLog = _rdaLog;
+            tnxlog = _tnxlog;
 
             InitializeComponent();
 
-            RdaLogConfig rdaLogConfig = (RdaLogConfig)config.parent;
+            TnxlogConfig tnxlogConfig = (TnxlogConfig)config.parent;
 
-            rdaLogConfig.httpService.logInOout += onLogInOut;
-            rdaLog.httpService.connectionStateChanged += onLogInOut;
+            tnxlogConfig.httpService.logInOout += onLogInOut;
+            tnxlog.httpService.connectionStateChanged += onLogInOut;
 
             foreach (InputLanguage iLang in InputLanguage.InstalledInputLanguages)
                 if (iLang.Culture.EnglishName.StartsWith("English"))
@@ -158,7 +158,7 @@ namespace RdaLog
                 {"cwMacros", panelCwMacro }
             };
             arrangePanels();
-            rdaLogConfig.mainFormPanelVisibleChange += delegate (object sender, EventArgs e)
+            tnxlogConfig.mainFormPanelVisibleChange += delegate (object sender, EventArgs e)
             {
                 arrangePanels();
             };
@@ -168,28 +168,27 @@ namespace RdaLog
             comboBoxMode.Items.AddRange(HamRadio.Mode.Names);
 
             checkBoxTop.Checked = config.topmost;
-            if (!string.IsNullOrEmpty(config.mode))
-                comboBoxMode.SelectedItem = config.mode;
+            comboBoxMode.SelectedItem = string.IsNullOrEmpty(config.mode) ? comboBoxMode.Items[0] : config.mode;
             if (config.freq != 0)
                 numericUpDownFreq.Value = config.freq;
 
             foreach (KeyValuePair<string, StatusFieldControls> item in statusFieldsControls)
             {
                 string field = item.Key;
-                bool auto = rdaLogConfig.getStatusFieldAuto(field);
+                bool auto = tnxlogConfig.getStatusFieldAuto(field);
                 CheckBox checkBoxAuto = item.Value.auto;
                 TextBox textBoxValue = item.Value.value;
                 checkBoxAuto.Checked = auto;
                 textBoxValue.Enabled = !auto;
-                textBoxValue.Text = rdaLogConfig.getStatusFieldValue(field);
+                textBoxValue.Text = tnxlogConfig.getStatusFieldValue(field);
                 checkBoxAuto.CheckedChanged += delegate (object sender, EventArgs e)
                 {
-                    rdaLogConfig.setStatusFieldAuto(field, checkBoxAuto.Checked);
+                    tnxlogConfig.setStatusFieldAuto(field, checkBoxAuto.Checked);
                     textBoxValue.Enabled = !checkBoxAuto.Checked;
                 };
                 textBoxValue.Validated += delegate (object sender, EventArgs e)
                 {
-                    rdaLog.setStatusFieldValue(field, textBoxValue.Text);
+                    tnxlog.setStatusFieldValue(field, textBoxValue.Text);
                 };
                 textBoxValue.TextChanged += delegate (object sender, EventArgs e)
                 {
@@ -198,7 +197,7 @@ namespace RdaLog
                     textBoxValue.SelectionStart = selStart;
                 };
 
-                rdaLog.statusFieldChange += delegate (object sender, StatusFieldChangeEventArgs e)
+                tnxlog.statusFieldChange += delegate (object sender, StatusFieldChangeEventArgs e)
                 {
                     if (e.field == field)
                         DoInvoke(() =>
@@ -208,19 +207,19 @@ namespace RdaLog
                 };
             }
 
-            rdaLog.statusFieldChange += rdaLog_statusFieldChange;
+            tnxlog.statusFieldChange += rdaLog_statusFieldChange;
 
-            textBoxUserField.Text = rdaLogConfig.userField;
+            textBoxUserField.Text = tnxlogConfig.userField;
             textBoxCallsign.Text = config.callsign;
 
             buildQsoIndices();
-            rdaLog.qsoList.ListChanged += QsoList_ListChanged;
+            tnxlog.qsoList.ListChanged += QsoList_ListChanged;
 
             timer.Tick += Timer_Tick;
             timer.Interval = 500;
             timer.Enabled = true;
 
-            Text += " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Text = Assembly.GetExecutingAssembly().GetName().Name + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             qsoControls = new Control[] { textBoxCallsign, numericUpDownFreq, comboBoxMode, textBoxRstRcvd, textBoxRstSent };
             saveQsoValues();
@@ -228,12 +227,12 @@ namespace RdaLog
 
         private void onLogInOut(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(((RdaLogConfig)config.parent).httpService.token))
+            if (string.IsNullOrEmpty(((TnxlogConfig)config.parent).httpService.token))
                 connectionStatusLabel.Text = "Not logged in.";
-            else if (rdaLog.httpService.connected)
-                connectionStatusLabel.Text = "Logged in as " + ((RdaLogConfig)config.parent).httpService.callsign.ToUpper() + ".";
+            else if (tnxlog.httpService.connected)
+                connectionStatusLabel.Text = "Logged in as " + ((TnxlogConfig)config.parent).httpService.callsign.ToUpper() + ".";
             else
-                connectionStatusLabel.Text = "Logged in as " + ((RdaLogConfig)config.parent).httpService.callsign + ". No connection.";
+                connectionStatusLabel.Text = "Logged in as " + ((TnxlogConfig)config.parent).httpService.callsign + ". No connection.";
         }
 
         private void rdaLog_statusFieldChange (object sender, StatusFieldChangeEventArgs e)
@@ -250,7 +249,7 @@ namespace RdaLog
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
         {
             if (e.ListChangedType == ListChangedType.ItemAdded)
-                indexQso(rdaLog.qsoList[e.NewIndex], true);
+                indexQso(tnxlog.qsoList[e.NewIndex], true);
             else if (e.ListChangedType == ListChangedType.Reset)
                 buildQsoIndices();
         }
@@ -283,7 +282,7 @@ namespace RdaLog
                 for (int co = 1; co < comboBoxStatFilterRda.Items.Count; co++)
                     comboBoxStatFilterRda.Items.RemoveAt(co);
             callsignsQso.clear();
-            foreach (QSO qso in rdaLog.qsoList)
+            foreach (QSO qso in tnxlog.qsoList)
                 indexQso(qso);
             setStatFilter();
         }
@@ -295,8 +294,8 @@ namespace RdaLog
                 if (panel.Parent == flowLayoutPanel)
                     flowLayoutPanel.Controls.Remove(panel);
             }
-            RdaLogConfig rdaLogConfig = ((RdaLogConfig)config.parent);
-            foreach (string panel in RdaLogConfig.MainFormPanels)
+            TnxlogConfig rdaLogConfig = ((TnxlogConfig)config.parent);
+            foreach (string panel in TnxlogConfig.MainFormPanels)
             {
                 //cwMacros temporary disabled
                 if (panels.ContainsKey(panel) && panel != "cwMacros" && rdaLogConfig.getMainFormPanelVisible(panel))
@@ -307,7 +306,7 @@ namespace RdaLog
 
         private void ToolStripLabelSettings_Click(object sender, EventArgs e)
         {
-            rdaLog.showSettings();
+            tnxlog.showSettings();
         }
 
 
@@ -369,7 +368,7 @@ namespace RdaLog
                 textBoxCorrespondent.Text = "";
                 setDefRst();
                 textBoxCorrespondent.Focus();
-                await rdaLog.newQso(correspondent, textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text);
+                await tnxlog.newQso(correspondent, textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text);
             }
         }
 
@@ -491,7 +490,7 @@ namespace RdaLog
 
         private void ToolStripLabelLog_Click(object sender, EventArgs e)
         {
-            rdaLog.showFormLog();
+            tnxlog.showFormLog();
         }
 
         private void MenuItemAdifExportRda_Click(object sender, EventArgs e)
@@ -503,7 +502,7 @@ namespace RdaLog
                 config.exportPathRda = folderBrowserDialog.SelectedPath;
                 config.write();
                 Dictionary<string, List<QSO>> data = new Dictionary<string, List<QSO>>();
-                rdaLog.qsoList
+                tnxlog.qsoList
                     .Where(qso => qso.rda != null).ToList()
                     .ForEach(qso =>
                     {
@@ -530,24 +529,50 @@ namespace RdaLog
             {
                 config.exportPathRafa = folderBrowserDialog.SelectedPath;
                 config.write();
-                Dictionary<string, List<QSO>> data = new Dictionary<string, List<QSO>>();
-                rdaLog.qsoList
-                    .Where(qso => qso.rafa != null).ToList()
-                    .ForEach(qso =>
-                    {
-                        string[] rafas = qso.rafa.Split(new string[] { " " }, StringSplitOptions.None);
-                        foreach (string rafa in rafas)
-                        {
-                            if (!data.ContainsKey(rafa))
-                                data[rafa] = new List<QSO>();
-                            data[rafa].Add(qso);
-                        }
-                    });
+                Dictionary<string, List<QSO>> data = qsoByField("rafa");
                 data.Keys.ToList().ForEach(val =>
                 {
                     writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>() { { "RAFA", val } }, true);
                 });
             }
+        }
+
+        private Dictionary<string, List<QSO>> qsoByField (string field)
+        {
+            Dictionary<string, List<QSO>> r = new Dictionary<string, List<QSO>>();
+            foreach (QSO qso in tnxlog.qsoList)
+            {
+                string fieldValFull = qso.GetType().GetProperty(field).GetValue(qso, null).ToString();
+                if (!string.IsNullOrEmpty(fieldValFull))
+                {
+                    string[] fieldValItems = fieldValFull.Split(new string[] { " " }, StringSplitOptions.None);
+                    for (int co=0; co < fieldValItems.Length; co++)
+                    {
+                        string valItem = fieldValItems[co];
+                        if (!r.ContainsKey(valItem))
+                            r[valItem] = new List<QSO>();
+                        r[valItem].Add(co == 0 ? qso :
+                            new QSO {
+                                _ts = DateTime.ParseExact(qso.ts, "yyyy-MM-dd HH:mm:ss", 
+                                    System.Globalization.CultureInfo.InvariantCulture).AddMinutes(co).ToString("yyyy-MM-dd HH:mm:ss"),
+                                _myCS = qso.myCS,
+                                _band = qso.band,
+                                _freq = qso.freq,
+                                _mode = qso.mode,
+                                _cs = qso.cs,
+                                _snt = qso.snt,
+                                _rcv = qso.rcv,
+                                _freqRx = qso.freq,
+                                _no = qso.no,
+                                _rda = qso.rda,
+                                _rafa = qso.rafa,
+                                _loc = qso.loc,
+                                _userFields = qso.userFields
+                            });
+                    }
+                }
+            }
+            return r;
         }
 
         private void writeADIF(string folder, string fileName, List<QSO> _data, Dictionary<string, string> adifParams, bool byCallsigns=false)
@@ -604,11 +629,31 @@ namespace RdaLog
 
         private void TextBoxCorrespondent_TextChanged(object sender, EventArgs e)
         {
-            if (((RdaLogConfig)config.parent).getMainFormPanelVisible("callsignId"))
+            if (((TnxlogConfig)config.parent).getMainFormPanelVisible("callsignId"))
             {
                 updateListBoxCallsigns(listBoxCallsignsDb, callsignsDb);
                 updateListBoxCallsigns(listBoxCallsignsQso, callsignsQso);
             }
+            if (textBoxCorrespondent.Text.Length > 2)
+            {
+                string today = DateTime.UtcNow.ToString("yyyy-MM-dd");
+                TnxlogConfig tnxlogConfig = (TnxlogConfig)config.parent;
+                if (tnxlog.qsoList.FirstOrDefault(x =>
+                {
+                    return x.cs == textBoxCorrespondent.Text && x.mode == comboBoxMode.SelectedItem.ToString() && x.band == Band.fromFreq(numericUpDownFreq.Value)
+                        && x.rda == tnxlogConfig.getStatusFieldValue("rda") && x.ts.StartsWith(today);
+                }) != null) {
+                    toggleDupe(true);
+                    return;
+                }
+            }
+            toggleDupe(false);
+        }
+
+        private void toggleDupe(bool val)
+        {
+            labelDupe.Visible = val;
+            textBoxCorrespondent.ForeColor = val ? Color.Gray : SystemColors.WindowText;
         }
 
         private void ListBoxCallsigns_SelectedIndexChanged(object sender, EventArgs e)
@@ -683,7 +728,7 @@ namespace RdaLog
         {
             HashSet<string> callsigns = new HashSet<string>();
             int qsoCount = 0;
-            foreach (QSO qso in rdaLog.qsoList)
+            foreach (QSO qso in tnxlog.qsoList)
                 if ((comboBoxStatFilterRda.SelectedIndex == 0 || comboBoxStatFilterRda.SelectedItem == null || 
                     (!string.IsNullOrEmpty(qso.rda) && qso.rda.Contains(comboBoxStatFilterRda.SelectedItem.ToString()))) &&
                     (comboBoxStatFilterMode.SelectedIndex == 0 || comboBoxStatFilterMode.SelectedItem == null || comboBoxStatFilterMode.SelectedItem.ToString() == qso.mode) &&
@@ -710,7 +755,7 @@ namespace RdaLog
 
         private async void ButtonPostFreq_Click(object sender, EventArgs e)
         {
-            await rdaLog.postFreq(numericUpDownFreq.Value);
+            await tnxlog.postFreq(numericUpDownFreq.Value);
         }
 
 
@@ -724,7 +769,7 @@ namespace RdaLog
                 if (!config.exportPath.EndsWith(".adi"))
                     config.exportPath += ".adi";
                 config.write();
-                writeADIF("", config.exportPath, rdaLog.qsoList.ToList(), new Dictionary<string, string>());
+                writeADIF("", config.exportPath, tnxlog.qsoList.ToList(), new Dictionary<string, string>());
             }
 
         }
@@ -733,7 +778,7 @@ namespace RdaLog
         {
             if (MessageBox.Show("All QSO will be deleted. Do you really want to continue?", "RDA Log", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
             {
-                rdaLog.clearQso();
+                tnxlog.clearQso();
                 buildQsoIndices();
             }
         }

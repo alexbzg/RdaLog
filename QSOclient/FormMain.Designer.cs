@@ -1,5 +1,5 @@
 ﻿using HamRadio;
-namespace RdaLog
+namespace tnxlog
 {
     partial class FormMain
     {
@@ -105,6 +105,7 @@ namespace RdaLog
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.labelDupe = new System.Windows.Forms.Label();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
@@ -877,7 +878,7 @@ namespace RdaLog
             // buttonPostFreq
             // 
             this.buttonPostFreq.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonPostFreq.Image = global::RdaLog.Properties.Resources.chat;
+            this.buttonPostFreq.Image = global::tnxlog.Properties.Resources.chat;
             this.buttonPostFreq.Location = new System.Drawing.Point(330, 99);
             this.buttonPostFreq.Name = "buttonPostFreq";
             this.buttonPostFreq.Size = new System.Drawing.Size(24, 24);
@@ -973,6 +974,18 @@ namespace RdaLog
             this.toolStripLabelLog.Text = "Log";
             this.toolStripLabelLog.Click += new System.EventHandler(this.ToolStripLabelLog_Click);
             // 
+            // labelDupe
+            // 
+            this.labelDupe.BackColor = System.Drawing.Color.Transparent;
+            this.labelDupe.ForeColor = System.Drawing.Color.Red;
+            this.labelDupe.Location = new System.Drawing.Point(194, 30);
+            this.labelDupe.Name = "labelDupe";
+            this.labelDupe.Size = new System.Drawing.Size(45, 13);
+            this.labelDupe.TabIndex = 65;
+            this.labelDupe.Text = "Dupe";
+            this.labelDupe.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.labelDupe.Visible = false;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -980,6 +993,7 @@ namespace RdaLog
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(364, 461);
+            this.Controls.Add(this.labelDupe);
             this.Controls.Add(this.checkBoxTop);
             this.Controls.Add(this.flowLayoutPanel);
             this.Controls.Add(this.labelMode);
@@ -1102,6 +1116,7 @@ namespace RdaLog
         private System.Windows.Forms.Label labelStatMode;
         private System.Windows.Forms.Label labelStatBand;
         private System.Windows.Forms.ToolStripStatusLabel connectionStatusLabel;
+        private System.Windows.Forms.Label labelDupe;
     }
 }
 

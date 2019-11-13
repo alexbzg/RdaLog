@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RdaLog
+namespace tnxlog
 {
     public partial class FormSettings : Form
     {

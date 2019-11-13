@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using XmlConfigNS;
 
-namespace RdaLog
+namespace tnxlog
 {
     public class StatusField
     {
@@ -30,7 +30,7 @@ namespace RdaLog
         public bool enabled;
     }
 
-    public class RdaLogConfig : XmlConfig
+    public class TnxlogConfig : XmlConfig
     {
         public static readonly List<Tuple<string, string>> HotKeysDefaults = new List<Tuple<string, string>>
         {
@@ -113,7 +113,7 @@ namespace RdaLog
         public bool autoLogin = true;
         public List<string[]> hotKeys;
 
-        public RdaLogConfig() : base() {}
+        public TnxlogConfig() : base() {}
 
         public override void initialize()
         {

@@ -17,7 +17,7 @@ using System.IO;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 
-namespace RdaLog
+namespace tnxlog
 {
     [DataContract]
     public class HttpServiceConfig : ConfigSection
@@ -76,11 +76,11 @@ namespace RdaLog
         }
         public EventHandler<EventArgs> connectionStateChanged;
         private HttpServiceConfig config;
-        private RdaLog rdaLog;
+        private Tnxlog rdaLog;
         public bool gpsServerLoad;
 
 
-        public HttpService(HttpServiceConfig _config, RdaLog _rdaLog)
+        public HttpService(HttpServiceConfig _config, Tnxlog _rdaLog)
         {
             config = _config;
             rdaLog = _rdaLog;
@@ -351,24 +351,24 @@ namespace RdaLog
 
     class StatusData : JSONToken
     {
-        public string loc { get { return ((RdaLogConfig)config.parent).getStatusFieldValue("locator"); } set { } }
+        public string loc { get { return ((TnxlogConfig)config.parent).getStatusFieldValue("locator"); } set { } }
         public bool ShouldSerializeloc()
         {
-            return !((RdaLogConfig)config.parent).getStatusFieldAuto("locator");
+            return !((TnxlogConfig)config.parent).getStatusFieldAuto("locator");
         }
-        public string rafa { get { return ((RdaLogConfig)config.parent).getStatusFieldValue("rafa"); } set { } }
+        public string rafa { get { return ((TnxlogConfig)config.parent).getStatusFieldValue("rafa"); } set { } }
         public bool ShouldSerializerafa()
         {
-            return !((RdaLogConfig)config.parent).getStatusFieldAuto("rafa");
+            return !((TnxlogConfig)config.parent).getStatusFieldAuto("rafa");
         }
 
-        public string rda { get { return ((RdaLogConfig)config.parent).getStatusFieldValue("rda"); } set { } }
+        public string rda { get { return ((TnxlogConfig)config.parent).getStatusFieldValue("rda"); } set { } }
         public bool ShouldSerializerda()
         {
-            return !((RdaLogConfig)config.parent).getStatusFieldAuto("rda");
+            return !((TnxlogConfig)config.parent).getStatusFieldAuto("rda");
         }
 
-        public string userField { get { return ((RdaLogConfig)config.parent).userField; } set { } }
+        public string userField { get { return ((TnxlogConfig)config.parent).userField; } set { } }
 
         internal StatusData(HttpServiceConfig _config) : base(_config) { }
 

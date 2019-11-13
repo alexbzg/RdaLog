@@ -1,4 +1,4 @@
-﻿namespace RdaLog
+﻿namespace tnxlog
 {
     partial class FormLog
     {

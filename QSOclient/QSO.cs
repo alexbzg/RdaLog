@@ -12,7 +12,7 @@ using SerializationNS;
 using System.Globalization;
 using HamRadio;
 
-namespace RdaLog
+namespace tnxlog
 {
     [DataContract, ProtoContract]
     public class QSO
@@ -129,12 +129,12 @@ namespace RdaLog
 
     public class QSOFactory
     {
-        private RdaLog rdaLog;
+        private Tnxlog rdaLog;
         public int no = 1;
 
 
 
-        public QSOFactory(RdaLog _qsoClient)
+        public QSOFactory(Tnxlog _qsoClient)
         {
             rdaLog = _qsoClient;
         }

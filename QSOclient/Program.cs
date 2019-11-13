@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RdaLog
+namespace tnxlog
 {
     static class Program
     {
@@ -22,7 +22,7 @@ namespace RdaLog
             _mutex = new Mutex(true, "MyApplicationMutex", out mutexFl);
             if (mutexFl)
             {
-                RdaLog rdaLog = new RdaLog();
+                Tnxlog rdaLog = new Tnxlog();
                 Application.Run(rdaLog.formMain);
             }
             else

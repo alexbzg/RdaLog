@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using XmlConfigNS;
 
-namespace RdaLog
+namespace tnxlog
 {
     public class StatusFieldChangeEventArgs: EventArgs
     {
@@ -18,12 +18,12 @@ namespace RdaLog
         public string value;
     }
 
-    public class RdaLog
+    public class Tnxlog
     {
         private FormMain _formMain;
         public FormMain formMain { get { return _formMain; } }
         private FormLog formLog;
-        private RdaLogConfig config;
+        private TnxlogConfig config;
         public HttpService httpService;
         private string qsoFilePath;
         internal BindingList<QSO> qsoList;
@@ -53,17 +53,17 @@ namespace RdaLog
 
 
 
-        public RdaLog()
+        public Tnxlog()
         {
-            string dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RdaLog");
+            string dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "tnxlog");
 #if DEBUG
             dataPath = Path.Combine(dataPath, "debug");
 #endif
             if (!Directory.Exists(dataPath))
                 Directory.CreateDirectory(dataPath);
             qsoFilePath = Path.Combine(dataPath, "qso.dat");
-            config = XmlConfig.create<RdaLogConfig>(Path.Combine(dataPath, "config.xml"));
-            foreach (string field in RdaLogConfig.StatusFields)
+            config = XmlConfig.create<TnxlogConfig>(Path.Combine(dataPath, "config.xml"));
+            foreach (string field in TnxlogConfig.StatusFields)
                 _statusFields[field] = config.getStatusFieldValue(field);
             httpService = new HttpService(config.httpService, this);
             qsoFactory = new QSOFactory(this);
