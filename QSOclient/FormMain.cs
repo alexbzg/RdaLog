@@ -50,7 +50,7 @@ namespace tnxlog
             rplcmnt = "$1-$2"
         };
 
-        static readonly string AutoUpdaterURI = "http://tnxqso.com/static/files/rda_log.xml";
+        static readonly string AutoUpdaterURI = "http://tnxqso.com/static/files/tnxlog.xml";
         private Tnxlog tnxlog;
         private Dictionary<string, StatusFieldControls> statusFieldsControls;
         private Dictionary<string, Panel> panels;

@@ -463,23 +463,23 @@ namespace tnxlog
             // 
             // listBoxCallsignsDb
             // 
-            this.listBoxCallsignsDb.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listBoxCallsignsDb.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxCallsignsDb.FormattingEnabled = true;
-            this.listBoxCallsignsDb.ItemHeight = 22;
+            this.listBoxCallsignsDb.ItemHeight = 18;
             this.listBoxCallsignsDb.Location = new System.Drawing.Point(184, 7);
             this.listBoxCallsignsDb.Name = "listBoxCallsignsDb";
-            this.listBoxCallsignsDb.Size = new System.Drawing.Size(170, 92);
+            this.listBoxCallsignsDb.Size = new System.Drawing.Size(170, 76);
             this.listBoxCallsignsDb.TabIndex = 1;
             this.listBoxCallsignsDb.SelectedIndexChanged += new System.EventHandler(this.ListBoxCallsigns_SelectedIndexChanged);
             // 
             // listBoxCallsignsQso
             // 
-            this.listBoxCallsignsQso.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listBoxCallsignsQso.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxCallsignsQso.FormattingEnabled = true;
-            this.listBoxCallsignsQso.ItemHeight = 22;
+            this.listBoxCallsignsQso.ItemHeight = 18;
             this.listBoxCallsignsQso.Location = new System.Drawing.Point(9, 7);
             this.listBoxCallsignsQso.Name = "listBoxCallsignsQso";
-            this.listBoxCallsignsQso.Size = new System.Drawing.Size(174, 92);
+            this.listBoxCallsignsQso.Size = new System.Drawing.Size(174, 76);
             this.listBoxCallsignsQso.TabIndex = 0;
             this.listBoxCallsignsQso.SelectedIndexChanged += new System.EventHandler(this.ListBoxCallsigns_SelectedIndexChanged);
             // 
