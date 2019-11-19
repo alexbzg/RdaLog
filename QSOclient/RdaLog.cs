@@ -77,8 +77,9 @@ namespace tnxlog
                 qsoFactory.no = qsoList.First().no + 1;
             _formMain = new FormMain(config.formMain, this);
             if (config.autoLogin)
-                Task.Run(() => { httpService.login(); });
+                Task.Run(() => { httpService.login(true); });
         }
+
 
         public void showFormLog()
         {
@@ -98,9 +99,9 @@ namespace tnxlog
             formLog = null;
         }
 
-        public async Task newQso(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt)
+        public async Task newQso(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, string comments)
         {
-            QSO qso = qsoFactory.create(callsign, myCallsign, freq, mode, rstRcvd, rstSnt);
+            QSO qso = qsoFactory.create(callsign, myCallsign, freq, mode, rstRcvd, rstSnt, comments);
             qsoList.Insert(0, qso);
             writeQsoList();
             await httpService.postQso(qso);
@@ -155,6 +156,8 @@ namespace tnxlog
                 config.httpService.password = formSettings.textBoxPassword.Text;
 
                 config.autoLogin = formSettings.checkBoxAutoLogin.Checked;
+                if (config.autoLogin && !httpService.connected)
+                    Task.Run(() => { httpService.login(true); });
 
                 foreach (KeyValuePair<string, CheckBox> item in formSettings.mainFormPanelCheckboxes)
                      config.setMainFormPanelVisible(item.Key, item.Value.Checked);

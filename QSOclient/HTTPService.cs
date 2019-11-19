@@ -1,5 +1,5 @@
 ﻿//#define DISABLE_HTTP
-//#define TEST_SRV
+#define TEST_SRV
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -61,8 +61,9 @@ namespace tnxlog
         private static readonly Uri srvURI = new Uri("http://tnxqso.com/aiohttp/");
 #endif
         System.Threading.Timer pingTimer;
+        System.Threading.Timer loginRetryTimer;
         ConcurrentQueue<QSO> qsoQueue = new ConcurrentQueue<QSO>();
-        private string unsentFilePath = Application.StartupPath + "\\unsent.dat";
+        private string unsentFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "unsent.dat");
         private string stationCallsign = null;
         private volatile bool _connected;
         public bool connected { get { return _connected; }
@@ -234,7 +235,7 @@ namespace tnxlog
             pingTimer.Change(response != null && response.IsSuccessStatusCode ? pingIntervalDef : pingIntervalNoConnection, Timeout.Infinite);
         }
 
-        public async Task<System.Net.HttpStatusCode?> login()
+        public async Task<System.Net.HttpStatusCode?> login(bool retry=false)
         {
             if (string.IsNullOrEmpty(config.callsign) || string.IsNullOrEmpty(config.password))
                 return null;
@@ -246,12 +247,23 @@ namespace tnxlog
                     LoginResponse userData = JsonConvert.DeserializeObject<LoginResponse>(await response.Content.ReadAsStringAsync());
                     config.token = userData.token;
                     schedulePingTimer();
+                    if (loginRetryTimer != null)
+                    {
+                        loginRetryTimer.Change(Timeout.Infinite, Timeout.Infinite);
+                        loginRetryTimer = null;
+                    }
                     Task.Run(() => processQueue());
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     config.token = null;
                     MessageBox.Show(await response.Content.ReadAsStringAsync(), "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } else if (retry)
+                {
+                    if (loginRetryTimer == null)
+                        loginRetryTimer = new System.Threading.Timer(obj => login(true), null, pingIntervalNoConnection, Timeout.Infinite);
+                    else
+                        loginRetryTimer.Change(pingIntervalNoConnection, Timeout.Infinite);
                 }
             }
             return response?.StatusCode;

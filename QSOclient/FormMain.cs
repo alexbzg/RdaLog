@@ -365,10 +365,12 @@ namespace tnxlog
                 }
                 saveQsoValues();
                 string correspondent = textBoxCorrespondent.Text;
+                string comments = textBoxComments.Text;
                 textBoxCorrespondent.Text = "";
+                textBoxComments.Text = "";
                 setDefRst();
                 textBoxCorrespondent.Focus();
-                await tnxlog.newQso(correspondent, textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text);
+                await tnxlog.newQso(correspondent, textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text, comments);
             }
         }
 
@@ -790,6 +792,8 @@ namespace tnxlog
             if (!InputLanguage.CurrentInputLanguage.Culture.EnglishName.StartsWith("English") && englishInputLanguage != null)
                 InputLanguage.CurrentInputLanguage = englishInputLanguage;
         }
+
+
     }
 
     [DataContract]

@@ -31,6 +31,7 @@ namespace tnxlog
         internal string _loc;
         internal string _freqRx;
         internal string _oper;
+        internal string _comments;
         internal int _no;
         internal string[] _userFields;
 
@@ -75,6 +76,10 @@ namespace tnxlog
 
         [DataMember, ProtoMember(14)]
         public string[] userFields { get { return _userFields; } set { _userFields = value; } }
+
+        [DataMember, ProtoMember(15)]
+        public string comments { get { return _comments; } set { _comments = value; } }
+
 
         [IgnoreDataMember]
         public string userField0
@@ -141,7 +146,7 @@ namespace tnxlog
 
 
 
-        public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, DateTime? timestamp = null)
+        public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, string comments, DateTime? timestamp = null)
         {           
             return new QSO {
                 _ts = (timestamp == null ? DateTime.UtcNow : (DateTime)timestamp).ToString("yyyy-MM-dd HH:mm:ss"),
@@ -157,7 +162,8 @@ namespace tnxlog
                 _rda = rdaLog.getStatusFieldValue("rda"),
                 _rafa = rdaLog.getStatusFieldValue("rafa"),
                 _loc = rdaLog.getStatusFieldValue("locator"),
-                _userFields = new string[] { rdaLog.userField }
+                _userFields = new string[] { rdaLog.userField },
+                _comments = comments
             };
         }
     }

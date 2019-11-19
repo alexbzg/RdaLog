@@ -106,6 +106,8 @@ namespace tnxlog
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.labelDupe = new System.Windows.Forms.Label();
+            this.labelComments = new System.Windows.Forms.Label();
+            this.textBoxComments = new System.Windows.Forms.TextBoxCallsign();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
@@ -140,9 +142,9 @@ namespace tnxlog
             this.flowLayoutPanel.Controls.Add(this.panelCwMacro);
             this.flowLayoutPanel.Controls.Add(this.statusStrip);
             this.flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel.Location = new System.Drawing.Point(0, 129);
+            this.flowLayoutPanel.Location = new System.Drawing.Point(0, 167);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 331);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 301);
             this.flowLayoutPanel.TabIndex = 63;
             // 
             // panelStatusFields
@@ -287,7 +289,7 @@ namespace tnxlog
             this.textBoxRda.Location = new System.Drawing.Point(12, 21);
             this.textBoxRda.Name = "textBoxRda";
             this.textBoxRda.Size = new System.Drawing.Size(171, 23);
-            this.textBoxRda.TabIndex = 6;
+            this.textBoxRda.TabIndex = 7;
             this.textBoxRda.Text = "RA-25 RA-37 RA-27";
             this.textBoxRda.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxRda.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxRda_Validating);
@@ -458,7 +460,7 @@ namespace tnxlog
             this.panelCallsignId.Location = new System.Drawing.Point(0, 152);
             this.panelCallsignId.Margin = new System.Windows.Forms.Padding(0);
             this.panelCallsignId.Name = "panelCallsignId";
-            this.panelCallsignId.Size = new System.Drawing.Size(363, 121);
+            this.panelCallsignId.Size = new System.Drawing.Size(363, 91);
             this.panelCallsignId.TabIndex = 63;
             // 
             // listBoxCallsignsDb
@@ -504,7 +506,7 @@ namespace tnxlog
             this.panelCwMacro.Controls.Add(this.labelHotKeyF1Bind);
             this.panelCwMacro.Controls.Add(this.labelHotKeyF3Bind);
             this.panelCwMacro.Controls.Add(this.labelHotKeyF2Bind);
-            this.panelCwMacro.Location = new System.Drawing.Point(0, 273);
+            this.panelCwMacro.Location = new System.Drawing.Point(0, 243);
             this.panelCwMacro.Margin = new System.Windows.Forms.Padding(0);
             this.panelCwMacro.Name = "panelCwMacro";
             this.panelCwMacro.Size = new System.Drawing.Size(364, 36);
@@ -723,7 +725,7 @@ namespace tnxlog
             this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.connectionStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 309);
+            this.statusStrip.Location = new System.Drawing.Point(0, 279);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(364, 22);
             this.statusStrip.SizingGrip = false;
@@ -739,7 +741,7 @@ namespace tnxlog
             this.labelMode.AutoSize = true;
             this.labelMode.BackColor = System.Drawing.Color.Transparent;
             this.labelMode.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelMode.Location = new System.Drawing.Point(171, 84);
+            this.labelMode.Location = new System.Drawing.Point(171, 78);
             this.labelMode.Name = "labelMode";
             this.labelMode.Size = new System.Drawing.Size(34, 13);
             this.labelMode.TabIndex = 16;
@@ -749,7 +751,7 @@ namespace tnxlog
             // 
             this.comboBoxMode.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxMode.FormattingEnabled = true;
-            this.comboBoxMode.Location = new System.Drawing.Point(174, 99);
+            this.comboBoxMode.Location = new System.Drawing.Point(174, 93);
             this.comboBoxMode.Name = "comboBoxMode";
             this.comboBoxMode.Size = new System.Drawing.Size(67, 24);
             this.comboBoxMode.TabIndex = 4;
@@ -761,7 +763,7 @@ namespace tnxlog
             this.labelFreq.AutoSize = true;
             this.labelFreq.BackColor = System.Drawing.Color.Transparent;
             this.labelFreq.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelFreq.Location = new System.Drawing.Point(247, 84);
+            this.labelFreq.Location = new System.Drawing.Point(247, 78);
             this.labelFreq.Name = "labelFreq";
             this.labelFreq.Size = new System.Drawing.Size(26, 13);
             this.labelFreq.TabIndex = 14;
@@ -776,7 +778,7 @@ namespace tnxlog
             0,
             0,
             65536});
-            this.numericUpDownFreq.Location = new System.Drawing.Point(248, 100);
+            this.numericUpDownFreq.Location = new System.Drawing.Point(248, 94);
             this.numericUpDownFreq.Maximum = new decimal(new int[] {
             29000,
             0,
@@ -804,7 +806,7 @@ namespace tnxlog
             this.labelCallsign.AutoSize = true;
             this.labelCallsign.BackColor = System.Drawing.Color.Transparent;
             this.labelCallsign.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelCallsign.Location = new System.Drawing.Point(11, 84);
+            this.labelCallsign.Location = new System.Drawing.Point(11, 78);
             this.labelCallsign.Name = "labelCallsign";
             this.labelCallsign.Size = new System.Drawing.Size(59, 13);
             this.labelCallsign.TabIndex = 12;
@@ -814,11 +816,10 @@ namespace tnxlog
             // 
             this.textBoxCallsign.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxCallsign.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCallsign.Location = new System.Drawing.Point(12, 100);
+            this.textBoxCallsign.Location = new System.Drawing.Point(12, 94);
             this.textBoxCallsign.Name = "textBoxCallsign";
             this.textBoxCallsign.Size = new System.Drawing.Size(156, 23);
             this.textBoxCallsign.TabIndex = 3;
-            this.textBoxCallsign.Text = "R7AB/P";
             this.textBoxCallsign.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxCallsign.Validated += new System.EventHandler(this.TextBoxCallsign_Validated);
             // 
@@ -879,7 +880,7 @@ namespace tnxlog
             // 
             this.buttonPostFreq.BackColor = System.Drawing.SystemColors.Control;
             this.buttonPostFreq.Image = global::tnxlog.Properties.Resources.chat;
-            this.buttonPostFreq.Location = new System.Drawing.Point(330, 99);
+            this.buttonPostFreq.Location = new System.Drawing.Point(330, 93);
             this.buttonPostFreq.Name = "buttonPostFreq";
             this.buttonPostFreq.Size = new System.Drawing.Size(24, 24);
             this.buttonPostFreq.TabIndex = 5;
@@ -986,13 +987,36 @@ namespace tnxlog
             this.labelDupe.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.labelDupe.Visible = false;
             // 
+            // labelComments
+            // 
+            this.labelComments.AutoSize = true;
+            this.labelComments.BackColor = System.Drawing.Color.Transparent;
+            this.labelComments.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelComments.Location = new System.Drawing.Point(12, 120);
+            this.labelComments.Name = "labelComments";
+            this.labelComments.Size = new System.Drawing.Size(56, 13);
+            this.labelComments.TabIndex = 67;
+            this.labelComments.Text = "Comments";
+            // 
+            // textBoxComments
+            // 
+            this.textBoxComments.BackColor = System.Drawing.SystemColors.Window;
+            this.textBoxComments.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxComments.Location = new System.Drawing.Point(13, 136);
+            this.textBoxComments.Name = "textBoxComments";
+            this.textBoxComments.Size = new System.Drawing.Size(344, 22);
+            this.textBoxComments.TabIndex = 6;
+            this.textBoxComments.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(364, 461);
+            this.ClientSize = new System.Drawing.Size(364, 471);
+            this.Controls.Add(this.labelComments);
+            this.Controls.Add(this.textBoxComments);
             this.Controls.Add(this.labelDupe);
             this.Controls.Add(this.checkBoxTop);
             this.Controls.Add(this.flowLayoutPanel);
@@ -1117,6 +1141,8 @@ namespace tnxlog
         private System.Windows.Forms.Label labelStatBand;
         private System.Windows.Forms.ToolStripStatusLabel connectionStatusLabel;
         private System.Windows.Forms.Label labelDupe;
+        private System.Windows.Forms.Label labelComments;
+        private System.Windows.Forms.TextBoxCallsign textBoxComments;
     }
 }
 
