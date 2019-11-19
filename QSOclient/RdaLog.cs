@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -75,11 +76,16 @@ namespace tnxlog
             }
             else if (qsoList.Count > 0)
                 qsoFactory.no = qsoList.First().no + 1;
+            qsoList.ListChanged += QsoList_ListChanged;
             _formMain = new FormMain(config.formMain, this);
             if (config.autoLogin)
                 Task.Run(() => { httpService.login(true); });
         }
 
+        private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            writeQsoList();
+        }
 
         public void showFormLog()
         {
@@ -112,7 +118,7 @@ namespace tnxlog
             await httpService.postFreq(QSO.formatFreq(freq));
         }
 
-        private void writeQsoList()
+        public void writeQsoList()
         {
             ProtoBufSerialization.Write<BindingList<QSO>>(qsoFilePath, qsoList);
         }
@@ -136,7 +142,7 @@ namespace tnxlog
                 config.httpService.password = formSettings.textBoxPassword.Text;
                 System.Net.HttpStatusCode? loginStatusCode = await httpService.login();
                 if (loginStatusCode == System.Net.HttpStatusCode.OK)
-                    MessageBox.Show("Logged in successfully.", "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Logged in successfully.", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
             };
 
             formSettings.checkBoxAutoLogin.Checked = config.autoLogin;

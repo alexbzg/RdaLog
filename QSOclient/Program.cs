@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -26,7 +27,8 @@ namespace tnxlog
                 Application.Run(rdaLog.formMain);
             }
             else
-                MessageBox.Show("RDA Log is already running!", "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(Assembly.GetExecutingAssembly().GetName().Name + " is already running!", 
+                    Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
     }
 }

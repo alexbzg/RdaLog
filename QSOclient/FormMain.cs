@@ -88,7 +88,7 @@ namespace tnxlog
             catch (Exception e)
             {
                 System.Diagnostics.Trace.TraceInformation(e.ToString());
-                MessageBox.Show("RDA data could not be loaded: " + e.ToString(), "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("RDA data could not be loaded: " + e.ToString(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             try
@@ -100,7 +100,7 @@ namespace tnxlog
             catch (Exception e)
             {
                 System.Diagnostics.Trace.TraceInformation(e.ToString());
-                MessageBox.Show("Callsigns list could not be loaded: " + e.ToString(), "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Callsigns list could not be loaded: " + e.ToString(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
@@ -131,7 +131,7 @@ namespace tnxlog
             catch (Exception e)
             {
                 System.Diagnostics.Trace.TraceInformation(e.ToString());
-                MessageBox.Show("RAFA data could not be loaded: " + e.ToString(), "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("RAFA data could not be loaded: " + e.ToString(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             statusFieldsControls = new Dictionary<string, StatusFieldControls>()
@@ -323,7 +323,7 @@ namespace tnxlog
                 NotifyIcon notifyIcon = new NotifyIcon();
                 notifyIcon.Visible = true;
                 notifyIcon.Icon = SystemIcons.Information;
-                notifyIcon.BalloonTipTitle = "RDA Log";
+                notifyIcon.BalloonTipTitle = Assembly.GetExecutingAssembly().GetName().Name;
                 notifyIcon.BalloonTipText = text;
                 notifyIcon.ShowBalloonTip(0);
                 notifyIcon.BalloonTipClosed += delegate (object sender, EventArgs e)
@@ -346,7 +346,7 @@ namespace tnxlog
                 if (!textBoxCallsign.validCallsign)
                 {
                     MessageBox.Show(string.IsNullOrEmpty(textBoxCallsign.Text) ? "Please enter your callsign." : $"Your callsign {textBoxCallsign.Text} is invalid.",
-                        "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     textBoxCallsign.Focus();
                     return;
                 }
@@ -441,7 +441,7 @@ namespace tnxlog
             }
             if (txt.Length > 0)
             {
-                MessageBox.Show("Invalid rda: " + txt, "Rda Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Invalid rda: " + txt, Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Cancel = true;
             }
         }
@@ -460,7 +460,7 @@ namespace tnxlog
             }
             if (txt.Length > 0)
             {
-                MessageBox.Show("Invalid rafa: " + txt, "Rda Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Invalid rafa: " + txt, Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Cancel = true;
             }
         }
@@ -484,7 +484,7 @@ namespace tnxlog
             }
             if (!ok && txt.Length > 0)
             {
-                MessageBox.Show("Invalid locator: " + txt, "Rda Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Invalid locator: " + txt, Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Cancel = true;
             }
 
@@ -771,7 +771,7 @@ namespace tnxlog
 
         private void MenuItemFileClear_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("All QSO will be deleted. Do you really want to continue?", "RDA Log", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            if (MessageBox.Show("All QSO will be deleted. Do you really want to continue?", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
             {
                 tnxlog.clearQso();
                 buildQsoIndices();

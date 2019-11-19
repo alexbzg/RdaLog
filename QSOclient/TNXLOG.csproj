@@ -149,6 +149,7 @@
     <Content Include="chat.png" />
     <Content Include="RDAlog.ico" />
     <Content Include="rdalog_icon_128.ico" />
+    <None Include="Resources\icon_delete.png" />
     <Content Include="tnxlog_128_icon.ico" />
     <None Include="Resources\chat.png" />
   </ItemGroup>

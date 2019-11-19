@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
@@ -108,7 +109,7 @@ namespace tnxlog
             else
             {
                 if (warning)
-                    MessageBox.Show("Callsign not found!", "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Callsign not found!", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 bsQSO.DataSource = tnxlog.qsoList;
                 filterButton.Checked = false;
             }
@@ -139,6 +140,40 @@ namespace tnxlog
         {
             tnxlog.qsoList.ListChanged -= QsoList_ListChanged;
             bsQSO.ListChanged -= BsQSO_ListChanged;
+        }
+
+        private void DataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            tnxlog.writeQsoList();
+        }
+
+        private void DataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == dataGridView.NewRowIndex || e.RowIndex < 0)
+                return;
+
+            if (e.ColumnIndex == dataGridView.Columns["DeleteButton"].Index)
+            {
+                if (MessageBox.Show("Do you really want to delete the qso?", "TNXLOG", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.OK)
+                    tnxlog.qsoList.RemoveAt(e.RowIndex);
+            }
+        }
+
+        private void DataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex == dataGridView.NewRowIndex || e.RowIndex < 0)
+                return;
+
+            if (e.ColumnIndex == dataGridView.Columns["DeleteButton"].Index)
+            {
+                var image = Properties.Resources.icon_delete;
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+                var x = e.CellBounds.Left + (e.CellBounds.Width - image.Width) / 2;
+                var y = e.CellBounds.Top + (e.CellBounds.Height - image.Height) / 2;
+                e.Graphics.DrawImage(image, new Point(x, y));
+
+                e.Handled = true;
+            }
         }
     }
 

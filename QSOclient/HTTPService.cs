@@ -257,7 +257,7 @@ namespace tnxlog
                 else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     config.token = null;
-                    MessageBox.Show(await response.Content.ReadAsStringAsync(), "RDA Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(await response.Content.ReadAsStringAsync(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 } else if (retry)
                 {
                     if (loginRetryTimer == null)
