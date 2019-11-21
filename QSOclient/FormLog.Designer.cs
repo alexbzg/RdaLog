@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLog));
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.DeleteButton = new System.Windows.Forms.DataGridViewButtonColumn();
             this.no = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ts = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.myCS = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,20 +47,24 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.filterTextBox = new System.Windows.Forms.ToolStripTextBoxCallsign();
             this.filterButton = new System.Windows.Forms.ToolStripButton();
+            this.cmsDataGridCell = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuItemDeleteQso = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemEditCell = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            this.cmsDataGridCell.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView
             // 
             this.dataGridView.AllowUserToAddRows = false;
+            this.dataGridView.AllowUserToDeleteRows = false;
             this.dataGridView.AllowUserToResizeRows = false;
             this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DeleteButton,
             this.no,
             this.ts,
             this.myCS,
@@ -74,20 +78,19 @@
             this.Locator,
             this.userField,
             this.Comments});
+            this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView.Location = new System.Drawing.Point(0, 28);
+            this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";
+            this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView.Size = new System.Drawing.Size(800, 422);
             this.dataGridView.TabIndex = 0;
-            this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellClick);
+            this.dataGridView.CellContextMenuStripNeeded += new System.Windows.Forms.DataGridViewCellContextMenuStripNeededEventHandler(this.DataGridView_CellContextMenuStripNeeded);
             this.dataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellEndEdit);
-            this.dataGridView.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.DataGridView_CellPainting);
+            this.dataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
+            this.dataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.DataGridView_CellValidating);
+            this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellValueChanged);
             this.dataGridView.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.DataGridView_ColumnWidthChanged);
-            // 
-            // DeleteButton
-            // 
-            this.DeleteButton.Frozen = true;
-            this.DeleteButton.HeaderText = "Delete";
-            this.DeleteButton.Name = "DeleteButton";
             // 
             // no
             // 
@@ -197,6 +200,28 @@
             this.filterButton.Text = "Filter";
             this.filterButton.CheckedChanged += new System.EventHandler(this.FilterButton_CheckedChanged);
             // 
+            // cmsDataGridCell
+            // 
+            this.cmsDataGridCell.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemDeleteQso,
+            this.menuItemEditCell});
+            this.cmsDataGridCell.Name = "cmsDataGridCell";
+            this.cmsDataGridCell.Size = new System.Drawing.Size(135, 48);
+            // 
+            // menuItemDeleteQso
+            // 
+            this.menuItemDeleteQso.Name = "menuItemDeleteQso";
+            this.menuItemDeleteQso.Size = new System.Drawing.Size(134, 22);
+            this.menuItemDeleteQso.Text = "Delete QSO";
+            this.menuItemDeleteQso.Click += new System.EventHandler(this.MenuItemDeleteQso_Click);
+            // 
+            // menuItemEditCell
+            // 
+            this.menuItemEditCell.Name = "menuItemEditCell";
+            this.menuItemEditCell.Size = new System.Drawing.Size(134, 22);
+            this.menuItemEditCell.Text = "Edit data";
+            this.menuItemEditCell.Click += new System.EventHandler(this.MenuItemEditCell_Click);
+            // 
             // FormLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -211,6 +236,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.cmsDataGridCell.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -236,5 +262,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Locator;
         private System.Windows.Forms.DataGridViewTextBoxColumn userField;
         private System.Windows.Forms.DataGridViewTextBoxColumn Comments;
+        private System.Windows.Forms.ContextMenuStrip cmsDataGridCell;
+        private System.Windows.Forms.ToolStripMenuItem menuItemDeleteQso;
+        private System.Windows.Forms.ToolStripMenuItem menuItemEditCell;
     }
 }

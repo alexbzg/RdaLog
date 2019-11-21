@@ -16,6 +16,8 @@ using System.Runtime.Serialization;
 using System.IO;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using System.Reflection;
+using ProtoBuf;
 
 namespace tnxlog
 {
@@ -62,7 +64,7 @@ namespace tnxlog
 #endif
         System.Threading.Timer pingTimer;
         System.Threading.Timer loginRetryTimer;
-        ConcurrentQueue<QSO> qsoQueue = new ConcurrentQueue<QSO>();
+        ConcurrentQueue<LogRequest> logQueue = new ConcurrentQueue<LogRequest>();
         private string unsentFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "unsent.dat");
         private string stationCallsign = null;
         private volatile bool _connected;
@@ -85,15 +87,30 @@ namespace tnxlog
         {
             config = _config;
             rdaLog = _rdaLog;
-            //schedulePingTimer();
+            //for backwards compatibility
             List<QSO> unsentQSOs = ProtoBufSerialization.Read<List<QSO>>(unsentFilePath);
             if (unsentQSOs != null && unsentQSOs.Count > 0)
-                Task.Run(() =>
+                Task.Run(async () =>
                {
                    foreach (QSO qso in unsentQSOs)
-                       postQso(qso);
-                   saveUnsent();
+                       await postQso(qso);
                });
+            unsentQSOs = ProtoBufSerialization.Read<List<QSO>>(unsentFilePath + ".qso");
+            if (unsentQSOs != null && unsentQSOs.Count > 0)
+                Task.Run(async () =>
+                {
+                    foreach (QSO qso in unsentQSOs)
+                        await postQso(qso);
+                });
+            List<QsoDeleteRequest>unsentDels = ProtoBufSerialization.Read<List<QsoDeleteRequest>>(unsentFilePath + ".del");
+            if (unsentDels != null && unsentDels.Count > 0)
+                Task.Run(async () =>
+                {
+                    foreach (QsoDeleteRequest del in unsentDels) 
+                        if (!await _postDeleteQso(del))
+                            addToQueue(del);
+                });
+
         }
 
         private void schedulePingTimer()
@@ -147,13 +164,34 @@ namespace tnxlog
             return response;
         }
 
+        private async Task<bool> _postQso(QSO qso)
+        {
+            if (qso._deleted)
+                return true;
+            HttpResponseMessage response = await post("log", qsoToken(qso));
+            if (response == null || !response.IsSuccessStatusCode)
+                return false;
+            else if (qso.serverTs != 0)
+            {
+                NewQsoResponse newQsoResponse = JsonConvert.DeserializeObject<NewQsoResponse>(await response.Content.ReadAsStringAsync());
+                qso.serverTs = newQsoResponse.ts;
+            }
+            return true;
+        }
+
+        private async Task<bool> _postDeleteQso(QsoDeleteRequest req)
+        {
+            HttpResponseMessage response = await post("log", req);
+            if (response == null || !response.IsSuccessStatusCode)
+                return false;
+            return true;
+        }
 
         public async Task postQso(QSO qso)
         {
-            if (qsoQueue.IsEmpty && config.token != null)
+            if (logQueue.IsEmpty && config.token != null)
             {
-                HttpResponseMessage response = await post("log", qsoToken(qso));
-                if (response == null || !response.IsSuccessStatusCode)
+                if (!await _postQso(qso))
                     addToQueue(qso);
             }
             else
@@ -162,24 +200,56 @@ namespace tnxlog
 
         private void addToQueue(QSO qso)
         {
-            qsoQueue.Enqueue(qso);
+            if (!qsoInQueue(qso))
+            {
+                logQueue.Enqueue(new LogRequest() { qso = qso });
+                saveUnsent();
+            }
+        }
+
+        private void addToQueue(QsoDeleteRequest req)
+        {
+            logQueue.Enqueue(new LogRequest() { delete = req });
             saveUnsent();
+        }
+
+        public async Task deleteQso(QSO qso)
+        {
+            if (qsoInQueue(qso))
+                qso._deleted = true;
+            else if (qso.serverTs != 0)
+            {
+                QsoDeleteRequest req = new QsoDeleteRequest(config, qso);
+                if (logQueue.IsEmpty && config.token != null)
+                {
+                    if (!await _postDeleteQso(req))
+                        addToQueue(req);
+                }
+                else
+                    addToQueue(req);
+            }
+        }
+
+        private bool qsoInQueue(QSO qso)
+        {
+            return logQueue.Where(item => item.qso != null).Select(item => item.qso).Contains(qso);
         }
 
         private void saveUnsent()
         {
-            ProtoBufSerialization.Write<List<QSO>>(unsentFilePath, qsoQueue.ToList());
+            ProtoBufSerialization.Write<List<QSO>>(unsentFilePath + ".qso", logQueue.Where(item => item.qso != null).Select(item => item.qso).ToList());
+            ProtoBufSerialization.Write<List<QsoDeleteRequest>>(unsentFilePath + ".del", logQueue.Where(item => item.delete != null).Select(item => item.delete).ToList());
         }
 
         private async Task processQueue()
         {
-            while (!qsoQueue.IsEmpty && config.token != null)
+            while (!logQueue.IsEmpty && config.token != null)
             {
-                qsoQueue.TryPeek(out QSO qso);
-                HttpResponseMessage r = await post("log", qsoToken(qso));
-                if (r != null && r.IsSuccessStatusCode)
+                logQueue.TryPeek(out LogRequest req);
+                bool r = req.qso != null ? await _postQso(req.qso) : await _postDeleteQso(req.delete);
+                if (r)
                 {
-                    qsoQueue.TryDequeue(out qso);
+                    logQueue.TryDequeue(out req);
                     saveUnsent();
                 }
                 else
@@ -343,6 +413,17 @@ namespace tnxlog
         public UserSettings settings;
     }
 
+    public class NewQsoResponse
+    {
+        public decimal ts;
+    }
+
+    public class LogRequest
+    {
+        public QsoDeleteRequest delete;
+        public QSO qso;
+    }
+
     class QSOtoken : JSONToken
     {
         public QSO qso;
@@ -350,6 +431,16 @@ namespace tnxlog
         internal QSOtoken(HttpServiceConfig _config, QSO _qso) : base(_config)
         {
             qso = _qso;
+        }
+    }
+    [DataContract, ProtoContract]
+    public class QsoDeleteRequest : JSONToken
+    {
+        [DataMember, ProtoMember(1)]
+        public decimal delete;
+        internal QsoDeleteRequest(HttpServiceConfig _config, QSO qso) : base(_config)
+        {
+            delete = qso.serverTs;
         }
     }
 

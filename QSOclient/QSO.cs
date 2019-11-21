@@ -34,6 +34,8 @@ namespace tnxlog
         internal string _comments;
         internal int _no;
         internal string[] _userFields;
+        internal decimal _serverTs = 0;
+        internal bool _deleted = false;
 
         [DataMember, ProtoMember(1)]
         public string ts { get { return _ts; } set { _ts = value; } }
@@ -79,6 +81,8 @@ namespace tnxlog
 
         [DataMember, ProtoMember(15)]
         public string comments { get { return _comments; } set { _comments = value; } }
+        [DataMember, ProtoMember(16)]
+        public decimal serverTs { get { return _serverTs; } set { _serverTs = value; } }
 
 
         [IgnoreDataMember]

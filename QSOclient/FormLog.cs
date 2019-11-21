@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -81,8 +82,10 @@ namespace tnxlog
         {
             for (int co = 0; co < dataGridView.ColumnCount; co++)
             {
-                r.Cells[co].Style.BackColor = b;
-                r.Cells[co].Style.ForeColor = f;
+                if (b != null)
+                    r.Cells[co].Style.BackColor = b;
+                if (f != null)
+                    r.Cells[co].Style.ForeColor = f;
             }
         }
 
@@ -144,35 +147,71 @@ namespace tnxlog
 
         private void DataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            tnxlog.writeQsoList();
+            dataGridView[e.ColumnIndex, e.RowIndex].Style.BackColor = SystemColors.Window;
         }
 
-        private void DataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView_CellContextMenuStripNeeded(object sender, DataGridViewCellContextMenuStripNeededEventArgs e)
         {
-            if (e.RowIndex == dataGridView.NewRowIndex || e.RowIndex < 0)
+            if (e.RowIndex == -1)
                 return;
+            menuItemEditCell.Visible = e.ColumnIndex != -1;
+            e.ContextMenuStrip = cmsDataGridCell;
+        }
 
-            if (e.ColumnIndex == dataGridView.Columns["DeleteButton"].Index)
-            {
-                if (MessageBox.Show("Do you really want to delete the qso?", "TNXLOG", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.OK)
-                    tnxlog.qsoList.RemoveAt(e.RowIndex);
+        private void DataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            if (dataGridView[e.ColumnIndex, e.RowIndex].IsInEditMode) {
+                DialogResult mbres = MessageBox.Show("Save changes?", Assembly.GetExecutingAssembly().GetName().Name,
+                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (mbres == DialogResult.Cancel)
+                    e.Cancel = true;
+                else if (mbres == DialogResult.Yes)
+                    dataGridView.EndEdit();
+                else
+                    dataGridView.CancelEdit();
             }
         }
 
-        private void DataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        private void MenuItemDeleteQso_Click(object sender, EventArgs e)
         {
-            if (e.RowIndex == dataGridView.NewRowIndex || e.RowIndex < 0)
-                return;
-
-            if (e.ColumnIndex == dataGridView.Columns["DeleteButton"].Index)
+            if (MessageBox.Show("Do you really want to delete the QSO?", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                var image = Properties.Resources.icon_delete;
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-                var x = e.CellBounds.Left + (e.CellBounds.Width - image.Width) / 2;
-                var y = e.CellBounds.Top + (e.CellBounds.Height - image.Height) / 2;
-                e.Graphics.DrawImage(image, new Point(x, y));
+                tnxlog.qsoList.Remove(getCurrentQso());
+            }
+        }
 
-                e.Handled = true;
+        private QSO getCurrentQso()
+        {
+            return ((BindingList<QSO>)bsQSO.DataSource)[dataGridView.SelectedCells[0].RowIndex];
+        }
+
+        private void MenuItemEditCell_Click(object sender, EventArgs e)
+        {
+            dataGridView.SelectedCells[0].Style.BackColor = SystemColors.Info;
+            dataGridView.BeginEdit(true);
+        }
+
+        private void DataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (e.RowIndex != -1)
+                {
+                    dataGridView.ClearSelection();
+                    if (e.ColumnIndex != -1)
+                        dataGridView[e.ColumnIndex, e.RowIndex].Selected = true;
+                    else
+                        dataGridView.Rows[e.RowIndex].Selected = true;
+                }
+            }
+        }
+
+        private async void DataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView.IsCurrentCellInEditMode)
+            {
+                tnxlog.writeQsoList();
+                await tnxlog.httpService.postQso(getCurrentQso());
             }
         }
     }

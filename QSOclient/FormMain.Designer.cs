@@ -1039,7 +1039,6 @@ namespace tnxlog
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = Assembly.GetExecutingAssembly().GetName().Name;
             this.Activated += new System.EventHandler(this.FormMain_Activated);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormMain_KeyDown);
