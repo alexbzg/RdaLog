@@ -176,7 +176,9 @@ namespace tnxlog
         {
             if (MessageBox.Show("Do you really want to delete the QSO?", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                tnxlog.qsoList.Remove(getCurrentQso());
+                QSO qso = getCurrentQso();
+                tnxlog.qsoList.Remove(qso);
+                tnxlog.httpService.deleteQso(qso);
             }
         }
 

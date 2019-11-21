@@ -115,7 +115,7 @@ namespace tnxlog
 
         private void schedulePingTimer()
         {
-            pingTimer = new System.Threading.Timer(obj => ping(), null, 5000, Timeout.Infinite);
+            pingTimer = new System.Threading.Timer(async obj => await ping(), null, 5000, Timeout.Infinite);
         }
 
         private async Task<HttpResponseMessage> post(string _URI, object data)
@@ -322,7 +322,7 @@ namespace tnxlog
                         loginRetryTimer.Change(Timeout.Infinite, Timeout.Infinite);
                         loginRetryTimer = null;
                     }
-                    Task.Run(() => processQueue());
+                    Task.Run(async () => await processQueue());
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -331,7 +331,7 @@ namespace tnxlog
                 } else if (retry)
                 {
                     if (loginRetryTimer == null)
-                        loginRetryTimer = new System.Threading.Timer(obj => login(true), null, pingIntervalNoConnection, Timeout.Infinite);
+                        loginRetryTimer = new System.Threading.Timer(async obj => await login(true), null, pingIntervalNoConnection, Timeout.Infinite);
                     else
                         loginRetryTimer.Change(pingIntervalNoConnection, Timeout.Infinite);
                 }

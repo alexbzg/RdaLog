@@ -79,7 +79,7 @@ namespace tnxlog
             qsoList.ListChanged += QsoList_ListChanged;
             _formMain = new FormMain(config.formMain, this);
             if (config.autoLogin)
-                Task.Run(() => { httpService.login(true); });
+                Task.Run(async () => await httpService.login(true));
         }
 
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
@@ -163,7 +163,7 @@ namespace tnxlog
 
                 config.autoLogin = formSettings.checkBoxAutoLogin.Checked;
                 if (config.autoLogin && !httpService.connected)
-                    Task.Run(() => { httpService.login(true); });
+                    Task.Run(async () => await httpService.login(true));
 
                 foreach (KeyValuePair<string, CheckBox> item in formSettings.mainFormPanelCheckboxes)
                      config.setMainFormPanelVisible(item.Key, item.Value.Checked);
