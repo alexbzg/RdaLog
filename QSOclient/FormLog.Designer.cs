@@ -45,11 +45,11 @@
             this.userField = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Comments = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.filterTextBox = new System.Windows.Forms.ToolStripTextBoxCallsign();
             this.filterButton = new System.Windows.Forms.ToolStripButton();
             this.cmsDataGridCell = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemDeleteQso = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemEditCell = new System.Windows.Forms.ToolStripMenuItem();
+            this.filterTextBox = new System.Windows.Forms.ToolStripTextBoxCallsign();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.cmsDataGridCell.SuspendLayout();
@@ -182,13 +182,6 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // filterTextBox
-            // 
-            this.filterTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.filterTextBox.Name = "filterTextBox";
-            this.filterTextBox.Size = new System.Drawing.Size(100, 25);
-            this.filterTextBox.Validated += new System.EventHandler(this.FilterTextBox_Validated);
-            // 
             // filterButton
             // 
             this.filterButton.CheckOnClick = true;
@@ -222,6 +215,14 @@
             this.menuItemEditCell.Text = "Edit data";
             this.menuItemEditCell.Click += new System.EventHandler(this.MenuItemEditCell_Click);
             // 
+            // filterTextBox
+            // 
+            this.filterTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.filterTextBox.Name = "filterTextBox";
+            this.filterTextBox.Size = new System.Drawing.Size(100, 25);
+            this.filterTextBox.AllowWildcards = true;
+            this.filterTextBox.Validated += new System.EventHandler(this.FilterTextBox_Validated);
+            // 
             // FormLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -246,7 +247,6 @@
 
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripTextBoxCallsign filterTextBox;
         private System.Windows.Forms.ToolStripButton filterButton;
         private System.Windows.Forms.DataGridViewButtonColumn DeleteButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn no;
@@ -265,5 +265,6 @@
         private System.Windows.Forms.ContextMenuStrip cmsDataGridCell;
         private System.Windows.Forms.ToolStripMenuItem menuItemDeleteQso;
         private System.Windows.Forms.ToolStripMenuItem menuItemEditCell;
+        private System.Windows.Forms.ToolStripTextBoxCallsign filterTextBox;
     }
 }

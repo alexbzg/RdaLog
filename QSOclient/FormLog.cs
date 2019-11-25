@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using XmlConfigNS;
@@ -19,7 +20,8 @@ namespace tnxlog
     {
         private Tnxlog tnxlog;
         private BindingSource bsQSO;
-        private Dictionary<string, BindingList<QSO>> qsoIndex = new Dictionary<string, BindingList<QSO>>();
+        private BindingList<QSO> searchResults = new BindingList<QSO>();
+        private Regex reFilter;
         public FormLog(FormLogConfig _config, Tnxlog _tnxlog) : base(_config)
         {
             tnxlog = _tnxlog;
@@ -37,7 +39,6 @@ namespace tnxlog
                 for (int co = _config.dataGridColumnsWidth.Count; co < dataGridView.Columns.Count; co++)
                     _config.dataGridColumnsWidth.Add(dataGridView.Columns[co].Width);
 
-            buildIndex();
             tnxlog.qsoList.ListChanged += QsoList_ListChanged;
         }
 
@@ -61,21 +62,24 @@ namespace tnxlog
             }
         }
 
-        private void buildIndex()
+        private bool qsoFilterPredicate(QSO qso)
         {
-            qsoIndex.Clear();
-            foreach (QSO qso in tnxlog.qsoList)
-                addToIndex(qso);
-            if (filterButton.Checked)
-                filterQso();
+            if (filterTextBox.Text.Contains("*"))
+                return reFilter.IsMatch(qso.cs);
+            else
+                return qso.cs == filterTextBox.Text;
+        }
+
+        private void updateSearchResults()
+        {
+            searchResults = new BindingList<QSO>(tnxlog.qsoList.Where(item => qsoFilterPredicate(item)).ToList());
         }
 
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
         {
             if (e.ListChangedType == ListChangedType.ItemAdded)
-                addToIndex(tnxlog.qsoList[e.NewIndex], true);
-            else if (e.ListChangedType == ListChangedType.Reset)
-                buildIndex();
+                if (bsQSO.DataSource == searchResults)
+                    searchResults.Insert(0, tnxlog.qsoList[e.NewIndex]);
         }
 
         private void setRowColors(DataGridViewRow r, Color f, Color b)
@@ -89,15 +93,6 @@ namespace tnxlog
             }
         }
 
-        private void addToIndex(QSO qso, bool reverse = false)
-        {
-            if (!qsoIndex.ContainsKey(qso.cs))
-                qsoIndex[qso.cs] = new BindingList<QSO>();
-            if (reverse)
-                qsoIndex[qso.cs].Insert(0, qso);
-            else
-                qsoIndex[qso.cs].Add(qso);
-        }
 
         private void DataGridView_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
@@ -107,14 +102,20 @@ namespace tnxlog
 
         private void filterQso(bool warning=false)
         {
-            if (filterTextBox.Text != "" && qsoIndex.ContainsKey(filterTextBox.Text))
-                bsQSO.DataSource = qsoIndex[filterTextBox.Text];
-            else
+            if (filterTextBox.Text != "")
             {
-                if (warning)
-                    MessageBox.Show("Callsign not found!", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                bsQSO.DataSource = tnxlog.qsoList;
-                filterButton.Checked = false;
+                if (filterTextBox.Text.Contains("*"))
+                    reFilter = new Regex(filterTextBox.Text.Replace("*", ".*"), RegexOptions.Compiled);
+                updateSearchResults();
+                if (searchResults.Count > 0)
+                    bsQSO.DataSource = searchResults;
+                else
+                {
+                    if (warning)
+                        MessageBox.Show("Callsign not found!", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    bsQSO.DataSource = tnxlog.qsoList;
+                    filterButton.Checked = false;
+                }
             }
         }
 
