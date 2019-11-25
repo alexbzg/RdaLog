@@ -18,6 +18,7 @@ using System.Xml.Serialization;
 using Newtonsoft.Json;
 using System.Reflection;
 using ProtoBuf;
+using System.Diagnostics;
 
 namespace tnxlog
 {
@@ -171,9 +172,13 @@ namespace tnxlog
             HttpResponseMessage response = await post("log", qsoToken(qso));
             if (response == null || !response.IsSuccessStatusCode)
                 return false;
-            else if (qso.serverTs != 0)
+            else if (qso.serverTs == 0)
             {
-                NewQsoResponse newQsoResponse = JsonConvert.DeserializeObject<NewQsoResponse>(await response.Content.ReadAsStringAsync());
+                string strRsp = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(strRsp);
+                NewQsoResponse newQsoResponse = JsonConvert.DeserializeObject<NewQsoResponse>(strRsp);
+
+                //NewQsoResponse newQsoResponse = JsonConvert.DeserializeObject<NewQsoResponse>(await response.Content.ReadAsStringAsync());
                 qso.serverTs = newQsoResponse.ts;
             }
             return true;
@@ -433,10 +438,10 @@ namespace tnxlog
             qso = _qso;
         }
     }
-    [DataContract, ProtoContract]
+    [ProtoContract]
     public class QsoDeleteRequest : JSONToken
     {
-        [DataMember, ProtoMember(1)]
+        [ProtoMember(1)]
         public decimal delete;
         internal QsoDeleteRequest(HttpServiceConfig _config, QSO qso) : base(_config)
         {
