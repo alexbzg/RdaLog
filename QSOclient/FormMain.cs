@@ -167,10 +167,16 @@ namespace tnxlog
             comboBoxStatFilterMode.Items.AddRange(HamRadio.Mode.Names);
             comboBoxMode.Items.AddRange(HamRadio.Mode.Names);
 
+            comboBoxStatFilterMode.SelectedItem = string.IsNullOrEmpty(config.statFilterMode) ? comboBoxStatFilterMode.Items[0] : config.statFilterMode;
+            comboBoxStatFilterBand.SelectedItem = string.IsNullOrEmpty(config.statFilterBand) ? comboBoxStatFilterBand.Items[0] : config.statFilterBand;
+            comboBoxStatFilterRda.SelectedItem = string.IsNullOrEmpty(config.statFilterRda) ? comboBoxStatFilterRda.Items[0] : config.statFilterRda;
+
             checkBoxTop.Checked = config.topmost;
             comboBoxMode.SelectedItem = string.IsNullOrEmpty(config.mode) ? comboBoxMode.Items[0] : config.mode;
             if (config.freq != 0)
                 numericUpDownFreq.Value = config.freq;
+
+            checkBoxAutoStatFilter.Checked = config.statFilterAuto;
 
             foreach (KeyValuePair<string, StatusFieldControls> item in statusFieldsControls)
             {
@@ -598,6 +604,17 @@ namespace tnxlog
 
         }
 
+        private void CheckBoxAutoStatFilter_CheckedChanged(object sender, EventArgs e)
+        {
+            setStatFilter();
+            if (checkBoxAutoStatFilter.Checked != config.statFilterAuto)
+            {
+                config.statFilterAuto = checkBoxAutoStatFilter.Checked;
+                config.write();
+            }
+        }
+
+
         private void updateListBoxCallsigns(ListBox box, StringIndex callsignsIndex)
         {
             box.ClearSelected();
@@ -738,7 +755,12 @@ namespace tnxlog
 
         private void StatFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
+            config.statFilterBand = comboBoxStatFilterBand.SelectedItem.ToString(); 
+            config.statFilterMode = comboBoxStatFilterMode.SelectedItem.ToString();
+            config.statFilterRda = comboBoxStatFilterRda.SelectedItem.ToString();
+            config.write();
             updateStats();
+            
         }
 
         private void CheckBoxTop_CheckedChanged(object sender, EventArgs e)

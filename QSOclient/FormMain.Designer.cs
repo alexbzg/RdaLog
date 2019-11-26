@@ -1,4 +1,5 @@
-﻿using HamRadio;
+﻿using System;
+using HamRadio;
 namespace tnxlog
 {
     partial class FormMain
@@ -441,6 +442,7 @@ namespace tnxlog
             this.checkBoxAutoStatFilter.TabStop = false;
             this.checkBoxAutoStatFilter.Text = "auto";
             this.checkBoxAutoStatFilter.UseVisualStyleBackColor = true;
+            this.checkBoxAutoStatFilter.CheckedChanged += new System.EventHandler(this.CheckBoxAutoStatFilter_CheckedChanged);
             // 
             // labelStatFilter
             // 
@@ -1061,6 +1063,7 @@ namespace tnxlog
             this.PerformLayout();
 
         }
+
 
         #endregion
 
