@@ -29,6 +29,19 @@ namespace tnxlog
             internal TextBox value;
         }
 
+        class QsoValues
+        {
+            internal string callsign;
+            internal decimal freq;
+            internal string mode;
+            internal string rstRcvd;
+            internal string rstSnt;
+
+            internal bool isEqual(QsoValues a)
+            {
+                return a != null && a.callsign == callsign && a.freq == freq && a.mode == mode && a.rstRcvd == rstRcvd && a.rstSnt == rstSnt;
+            }
+        }
 
         class RegexReplace
         {
@@ -59,9 +72,19 @@ namespace tnxlog
         private StringIndex callsignsDb = new StringIndex();
         private StringIndex callsignsQso = new StringIndex();
         private Timer timer = new Timer();
-        private Control[] qsoControls;
-        private Object[] qsoValues;
+        private QsoValues qsoValues;
         private InputLanguage englishInputLanguage;
+
+        private QsoValues currentQsoValues()
+        {
+            return new QsoValues() {
+                callsign = textBoxCallsign.Text,
+                freq = numericUpDownFreq.Value,
+                mode = comboBoxMode.Text,
+                rstRcvd = textBoxRstRcvd.Text,
+                rstSnt = textBoxRstSent.Text
+            };
+        }
         public FormMain(FormMainConfig _config, Tnxlog _tnxlog) : base(_config)
         {
             tnxlog = _tnxlog;
@@ -165,14 +188,19 @@ namespace tnxlog
 
             comboBoxStatFilterBand.Items.AddRange(Band.Names);
             comboBoxStatFilterMode.Items.AddRange(HamRadio.Mode.Names);
+            buildQsoIndices();
+
             comboBoxMode.Items.AddRange(HamRadio.Mode.Names);
 
-            comboBoxStatFilterMode.SelectedItem = string.IsNullOrEmpty(config.statFilterMode) ? comboBoxStatFilterMode.Items[0] : config.statFilterMode;
-            comboBoxStatFilterBand.SelectedItem = string.IsNullOrEmpty(config.statFilterBand) ? comboBoxStatFilterBand.Items[0] : config.statFilterBand;
-            comboBoxStatFilterRda.SelectedItem = string.IsNullOrEmpty(config.statFilterRda) ? comboBoxStatFilterRda.Items[0] : config.statFilterRda;
+            comboBoxStatFilterMode.SelectedItem = string.IsNullOrEmpty(config.statFilterMode) || !comboBoxStatFilterMode.Items.Contains(config.statFilterMode) ? 
+                comboBoxStatFilterMode.Items[0] : config.statFilterMode;
+            comboBoxStatFilterBand.SelectedItem = string.IsNullOrEmpty(config.statFilterBand) || !comboBoxStatFilterBand.Items.Contains(config.statFilterBand) ? 
+                comboBoxStatFilterBand.Items[0] : config.statFilterBand;
+            comboBoxStatFilterRda.SelectedItem = string.IsNullOrEmpty(config.statFilterRda) || !comboBoxStatFilterRda.Items.Contains(config.statFilterRda) ? 
+                comboBoxStatFilterRda.Items[0] : config.statFilterRda;
 
             checkBoxTop.Checked = config.topmost;
-            comboBoxMode.SelectedItem = string.IsNullOrEmpty(config.mode) ? comboBoxMode.Items[0] : config.mode;
+            comboBoxMode.SelectedItem = string.IsNullOrEmpty(config.mode) || !comboBoxMode.Items.Contains(config.mode) ? comboBoxMode.Items[0] : config.mode;
             if (config.freq != 0)
                 numericUpDownFreq.Value = config.freq;
 
@@ -218,7 +246,6 @@ namespace tnxlog
             textBoxUserField.Text = tnxlogConfig.userField;
             textBoxCallsign.Text = config.callsign;
 
-            buildQsoIndices();
             tnxlog.qsoList.ListChanged += QsoList_ListChanged;
 
             timer.Tick += Timer_Tick;
@@ -227,8 +254,7 @@ namespace tnxlog
 
             Text = Assembly.GetExecutingAssembly().GetName().Name + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-            qsoControls = new Control[] { textBoxCallsign, numericUpDownFreq, comboBoxMode, textBoxRstRcvd, textBoxRstSent };
-            saveQsoValues();
+            qsoValues = currentQsoValues();
         }
 
         private void onLogInOut(object sender, EventArgs e)
@@ -358,39 +384,35 @@ namespace tnxlog
                 }
                 if (ActiveControl != textBoxCorrespondent)
                 {
-                    for (int co = 0; co < qsoControls.Length; co++)
+                    QsoValues newQsoValues = currentQsoValues();
+                    if (!newQsoValues.isEqual(qsoValues))
                     {
-                        if ((qsoControls[co].GetType() == typeof(NumericUpDown) && ((NumericUpDown)qsoControls[co]).Value != (decimal)qsoValues[co])
-                            || (qsoControls[co].GetType() != typeof(NumericUpDown) && qsoControls[co].Text != qsoValues[co].ToString()))
-                        {
-                            textBoxCorrespondent.Focus();
-                            saveQsoValues();
-                            return;
-                        }
+                        textBoxCorrespondent.Focus();
+                        qsoValues = newQsoValues;
+                        return;
                     }
                 }
-                saveQsoValues();
+                qsoValues = currentQsoValues();
                 string correspondent = textBoxCorrespondent.Text;
                 string comments = textBoxComments.Text;
                 textBoxCorrespondent.Text = "";
                 textBoxComments.Text = "";
-                setDefRst();
                 textBoxCorrespondent.Focus();
-                await tnxlog.newQso(correspondent, textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text, comments);
+                setDefRst();
+                await tnxlog.newQso(correspondent, qsoValues.callsign, qsoValues.freq, qsoValues.mode, qsoValues.rstRcvd, qsoValues.rstSnt, comments);                
             }
         }
 
         private void setDefRst()
         {
             string mode = comboBoxMode.SelectedItem.ToString();
-            textBoxRstSent.Text = HamRadio.Mode.DefRst[mode];
-            textBoxRstRcvd.Text = HamRadio.Mode.DefRst[mode];
+            if (HamRadio.Mode.DefRst.ContainsKey(mode))
+            {
+                textBoxRstSent.Text = HamRadio.Mode.DefRst[mode];
+                textBoxRstRcvd.Text = HamRadio.Mode.DefRst[mode];
+            }
         }
 
-        private void saveQsoValues()
-        {
-            qsoValues = new object[] { textBoxCallsign.Text, numericUpDownFreq.Value, comboBoxMode.Text, textBoxRstRcvd.Text, textBoxRstSent.Text };
-        }
 
         private List<string> parseValues(Regex reMatch, ref string values, HashSet<string> valuesSet, RegexReplace reReplace)
         {

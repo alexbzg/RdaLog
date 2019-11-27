@@ -161,25 +161,17 @@ namespace tnxlog
 
         private void DataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            if (dataGridView[e.ColumnIndex, e.RowIndex].IsInEditMode) {
-                DialogResult mbres = MessageBox.Show("Save changes?", Assembly.GetExecutingAssembly().GetName().Name,
-                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                if (mbres == DialogResult.Cancel)
-                    e.Cancel = true;
-                else if (mbres == DialogResult.Yes)
-                    dataGridView.EndEdit();
-                else
-                    dataGridView.CancelEdit();
-            }
+            if (dataGridView[e.ColumnIndex, e.RowIndex].IsInEditMode)
+                dataGridView.EndEdit();
         }
 
-        private void MenuItemDeleteQso_Click(object sender, EventArgs e)
+        private async void MenuItemDeleteQso_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Do you really want to delete the QSO?", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 QSO qso = getCurrentQso();
                 tnxlog.qsoList.Remove(qso);
-                tnxlog.httpService.deleteQso(qso);
+                await tnxlog.httpService.deleteQso(qso);
             }
         }
 
@@ -189,6 +181,11 @@ namespace tnxlog
         }
 
         private void MenuItemEditCell_Click(object sender, EventArgs e)
+        {
+            editCell();
+        }
+
+        private void editCell()
         {
             dataGridView.SelectedCells[0].Style.BackColor = SystemColors.Info;
             dataGridView.BeginEdit(true);
@@ -216,6 +213,14 @@ namespace tnxlog
                 tnxlog.writeQsoList();
                 await tnxlog.httpService.postQso(getCurrentQso());
             }
+        }
+
+        private void DataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView.ClearSelection();
+            if (e.ColumnIndex != -1)
+                dataGridView[e.ColumnIndex, e.RowIndex].Selected = true;
+            editCell();
         }
     }
 

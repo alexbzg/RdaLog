@@ -45,11 +45,11 @@
             this.userField = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Comments = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.filterTextBox = new System.Windows.Forms.ToolStripTextBoxCallsign();
             this.filterButton = new System.Windows.Forms.ToolStripButton();
             this.cmsDataGridCell = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemDeleteQso = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemEditCell = new System.Windows.Forms.ToolStripMenuItem();
-            this.filterTextBox = new System.Windows.Forms.ToolStripTextBoxCallsign();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.cmsDataGridCell.SuspendLayout();
@@ -86,6 +86,7 @@
             this.dataGridView.Size = new System.Drawing.Size(800, 422);
             this.dataGridView.TabIndex = 0;
             this.dataGridView.CellContextMenuStripNeeded += new System.Windows.Forms.DataGridViewCellContextMenuStripNeededEventHandler(this.DataGridView_CellContextMenuStripNeeded);
+            this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellDoubleClick);
             this.dataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellEndEdit);
             this.dataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
             this.dataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.DataGridView_CellValidating);
@@ -182,6 +183,14 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // filterTextBox
+            // 
+            this.filterTextBox.AllowWildcards = true;
+            this.filterTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.filterTextBox.Name = "filterTextBox";
+            this.filterTextBox.Size = new System.Drawing.Size(100, 25);
+            this.filterTextBox.Validated += new System.EventHandler(this.FilterTextBox_Validated);
+            // 
             // filterButton
             // 
             this.filterButton.CheckOnClick = true;
@@ -214,14 +223,6 @@
             this.menuItemEditCell.Size = new System.Drawing.Size(134, 22);
             this.menuItemEditCell.Text = "Edit data";
             this.menuItemEditCell.Click += new System.EventHandler(this.MenuItemEditCell_Click);
-            // 
-            // filterTextBox
-            // 
-            this.filterTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.filterTextBox.Name = "filterTextBox";
-            this.filterTextBox.Size = new System.Drawing.Size(100, 25);
-            this.filterTextBox.AllowWildcards = true;
-            this.filterTextBox.Validated += new System.EventHandler(this.FilterTextBox_Validated);
             // 
             // FormLog
             // 
