@@ -576,7 +576,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FormSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Settings";
+            this.Text = "TNXLOG - Settings";
             this.ResumeLayout(false);
             this.PerformLayout();
 

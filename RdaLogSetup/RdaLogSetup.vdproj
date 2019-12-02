@@ -420,7 +420,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:TNXLOG, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:TNXLOG, Version=0.1.3.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_542674FE6A3A4EC9BC9654EA0DA51E6C"
@@ -711,15 +711,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TNXLOG"
-        "ProductCode" = "8:{C51F9694-8171-411E-8586-8960D00E876D}"
-        "PackageCode" = "8:{BE0F8F54-10BB-4F14-AA2F-B64627DAD6AD}"
+        "ProductCode" = "8:{43A7E73B-AB1A-431A-BDA2-657293625DF8}"
+        "PackageCode" = "8:{A87048C5-D7EB-4D24-94E8-766548536667}"
         "UpgradeCode" = "8:{B0CA3AEB-7084-42FE-9464-94546D3CD25A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.1.2"
+        "ProductVersion" = "8:0.1.4"
         "Manufacturer" = "8:TNXqso"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

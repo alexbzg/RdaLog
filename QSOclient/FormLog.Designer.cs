@@ -186,7 +186,6 @@
             // filterTextBox
             // 
             this.filterTextBox.AllowWildcards = true;
-            this.filterTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.filterTextBox.Name = "filterTextBox";
             this.filterTextBox.Size = new System.Drawing.Size(100, 25);
             this.filterTextBox.Validated += new System.EventHandler(this.FilterTextBox_Validated);
@@ -233,7 +232,7 @@
             this.Controls.Add(this.dataGridView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormLog";
-            this.Text = "RDA Log - Log";
+            this.Text = "TNXLOG - Log";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormLog_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.toolStrip1.ResumeLayout(false);

@@ -270,7 +270,7 @@ namespace tnxlog
         private void rdaLog_statusFieldChange (object sender, StatusFieldChangeEventArgs e)
         {
             string value = string.IsNullOrEmpty(e.value) ? "N/A" : e.value;
-            showBalloon($"New {e.field}: {value}");
+            //showBalloon($"New {e.field}: {value}", 20 * 1000);
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -348,7 +348,7 @@ namespace tnxlog
             config.write();
         }
 
-        private void showBalloon(string text)
+        private void showBalloon(string text, int msTimeout)
         {
             DoInvoke(() =>
             {
@@ -357,7 +357,7 @@ namespace tnxlog
                 notifyIcon.Icon = SystemIcons.Information;
                 notifyIcon.BalloonTipTitle = Assembly.GetExecutingAssembly().GetName().Name;
                 notifyIcon.BalloonTipText = text;
-                notifyIcon.ShowBalloonTip(0);
+                notifyIcon.ShowBalloonTip(msTimeout);
                 notifyIcon.BalloonTipClosed += delegate (object sender, EventArgs e)
                 {
                     notifyIcon.Dispose();
