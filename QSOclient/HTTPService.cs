@@ -1,5 +1,6 @@
 ﻿//#define DISABLE_HTTP
 #define TEST_SRV
+#define DISABLE_HTTP_LOGGING
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ namespace tnxlog
         public EventHandler<EventArgs> logInOout;
 
         [DataMember]
+        public int updateIterval = 60 * 1000;
+        [DataMember]
         public string token
         {
             get { return _token; }
@@ -55,7 +58,7 @@ namespace tnxlog
     }
     public class HttpService
     {
-        private static int pingIntervalDef = 60 * 1000;
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private static int pingIntervalNoConnection = 5 * 1000;
         HttpClient client = new HttpClient();
 #if DEBUG && TEST_SRV
@@ -127,7 +130,9 @@ namespace tnxlog
         private async Task<HttpResponseMessage> post(string _URI, object data, bool warnings)
         {
             string sContent = JsonConvert.SerializeObject(data);
+#if !DISABLE_HTTP_LOGGING
             System.Diagnostics.Debug.WriteLine(sContent);
+#endif
             string URI = srvURI + _URI;
 #if DEBUG && DISABLE_HTTP
             return true;
@@ -139,11 +144,13 @@ namespace tnxlog
             {
                 response = await client.PostAsync(URI, content);
                 result = response.IsSuccessStatusCode;
+#if !DISABLE_HTTP_LOGGING
                 System.Diagnostics.Debug.WriteLine(response.ToString());
+#endif
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.ToString());
+                logger.Error(e, "HTTP post error");
             }
             if (connected != result)
             {
@@ -175,10 +182,7 @@ namespace tnxlog
             else if (qso.serverTs == 0)
             {
                 string strRsp = await response.Content.ReadAsStringAsync();
-                Debug.WriteLine(strRsp);
                 NewQsoResponse newQsoResponse = JsonConvert.DeserializeObject<NewQsoResponse>(strRsp);
-
-                //NewQsoResponse newQsoResponse = JsonConvert.DeserializeObject<NewQsoResponse>(await response.Content.ReadAsStringAsync());
                 qso.serverTs = newQsoResponse.ts;
             }
             return true;
@@ -274,11 +278,10 @@ namespace tnxlog
 
         public async Task getLocation()
         {
-            Uri statusUri = new Uri(srvURI.Scheme + "://" + srvURI.Host + "/static/stations/" + stationCallsign + "/status.json");
+            Uri statusUri = new Uri($"{srvURI.Scheme}://{srvURI.Host}/{stationCallsign}/status.json");
             try
             {
                 HttpResponseMessage response = await client.GetAsync(statusUri);
-                System.Diagnostics.Debug.WriteLine(response.ToString());
                 if (response.IsSuccessStatusCode)
                 {
                     LocationResponse location = JsonConvert.DeserializeObject<LocationResponse>(await response.Content.ReadAsStringAsync());
@@ -289,7 +292,7 @@ namespace tnxlog
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.ToString());
+                logger.Error(e, "HTTP get location error");
             }
         }
 
@@ -307,7 +310,7 @@ namespace tnxlog
                 rdaLog.setStatusFieldValue("rda", location.rda);
                 rdaLog.setStatusFieldValue("locator", location.loc);
             }
-            pingTimer.Change(response != null && response.IsSuccessStatusCode ? pingIntervalDef : pingIntervalNoConnection, Timeout.Infinite);
+            pingTimer.Change(response != null && response.IsSuccessStatusCode ? config.updateIterval : pingIntervalNoConnection, Timeout.Infinite);
         }
 
         public async Task<System.Net.HttpStatusCode?> login(bool retry=false)

@@ -1,8 +1,10 @@
 ﻿using HamRadio;
+using NLog;
 using SerializationNS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -21,11 +23,14 @@ namespace tnxlog
 
     public class Tnxlog
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private FormMain _formMain;
         public FormMain formMain { get { return _formMain; } }
         private FormLog formLog;
         private TnxlogConfig config;
         public HttpService httpService;
+        internal string dataPath;
+        private NLog.Targets.FileTarget logfile;
         private string qsoFilePath;
         internal BindingList<QSO> qsoList;
         private int qsoNo = 0;
@@ -56,12 +61,30 @@ namespace tnxlog
 
         public Tnxlog()
         {
-            string dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "tnxlog");
+#if DEBUG || LOG
+            var loggingConfig = new NLog.Config.LoggingConfiguration();
+#endif
+            dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "tnxlog");
 #if DEBUG
             dataPath = Path.Combine(dataPath, "debug");
+            var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
+            loggingConfig.AddRule(LogLevel.Info, LogLevel.Fatal, logconsole);
 #endif
             if (!Directory.Exists(dataPath))
                 Directory.CreateDirectory(dataPath);
+#if LOG
+            logfile = new NLog.Targets.FileTarget("logfile") {
+                FileName = Path.Combine(dataPath, "debug.log"),
+                ArchiveEvery = NLog.Targets.FileArchivePeriod.Sunday,
+                MaxArchiveFiles = 1 };
+            loggingConfig.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+#endif
+#if DEBUG || LOG
+            NLog.LogManager.Configuration = loggingConfig;
+#endif
+#if LOG
+            Logger.Info("Start");
+#endif
             qsoFilePath = Path.Combine(dataPath, "qso.dat");
             config = XmlConfig.create<TnxlogConfig>(Path.Combine(dataPath, "config.xml"));
             foreach (string field in TnxlogConfig.StatusFields)
@@ -132,10 +155,12 @@ namespace tnxlog
 
         public void showSettings()
         {
-            FormSettings formSettings = new FormSettings();
+            FormSettings formSettings = new FormSettings(dataPath);
 
             formSettings.textBoxLogin.Text = config.httpService.callsign;
             formSettings.textBoxPassword.Text = config.httpService.password;
+            if (config.httpService.updateIterval != 0)
+                formSettings.updateIntervalRadioButtons[config.httpService.updateIterval].Checked = true;
             formSettings.buttonLogin.Click += async delegate (object sender, EventArgs e)
             {
                 config.httpService.callsign = formSettings.textBoxLogin.Text;
@@ -160,6 +185,7 @@ namespace tnxlog
             {
                 config.httpService.callsign = formSettings.textBoxLogin.Text;
                 config.httpService.password = formSettings.textBoxPassword.Text;
+                config.httpService.updateIterval = formSettings.updateIntervalRadioButtons.Where(x => x.Value.Checked).FirstOrDefault().Key;
 
                 config.autoLogin = formSettings.checkBoxAutoLogin.Checked;
                 if (config.autoLogin && !httpService.connected)

@@ -82,7 +82,7 @@ namespace tnxlog
             this.labelHotKeyF3Bind = new System.Windows.Forms.Label();
             this.labelHotKeyF2Bind = new System.Windows.Forms.Label();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.connectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.loginLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelMode = new System.Windows.Forms.Label();
             this.comboBoxMode = new System.Windows.Forms.ComboBox();
             this.labelFreq = new System.Windows.Forms.Label();
@@ -109,6 +109,7 @@ namespace tnxlog
             this.labelDupe = new System.Windows.Forms.Label();
             this.labelComments = new System.Windows.Forms.Label();
             this.textBoxComments = new System.Windows.Forms.TextBoxCallsign();
+            this.connectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
@@ -726,6 +727,7 @@ namespace tnxlog
             this.statusStrip.AutoSize = false;
             this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loginLabel,
             this.connectionStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 279);
             this.statusStrip.Name = "statusStrip";
@@ -733,10 +735,10 @@ namespace tnxlog
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 0;
             // 
-            // connectionStatusLabel
+            // loginLabel
             // 
-            this.connectionStatusLabel.Name = "connectionStatusLabel";
-            this.connectionStatusLabel.Size = new System.Drawing.Size(0, 17);
+            this.loginLabel.Name = "loginLabel";
+            this.loginLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // labelMode
             // 
@@ -1010,6 +1012,13 @@ namespace tnxlog
             this.textBoxComments.TabIndex = 6;
             this.textBoxComments.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // connectionStatusLabel
+            // 
+            this.connectionStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Bump;
+            this.connectionStatusLabel.Name = "connectionStatusLabel";
+            this.connectionStatusLabel.Size = new System.Drawing.Size(118, 17);
+            this.connectionStatusLabel.Text = "toolStripStatusLabel1";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1042,6 +1051,7 @@ namespace tnxlog
             this.MaximizeBox = false;
             this.Name = "FormMain";
             this.Activated += new System.EventHandler(this.FormMain_Activated);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormMain_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormMain_KeyPress);
@@ -1141,10 +1151,11 @@ namespace tnxlog
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.Label labelStatMode;
         private System.Windows.Forms.Label labelStatBand;
-        private System.Windows.Forms.ToolStripStatusLabel connectionStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel loginLabel;
         private System.Windows.Forms.Label labelDupe;
         private System.Windows.Forms.Label labelComments;
         private System.Windows.Forms.TextBoxCallsign textBoxComments;
+        private System.Windows.Forms.ToolStripStatusLabel connectionStatusLabel;
     }
 }
 

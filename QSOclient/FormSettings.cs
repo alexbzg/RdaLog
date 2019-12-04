@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,9 +32,13 @@ namespace tnxlog
             }
         }
 
+        internal Dictionary<int, RadioButton> updateIntervalRadioButtons;
+
         internal Dictionary<string, CheckBox> mainFormPanelCheckboxes;
-        public FormSettings()
+        private string dataPath;
+        public FormSettings(string _dataPath)
         {
+            dataPath = _dataPath;
             InitializeComponent();
             mainFormPanelCheckboxes = new Dictionary<string, CheckBox>()
             {
@@ -42,7 +47,19 @@ namespace tnxlog
                 {"cwMacros", checkBoxViewCwMacro },
                 {"callsignId", checkBoxViewCallsignId }
             };
+            updateIntervalRadioButtons = new Dictionary<int, RadioButton>()
+            {
+                {10 * 1000, radioButtonUpdInterval10s },
+                {60 * 1000, radioButtonUpdInterval1m }
+            };
         }
 
+        private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl.SelectedTab == tabPageDebug)
+            {
+                textBoxDebugLog.Text = File.ReadAllText(Path.Combine(dataPath, "debug.log"));
+            }
+        }
     }
 }

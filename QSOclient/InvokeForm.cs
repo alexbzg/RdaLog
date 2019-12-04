@@ -9,6 +9,7 @@ namespace InvokeFormNS
 {
     public class InvokeForm : Form
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         public InvokeForm()
         {
         }
@@ -23,7 +24,7 @@ namespace InvokeFormNS
                 }
                 catch (Exception e)
                 {
-                    System.Diagnostics.Debug.WriteLine(e.ToString());
+                    logger.Error(e, "Invoke exception");
                 }
             }
             else

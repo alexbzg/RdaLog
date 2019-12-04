@@ -13,6 +13,8 @@ namespace XmlConfigNS
 
     public class XmlConfig
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         private string fname;
         protected bool initialized;
 
@@ -46,7 +48,7 @@ namespace XmlConfigNS
                     }
                     catch (Exception e)
                     {
-                        System.Diagnostics.Debug.WriteLine(e.ToString());
+                        logger.Error(e, "XmlConfig read exception");
                     }
                 }
             }
@@ -72,7 +74,7 @@ namespace XmlConfigNS
                     }
                     catch (Exception ex)
                     {
-                        System.Diagnostics.Debug.WriteLine(ex.ToString());
+                        logger.Error(ex, "XmlConfig write exception");
                     }
                 }
         }

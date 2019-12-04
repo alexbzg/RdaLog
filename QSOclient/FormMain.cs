@@ -23,6 +23,7 @@ namespace tnxlog
 {
     public partial class FormMain : StorableForm.StorableForm<FormMainConfig>
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         class StatusFieldControls
         {
             internal CheckBox auto;
@@ -110,7 +111,7 @@ namespace tnxlog
             }
             catch (Exception e)
             {
-                System.Diagnostics.Trace.TraceInformation(e.ToString());
+                Logger.Error(e, "Error loading RDA data");
                 MessageBox.Show("RDA data could not be loaded: " + e.ToString(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -122,7 +123,7 @@ namespace tnxlog
             }
             catch (Exception e)
             {
-                System.Diagnostics.Trace.TraceInformation(e.ToString());
+                Logger.Error(e, "Error loading callsigns list");
                 MessageBox.Show("Callsigns list could not be loaded: " + e.ToString(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -153,7 +154,7 @@ namespace tnxlog
             }
             catch (Exception e)
             {
-                System.Diagnostics.Trace.TraceInformation(e.ToString());
+                Logger.Error(e, "Error loading RAFA");
                 MessageBox.Show("RAFA data could not be loaded: " + e.ToString(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -253,18 +254,17 @@ namespace tnxlog
             timer.Enabled = true;
 
             Text = Assembly.GetExecutingAssembly().GetName().Name + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
             qsoValues = currentQsoValues();
         }
 
         private void onLogInOut(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(((TnxlogConfig)config.parent).httpService.token))
-                connectionStatusLabel.Text = "Not logged in.";
+                loginLabel.Text = "Not logged in.";
             else if (tnxlog.httpService.connected)
-                connectionStatusLabel.Text = "Logged in as " + ((TnxlogConfig)config.parent).httpService.callsign.ToUpper() + ".";
+                loginLabel.Text = "Logged in as " + ((TnxlogConfig)config.parent).httpService.callsign.ToUpper() + ".";
             else
-                connectionStatusLabel.Text = "Logged in as " + ((TnxlogConfig)config.parent).httpService.callsign + ". No connection.";
+                loginLabel.Text = "Logged in as " + ((TnxlogConfig)config.parent).httpService.callsign + ". No connection.";
         }
 
         private void rdaLog_statusFieldChange (object sender, StatusFieldChangeEventArgs e)
@@ -602,13 +602,13 @@ namespace tnxlog
         {
             var data = byCallsigns ? _data.GroupBy(item => item.myCS, item => item, (cs, items) => new { callsign = cs, qso = items.ToList() }) :
                 _data.GroupBy(item => "", item => item, (cs, items) => new { callsign = cs, qso = items.ToList() });
-            try
+            DateTime ts = DateTime.UtcNow;
+            foreach (var entry in data)
             {
-                DateTime ts = DateTime.UtcNow;
-                foreach (var entry in data)
-                {
-                    string entryFileName = string.IsNullOrEmpty(entry.callsign) ? fileName : entry.callsign.Replace('/', '_') + " " + fileName;
-                    using (StreamWriter sw = new StreamWriter(Path.Combine(folder, entryFileName)))
+                string entryFileName = string.IsNullOrEmpty(entry.callsign) ? fileName : entry.callsign.Replace('/', '_') + " " + fileName;
+                string entryPath = Path.Combine(folder, entryFileName);
+                try {
+                    using (StreamWriter sw = new StreamWriter(entryPath))
                     {
                         sw.WriteLine("ADIF Export from RDA Log");
                         sw.WriteLine("Logs generated @ {0:yyyy-MM-dd HH:mm:ssZ}", ts);
@@ -617,13 +617,12 @@ namespace tnxlog
                             sw.WriteLine(qso.adif(adifParams));
                     }
                 }
+                catch (Exception e)
+                {
+                    Logger.Error(e, "Error while ADIF export to file {file}", entryPath);
+                    MessageBox.Show("Can not export to text file: " + e.ToString(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Trace.TraceInformation(ex.ToString());
-                MessageBox.Show("Can not export to text file: " + ex.ToString(), "DXpedition", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
         }
 
         private void CheckBoxAutoStatFilter_CheckedChanged(object sender, EventArgs e)
@@ -835,6 +834,11 @@ namespace tnxlog
         {
             if (!InputLanguage.CurrentInputLanguage.Culture.EnglishName.StartsWith("English") && englishInputLanguage != null)
                 InputLanguage.CurrentInputLanguage = englishInputLanguage;
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Logger.Info("------------------- Closed by user -------------------------------------");
         }
 
 

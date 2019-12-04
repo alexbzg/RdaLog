@@ -142,13 +142,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2BAD8694A21717A335844D30CE1286A1"
+        "OwnerKey" = "8:_A3790AF570AB4BFCB410CD78A83190B6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4BA7401C36A131115142F09A61C7CAA4"
+        "OwnerKey" = "8:_542674FE6A3A4EC9BC9654EA0DA51E6C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -160,7 +160,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0ED09114E6A64336AB11B0C5B951D9D0"
+        "OwnerKey" = "8:_4BA7401C36A131115142F09A61C7CAA4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2BAD8694A21717A335844D30CE1286A1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -172,19 +178,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A3790AF570AB4BFCB410CD78A83190B6"
+        "OwnerKey" = "8:_0ED09114E6A64336AB11B0C5B951D9D0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_918B55A47B6C4385A11D57B6248D6485"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_542674FE6A3A4EC9BC9654EA0DA51E6C"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -340,6 +340,11 @@
             "AssemblyAsmDisplayName" = "8:AutoUpdater.NET, Version=1.5.7.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_2BAD8694A21717A335844D30CE1286A1"
+                    {
+                    "Name" = "8:AutoUpdater.NET.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:AutoUpdater.NET.dll"
             "TargetName" = "8:"
@@ -397,6 +402,11 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_4BA7401C36A131115142F09A61C7CAA4"
+                    {
+                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
@@ -420,7 +430,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:TNXLOG, Version=0.1.3.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:TNXLOG, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_542674FE6A3A4EC9BC9654EA0DA51E6C"
@@ -636,6 +646,11 @@
             "AssemblyAsmDisplayName" = "8:protobuf-net, Version=2.4.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_F42FF4B593DAE95808F89D83EB9B5DE5"
+                    {
+                    "Name" = "8:protobuf-net.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:protobuf-net.dll"
             "TargetName" = "8:"
@@ -711,15 +726,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TNXLOG"
-        "ProductCode" = "8:{43A7E73B-AB1A-431A-BDA2-657293625DF8}"
-        "PackageCode" = "8:{A87048C5-D7EB-4D24-94E8-766548536667}"
+        "ProductCode" = "8:{9C0F1D59-B02A-4020-B9BB-81398F536C75}"
+        "PackageCode" = "8:{B3F6CD28-568E-4E41-B260-425D86DF7D62}"
         "UpgradeCode" = "8:{B0CA3AEB-7084-42FE-9464-94546D3CD25A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.1.4"
+        "ProductVersion" = "8:0.1.5"
         "Manufacturer" = "8:TNXqso"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1261,7 +1276,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_918B55A47B6C4385A11D57B6248D6485"
             {
-            "SourcePath" = "8:..\\QSOclient\\obj\\Debug\\TNXLOG.exe"
+            "SourcePath" = "8:..\\QSOclient\\obj\\Release\\TNXLOG.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_07A611DB238C4376884334BC497653C3"

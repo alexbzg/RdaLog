@@ -54,6 +54,7 @@ namespace SerializationNS
 
     public static class ProtoBufSerialization
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         public static void Write<T>(string filePath, T objectToWrite, bool append = false)
         {
             try
@@ -66,7 +67,7 @@ namespace SerializationNS
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.ToString());
+                logger.Error(e, "Protobuf serializtion write exception");
             }
         }
 
@@ -83,7 +84,7 @@ namespace SerializationNS
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.ToString());
+                logger.Error(e, "Protobuf serializtion write exception");
             }
         }
 
