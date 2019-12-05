@@ -255,16 +255,19 @@ namespace tnxlog
 
             Text = Assembly.GetExecutingAssembly().GetName().Name + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
             qsoValues = currentQsoValues();
+
+            connectionStatusLabel.Alignment = ToolStripItemAlignment.Right;
         }
 
         private void onLogInOut(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(((TnxlogConfig)config.parent).httpService.token))
                 loginLabel.Text = "Not logged in.";
-            else if (tnxlog.httpService.connected)
+            else 
                 loginLabel.Text = "Logged in as " + ((TnxlogConfig)config.parent).httpService.callsign.ToUpper() + ".";
-            else
-                loginLabel.Text = "Logged in as " + ((TnxlogConfig)config.parent).httpService.callsign + ". No connection.";
+            Image bgImage = tnxlog.httpService.connected ? global::tnxlog.Properties.Resources.green : global::tnxlog.Properties.Resources.red;
+            if (connectionStatusLabel.BackgroundImage != bgImage)
+                DoInvoke(() => { connectionStatusLabel.BackgroundImage = bgImage; });
         }
 
         private void rdaLog_statusFieldChange (object sender, StatusFieldChangeEventArgs e)

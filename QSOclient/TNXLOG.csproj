@@ -158,6 +158,8 @@
   <ItemGroup>
     <Content Include="chat.png" />
     <None Include="Resources\icon_delete.png" />
+    <None Include="Resources\green.png" />
+    <None Include="Resources\red.png" />
     <Content Include="tnxlog_128_icon.ico" />
     <None Include="Resources\chat.png" />
   </ItemGroup>

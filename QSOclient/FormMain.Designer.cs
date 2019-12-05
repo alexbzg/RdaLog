@@ -32,6 +32,9 @@ namespace tnxlog
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.labelComments = new System.Windows.Forms.Label();
+            this.labelDupe = new System.Windows.Forms.Label();
             this.checkBoxTop = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.panelStatusFields = new System.Windows.Forms.Panel();
@@ -83,17 +86,16 @@ namespace tnxlog
             this.labelHotKeyF2Bind = new System.Windows.Forms.Label();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.loginLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.connectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelMode = new System.Windows.Forms.Label();
             this.comboBoxMode = new System.Windows.Forms.ComboBox();
             this.labelFreq = new System.Windows.Forms.Label();
             this.numericUpDownFreq = new System.Windows.Forms.NumericUpDown();
             this.labelCallsign = new System.Windows.Forms.Label();
-            this.textBoxCallsign = new System.Windows.Forms.TextBoxCallsign();
             this.labelRstRcvd = new System.Windows.Forms.Label();
             this.textBoxRstRcvd = new System.Windows.Forms.TextBox();
             this.labelRstSent = new System.Windows.Forms.Label();
             this.textBoxRstSent = new System.Windows.Forms.TextBox();
-            this.textBoxCorrespondent = new System.Windows.Forms.TextBoxCallsign();
             this.buttonPostFreq = new System.Windows.Forms.Button();
             this.labelDateTime = new System.Windows.Forms.Label();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
@@ -105,11 +107,9 @@ namespace tnxlog
             this.menuItemAdifExportAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.labelDupe = new System.Windows.Forms.Label();
-            this.labelComments = new System.Windows.Forms.Label();
             this.textBoxComments = new System.Windows.Forms.TextBoxCallsign();
-            this.connectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.textBoxCallsign = new System.Windows.Forms.TextBoxCallsign();
+            this.textBoxCorrespondent = new System.Windows.Forms.TextBoxCallsign();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
@@ -120,6 +120,29 @@ namespace tnxlog
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).BeginInit();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // labelComments
+            // 
+            this.labelComments.AutoSize = true;
+            this.labelComments.BackColor = System.Drawing.Color.Transparent;
+            this.labelComments.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelComments.Location = new System.Drawing.Point(12, 120);
+            this.labelComments.Name = "labelComments";
+            this.labelComments.Size = new System.Drawing.Size(56, 13);
+            this.labelComments.TabIndex = 67;
+            this.labelComments.Text = "Comments";
+            // 
+            // labelDupe
+            // 
+            this.labelDupe.BackColor = System.Drawing.Color.Transparent;
+            this.labelDupe.ForeColor = System.Drawing.Color.Red;
+            this.labelDupe.Location = new System.Drawing.Point(194, 30);
+            this.labelDupe.Name = "labelDupe";
+            this.labelDupe.Size = new System.Drawing.Size(45, 13);
+            this.labelDupe.TabIndex = 65;
+            this.labelDupe.Text = "Dupe";
+            this.labelDupe.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.labelDupe.Visible = false;
             // 
             // checkBoxTop
             // 
@@ -726,9 +749,11 @@ namespace tnxlog
             this.statusStrip.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.statusStrip.AutoSize = false;
             this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStrip.GripMargin = new System.Windows.Forms.Padding(0);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loginLabel,
             this.connectionStatusLabel});
+            this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.statusStrip.Location = new System.Drawing.Point(0, 279);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(364, 22);
@@ -739,6 +764,16 @@ namespace tnxlog
             // 
             this.loginLabel.Name = "loginLabel";
             this.loginLabel.Size = new System.Drawing.Size(0, 17);
+            // 
+            // connectionStatusLabel
+            // 
+            this.connectionStatusLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.connectionStatusLabel.BackgroundImage = global::tnxlog.Properties.Resources.red;
+            this.connectionStatusLabel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.connectionStatusLabel.ForeColor = System.Drawing.Color.White;
+            this.connectionStatusLabel.Name = "connectionStatusLabel";
+            this.connectionStatusLabel.Size = new System.Drawing.Size(87, 17);
+            this.connectionStatusLabel.Text = " TNXQSO.com ";
             // 
             // labelMode
             // 
@@ -816,17 +851,6 @@ namespace tnxlog
             this.labelCallsign.TabIndex = 12;
             this.labelCallsign.Text = "My callsign";
             // 
-            // textBoxCallsign
-            // 
-            this.textBoxCallsign.BackColor = System.Drawing.SystemColors.Window;
-            this.textBoxCallsign.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCallsign.Location = new System.Drawing.Point(12, 94);
-            this.textBoxCallsign.Name = "textBoxCallsign";
-            this.textBoxCallsign.Size = new System.Drawing.Size(156, 23);
-            this.textBoxCallsign.TabIndex = 3;
-            this.textBoxCallsign.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxCallsign.Validated += new System.EventHandler(this.TextBoxCallsign_Validated);
-            // 
             // labelRstRcvd
             // 
             this.labelRstRcvd.AutoSize = true;
@@ -868,17 +892,6 @@ namespace tnxlog
             this.textBoxRstSent.TabIndex = 1;
             this.textBoxRstSent.Text = "599";
             this.textBoxRstSent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBoxCorrespondent
-            // 
-            this.textBoxCorrespondent.BackColor = System.Drawing.SystemColors.Info;
-            this.textBoxCorrespondent.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxCorrespondent.Location = new System.Drawing.Point(12, 46);
-            this.textBoxCorrespondent.Name = "textBoxCorrespondent";
-            this.textBoxCorrespondent.Size = new System.Drawing.Size(229, 29);
-            this.textBoxCorrespondent.TabIndex = 0;
-            this.textBoxCorrespondent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxCorrespondent.TextChanged += new System.EventHandler(this.TextBoxCorrespondent_TextChanged);
             // 
             // buttonPostFreq
             // 
@@ -979,29 +992,6 @@ namespace tnxlog
             this.toolStripLabelLog.Text = "Log";
             this.toolStripLabelLog.Click += new System.EventHandler(this.ToolStripLabelLog_Click);
             // 
-            // labelDupe
-            // 
-            this.labelDupe.BackColor = System.Drawing.Color.Transparent;
-            this.labelDupe.ForeColor = System.Drawing.Color.Red;
-            this.labelDupe.Location = new System.Drawing.Point(194, 30);
-            this.labelDupe.Name = "labelDupe";
-            this.labelDupe.Size = new System.Drawing.Size(45, 13);
-            this.labelDupe.TabIndex = 65;
-            this.labelDupe.Text = "Dupe";
-            this.labelDupe.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.labelDupe.Visible = false;
-            // 
-            // labelComments
-            // 
-            this.labelComments.AutoSize = true;
-            this.labelComments.BackColor = System.Drawing.Color.Transparent;
-            this.labelComments.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelComments.Location = new System.Drawing.Point(12, 120);
-            this.labelComments.Name = "labelComments";
-            this.labelComments.Size = new System.Drawing.Size(56, 13);
-            this.labelComments.TabIndex = 67;
-            this.labelComments.Text = "Comments";
-            // 
             // textBoxComments
             // 
             this.textBoxComments.BackColor = System.Drawing.SystemColors.Window;
@@ -1012,12 +1002,27 @@ namespace tnxlog
             this.textBoxComments.TabIndex = 6;
             this.textBoxComments.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // connectionStatusLabel
+            // textBoxCallsign
             // 
-            this.connectionStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Bump;
-            this.connectionStatusLabel.Name = "connectionStatusLabel";
-            this.connectionStatusLabel.Size = new System.Drawing.Size(118, 17);
-            this.connectionStatusLabel.Text = "toolStripStatusLabel1";
+            this.textBoxCallsign.BackColor = System.Drawing.SystemColors.Window;
+            this.textBoxCallsign.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
+            this.textBoxCallsign.Location = new System.Drawing.Point(12, 94);
+            this.textBoxCallsign.Name = "textBoxCallsign";
+            this.textBoxCallsign.Size = new System.Drawing.Size(156, 23);
+            this.textBoxCallsign.TabIndex = 3;
+            this.textBoxCallsign.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxCallsign.Validated += new System.EventHandler(this.TextBoxCallsign_Validated);
+            // 
+            // textBoxCorrespondent
+            // 
+            this.textBoxCorrespondent.BackColor = System.Drawing.SystemColors.Info;
+            this.textBoxCorrespondent.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxCorrespondent.Location = new System.Drawing.Point(12, 46);
+            this.textBoxCorrespondent.Name = "textBoxCorrespondent";
+            this.textBoxCorrespondent.Size = new System.Drawing.Size(229, 29);
+            this.textBoxCorrespondent.TabIndex = 0;
+            this.textBoxCorrespondent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxCorrespondent.TextChanged += new System.EventHandler(this.TextBoxCorrespondent_TextChanged);
             // 
             // FormMain
             // 
