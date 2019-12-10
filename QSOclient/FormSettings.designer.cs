@@ -450,7 +450,7 @@
             this.checkBoxViewStatFilter.Checked = true;
             this.checkBoxViewStatFilter.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxViewStatFilter.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewStatFilter.Location = new System.Drawing.Point(210, 17);
+            this.checkBoxViewStatFilter.Location = new System.Drawing.Point(37, 65);
             this.checkBoxViewStatFilter.Name = "checkBoxViewStatFilter";
             this.checkBoxViewStatFilter.Size = new System.Drawing.Size(85, 17);
             this.checkBoxViewStatFilter.TabIndex = 60;
@@ -463,7 +463,7 @@
             this.checkBoxViewFields.Checked = true;
             this.checkBoxViewFields.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxViewFields.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewFields.Location = new System.Drawing.Point(12, 17);
+            this.checkBoxViewFields.Location = new System.Drawing.Point(37, 19);
             this.checkBoxViewFields.Name = "checkBoxViewFields";
             this.checkBoxViewFields.Size = new System.Drawing.Size(175, 17);
             this.checkBoxViewFields.TabIndex = 61;
@@ -476,7 +476,7 @@
             this.checkBoxViewCallsignId.Checked = true;
             this.checkBoxViewCallsignId.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxViewCallsignId.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewCallsignId.Location = new System.Drawing.Point(12, 40);
+            this.checkBoxViewCallsignId.Location = new System.Drawing.Point(37, 42);
             this.checkBoxViewCallsignId.Name = "checkBoxViewCallsignId";
             this.checkBoxViewCallsignId.Size = new System.Drawing.Size(147, 17);
             this.checkBoxViewCallsignId.TabIndex = 62;
@@ -489,7 +489,7 @@
             this.checkBoxViewCwMacro.Checked = true;
             this.checkBoxViewCwMacro.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxViewCwMacro.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewCwMacro.Location = new System.Drawing.Point(210, 40);
+            this.checkBoxViewCwMacro.Location = new System.Drawing.Point(37, 88);
             this.checkBoxViewCwMacro.Name = "checkBoxViewCwMacro";
             this.checkBoxViewCwMacro.Size = new System.Drawing.Size(110, 17);
             this.checkBoxViewCwMacro.TabIndex = 63;
@@ -664,20 +664,20 @@
             // textBoxDebugLog
             // 
             this.textBoxDebugLog.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBoxDebugLog.Location = new System.Drawing.Point(3, 40);
+            this.textBoxDebugLog.Location = new System.Drawing.Point(3, 65);
             this.textBoxDebugLog.Multiline = true;
             this.textBoxDebugLog.Name = "textBoxDebugLog";
-            this.textBoxDebugLog.Size = new System.Drawing.Size(350, 233);
+            this.textBoxDebugLog.Size = new System.Drawing.Size(350, 208);
             this.textBoxDebugLog.TabIndex = 1;
             // 
             // labelDebug
             // 
             this.labelDebug.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelDebug.Location = new System.Drawing.Point(8, 3);
+            this.labelDebug.Location = new System.Drawing.Point(8, 13);
             this.labelDebug.Name = "labelDebug";
             this.labelDebug.Size = new System.Drawing.Size(340, 34);
             this.labelDebug.TabIndex = 0;
-            this.labelDebug.Text = "Выделите весь текст в окне ниже и отправьте по адресу support@tnxqso.com\r\n";
+            this.labelDebug.Text = "Скопируйте весь текст в окне ниже и отправьте по адресу 18@73.ru";
             // 
             // FormSettings
             // 

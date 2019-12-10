@@ -768,7 +768,7 @@ namespace tnxlog
             // connectionStatusLabel
             // 
             this.connectionStatusLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.connectionStatusLabel.BackgroundImage = global::tnxlog.Properties.Resources.red;
+            this.connectionStatusLabel.BackColor = System.Drawing.Color.Red;
             this.connectionStatusLabel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.connectionStatusLabel.ForeColor = System.Drawing.Color.White;
             this.connectionStatusLabel.Name = "connectionStatusLabel";

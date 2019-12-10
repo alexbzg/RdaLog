@@ -265,9 +265,9 @@ namespace tnxlog
                 loginLabel.Text = "Not logged in.";
             else 
                 loginLabel.Text = "Logged in as " + ((TnxlogConfig)config.parent).httpService.callsign.ToUpper() + ".";
-            Image bgImage = tnxlog.httpService.connected ? global::tnxlog.Properties.Resources.green : global::tnxlog.Properties.Resources.red;
-            if (connectionStatusLabel.BackgroundImage != bgImage)
-                DoInvoke(() => { connectionStatusLabel.BackgroundImage = bgImage; });
+            Color backColor = tnxlog.httpService.connected ? Color.Green : Color.Red;
+            if (connectionStatusLabel.BackColor != backColor)
+                DoInvoke(() => { connectionStatusLabel.BackColor = backColor; });
         }
 
         private void rdaLog_statusFieldChange (object sender, StatusFieldChangeEventArgs e)

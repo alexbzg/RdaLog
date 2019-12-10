@@ -75,6 +75,7 @@ namespace tnxlog
 #if LOG
             logfile = new NLog.Targets.FileTarget("logfile") {
                 FileName = Path.Combine(dataPath, "debug.log"),
+                Layout = "${longdate} ${level} ${message}  ${exception:format=toString,Data:maxInnerExceptionLevel=10}",
                 ArchiveEvery = NLog.Targets.FileArchivePeriod.Sunday,
                 MaxArchiveFiles = 1 };
             loggingConfig.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
