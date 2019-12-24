@@ -610,7 +610,9 @@ namespace tnxlog
             {
                 string entryFileName = string.IsNullOrEmpty(entry.callsign) ? fileName : entry.callsign.Replace('/', '_') + " " + fileName;
                 string entryPath = Path.Combine(folder, entryFileName);
-                try {
+                entry.qso.Reverse();
+                try
+                {
                     using (StreamWriter sw = new StreamWriter(entryPath))
                     {
                         sw.WriteLine("ADIF Export from RDA Log");
@@ -826,7 +828,8 @@ namespace tnxlog
 
         private void FormMain_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyData == Keys.Oemtilde || e.KeyData == (Keys.V | Keys.Alt))
+            if (e.KeyData == Keys.Oemtilde || e.KeyData == (Keys.W | Keys.Alt) || e.KeyData == (Keys.W | Keys.Control))
+            //clear corrrespondent field
             {
                 e.Handled = true;
                 textBoxCorrespondent.Text = "";
@@ -844,7 +847,10 @@ namespace tnxlog
             Logger.Info("------------------- Closed by user -------------------------------------");
         }
 
+        private void ConnectionStatusLabel_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 
     [DataContract]

@@ -770,10 +770,12 @@ namespace tnxlog
             this.connectionStatusLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.connectionStatusLabel.BackColor = System.Drawing.Color.Red;
             this.connectionStatusLabel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.connectionStatusLabel.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.connectionStatusLabel.ForeColor = System.Drawing.Color.White;
             this.connectionStatusLabel.Name = "connectionStatusLabel";
-            this.connectionStatusLabel.Size = new System.Drawing.Size(87, 17);
+            this.connectionStatusLabel.Size = new System.Drawing.Size(79, 17);
             this.connectionStatusLabel.Text = " TNXQSO.com ";
+            this.connectionStatusLabel.Click += new System.EventHandler(this.ConnectionStatusLabel_Click);
             // 
             // labelMode
             // 
