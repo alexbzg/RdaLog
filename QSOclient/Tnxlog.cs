@@ -104,6 +104,7 @@ namespace tnxlog
             _formMain = new FormMain(config.formMain, this);
             if (config.autoLogin)
                 Task.Run(async () => await httpService.login(true));
+            qsoList.Where(qso => qso.serverTs == 0).Select(async qso => await httpService.postQso(qso));
         }
 
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)

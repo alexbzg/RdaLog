@@ -26,6 +26,7 @@ Global
 		{D25141EB-BE8E-4F15-89D9-73E549A272CB}.Debug|Any CPU.ActiveCfg = Debug
 		{D25141EB-BE8E-4F15-89D9-73E549A272CB}.Debug|x86.ActiveCfg = Debug
 		{D25141EB-BE8E-4F15-89D9-73E549A272CB}.Release|Any CPU.ActiveCfg = Release
+		{D25141EB-BE8E-4F15-89D9-73E549A272CB}.Release|Any CPU.Build.0 = Release
 		{D25141EB-BE8E-4F15-89D9-73E549A272CB}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

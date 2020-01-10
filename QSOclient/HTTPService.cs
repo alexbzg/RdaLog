@@ -1,6 +1,6 @@
 ﻿//#define DISABLE_HTTP
 #define TEST_SRV
-#define DISABLE_HTTP_LOGGING
+//#define DISABLE_HTTP_LOGGING
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -104,7 +104,8 @@ namespace tnxlog
                 Task.Run(async () =>
                 {
                     foreach (QSO qso in unsentQSOs)
-                        await postQso(qso);
+                        if (qso.serverTs != 0)
+                            await postQso(qso);
                 });
             List<QsoDeleteRequest>unsentDels = ProtoBufSerialization.Read<List<QsoDeleteRequest>>(unsentFilePath + ".del");
             if (unsentDels != null && unsentDels.Count > 0)

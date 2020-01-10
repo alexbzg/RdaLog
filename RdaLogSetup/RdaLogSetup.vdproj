@@ -22,19 +22,25 @@
         "Entry"
         {
         "MsmKey" = "8:_2BAD8694A21717A335844D30CE1286A1"
-        "OwnerKey" = "8:_918B55A47B6C4385A11D57B6248D6485"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2F6D37946092437D8276264EEC1878A3"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_439091F2B9791EDEC6C4830D7C548C19"
-        "OwnerKey" = "8:_918B55A47B6C4385A11D57B6248D6485"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_4BA7401C36A131115142F09A61C7CAA4"
-        "OwnerKey" = "8:_918B55A47B6C4385A11D57B6248D6485"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -51,20 +57,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_918B55A47B6C4385A11D57B6248D6485"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_97CC19661BB375042B3480064097B6B1"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_97CC19661BB375042B3480064097B6B1"
         "OwnerKey" = "8:_F903A72257AC27E2C8A3346F0A71A95E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_97CC19661BB375042B3480064097B6B1"
-        "OwnerKey" = "8:_918B55A47B6C4385A11D57B6248D6485"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -94,43 +94,19 @@
         "Entry"
         {
         "MsmKey" = "8:_F42FF4B593DAE95808F89D83EB9B5DE5"
-        "OwnerKey" = "8:_918B55A47B6C4385A11D57B6248D6485"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_F903A72257AC27E2C8A3346F0A71A95E"
-        "OwnerKey" = "8:_918B55A47B6C4385A11D57B6248D6485"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F42FF4B593DAE95808F89D83EB9B5DE5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F903A72257AC27E2C8A3346F0A71A95E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_97CC19661BB375042B3480064097B6B1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4BA7401C36A131115142F09A61C7CAA4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2BAD8694A21717A335844D30CE1286A1"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -142,7 +118,31 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_918B55A47B6C4385A11D57B6248D6485"
+        "OwnerKey" = "8:_97CC19661BB375042B3480064097B6B1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2BAD8694A21717A335844D30CE1286A1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4BA7401C36A131115142F09A61C7CAA4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_F903A72257AC27E2C8A3346F0A71A95E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_F42FF4B593DAE95808F89D83EB9B5DE5"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -267,11 +267,6 @@
             "AssemblyAsmDisplayName" = "8:AutoUpdater.NET, Version=1.5.7.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_2BAD8694A21717A335844D30CE1286A1"
-                    {
-                    "Name" = "8:AutoUpdater.NET.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:AutoUpdater.NET.dll"
             "TargetName" = "8:"
@@ -329,11 +324,6 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_4BA7401C36A131115142F09A61C7CAA4"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
@@ -400,11 +390,6 @@
             "AssemblyAsmDisplayName" = "8:System.IO.Compression, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                 "ScatterAssemblies"
                 {
-                    "_97CC19661BB375042B3480064097B6B1"
-                    {
-                    "Name" = "8:System.IO.Compression.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.IO.Compression.dll"
             "TargetName" = "8:"
@@ -511,11 +496,6 @@
             "AssemblyAsmDisplayName" = "8:protobuf-net, Version=2.4.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_F42FF4B593DAE95808F89D83EB9B5DE5"
-                    {
-                    "Name" = "8:protobuf-net.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:protobuf-net.dll"
             "TargetName" = "8:"
@@ -542,11 +522,6 @@
             "AssemblyAsmDisplayName" = "8:NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_F903A72257AC27E2C8A3346F0A71A95E"
-                    {
-                    "Name" = "8:NLog.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:NLog.dll"
             "TargetName" = "8:"
@@ -622,15 +597,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TNXLOG"
-        "ProductCode" = "8:{57BFDED0-5FD3-4EAF-9CDE-B874A73BAA19}"
-        "PackageCode" = "8:{F4C53F39-7C1E-49C5-B719-93A405781C08}"
+        "ProductCode" = "8:{585B11BC-34BD-425D-B04A-7E58FA126DF3}"
+        "PackageCode" = "8:{FBD9112D-E924-45A4-BAFE-027E3500B5C1}"
         "UpgradeCode" = "8:{B0CA3AEB-7084-42FE-9464-94546D3CD25A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.1.10"
+        "ProductVersion" = "8:0.1.13"
         "Manufacturer" = "8:TNXqso"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -743,7 +718,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_90EFAE515791445FA3D08218CBF3CD6A"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1146B1985EE6473AA7159EFDEA294A52"
             {
             "Name" = "8:TNXLOG"
             "Arguments" = "8:"
@@ -751,24 +726,24 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_918B55A47B6C4385A11D57B6248D6485"
-            "Folder" = "8:_3E20D49AF0964079B6D7D8A826FA58CD"
-            "WorkingFolder" = "8:_07A611DB238C4376884334BC497653C3"
-            "Icon" = "8:_918B55A47B6C4385A11D57B6248D6485"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A0804D4E139C45E78016BA4F15035CEB"
-            {
-            "Name" = "8:TNXLOG"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:32512"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_918B55A47B6C4385A11D57B6248D6485"
+            "Target" = "8:_2F6D37946092437D8276264EEC1878A3"
             "Folder" = "8:_F4D22CABCED84429BE3B4A6C2E8AD782"
             "WorkingFolder" = "8:_07A611DB238C4376884334BC497653C3"
-            "Icon" = "8:_918B55A47B6C4385A11D57B6248D6485"
+            "Icon" = "8:_2F6D37946092437D8276264EEC1878A3"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_226FEB9FD13449E1B99D9B0C006DB991"
+            {
+            "Name" = "8:TNXLOG"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_2F6D37946092437D8276264EEC1878A3"
+            "Folder" = "8:_3E20D49AF0964079B6D7D8A826FA58CD"
+            "WorkingFolder" = "8:_07A611DB238C4376884334BC497653C3"
+            "Icon" = "8:_2F6D37946092437D8276264EEC1878A3"
             "Feature" = "8:"
             }
         }
@@ -1170,9 +1145,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_918B55A47B6C4385A11D57B6248D6485"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2F6D37946092437D8276264EEC1878A3"
             {
-            "SourcePath" = "8:..\\QSOclient\\obj\\Debug\\TNXLOG.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_07A611DB238C4376884334BC497653C3"
@@ -1190,7 +1165,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
+            "OutputConfiguration" = "8:Release|Any CPU"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{47BB38FF-680E-4790-9115-1052190565B5}"
             "ShowKeyOutput" = "11:TRUE"

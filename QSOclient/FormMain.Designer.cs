@@ -110,6 +110,7 @@ namespace tnxlog
             this.textBoxComments = new System.Windows.Forms.TextBoxCallsign();
             this.textBoxCallsign = new System.Windows.Forms.TextBoxCallsign();
             this.textBoxCorrespondent = new System.Windows.Forms.TextBoxCallsign();
+            this.menuItemAdifExportLoc = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
@@ -945,7 +946,7 @@ namespace tnxlog
             // menuItemFileClear
             // 
             this.menuItemFileClear.Name = "menuItemFileClear";
-            this.menuItemFileClear.Size = new System.Drawing.Size(107, 22);
+            this.menuItemFileClear.Size = new System.Drawing.Size(180, 22);
             this.menuItemFileClear.Text = "New";
             this.menuItemFileClear.Click += new System.EventHandler(this.MenuItemFileClear_Click);
             // 
@@ -954,29 +955,30 @@ namespace tnxlog
             this.menuItemAdifExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemAdifExportRda,
             this.menuItemAdifExportRafa,
+            this.menuItemAdifExportLoc,
             this.menuItemAdifExportAll});
             this.menuItemAdifExport.Name = "menuItemAdifExport";
-            this.menuItemAdifExport.Size = new System.Drawing.Size(107, 22);
+            this.menuItemAdifExport.Size = new System.Drawing.Size(180, 22);
             this.menuItemAdifExport.Text = "Export";
             // 
             // menuItemAdifExportRda
             // 
             this.menuItemAdifExportRda.Name = "menuItemAdifExportRda";
-            this.menuItemAdifExportRda.Size = new System.Drawing.Size(118, 22);
+            this.menuItemAdifExportRda.Size = new System.Drawing.Size(180, 22);
             this.menuItemAdifExportRda.Text = "By RDA";
             this.menuItemAdifExportRda.Click += new System.EventHandler(this.MenuItemAdifExportRda_Click);
             // 
             // menuItemAdifExportRafa
             // 
             this.menuItemAdifExportRafa.Name = "menuItemAdifExportRafa";
-            this.menuItemAdifExportRafa.Size = new System.Drawing.Size(118, 22);
+            this.menuItemAdifExportRafa.Size = new System.Drawing.Size(180, 22);
             this.menuItemAdifExportRafa.Text = "By RAFA";
             this.menuItemAdifExportRafa.Click += new System.EventHandler(this.MenuItemAdifExportRafa_Click);
             // 
             // menuItemAdifExportAll
             // 
             this.menuItemAdifExportAll.Name = "menuItemAdifExportAll";
-            this.menuItemAdifExportAll.Size = new System.Drawing.Size(118, 22);
+            this.menuItemAdifExportAll.Size = new System.Drawing.Size(180, 22);
             this.menuItemAdifExportAll.Text = "All QSO";
             this.menuItemAdifExportAll.Click += new System.EventHandler(this.MenuItemAdifExportAll_Click);
             // 
@@ -1025,6 +1027,13 @@ namespace tnxlog
             this.textBoxCorrespondent.TabIndex = 0;
             this.textBoxCorrespondent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxCorrespondent.TextChanged += new System.EventHandler(this.TextBoxCorrespondent_TextChanged);
+            // 
+            // menuItemAdifExportLoc
+            // 
+            this.menuItemAdifExportLoc.Name = "menuItemAdifExportLoc";
+            this.menuItemAdifExportLoc.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportLoc.Text = "By locator";
+            this.menuItemAdifExportLoc.Click += new System.EventHandler(this.MenuItemAdifExportLoc_Click);
             // 
             // FormMain
             // 
@@ -1163,6 +1172,7 @@ namespace tnxlog
         private System.Windows.Forms.Label labelComments;
         private System.Windows.Forms.TextBoxCallsign textBoxComments;
         private System.Windows.Forms.ToolStripStatusLabel connectionStatusLabel;
+        private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportLoc;
     }
 }
 

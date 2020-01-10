@@ -851,6 +851,22 @@ namespace tnxlog
         {
 
         }
+
+        private void MenuItemAdifExportLoc_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(config.exportPathLoc))
+                folderBrowserDialog.SelectedPath = config.exportPathLoc;
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                config.exportPathLoc = folderBrowserDialog.SelectedPath;
+                config.write();
+                Dictionary<string, List<QSO>> data = qsoByField("loc");
+                data.Keys.ToList().ForEach(val =>
+                {
+                    writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>(), true);
+                });
+            }
+        }
     }
 
     [DataContract]
@@ -861,6 +877,7 @@ namespace tnxlog
         public decimal freq = 14000;
         public string exportPathRda;
         public string exportPathRafa;
+        public string exportPathLoc;
         public string exportPath;
         public string statFilterRda;
         public string statFilterBand;
