@@ -480,7 +480,7 @@ namespace tnxlog
             return !((TnxlogConfig)config.parent).getStatusFieldAuto("rda");
         }
 
-        public string userField { get { return ((TnxlogConfig)config.parent).userField; } set { } }
+        public string[] userFields { get { return new string[] { ((TnxlogConfig)config.parent).userField }; } set { } }
 
         internal StatusData(HttpServiceConfig _config) : base(_config) { }
 

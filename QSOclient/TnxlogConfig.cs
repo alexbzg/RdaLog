@@ -44,7 +44,7 @@ namespace tnxlog
             Tuple.Create("RAFA", "RAFA {RAFA}"),
             Tuple.Create("", "")
         };
-        public static readonly List<string> StatusFields = new List<string> { "rda", "rafa", "locator" };
+        public static readonly List<string> StatusFields = new List<string> { "rda", "rafa", "locator",  };
 
         public static readonly List<string> MainFormPanels = new List<string> { "statusFields", "statFilter", "callsignId", "cwMacros" };
 

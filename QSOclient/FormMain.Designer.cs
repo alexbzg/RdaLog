@@ -104,13 +104,13 @@ namespace tnxlog
             this.menuItemAdifExport = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExportRda = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExportRafa = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemAdifExportLoc = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExportAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
             this.textBoxComments = new System.Windows.Forms.TextBoxCallsign();
             this.textBoxCallsign = new System.Windows.Forms.TextBoxCallsign();
             this.textBoxCorrespondent = new System.Windows.Forms.TextBoxCallsign();
-            this.menuItemAdifExportLoc = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
@@ -250,6 +250,7 @@ namespace tnxlog
             this.textBoxUserField.Size = new System.Drawing.Size(168, 23);
             this.textBoxUserField.TabIndex = 9;
             this.textBoxUserField.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxUserField.Validated += new System.EventHandler(this.TextBoxUserField_Validated);
             // 
             // labelLocator
             // 
@@ -295,7 +296,6 @@ namespace tnxlog
             this.textBoxRafa.TabIndex = 7;
             this.textBoxRafa.Text = "H4RT";
             this.textBoxRafa.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxRafa.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxRafa_Validating);
             // 
             // labelRda
             // 
@@ -946,7 +946,7 @@ namespace tnxlog
             // menuItemFileClear
             // 
             this.menuItemFileClear.Name = "menuItemFileClear";
-            this.menuItemFileClear.Size = new System.Drawing.Size(180, 22);
+            this.menuItemFileClear.Size = new System.Drawing.Size(107, 22);
             this.menuItemFileClear.Text = "New";
             this.menuItemFileClear.Click += new System.EventHandler(this.MenuItemFileClear_Click);
             // 
@@ -958,27 +958,34 @@ namespace tnxlog
             this.menuItemAdifExportLoc,
             this.menuItemAdifExportAll});
             this.menuItemAdifExport.Name = "menuItemAdifExport";
-            this.menuItemAdifExport.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExport.Size = new System.Drawing.Size(107, 22);
             this.menuItemAdifExport.Text = "Export";
             // 
             // menuItemAdifExportRda
             // 
             this.menuItemAdifExportRda.Name = "menuItemAdifExportRda";
-            this.menuItemAdifExportRda.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportRda.Size = new System.Drawing.Size(127, 22);
             this.menuItemAdifExportRda.Text = "By RDA";
             this.menuItemAdifExportRda.Click += new System.EventHandler(this.MenuItemAdifExportRda_Click);
             // 
             // menuItemAdifExportRafa
             // 
             this.menuItemAdifExportRafa.Name = "menuItemAdifExportRafa";
-            this.menuItemAdifExportRafa.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportRafa.Size = new System.Drawing.Size(127, 22);
             this.menuItemAdifExportRafa.Text = "By RAFA";
             this.menuItemAdifExportRafa.Click += new System.EventHandler(this.MenuItemAdifExportRafa_Click);
+            // 
+            // menuItemAdifExportLoc
+            // 
+            this.menuItemAdifExportLoc.Name = "menuItemAdifExportLoc";
+            this.menuItemAdifExportLoc.Size = new System.Drawing.Size(127, 22);
+            this.menuItemAdifExportLoc.Text = "By locator";
+            this.menuItemAdifExportLoc.Click += new System.EventHandler(this.MenuItemAdifExportLoc_Click);
             // 
             // menuItemAdifExportAll
             // 
             this.menuItemAdifExportAll.Name = "menuItemAdifExportAll";
-            this.menuItemAdifExportAll.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportAll.Size = new System.Drawing.Size(127, 22);
             this.menuItemAdifExportAll.Text = "All QSO";
             this.menuItemAdifExportAll.Click += new System.EventHandler(this.MenuItemAdifExportAll_Click);
             // 
@@ -1027,13 +1034,6 @@ namespace tnxlog
             this.textBoxCorrespondent.TabIndex = 0;
             this.textBoxCorrespondent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxCorrespondent.TextChanged += new System.EventHandler(this.TextBoxCorrespondent_TextChanged);
-            // 
-            // menuItemAdifExportLoc
-            // 
-            this.menuItemAdifExportLoc.Name = "menuItemAdifExportLoc";
-            this.menuItemAdifExportLoc.Size = new System.Drawing.Size(180, 22);
-            this.menuItemAdifExportLoc.Text = "By locator";
-            this.menuItemAdifExportLoc.Click += new System.EventHandler(this.MenuItemAdifExportLoc_Click);
             // 
             // FormMain
             // 

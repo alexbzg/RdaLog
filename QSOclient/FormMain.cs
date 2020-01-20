@@ -69,7 +69,6 @@ namespace tnxlog
         private Dictionary<string, StatusFieldControls> statusFieldsControls;
         private Dictionary<string, Panel> panels;
         private HashSet<string> rdaValues;
-        private HashSet<string> rafaValues;
         private StringIndex callsignsDb = new StringIndex();
         private StringIndex callsignsQso = new StringIndex();
         private Timer timer = new Timer();
@@ -125,37 +124,6 @@ namespace tnxlog
             {
                 Logger.Error(e, "Error loading callsigns list");
                 MessageBox.Show("Callsigns list could not be loaded: " + e.ToString(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
-            try
-            {
-                using (StreamReader sr = new StreamReader(Application.StartupPath + "\\rafa.csv"))
-                {
-                    List<string> values = new List<string>();
-                    do
-                    {
-                        string line = sr.ReadLine();
-                        string[] lineData = line.Split(';');
-                        if (lineData[0] == "")
-                        {
-                            string[] keys = lineData[3].Split(',');
-                            foreach (string key in keys)
-                            {
-                                string entry = lineData[1];
-                                if (!values.Contains(entry))
-                                    values.Add(entry);
-                            }
-                        }
-                    } while (sr.Peek() >= 0);
-                    if (values.Count > 0)
-                        rafaValues = new HashSet<string>(values);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e, "Error loading RAFA");
-                MessageBox.Show("RAFA data could not be loaded: " + e.ToString(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             statusFieldsControls = new Dictionary<string, StatusFieldControls>()
@@ -473,25 +441,6 @@ namespace tnxlog
             if (txt.Length > 0)
             {
                 MessageBox.Show("Invalid rda: " + txt, Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                e.Cancel = true;
-            }
-        }
-
-        private void TextBoxRafa_Validating(object sender, CancelEventArgs e)
-        {
-            string txt = textBoxRafa.Text;
-            try
-            {
-                List<string> rafas = parseValues(RafaRegex, ref txt, rafaValues, null);
-                textBoxRafa.Text = String.Join(" ", rafas);
-            }
-            catch (ArgumentException ex)
-            {
-                txt = ex.Message;
-            }
-            if (txt.Length > 0)
-            {
-                MessageBox.Show("Invalid rafa: " + txt, Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Cancel = true;
             }
         }
@@ -866,6 +815,11 @@ namespace tnxlog
                     writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>(), true);
                 });
             }
+        }
+
+        private void TextBoxUserField_Validated(object sender, EventArgs e)
+        {
+            ((TnxlogConfig)config.parent).userField = textBoxUserField.Text;
         }
     }
 
