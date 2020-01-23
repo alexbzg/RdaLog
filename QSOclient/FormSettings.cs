@@ -1,9 +1,12 @@
-﻿using System;
+﻿using SerialDevice;
+using SerialPortTester;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +16,8 @@ namespace tnxlog
 {
     public partial class FormSettings : Form
     {
+        private List<SerialDeviceInfo> serialPorts = SerialDevice.SerialDevice.listSerialDevices();
+        private SerialPort serialPort;
         internal List<Tuple<TextBox, TextBox>> HotKeyBindings
         {
             get
@@ -52,6 +57,14 @@ namespace tnxlog
                 {10 * 1000, radioButtonUpdInterval10s },
                 {60 * 1000, radioButtonUpdInterval1m }
             };
+            foreach (SerialDeviceInfo sp in serialPorts)
+            {
+                comboBoxPort.Items.Add(sp.caption);
+                int w = TextRenderer.MeasureText(sp.caption, comboBoxPort.Font).Width;
+                if (comboBoxPort.DropDownWidth < w)
+                    comboBoxPort.DropDownWidth = w;
+            }
+            comboBoxPort.Items.Add("Disable");
         }
 
         private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -60,6 +73,66 @@ namespace tnxlog
             {
                 textBoxDebugLog.Text = File.ReadAllText(Path.Combine(dataPath, "debug.log"));
             }
+        }
+
+        private void TabPageSerial_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboBoxPort_SelectedValueChanged(object sender, EventArgs e)
+        {
+            serialPort?.Close();
+            if (comboBoxPort.SelectedIndex != -1)
+            {
+                string portName = serialPorts[comboBoxPort.SelectedIndex].portName;
+                serialPort = new SerialPort(portName);
+                try
+                {
+                    SerialPortFixer.Execute(portName);
+                    serialPort.Open();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Trace.TraceInformation("Error opening port " + portName + " " + ex.ToString());
+                }
+            }
+            else
+                serialPort = null;
+
+        }
+
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (serialPort != null)
+                serialPort.DtrEnable = checkBoxInvertRts.Checked;
+        }
+
+        private void CheckBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (serialPort != null)
+                serialPort.RtsEnable = checkBoxInvertDtr.Checked;
+
+        }
+
+        private void GroupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

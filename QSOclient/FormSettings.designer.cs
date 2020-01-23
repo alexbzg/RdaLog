@@ -75,14 +75,22 @@
             this.radioButtonUpdInterval10s = new System.Windows.Forms.RadioButton();
             this.tabPageView = new System.Windows.Forms.TabPage();
             this.tabPageCwMacros = new System.Windows.Forms.TabPage();
+            this.tabPageSerial = new System.Windows.Forms.TabPage();
+            this.labelPort = new System.Windows.Forms.Label();
+            this.comboBoxPort = new System.Windows.Forms.ComboBox();
             this.tabPageDebug = new System.Windows.Forms.TabPage();
             this.textBoxDebugLog = new System.Windows.Forms.TextBox();
             this.labelDebug = new System.Windows.Forms.Label();
+            this.labelPinout = new System.Windows.Forms.Label();
+            this.comboBoxPinout = new System.Windows.Forms.ComboBox();
+            this.checkBoxInvertRts = new System.Windows.Forms.CheckBox();
+            this.checkBoxInvertDtr = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabPageServer.SuspendLayout();
             this.groupBoxUpdInterval.SuspendLayout();
             this.tabPageView.SuspendLayout();
             this.tabPageCwMacros.SuspendLayout();
+            this.tabPageSerial.SuspendLayout();
             this.tabPageDebug.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -538,6 +546,7 @@
             this.tabControl.Controls.Add(this.tabPageServer);
             this.tabControl.Controls.Add(this.tabPageView);
             this.tabControl.Controls.Add(this.tabPageCwMacros);
+            this.tabControl.Controls.Add(this.tabPageSerial);
             this.tabControl.Controls.Add(this.tabPageDebug);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
@@ -649,6 +658,41 @@
             this.tabPageCwMacros.TabIndex = 2;
             this.tabPageCwMacros.Text = "CW macros";
             // 
+            // tabPageSerial
+            // 
+            this.tabPageSerial.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageSerial.Controls.Add(this.checkBoxInvertDtr);
+            this.tabPageSerial.Controls.Add(this.checkBoxInvertRts);
+            this.tabPageSerial.Controls.Add(this.comboBoxPinout);
+            this.tabPageSerial.Controls.Add(this.labelPinout);
+            this.tabPageSerial.Controls.Add(this.labelPort);
+            this.tabPageSerial.Controls.Add(this.comboBoxPort);
+            this.tabPageSerial.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSerial.Name = "tabPageSerial";
+            this.tabPageSerial.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSerial.Size = new System.Drawing.Size(356, 276);
+            this.tabPageSerial.TabIndex = 4;
+            this.tabPageSerial.Text = "Serial";
+            this.tabPageSerial.Click += new System.EventHandler(this.TabPageSerial_Click);
+            // 
+            // labelPort
+            // 
+            this.labelPort.AutoSize = true;
+            this.labelPort.Location = new System.Drawing.Point(8, 15);
+            this.labelPort.Name = "labelPort";
+            this.labelPort.Size = new System.Drawing.Size(26, 13);
+            this.labelPort.TabIndex = 69;
+            this.labelPort.Text = "Port";
+            // 
+            // comboBoxPort
+            // 
+            this.comboBoxPort.FormattingEnabled = true;
+            this.comboBoxPort.Location = new System.Drawing.Point(40, 12);
+            this.comboBoxPort.Name = "comboBoxPort";
+            this.comboBoxPort.Size = new System.Drawing.Size(308, 21);
+            this.comboBoxPort.TabIndex = 68;
+            this.comboBoxPort.SelectedValueChanged += new System.EventHandler(this.ComboBoxPort_SelectedValueChanged);
+            // 
             // tabPageDebug
             // 
             this.tabPageDebug.BackColor = System.Drawing.SystemColors.Control;
@@ -679,6 +723,47 @@
             this.labelDebug.TabIndex = 0;
             this.labelDebug.Text = "Скопируйте весь текст в окне ниже и отправьте по адресу 18@73.ru";
             // 
+            // label1
+            // 
+            this.labelPinout.AutoSize = true;
+            this.labelPinout.Location = new System.Drawing.Point(8, 45);
+            this.labelPinout.Name = "label1";
+            this.labelPinout.Size = new System.Drawing.Size(37, 13);
+            this.labelPinout.TabIndex = 70;
+            this.labelPinout.Text = "Pinout";
+            // 
+            // comboBoxPinout
+            // 
+            this.comboBoxPinout.FormattingEnabled = true;
+            this.comboBoxPinout.Items.AddRange(new object[] {
+            "DTR: PTT; RTS: telegraph",
+            "DTR: telegraph; RTS: PTT"});
+            this.comboBoxPinout.Location = new System.Drawing.Point(51, 42);
+            this.comboBoxPinout.Name = "comboBoxPinout";
+            this.comboBoxPinout.Size = new System.Drawing.Size(297, 21);
+            this.comboBoxPinout.TabIndex = 71;
+            this.comboBoxPinout.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
+            // 
+            // checkBoxInvertRts
+            // 
+            this.checkBoxInvertRts.AutoSize = true;
+            this.checkBoxInvertRts.Location = new System.Drawing.Point(11, 98);
+            this.checkBoxInvertRts.Name = "checkBoxInvertRts";
+            this.checkBoxInvertRts.Size = new System.Drawing.Size(78, 17);
+            this.checkBoxInvertRts.TabIndex = 72;
+            this.checkBoxInvertRts.Text = "Invert RTS";
+            this.checkBoxInvertRts.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxInvertDtr
+            // 
+            this.checkBoxInvertDtr.AutoSize = true;
+            this.checkBoxInvertDtr.Location = new System.Drawing.Point(11, 73);
+            this.checkBoxInvertDtr.Name = "checkBoxInvertDtr";
+            this.checkBoxInvertDtr.Size = new System.Drawing.Size(79, 17);
+            this.checkBoxInvertDtr.TabIndex = 73;
+            this.checkBoxInvertDtr.Text = "Invert DTR";
+            this.checkBoxInvertDtr.UseVisualStyleBackColor = true;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -688,7 +773,11 @@
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormSettings";
+            this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "TNXLOG - Settings";
             this.tabControl.ResumeLayout(false);
@@ -700,6 +789,8 @@
             this.tabPageView.PerformLayout();
             this.tabPageCwMacros.ResumeLayout(false);
             this.tabPageCwMacros.PerformLayout();
+            this.tabPageSerial.ResumeLayout(false);
+            this.tabPageSerial.PerformLayout();
             this.tabPageDebug.ResumeLayout(false);
             this.tabPageDebug.PerformLayout();
             this.ResumeLayout(false);
@@ -758,5 +849,12 @@
         private System.Windows.Forms.TabPage tabPageDebug;
         private System.Windows.Forms.TextBox textBoxDebugLog;
         private System.Windows.Forms.Label labelDebug;
+        private System.Windows.Forms.TabPage tabPageSerial;
+        internal System.Windows.Forms.ComboBox comboBoxPort;
+        private System.Windows.Forms.Label labelPort;
+        internal System.Windows.Forms.ComboBox comboBoxPinout;
+        private System.Windows.Forms.Label labelPinout;
+        internal System.Windows.Forms.CheckBox checkBoxInvertDtr;
+        internal System.Windows.Forms.CheckBox checkBoxInvertRts;
     }
 }

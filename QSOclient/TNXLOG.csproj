@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SerialDevice.cs" />
     <Compile Include="StringIndex.cs" />
     <Compile Include="System\Windows\Forms\TextBoxCallsign.cs">
       <SubType>Component</SubType>
@@ -106,6 +107,7 @@
     <Compile Include="System\Windows\Forms\ToolStripTextBoxCallsign.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TransceiverController.cs" />
     <Compile Include="XmlConfig.cs" />
     <EmbeddedResource Include="FormLog.resx">
       <DependentUpon>FormLog.cs</DependentUpon>

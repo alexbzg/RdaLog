@@ -51,6 +51,7 @@ namespace tnxlog
         public FormMainConfig formMain;
         public HttpServiceConfig httpService;
         public FormLogConfig formLog;
+        public TransceiverControllerConfig transceiverController;
 
         private Dictionary<string, StatusField> _statusFields;
         public List<SerStatusField> serStatusFields;
@@ -131,6 +132,11 @@ namespace tnxlog
                 httpService = new HttpServiceConfig(this);
             else
                 httpService.parent = this;
+
+            if (transceiverController == null)
+                transceiverController = new TransceiverControllerConfig(this);
+            else
+                transceiverController.parent = this;
 
             if (hotKeys == null)
             {

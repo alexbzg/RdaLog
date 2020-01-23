@@ -183,6 +183,8 @@ namespace tnxlog
                 formSettings.HotKeyBindings[co].Item2.Text = config.hotKeys[co][1];
             }
 
+            formSettings.comboBoxPort.
+
             if (formSettings.ShowDialog(this.formMain) == System.Windows.Forms.DialogResult.OK)
             {
                 config.httpService.callsign = formSettings.textBoxLogin.Text;
