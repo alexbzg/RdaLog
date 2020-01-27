@@ -15,7 +15,7 @@ namespace SerialDevice
         public string deviceID;
     }
 
-    class SerialDevice
+    public class SerialDevice
     {
         private static Regex portRE = new Regex(@"(?<=\()COM\d+(?=\))");
 
@@ -46,6 +46,14 @@ namespace SerialDevice
             }
             return r;
         }
+
+        public static readonly List<string> PINS = new List<string>() { "DTR", "RTS" };
+
+        public static readonly Dictionary<string, string> PIN_PROPS = new Dictionary<string, string>()
+        {
+            {"DTR", "enableDTR"},
+            {"RTS", "enableRTS"},
+        };
 
     }
 }

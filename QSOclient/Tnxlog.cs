@@ -177,13 +177,19 @@ namespace tnxlog
             foreach (KeyValuePair<string,CheckBox> item in formSettings.mainFormPanelCheckboxes)
                 item.Value.Checked = config.getMainFormPanelVisible(item.Key);
 
+            formSettings.enableCwMacros = config.enableMacros;
+            formSettings.serialDeviceId = config.transceiverController.serialDeviceId;
+            for (int co = 0; co < TransceiverController.PIN_FUNCTIONS.Count; co++)
+            {
+                formSettings.transceiverPinSettings[co].pin = SerialDevice.SerialDevice.PINS[config.transceiverController.pinout[co]];
+                formSettings.transceiverPinSettings[co].invert = config.transceiverController.invertPins[co];
+            }
+
             for (int co = 0; co < formSettings.HotKeyBindings.Count; co++)
             {
                 formSettings.HotKeyBindings[co].Item1.Text = config.hotKeys[co][0];
                 formSettings.HotKeyBindings[co].Item2.Text = config.hotKeys[co][1];
             }
-
-            formSettings.comboBoxPort.
 
             if (formSettings.ShowDialog(this.formMain) == System.Windows.Forms.DialogResult.OK)
             {
@@ -198,7 +204,14 @@ namespace tnxlog
                 foreach (KeyValuePair<string, CheckBox> item in formSettings.mainFormPanelCheckboxes)
                      config.setMainFormPanelVisible(item.Key, item.Value.Checked);
 
-                config.enableMacros = formSettings.checkBoxEnableCwMacro.Checked;
+                config.enableMacros = formSettings.enableCwMacros;
+                config.transceiverController.serialDeviceId = formSettings.serialDeviceId;
+                for (int co = 0; co < TransceiverController.PIN_FUNCTIONS.Count; co++)
+                {
+                    config.transceiverController.pinout[co] = SerialDevice.SerialDevice.PINS.IndexOf(formSettings.transceiverPinSettings[co].pin);
+                    config.transceiverController.invertPins[co] = formSettings.transceiverPinSettings[co].invert;
+                }
+
 
                 for (int co = 0; co < formSettings.HotKeyBindings.Count; co++)
                 {

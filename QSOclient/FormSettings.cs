@@ -1,7 +1,9 @@
 ﻿using SerialDevice;
 using SerialPortTester;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -16,7 +18,7 @@ namespace tnxlog
 {
     public partial class FormSettings : Form
     {
-        private List<SerialDeviceInfo> serialPorts = SerialDevice.SerialDevice.listSerialDevices();
+        private List<SerialDeviceInfo> serialDevices = SerialDevice.SerialDevice.listSerialDevices();
         private SerialPort serialPort;
         internal List<Tuple<TextBox, TextBox>> HotKeyBindings
         {
@@ -40,11 +42,28 @@ namespace tnxlog
         internal Dictionary<int, RadioButton> updateIntervalRadioButtons;
 
         internal Dictionary<string, CheckBox> mainFormPanelCheckboxes;
+
+        internal List<TransceiverPinSettings> transceiverPinSettings = new List<TransceiverPinSettings>();
+
+        internal string serialDeviceId {
+            get { return comboBoxPort.SelectedIndex == -1 ? null : serialDevices[comboBoxPort.SelectedIndex].deviceID; }
+            set {
+                SerialDeviceInfo device = serialDevices.FirstOrDefault(item => item.deviceID == value);
+                if (device != null)
+                    comboBoxPort.SelectedItem = device.caption;
+                else
+                    comboBoxPort.SelectedIndex = -1;
+            }
+        }
+
+        internal bool enableCwMacros { get { return checkBoxEnableCwMacros.Checked; } set { checkBoxEnableCwMacros.Checked = value; } }
+
         private string dataPath;
         public FormSettings(string _dataPath)
         {
             dataPath = _dataPath;
             InitializeComponent();
+
             mainFormPanelCheckboxes = new Dictionary<string, CheckBox>()
             {
                 {"statusFields", checkBoxViewFields },
@@ -52,19 +71,58 @@ namespace tnxlog
                 {"cwMacros", checkBoxViewCwMacro },
                 {"callsignId", checkBoxViewCallsignId }
             };
+
             updateIntervalRadioButtons = new Dictionary<int, RadioButton>()
             {
                 {10 * 1000, radioButtonUpdInterval10s },
                 {60 * 1000, radioButtonUpdInterval1m }
             };
-            foreach (SerialDeviceInfo sp in serialPorts)
+
+            foreach (SerialDeviceInfo sp in serialDevices)
             {
                 comboBoxPort.Items.Add(sp.caption);
                 int w = TextRenderer.MeasureText(sp.caption, comboBoxPort.Font).Width;
                 if (comboBoxPort.DropDownWidth < w)
                     comboBoxPort.DropDownWidth = w;
             }
-            comboBoxPort.Items.Add("Disable");
+
+            int pinCount = 0;
+            foreach (string pinFunction in TransceiverController.PIN_FUNCTIONS)
+            {
+                TransceiverPinSettings tpsControl = new TransceiverPinSettings(pinFunction);
+                transceiverPinSettings.Add(tpsControl);
+                tabPageCwMacros.Controls.Add(tpsControl);
+                tpsControl.Location = new Point(1, 45 + (pinCount++) * (tpsControl.Height + 2));
+                tpsControl.pinChanged += transceiverPinChanged;
+            }
+        }
+
+        private void transceiverPinChanged(object sender, EventArgs e)
+        {
+            TransceiverPinSettings tpsSender = (TransceiverPinSettings)sender;
+            string freePin = null;
+            foreach (string pin in SerialDevice.SerialDevice.PINS)
+            {
+                bool busy = false;
+                foreach (TransceiverPinSettings tpsControl in transceiverPinSettings)
+                    if (tpsControl.pin == pin)
+                    {
+                        busy = true;
+                        break;
+                    }
+                if (!busy)
+                {
+                    freePin = pin;
+                    break;
+                }
+            }
+            if (freePin != null)
+                foreach (TransceiverPinSettings tpsControl in transceiverPinSettings)
+                    if (tpsControl != tpsSender && tpsControl.pin == tpsSender.pin)
+                    {
+                        tpsControl.pin = freePin;
+                        break;
+                    }
         }
 
         private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -82,10 +140,12 @@ namespace tnxlog
 
         private void ComboBoxPort_SelectedValueChanged(object sender, EventArgs e)
         {
-            serialPort?.Close();
+            foreach (TransceiverPinSettings tpsControl in transceiverPinSettings)
+                tpsControl.testEnabled = comboBoxPort.SelectedIndex != -1;
+            /*
             if (comboBoxPort.SelectedIndex != -1)
             {
-                string portName = serialPorts[comboBoxPort.SelectedIndex].portName;
+                string portName = serialDevices[comboBoxPort.SelectedIndex].portName;
                 serialPort = new SerialPort(portName);
                 try
                 {
@@ -99,38 +159,27 @@ namespace tnxlog
             }
             else
                 serialPort = null;
-
+                */
         }
 
-        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (serialPort != null)
-                serialPort.DtrEnable = checkBoxInvertRts.Checked;
-        }
-
-        private void CheckBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (serialPort != null)
-                serialPort.RtsEnable = checkBoxInvertDtr.Checked;
-
-        }
-
-        private void GroupBox1_Enter(object sender, EventArgs e)
+        private void LabelPort_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void Label2_Click(object sender, EventArgs e)
+        private void TabPageCwMacros_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void Label1_Click(object sender, EventArgs e)
+        private void checkBoxEnableCwMacros_CheckedChanged(object sender, EventArgs e)
         {
-
+            comboBoxPort.Enabled = checkBoxEnableCwMacros.Checked;
+            foreach (TransceiverPinSettings tps in transceiverPinSettings)
+                tps.Enabled = checkBoxEnableCwMacros.Checked;
         }
 
-        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxPort_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
