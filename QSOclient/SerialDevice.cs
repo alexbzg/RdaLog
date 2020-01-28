@@ -51,8 +51,8 @@ namespace SerialDevice
 
         public static readonly Dictionary<string, string> PIN_PROPS = new Dictionary<string, string>()
         {
-            {"DTR", "enableDTR"},
-            {"RTS", "enableRTS"},
+            {"DTR", "DtrEnable"},
+            {"RTS", "RtsEnable"},
         };
 
     }

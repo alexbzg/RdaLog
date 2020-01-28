@@ -22,6 +22,7 @@ namespace tnxlog
         internal EventHandler pinChanged;
         internal EventHandler testMouseDown;
         internal EventHandler testMouseUp;
+        internal EventHandler invertChanged;
 
         public TransceiverPinSettings(string _function)
         {
@@ -33,19 +34,24 @@ namespace tnxlog
 
         private void ComboBoxPin_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pinChanged?.Invoke(this, new EventArgs());
+            pinChanged?.Invoke(this, e);
         }
 
         private void ButtonTest_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                testMouseDown?.Invoke(this, new EventArgs());
+                testMouseDown?.Invoke(this, e);
         }
 
         private void ButtonTest_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                testMouseUp?.Invoke(this, new EventArgs());
+                testMouseUp?.Invoke(this, e);
+        }
+
+        private void CheckBoxInvert_CheckedChanged(object sender, EventArgs e)
+        {
+            invertChanged?.Invoke(this, e);
         }
     }
 }

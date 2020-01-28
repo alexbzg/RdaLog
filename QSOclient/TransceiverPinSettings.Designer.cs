@@ -61,6 +61,7 @@
             this.checkBoxInvert.TabIndex = 2;
             this.checkBoxInvert.Text = "Invert";
             this.checkBoxInvert.UseVisualStyleBackColor = true;
+            this.checkBoxInvert.CheckedChanged += new System.EventHandler(this.CheckBoxInvert_CheckedChanged);
             // 
             // buttonTest
             // 

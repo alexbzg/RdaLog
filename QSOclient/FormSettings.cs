@@ -45,6 +45,8 @@ namespace tnxlog
 
         internal List<TransceiverPinSettings> transceiverPinSettings = new List<TransceiverPinSettings>();
 
+        private TransceiverController transceiverController = new TransceiverController(new TransceiverControllerConfig());
+
         internal string serialDeviceId {
             get { return comboBoxPort.SelectedIndex == -1 ? null : serialDevices[comboBoxPort.SelectedIndex].deviceID; }
             set {
@@ -94,7 +96,27 @@ namespace tnxlog
                 tabPageCwMacros.Controls.Add(tpsControl);
                 tpsControl.Location = new Point(1, 45 + (pinCount++) * (tpsControl.Height + 2));
                 tpsControl.pinChanged += transceiverPinChanged;
+                tpsControl.invertChanged += transceiverPinInvertChanged;
+                tpsControl.testMouseDown += testPinMouseDown;
+                tpsControl.testMouseUp += testPinMouseUp;
             }
+        }
+
+        private void testPinMouseUp(object sender, EventArgs e)
+        {
+            TransceiverPinSettings tpsSender = (TransceiverPinSettings)sender;
+            transceiverController.setPin(tpsSender.function, true);
+        }
+
+        private void testPinMouseDown(object sender, EventArgs e)
+        {
+            TransceiverPinSettings tpsSender = (TransceiverPinSettings)sender;
+            transceiverController.setPin(tpsSender.function, false);
+        }
+
+        private void transceiverPinInvertChanged(object sender, EventArgs e)
+        {
+            updateTransceiverController();
         }
 
         private void transceiverPinChanged(object sender, EventArgs e)
@@ -123,6 +145,7 @@ namespace tnxlog
                         tpsControl.pin = freePin;
                         break;
                     }
+            updateTransceiverController();
         }
 
         private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -142,24 +165,6 @@ namespace tnxlog
         {
             foreach (TransceiverPinSettings tpsControl in transceiverPinSettings)
                 tpsControl.testEnabled = comboBoxPort.SelectedIndex != -1;
-            /*
-            if (comboBoxPort.SelectedIndex != -1)
-            {
-                string portName = serialDevices[comboBoxPort.SelectedIndex].portName;
-                serialPort = new SerialPort(portName);
-                try
-                {
-                    SerialPortFixer.Execute(portName);
-                    serialPort.Open();
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Trace.TraceInformation("Error opening port " + portName + " " + ex.ToString());
-                }
-            }
-            else
-                serialPort = null;
-                */
         }
 
         private void LabelPort_Click(object sender, EventArgs e)
@@ -181,7 +186,23 @@ namespace tnxlog
 
         private void ComboBoxPort_SelectedIndexChanged(object sender, EventArgs e)
         {
+            transceiverController.disconnect();
+            if (comboBoxPort.SelectedIndex != -1)
+            {
+                transceiverController.config.updateFromForm(this);
+                transceiverController.connect();
+            }
+        }
 
+        private void updateTransceiverController()
+        {
+            transceiverController.config.updateFromForm(this);
+            transceiverController.initializePort();
+        }
+
+        private void FormSettings_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            transceiverController.disconnect();
         }
     }
 }

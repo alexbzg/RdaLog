@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using XmlConfigNS;
@@ -29,6 +30,7 @@ namespace tnxlog
         private FormLog formLog;
         private TnxlogConfig config;
         public HttpService httpService;
+        private TransceiverController transceiverController;
         internal string dataPath;
         private NLog.Targets.FileTarget logfile;
         private string qsoFilePath;
@@ -68,14 +70,14 @@ namespace tnxlog
 #if DEBUG
             dataPath = Path.Combine(dataPath, "debug");
             var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
-            loggingConfig.AddRule(LogLevel.Info, LogLevel.Fatal, logconsole);
+            loggingConfig.AddRule(LogLevel.Debug, LogLevel.Fatal, logconsole);
 #endif
             if (!Directory.Exists(dataPath))
                 Directory.CreateDirectory(dataPath);
 #if LOG
             logfile = new NLog.Targets.FileTarget("logfile") {
                 FileName = Path.Combine(dataPath, "debug.log"),
-                Layout = "${longdate} ${level} ${message}  ${exception:format=toString,Data:maxInnerExceptionLevel=10}",
+                Layout = "${longdate} ${level} ${message}  ${exception:format=toString,Data:maxInnerExceptionLevel=10} ${stacktrace:format=DetailedFlat}",
                 ArchiveEvery = NLog.Targets.FileArchivePeriod.Sunday,
                 MaxArchiveFiles = 1 };
             loggingConfig.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
@@ -91,6 +93,7 @@ namespace tnxlog
             foreach (string field in TnxlogConfig.StatusFields)
                 _statusFields[field] = config.getStatusFieldValue(field);
             httpService = new HttpService(config.httpService, this);
+            transceiverController = new TransceiverController(config.transceiverController);
             qsoFactory = new QSOFactory(this);
             qsoList = ProtoBufSerialization.Read<BindingList<QSO>>(qsoFilePath);
             if (qsoList == null)
@@ -177,6 +180,7 @@ namespace tnxlog
             foreach (KeyValuePair<string,CheckBox> item in formSettings.mainFormPanelCheckboxes)
                 item.Value.Checked = config.getMainFormPanelVisible(item.Key);
 
+            transceiverController.disconnect();
             formSettings.enableCwMacros = config.enableMacros;
             formSettings.serialDeviceId = config.transceiverController.serialDeviceId;
             for (int co = 0; co < TransceiverController.PIN_FUNCTIONS.Count; co++)
@@ -205,13 +209,8 @@ namespace tnxlog
                      config.setMainFormPanelVisible(item.Key, item.Value.Checked);
 
                 config.enableMacros = formSettings.enableCwMacros;
-                config.transceiverController.serialDeviceId = formSettings.serialDeviceId;
-                for (int co = 0; co < TransceiverController.PIN_FUNCTIONS.Count; co++)
-                {
-                    config.transceiverController.pinout[co] = SerialDevice.SerialDevice.PINS.IndexOf(formSettings.transceiverPinSettings[co].pin);
-                    config.transceiverController.invertPins[co] = formSettings.transceiverPinSettings[co].invert;
-                }
-
+                updateTransceiverControllerConfig(config.transceiverController, formSettings);
+                transceiverController.connect();
 
                 for (int co = 0; co < formSettings.HotKeyBindings.Count; co++)
                 {
@@ -222,6 +221,16 @@ namespace tnxlog
                 config.write();
             }
             formSettings.Dispose();
+        }
+
+        private void updateTransceiverControllerConfig(TransceiverControllerConfig tcConfig, FormSettings formSettings)
+        {
+            tcConfig.serialDeviceId = formSettings.serialDeviceId;
+            for (int co = 0; co < TransceiverController.PIN_FUNCTIONS.Count; co++)
+            {
+                tcConfig.pinout[co] = SerialDevice.SerialDevice.PINS.IndexOf(formSettings.transceiverPinSettings[co].pin);
+                tcConfig.invertPins[co] = formSettings.transceiverPinSettings[co].invert;
+            }
         }
 
     }

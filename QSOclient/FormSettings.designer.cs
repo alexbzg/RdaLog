@@ -690,6 +690,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "TNXLOG - Settings";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormSettings_FormClosed);
             this.tabControl.ResumeLayout(false);
             this.tabPageServer.ResumeLayout(false);
             this.tabPageServer.PerformLayout();
