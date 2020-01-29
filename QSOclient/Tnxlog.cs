@@ -30,12 +30,11 @@ namespace tnxlog
         private FormLog formLog;
         private TnxlogConfig config;
         public HttpService httpService;
-        private TransceiverController transceiverController;
+        public TransceiverController transceiverController;
         internal string dataPath;
         private NLog.Targets.FileTarget logfile;
         private string qsoFilePath;
         internal BindingList<QSO> qsoList;
-        private int qsoNo = 0;
         private QSOFactory qsoFactory;
         public EventHandler<StatusFieldChangeEventArgs> statusFieldChange;
         private Dictionary<string, string> _statusFields = new Dictionary<string, string>();
@@ -77,8 +76,9 @@ namespace tnxlog
 #if LOG
             logfile = new NLog.Targets.FileTarget("logfile") {
                 FileName = Path.Combine(dataPath, "debug.log"),
-                Layout = "${longdate} ${level} ${message}  ${exception:format=toString,Data:maxInnerExceptionLevel=10} ${stacktrace:format=DetailedFlat}",
+                Layout = "${longdate} ${level} ${message}  ${exception:format=toString,Data:maxInnerExceptionLevel=10} ${stacktrace:format=DetailedFlat:topFrames=10}",
                 ArchiveEvery = NLog.Targets.FileArchivePeriod.Sunday,
+                Encoding = Encoding.UTF8,
                 MaxArchiveFiles = 1 };
             loggingConfig.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
 #endif
@@ -94,6 +94,7 @@ namespace tnxlog
                 _statusFields[field] = config.getStatusFieldValue(field);
             httpService = new HttpService(config.httpService, this);
             transceiverController = new TransceiverController(config.transceiverController);
+            transceiverController.connect();
             qsoFactory = new QSOFactory(this);
             qsoList = ProtoBufSerialization.Read<BindingList<QSO>>(qsoFilePath);
             if (qsoList == null)
@@ -160,6 +161,7 @@ namespace tnxlog
 
         public void showSettings()
         {
+            transceiverController.disconnect();
             FormSettings formSettings = new FormSettings(dataPath);
 
             formSettings.textBoxLogin.Text = config.httpService.callsign;
@@ -180,7 +182,6 @@ namespace tnxlog
             foreach (KeyValuePair<string,CheckBox> item in formSettings.mainFormPanelCheckboxes)
                 item.Value.Checked = config.getMainFormPanelVisible(item.Key);
 
-            transceiverController.disconnect();
             formSettings.enableCwMacros = config.enableMacros;
             formSettings.serialDeviceId = config.transceiverController.serialDeviceId;
             for (int co = 0; co < TransceiverController.PIN_FUNCTIONS.Count; co++)
@@ -189,10 +190,10 @@ namespace tnxlog
                 formSettings.transceiverPinSettings[co].invert = config.transceiverController.invertPins[co];
             }
 
-            for (int co = 0; co < formSettings.HotKeyBindings.Count; co++)
+            for (int co = 0; co < formSettings.CwMacros.Count; co++)
             {
-                formSettings.HotKeyBindings[co].Item1.Text = config.hotKeys[co][0];
-                formSettings.HotKeyBindings[co].Item2.Text = config.hotKeys[co][1];
+                formSettings.CwMacros[co].Item1.Text = config.cwMacros[co][0];
+                formSettings.CwMacros[co].Item2.Text = config.cwMacros[co][1];
             }
 
             if (formSettings.ShowDialog(this.formMain) == System.Windows.Forms.DialogResult.OK)
@@ -210,17 +211,18 @@ namespace tnxlog
 
                 config.enableMacros = formSettings.enableCwMacros;
                 updateTransceiverControllerConfig(config.transceiverController, formSettings);
-                transceiverController.connect();
 
-                for (int co = 0; co < formSettings.HotKeyBindings.Count; co++)
+                for (int co = 0; co < formSettings.CwMacros.Count; co++)
                 {
-                    config.hotKeys[co][0] = formSettings.HotKeyBindings[co].Item1.Text;
-                    config.hotKeys[co][1] = formSettings.HotKeyBindings[co].Item2.Text;
+                    config.cwMacros[co][0] = formSettings.CwMacros[co].Item1.Text;
+                    config.cwMacros[co][1] = formSettings.CwMacros[co].Item2.Text;
                 }
 
                 config.write();
             }
             formSettings.Dispose();
+            transceiverController.connect();
+            formMain.updateCwMacrosTitles();
         }
 
         private void updateTransceiverControllerConfig(TransceiverControllerConfig tcConfig, FormSettings formSettings)

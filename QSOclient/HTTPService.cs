@@ -159,17 +159,6 @@ namespace tnxlog
                 if (connected)
                     await processQueue();
             }
-            /*if (response?.StatusCode == System.Net.HttpStatusCode.BadRequest)
-            {
-                string srvMsg = await response.Content.ReadAsStringAsync();
-                if (srvMsg == "Login expired")
-                {
-                    if (config.callsign.Length > 3 && config.password.Length > 5 && await login(config.callsign, config.password) == System.Net.HttpStatusCode.OK)
-                        return await post(_URI, data, warnings);
-                }
-                if (warnings)
-                    MessageBox.Show(await response.Content.ReadAsStringAsync(), "Bad request to server");
-            }*/
             return response;
         }
 
@@ -331,21 +320,27 @@ namespace tnxlog
                         loginRetryTimer.Change(Timeout.Infinite, Timeout.Infinite);
                         loginRetryTimer = null;
                     }
-                    Task.Run(async () => await processQueue());
+                    await Task.Run(async () => await processQueue());
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     config.token = null;
                     MessageBox.Show(await response.Content.ReadAsStringAsync(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                } else if (retry)
-                {
-                    if (loginRetryTimer == null)
-                        loginRetryTimer = new System.Threading.Timer(async obj => await login(true), null, pingIntervalNoConnection, Timeout.Infinite);
-                    else
-                        loginRetryTimer.Change(pingIntervalNoConnection, Timeout.Infinite);
                 }
+                else if (retry)
+                    scheduleLoginRetryTimer();
             }
+            else if (retry)
+                scheduleLoginRetryTimer();
             return response?.StatusCode;
+        }
+
+        private void scheduleLoginRetryTimer()
+        {
+            if (loginRetryTimer == null)
+                loginRetryTimer = new System.Threading.Timer(async obj => await login(true), null, pingIntervalNoConnection, Timeout.Infinite);
+            else
+                loginRetryTimer.Change(pingIntervalNoConnection, Timeout.Infinite);
         }
 
         public async Task postFreq(string freq)

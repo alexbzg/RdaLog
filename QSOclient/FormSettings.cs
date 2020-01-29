@@ -19,22 +19,21 @@ namespace tnxlog
     public partial class FormSettings : Form
     {
         private List<SerialDeviceInfo> serialDevices = SerialDevice.SerialDevice.listSerialDevices();
-        private SerialPort serialPort;
-        internal List<Tuple<TextBox, TextBox>> HotKeyBindings
+        internal List<Tuple<TextBox, TextBox>> CwMacros
         {
             get
             {
                 return new List<Tuple<TextBox, TextBox>>()
                 {
-                    Tuple.Create(textBoxHotKeyF1Title, textBoxHotKeyF1Bindings),
-                    Tuple.Create(textBoxHotKeyF2Title, textBoxHotKeyF2Bindings),
-                    Tuple.Create(textBoxHotKeyF3Title, textBoxHotKeyF3Bindings),
-                    Tuple.Create(textBoxHotKeyF4Title, textBoxHotKeyF4Bindings),
-                    Tuple.Create(textBoxHotKeyF5Title, textBoxHotKeyF5Bindings),
-                    Tuple.Create(textBoxHotKeyF6Title, textBoxHotKeyF6Bindings),
-                    Tuple.Create(textBoxHotKeyF7Title, textBoxHotKeyF7Bindings),
-                    Tuple.Create(textBoxHotKeyF8Title, textBoxHotKeyF8Bindings),
-                    Tuple.Create(textBoxHotKeyF9Title, textBoxHotKeyF9Bindings)
+                    Tuple.Create(textBoxCwMacroF1Title, textBoxCwMacroF1Bindings),
+                    Tuple.Create(textBoxCwMacroF2Title, textBoxCwMacroF2Bindings),
+                    Tuple.Create(textBoxCwMacroF3Title, textBoxCwMacroF3Bindings),
+                    Tuple.Create(textBoxCwMacroF4Title, textBoxCwMacroF4Bindings),
+                    Tuple.Create(textBoxCwMacroF5Title, textBoxCwMacroF5Bindings),
+                    Tuple.Create(textBoxCwMacroF6Title, textBoxCwMacroF6Bindings),
+                    Tuple.Create(textBoxCwMacroF7Title, textBoxCwMacroF7Bindings),
+                    Tuple.Create(textBoxCwMacroF8Title, textBoxCwMacroF8Bindings),
+                    Tuple.Create(textBoxCwMacroF9Title, textBoxCwMacroF9Bindings)
                 };
             }
         }

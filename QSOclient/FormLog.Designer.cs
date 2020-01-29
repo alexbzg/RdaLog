@@ -248,7 +248,6 @@
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton filterButton;
-        private System.Windows.Forms.DataGridViewButtonColumn DeleteButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn no;
         private System.Windows.Forms.DataGridViewTextBoxColumn ts;
         private System.Windows.Forms.DataGridViewTextBoxColumn myCS;

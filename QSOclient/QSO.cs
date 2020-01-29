@@ -30,7 +30,6 @@ namespace tnxlog
         internal string _wff;
         internal string _loc;
         internal string _freqRx;
-        internal string _oper;
         internal string _comments;
         internal int _no;
         internal string[] _userFields;

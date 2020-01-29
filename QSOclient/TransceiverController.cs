@@ -1,4 +1,5 @@
-﻿using SerialDevice;
+﻿using HamRadio;
+using SerialDevice;
 using SerialPortTester;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using XmlConfigNS;
 
@@ -48,6 +50,9 @@ namespace tnxlog
         private SerialPort serialPort; 
 
         public bool connected { get { return serialPort != null; } }
+        private bool _busy;
+
+        public bool busy { get { return _busy; } }
 
         public TransceiverController(TransceiverControllerConfig _config)
         {
@@ -82,6 +87,51 @@ namespace tnxlog
         {
             foreach (string pinFunction in PIN_FUNCTIONS)
                 setPin(pinFunction, true);
+        }
+
+        public async Task morseString(string line, int speed, CancellationToken ct)
+        {
+            if (!_busy)
+            {
+                try
+                {
+                    _busy = true;
+                    setPin("PTT", false);
+                    await Task.Delay(speed, ct);
+                    foreach (char c in line)
+                    {
+                        Logger.Debug($"Morse: {c}");
+                        if (c != ' ')
+                        {
+                            if (!MorseCode.Alphabet.ContainsKey(c))
+                                continue;
+                            char[] code = MorseCode.Alphabet[c];
+                            foreach (char mc in code)
+                            {
+                                if (ct.IsCancellationRequested)
+                                    throw new TaskCanceledException();
+                                setPin("CW", false);
+                                await Task.Delay(mc == MorseCode.Dot ? speed : Convert.ToInt32(2.5 * speed), ct);
+                                setPin("CW", true);
+                            }
+                            await Task.Delay(2 * speed, ct);
+                        }
+                        else
+                            await Task.Delay(2 * speed, ct);
+                    }
+                }
+                catch (TaskCanceledException) {}
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, "Morse string output error!");
+                }
+                finally
+                {
+                    _busy = false;
+                    initializePort();
+                }
+
+            }
         }
 
         public void setPin(string pinFunction, bool value)

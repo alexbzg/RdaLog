@@ -32,7 +32,7 @@ namespace tnxlog
 
     public class TnxlogConfig : XmlConfig
     {
-        public static readonly List<Tuple<string, string>> HotKeysDefaults = new List<Tuple<string, string>>
+        public static readonly List<Tuple<string, string>> CwMacrosDefaults = new List<Tuple<string, string>>
         {
             Tuple.Create("CQ", "CQ {MY_CALL} {MY_CALL}"),
             Tuple.Create("5NN", "5NN"),
@@ -111,8 +111,16 @@ namespace tnxlog
         }
 
         public bool enableMacros = true;
+        private int _morseSpeed = 12;
+        public int morseSpeed {
+            get { return _morseSpeed; }
+            set {
+                _morseSpeed = value;
+                write();
+            }
+        }
         public bool autoLogin = true;
-        public List<string[]> hotKeys;
+        public List<string[]> cwMacros;
 
         public TnxlogConfig() : base() {}
 
@@ -138,12 +146,12 @@ namespace tnxlog
             else
                 transceiverController.parent = this;
 
-            if (hotKeys == null)
+            if (cwMacros == null)
             {
-                hotKeys = new List<string[]>();
+                cwMacros = new List<string[]>();
             }
-            for (int co = hotKeys.Count; co < HotKeysDefaults.Count; co++)
-                hotKeys.Add(new string[] { HotKeysDefaults[co].Item1, HotKeysDefaults[co].Item2 });
+            for (int co = cwMacros.Count; co < CwMacrosDefaults.Count; co++)
+                cwMacros.Add(new string[] { CwMacrosDefaults[co].Item1, CwMacrosDefaults[co].Item2 });
 
             if (serStatusFields != null)
                 _statusFields = serStatusFields.ToDictionary(item => item.field, item => new StatusField() { auto = item.auto, value = item.value });

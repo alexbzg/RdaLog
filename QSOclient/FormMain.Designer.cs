@@ -65,25 +65,25 @@ namespace tnxlog
             this.listBoxCallsignsDb = new System.Windows.Forms.ListBox();
             this.listBoxCallsignsQso = new System.Windows.Forms.ListBox();
             this.panelCwMacro = new System.Windows.Forms.Panel();
-            this.labelHotKeyF5 = new System.Windows.Forms.Label();
-            this.labelHotKeyF1 = new System.Windows.Forms.Label();
-            this.labelHotKeyF2 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.labelHotKeyF3 = new System.Windows.Forms.Label();
-            this.labelHotKeyF9Bind = new System.Windows.Forms.Label();
-            this.labelHotKeyF4 = new System.Windows.Forms.Label();
-            this.labelHotKeyF8Bind = new System.Windows.Forms.Label();
-            this.labelHotKeyF6 = new System.Windows.Forms.Label();
-            this.labelHotKeyF7Bind = new System.Windows.Forms.Label();
-            this.labelHotKeyF7 = new System.Windows.Forms.Label();
-            this.labelHotKeyF6Bind = new System.Windows.Forms.Label();
-            this.labelHotKeyF8 = new System.Windows.Forms.Label();
-            this.labelHotKeyF5Bind = new System.Windows.Forms.Label();
-            this.labelHotKeyF9 = new System.Windows.Forms.Label();
-            this.labelHotKeyF4Bind = new System.Windows.Forms.Label();
-            this.labelHotKeyF1Bind = new System.Windows.Forms.Label();
-            this.labelHotKeyF3Bind = new System.Windows.Forms.Label();
-            this.labelHotKeyF2Bind = new System.Windows.Forms.Label();
+            this.labelCwMacroF5 = new System.Windows.Forms.Label();
+            this.labelCwMacroF1 = new System.Windows.Forms.Label();
+            this.labelCwMacroF2 = new System.Windows.Forms.Label();
+            this.numericUpDownMorseSpeed = new System.Windows.Forms.NumericUpDown();
+            this.labelCwMacroF3 = new System.Windows.Forms.Label();
+            this.labelCwMacroF9Title = new System.Windows.Forms.Label();
+            this.labelCwMacroF4 = new System.Windows.Forms.Label();
+            this.labelCwMacroF8Title = new System.Windows.Forms.Label();
+            this.labelCwMacroF6 = new System.Windows.Forms.Label();
+            this.labelCwMacroF7Title = new System.Windows.Forms.Label();
+            this.labelCwMacroF7 = new System.Windows.Forms.Label();
+            this.labelCwMacroF6Title = new System.Windows.Forms.Label();
+            this.labelCwMacroF8 = new System.Windows.Forms.Label();
+            this.labelCwMacroF5Title = new System.Windows.Forms.Label();
+            this.labelCwMacroF9 = new System.Windows.Forms.Label();
+            this.labelCwMacroF4Title = new System.Windows.Forms.Label();
+            this.labelCwMacroF1Title = new System.Windows.Forms.Label();
+            this.labelCwMacroF3Title = new System.Windows.Forms.Label();
+            this.labelCwMacroF2Title = new System.Windows.Forms.Label();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.loginLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.connectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -111,12 +111,13 @@ namespace tnxlog
             this.textBoxComments = new System.Windows.Forms.TextBoxCallsign();
             this.textBoxCallsign = new System.Windows.Forms.TextBoxCallsign();
             this.textBoxCorrespondent = new System.Windows.Forms.TextBoxCallsign();
+            this.labelMorseSpeed = new System.Windows.Forms.Label();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
             this.panelCallsignId.SuspendLayout();
             this.panelCwMacro.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMorseSpeed)).BeginInit();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).BeginInit();
             this.toolStrip.SuspendLayout();
@@ -168,9 +169,9 @@ namespace tnxlog
             this.flowLayoutPanel.Controls.Add(this.panelCwMacro);
             this.flowLayoutPanel.Controls.Add(this.statusStrip);
             this.flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel.Location = new System.Drawing.Point(0, 167);
+            this.flowLayoutPanel.Location = new System.Drawing.Point(0, 164);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 301);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 305);
             this.flowLayoutPanel.TabIndex = 63;
             // 
             // panelStatusFields
@@ -514,236 +515,239 @@ namespace tnxlog
             // 
             // panelCwMacro
             // 
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF5);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF1);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF2);
-            this.panelCwMacro.Controls.Add(this.numericUpDown1);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF3);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF9Bind);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF4);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF8Bind);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF6);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF7Bind);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF7);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF6Bind);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF8);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF5Bind);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF9);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF4Bind);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF1Bind);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF3Bind);
-            this.panelCwMacro.Controls.Add(this.labelHotKeyF2Bind);
+            this.panelCwMacro.Controls.Add(this.labelMorseSpeed);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF5);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF1);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF2);
+            this.panelCwMacro.Controls.Add(this.numericUpDownMorseSpeed);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF3);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF9Title);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF4);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF8Title);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF6);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF7Title);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF7);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF6Title);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF8);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF5Title);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF9);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF4Title);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF1Title);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF3Title);
+            this.panelCwMacro.Controls.Add(this.labelCwMacroF2Title);
             this.panelCwMacro.Location = new System.Drawing.Point(0, 243);
             this.panelCwMacro.Margin = new System.Windows.Forms.Padding(0);
             this.panelCwMacro.Name = "panelCwMacro";
-            this.panelCwMacro.Size = new System.Drawing.Size(364, 36);
+            this.panelCwMacro.Size = new System.Drawing.Size(364, 40);
             this.panelCwMacro.TabIndex = 62;
             // 
-            // labelHotKeyF5
+            // labelCwMacroF5
             // 
-            this.labelHotKeyF5.AutoSize = true;
-            this.labelHotKeyF5.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF5.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF5.Location = new System.Drawing.Point(154, 4);
-            this.labelHotKeyF5.Name = "labelHotKeyF5";
-            this.labelHotKeyF5.Size = new System.Drawing.Size(19, 13);
-            this.labelHotKeyF5.TabIndex = 47;
-            this.labelHotKeyF5.Text = "F5";
+            this.labelCwMacroF5.AutoSize = true;
+            this.labelCwMacroF5.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF5.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelCwMacroF5.Location = new System.Drawing.Point(141, 4);
+            this.labelCwMacroF5.Name = "labelCwMacroF5";
+            this.labelCwMacroF5.Size = new System.Drawing.Size(19, 13);
+            this.labelCwMacroF5.TabIndex = 47;
+            this.labelCwMacroF5.Text = "F5";
             // 
-            // labelHotKeyF1
+            // labelCwMacroF1
             // 
-            this.labelHotKeyF1.AutoSize = true;
-            this.labelHotKeyF1.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF1.Location = new System.Drawing.Point(6, 4);
-            this.labelHotKeyF1.Name = "labelHotKeyF1";
-            this.labelHotKeyF1.Size = new System.Drawing.Size(19, 13);
-            this.labelHotKeyF1.TabIndex = 43;
-            this.labelHotKeyF1.Text = "F1";
+            this.labelCwMacroF1.AutoSize = true;
+            this.labelCwMacroF1.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelCwMacroF1.Location = new System.Drawing.Point(6, 4);
+            this.labelCwMacroF1.Name = "labelCwMacroF1";
+            this.labelCwMacroF1.Size = new System.Drawing.Size(19, 13);
+            this.labelCwMacroF1.TabIndex = 43;
+            this.labelCwMacroF1.Text = "F1";
             // 
-            // labelHotKeyF2
+            // labelCwMacroF2
             // 
-            this.labelHotKeyF2.AutoSize = true;
-            this.labelHotKeyF2.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF2.Location = new System.Drawing.Point(43, 4);
-            this.labelHotKeyF2.Name = "labelHotKeyF2";
-            this.labelHotKeyF2.Size = new System.Drawing.Size(19, 13);
-            this.labelHotKeyF2.TabIndex = 44;
-            this.labelHotKeyF2.Text = "F2";
+            this.labelCwMacroF2.AutoSize = true;
+            this.labelCwMacroF2.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelCwMacroF2.Location = new System.Drawing.Point(38, 4);
+            this.labelCwMacroF2.Name = "labelCwMacroF2";
+            this.labelCwMacroF2.Size = new System.Drawing.Size(19, 13);
+            this.labelCwMacroF2.TabIndex = 44;
+            this.labelCwMacroF2.Text = "F2";
             // 
-            // numericUpDown1
+            // numericUpDownMorseSpeed
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(317, 2);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(37, 20);
-            this.numericUpDown1.TabIndex = 62;
-            this.numericUpDown1.TabStop = false;
+            this.numericUpDownMorseSpeed.Location = new System.Drawing.Point(317, 18);
+            this.numericUpDownMorseSpeed.Name = "numericUpDownMorseSpeed";
+            this.numericUpDownMorseSpeed.Size = new System.Drawing.Size(43, 20);
+            this.numericUpDownMorseSpeed.TabIndex = 62;
+            this.numericUpDownMorseSpeed.TabStop = false;
+            this.numericUpDownMorseSpeed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDownMorseSpeed.ValueChanged += new System.EventHandler(this.NumericUpDownMorseSpeed_ValueChanged);
             // 
-            // labelHotKeyF3
+            // labelCwMacroF3
             // 
-            this.labelHotKeyF3.AutoSize = true;
-            this.labelHotKeyF3.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF3.Location = new System.Drawing.Point(80, 4);
-            this.labelHotKeyF3.Name = "labelHotKeyF3";
-            this.labelHotKeyF3.Size = new System.Drawing.Size(19, 13);
-            this.labelHotKeyF3.TabIndex = 45;
-            this.labelHotKeyF3.Text = "F3";
+            this.labelCwMacroF3.AutoSize = true;
+            this.labelCwMacroF3.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelCwMacroF3.Location = new System.Drawing.Point(73, 4);
+            this.labelCwMacroF3.Name = "labelCwMacroF3";
+            this.labelCwMacroF3.Size = new System.Drawing.Size(19, 13);
+            this.labelCwMacroF3.TabIndex = 45;
+            this.labelCwMacroF3.Text = "F3";
             // 
-            // labelHotKeyF9Bind
+            // labelCwMacroF9Title
             // 
-            this.labelHotKeyF9Bind.AutoSize = true;
-            this.labelHotKeyF9Bind.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF9Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF9Bind.Location = new System.Drawing.Point(301, 19);
-            this.labelHotKeyF9Bind.Name = "labelHotKeyF9Bind";
-            this.labelHotKeyF9Bind.Size = new System.Drawing.Size(16, 13);
-            this.labelHotKeyF9Bind.TabIndex = 60;
-            this.labelHotKeyF9Bind.Text = "...";
+            this.labelCwMacroF9Title.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF9Title.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelCwMacroF9Title.Location = new System.Drawing.Point(273, 20);
+            this.labelCwMacroF9Title.Name = "labelCwMacroF9Title";
+            this.labelCwMacroF9Title.Size = new System.Drawing.Size(30, 16);
+            this.labelCwMacroF9Title.TabIndex = 60;
+            this.labelCwMacroF9Title.Text = "...";
+            this.labelCwMacroF9Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // labelHotKeyF4
+            // labelCwMacroF4
             // 
-            this.labelHotKeyF4.AutoSize = true;
-            this.labelHotKeyF4.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF4.Location = new System.Drawing.Point(117, 4);
-            this.labelHotKeyF4.Name = "labelHotKeyF4";
-            this.labelHotKeyF4.Size = new System.Drawing.Size(19, 13);
-            this.labelHotKeyF4.TabIndex = 46;
-            this.labelHotKeyF4.Text = "F4";
+            this.labelCwMacroF4.AutoSize = true;
+            this.labelCwMacroF4.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelCwMacroF4.Location = new System.Drawing.Point(107, 4);
+            this.labelCwMacroF4.Name = "labelCwMacroF4";
+            this.labelCwMacroF4.Size = new System.Drawing.Size(19, 13);
+            this.labelCwMacroF4.TabIndex = 46;
+            this.labelCwMacroF4.Text = "F4";
             // 
-            // labelHotKeyF8Bind
+            // labelCwMacroF8Title
             // 
-            this.labelHotKeyF8Bind.AutoSize = true;
-            this.labelHotKeyF8Bind.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF8Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF8Bind.Location = new System.Drawing.Point(253, 19);
-            this.labelHotKeyF8Bind.Name = "labelHotKeyF8Bind";
-            this.labelHotKeyF8Bind.Size = new System.Drawing.Size(35, 13);
-            this.labelHotKeyF8Bind.TabIndex = 59;
-            this.labelHotKeyF8Bind.Text = "RAFA";
+            this.labelCwMacroF8Title.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF8Title.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelCwMacroF8Title.Location = new System.Drawing.Point(239, 19);
+            this.labelCwMacroF8Title.Name = "labelCwMacroF8Title";
+            this.labelCwMacroF8Title.Size = new System.Drawing.Size(30, 16);
+            this.labelCwMacroF8Title.TabIndex = 59;
+            this.labelCwMacroF8Title.Text = "RAFA";
+            this.labelCwMacroF8Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // labelHotKeyF6
+            // labelCwMacroF6
             // 
-            this.labelHotKeyF6.AutoSize = true;
-            this.labelHotKeyF6.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF6.Location = new System.Drawing.Point(191, 4);
-            this.labelHotKeyF6.Name = "labelHotKeyF6";
-            this.labelHotKeyF6.Size = new System.Drawing.Size(19, 13);
-            this.labelHotKeyF6.TabIndex = 48;
-            this.labelHotKeyF6.Text = "F6";
+            this.labelCwMacroF6.AutoSize = true;
+            this.labelCwMacroF6.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelCwMacroF6.Location = new System.Drawing.Point(177, 4);
+            this.labelCwMacroF6.Name = "labelCwMacroF6";
+            this.labelCwMacroF6.Size = new System.Drawing.Size(19, 13);
+            this.labelCwMacroF6.TabIndex = 48;
+            this.labelCwMacroF6.Text = "F6";
             // 
-            // labelHotKeyF7Bind
+            // labelCwMacroF7Title
             // 
-            this.labelHotKeyF7Bind.AutoSize = true;
-            this.labelHotKeyF7Bind.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF7Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF7Bind.Location = new System.Drawing.Point(210, 19);
-            this.labelHotKeyF7Bind.Name = "labelHotKeyF7Bind";
-            this.labelHotKeyF7Bind.Size = new System.Drawing.Size(30, 13);
-            this.labelHotKeyF7Bind.TabIndex = 58;
-            this.labelHotKeyF7Bind.Text = "RDA";
+            this.labelCwMacroF7Title.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF7Title.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelCwMacroF7Title.Location = new System.Drawing.Point(205, 19);
+            this.labelCwMacroF7Title.Name = "labelCwMacroF7Title";
+            this.labelCwMacroF7Title.Size = new System.Drawing.Size(30, 16);
+            this.labelCwMacroF7Title.TabIndex = 58;
+            this.labelCwMacroF7Title.Text = "RDA";
+            this.labelCwMacroF7Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // labelHotKeyF7
+            // labelCwMacroF7
             // 
-            this.labelHotKeyF7.AutoSize = true;
-            this.labelHotKeyF7.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF7.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF7.Location = new System.Drawing.Point(228, 4);
-            this.labelHotKeyF7.Name = "labelHotKeyF7";
-            this.labelHotKeyF7.Size = new System.Drawing.Size(19, 13);
-            this.labelHotKeyF7.TabIndex = 49;
-            this.labelHotKeyF7.Text = "F7";
+            this.labelCwMacroF7.AutoSize = true;
+            this.labelCwMacroF7.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF7.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelCwMacroF7.Location = new System.Drawing.Point(212, 4);
+            this.labelCwMacroF7.Name = "labelCwMacroF7";
+            this.labelCwMacroF7.Size = new System.Drawing.Size(19, 13);
+            this.labelCwMacroF7.TabIndex = 49;
+            this.labelCwMacroF7.Text = "F7";
             // 
-            // labelHotKeyF6Bind
+            // labelCwMacroF6Title
             // 
-            this.labelHotKeyF6Bind.AutoSize = true;
-            this.labelHotKeyF6Bind.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF6Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF6Bind.Location = new System.Drawing.Point(181, 19);
-            this.labelHotKeyF6Bind.Name = "labelHotKeyF6Bind";
-            this.labelHotKeyF6Bind.Size = new System.Drawing.Size(16, 13);
-            this.labelHotKeyF6Bind.TabIndex = 57;
-            this.labelHotKeyF6Bind.Text = "...";
+            this.labelCwMacroF6Title.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF6Title.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelCwMacroF6Title.Location = new System.Drawing.Point(170, 19);
+            this.labelCwMacroF6Title.Name = "labelCwMacroF6Title";
+            this.labelCwMacroF6Title.Size = new System.Drawing.Size(30, 16);
+            this.labelCwMacroF6Title.TabIndex = 57;
+            this.labelCwMacroF6Title.Text = "...";
+            this.labelCwMacroF6Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // labelHotKeyF8
+            // labelCwMacroF8
             // 
-            this.labelHotKeyF8.AutoSize = true;
-            this.labelHotKeyF8.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF8.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF8.Location = new System.Drawing.Point(265, 4);
-            this.labelHotKeyF8.Name = "labelHotKeyF8";
-            this.labelHotKeyF8.Size = new System.Drawing.Size(19, 13);
-            this.labelHotKeyF8.TabIndex = 50;
-            this.labelHotKeyF8.Text = "F8";
+            this.labelCwMacroF8.AutoSize = true;
+            this.labelCwMacroF8.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF8.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelCwMacroF8.Location = new System.Drawing.Point(246, 4);
+            this.labelCwMacroF8.Name = "labelCwMacroF8";
+            this.labelCwMacroF8.Size = new System.Drawing.Size(19, 13);
+            this.labelCwMacroF8.TabIndex = 50;
+            this.labelCwMacroF8.Text = "F8";
             // 
-            // labelHotKeyF5Bind
+            // labelCwMacroF5Title
             // 
-            this.labelHotKeyF5Bind.AutoSize = true;
-            this.labelHotKeyF5Bind.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF5Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF5Bind.Location = new System.Drawing.Point(143, 19);
-            this.labelHotKeyF5Bind.Name = "labelHotKeyF5Bind";
-            this.labelHotKeyF5Bind.Size = new System.Drawing.Size(25, 13);
-            this.labelHotKeyF5Bind.TabIndex = 56;
-            this.labelHotKeyF5Bind.Text = "HIS";
+            this.labelCwMacroF5Title.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF5Title.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelCwMacroF5Title.Location = new System.Drawing.Point(135, 19);
+            this.labelCwMacroF5Title.Name = "labelCwMacroF5Title";
+            this.labelCwMacroF5Title.Size = new System.Drawing.Size(30, 16);
+            this.labelCwMacroF5Title.TabIndex = 56;
+            this.labelCwMacroF5Title.Text = "HIS";
+            this.labelCwMacroF5Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // labelHotKeyF9
+            // labelCwMacroF9
             // 
-            this.labelHotKeyF9.AutoSize = true;
-            this.labelHotKeyF9.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF9.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelHotKeyF9.Location = new System.Drawing.Point(290, 4);
-            this.labelHotKeyF9.Name = "labelHotKeyF9";
-            this.labelHotKeyF9.Size = new System.Drawing.Size(19, 13);
-            this.labelHotKeyF9.TabIndex = 51;
-            this.labelHotKeyF9.Text = "F9";
+            this.labelCwMacroF9.AutoSize = true;
+            this.labelCwMacroF9.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF9.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelCwMacroF9.Location = new System.Drawing.Point(282, 4);
+            this.labelCwMacroF9.Name = "labelCwMacroF9";
+            this.labelCwMacroF9.Size = new System.Drawing.Size(19, 13);
+            this.labelCwMacroF9.TabIndex = 51;
+            this.labelCwMacroF9.Text = "F9";
             // 
-            // labelHotKeyF4Bind
+            // labelCwMacroF4Title
             // 
-            this.labelHotKeyF4Bind.AutoSize = true;
-            this.labelHotKeyF4Bind.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF4Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF4Bind.Location = new System.Drawing.Point(107, 19);
-            this.labelHotKeyF4Bind.Name = "labelHotKeyF4Bind";
-            this.labelHotKeyF4Bind.Size = new System.Drawing.Size(23, 13);
-            this.labelHotKeyF4Bind.TabIndex = 55;
-            this.labelHotKeyF4Bind.Text = "MY";
+            this.labelCwMacroF4Title.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF4Title.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelCwMacroF4Title.Location = new System.Drawing.Point(101, 19);
+            this.labelCwMacroF4Title.Name = "labelCwMacroF4Title";
+            this.labelCwMacroF4Title.Size = new System.Drawing.Size(30, 16);
+            this.labelCwMacroF4Title.TabIndex = 55;
+            this.labelCwMacroF4Title.Text = "MY";
+            this.labelCwMacroF4Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // labelHotKeyF1Bind
+            // labelCwMacroF1Title
             // 
-            this.labelHotKeyF1Bind.AutoSize = true;
-            this.labelHotKeyF1Bind.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF1Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF1Bind.Location = new System.Drawing.Point(-1, 19);
-            this.labelHotKeyF1Bind.Name = "labelHotKeyF1Bind";
-            this.labelHotKeyF1Bind.Size = new System.Drawing.Size(22, 13);
-            this.labelHotKeyF1Bind.TabIndex = 52;
-            this.labelHotKeyF1Bind.Text = "CQ";
+            this.labelCwMacroF1Title.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF1Title.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelCwMacroF1Title.Location = new System.Drawing.Point(-1, 19);
+            this.labelCwMacroF1Title.Name = "labelCwMacroF1Title";
+            this.labelCwMacroF1Title.Size = new System.Drawing.Size(30, 16);
+            this.labelCwMacroF1Title.TabIndex = 52;
+            this.labelCwMacroF1Title.Text = "CQ";
+            this.labelCwMacroF1Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // labelHotKeyF3Bind
+            // labelCwMacroF3Title
             // 
-            this.labelHotKeyF3Bind.AutoSize = true;
-            this.labelHotKeyF3Bind.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF3Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF3Bind.Location = new System.Drawing.Point(72, 19);
-            this.labelHotKeyF3Bind.Name = "labelHotKeyF3Bind";
-            this.labelHotKeyF3Bind.Size = new System.Drawing.Size(22, 13);
-            this.labelHotKeyF3Bind.TabIndex = 54;
-            this.labelHotKeyF3Bind.Text = "TU";
+            this.labelCwMacroF3Title.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF3Title.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelCwMacroF3Title.Location = new System.Drawing.Point(66, 19);
+            this.labelCwMacroF3Title.Name = "labelCwMacroF3Title";
+            this.labelCwMacroF3Title.Size = new System.Drawing.Size(30, 16);
+            this.labelCwMacroF3Title.TabIndex = 54;
+            this.labelCwMacroF3Title.Text = "TU";
+            this.labelCwMacroF3Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // labelHotKeyF2Bind
+            // labelCwMacroF2Title
             // 
-            this.labelHotKeyF2Bind.AutoSize = true;
-            this.labelHotKeyF2Bind.BackColor = System.Drawing.Color.Transparent;
-            this.labelHotKeyF2Bind.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelHotKeyF2Bind.Location = new System.Drawing.Point(34, 19);
-            this.labelHotKeyF2Bind.Name = "labelHotKeyF2Bind";
-            this.labelHotKeyF2Bind.Size = new System.Drawing.Size(25, 13);
-            this.labelHotKeyF2Bind.TabIndex = 53;
-            this.labelHotKeyF2Bind.Text = "599";
+            this.labelCwMacroF2Title.BackColor = System.Drawing.Color.Transparent;
+            this.labelCwMacroF2Title.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelCwMacroF2Title.Location = new System.Drawing.Point(32, 19);
+            this.labelCwMacroF2Title.Name = "labelCwMacroF2Title";
+            this.labelCwMacroF2Title.Size = new System.Drawing.Size(30, 16);
+            this.labelCwMacroF2Title.TabIndex = 53;
+            this.labelCwMacroF2Title.Text = "599";
+            this.labelCwMacroF2Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // statusStrip
             // 
@@ -755,7 +759,7 @@ namespace tnxlog
             this.loginLabel,
             this.connectionStatusLabel});
             this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.statusStrip.Location = new System.Drawing.Point(0, 279);
+            this.statusStrip.Location = new System.Drawing.Point(0, 283);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(364, 22);
             this.statusStrip.SizingGrip = false;
@@ -776,7 +780,6 @@ namespace tnxlog
             this.connectionStatusLabel.Name = "connectionStatusLabel";
             this.connectionStatusLabel.Size = new System.Drawing.Size(79, 17);
             this.connectionStatusLabel.Text = " TNXQSO.com ";
-            this.connectionStatusLabel.Click += new System.EventHandler(this.ConnectionStatusLabel_Click);
             // 
             // labelMode
             // 
@@ -1035,13 +1038,24 @@ namespace tnxlog
             this.textBoxCorrespondent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxCorrespondent.TextChanged += new System.EventHandler(this.TextBoxCorrespondent_TextChanged);
             // 
+            // labelMorseSpeed
+            // 
+            this.labelMorseSpeed.AutoSize = true;
+            this.labelMorseSpeed.BackColor = System.Drawing.Color.Transparent;
+            this.labelMorseSpeed.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelMorseSpeed.Location = new System.Drawing.Point(322, 4);
+            this.labelMorseSpeed.Name = "labelMorseSpeed";
+            this.labelMorseSpeed.Size = new System.Drawing.Size(34, 13);
+            this.labelMorseSpeed.TabIndex = 63;
+            this.labelMorseSpeed.Text = "WPM";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(364, 471);
+            this.ClientSize = new System.Drawing.Size(364, 474);
             this.Controls.Add(this.labelComments);
             this.Controls.Add(this.textBoxComments);
             this.Controls.Add(this.labelDupe);
@@ -1079,7 +1093,7 @@ namespace tnxlog
             this.panelCallsignId.ResumeLayout(false);
             this.panelCwMacro.ResumeLayout(false);
             this.panelCwMacro.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMorseSpeed)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).EndInit();
@@ -1130,25 +1144,25 @@ namespace tnxlog
         private System.Windows.Forms.Label labelStatQso;
         private System.Windows.Forms.Label labelStatQsoCaption;
         private System.Windows.Forms.Label labelStatCallsignsCaption;
-        private System.Windows.Forms.Label labelHotKeyF1;
-        private System.Windows.Forms.Label labelHotKeyF2;
-        private System.Windows.Forms.Label labelHotKeyF3;
-        private System.Windows.Forms.Label labelHotKeyF4;
-        private System.Windows.Forms.Label labelHotKeyF5;
-        private System.Windows.Forms.Label labelHotKeyF6;
-        private System.Windows.Forms.Label labelHotKeyF7;
-        private System.Windows.Forms.Label labelHotKeyF8;
-        private System.Windows.Forms.Label labelHotKeyF9;
-        private System.Windows.Forms.Label labelHotKeyF9Bind;
-        private System.Windows.Forms.Label labelHotKeyF8Bind;
-        private System.Windows.Forms.Label labelHotKeyF7Bind;
-        private System.Windows.Forms.Label labelHotKeyF6Bind;
-        private System.Windows.Forms.Label labelHotKeyF5Bind;
-        private System.Windows.Forms.Label labelHotKeyF4Bind;
-        private System.Windows.Forms.Label labelHotKeyF3Bind;
-        private System.Windows.Forms.Label labelHotKeyF2Bind;
-        private System.Windows.Forms.Label labelHotKeyF1Bind;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label labelCwMacroF1;
+        private System.Windows.Forms.Label labelCwMacroF2;
+        private System.Windows.Forms.Label labelCwMacroF3;
+        private System.Windows.Forms.Label labelCwMacroF4;
+        private System.Windows.Forms.Label labelCwMacroF5;
+        private System.Windows.Forms.Label labelCwMacroF6;
+        private System.Windows.Forms.Label labelCwMacroF7;
+        private System.Windows.Forms.Label labelCwMacroF8;
+        private System.Windows.Forms.Label labelCwMacroF9;
+        private System.Windows.Forms.Label labelCwMacroF9Title;
+        private System.Windows.Forms.Label labelCwMacroF8Title;
+        private System.Windows.Forms.Label labelCwMacroF7Title;
+        private System.Windows.Forms.Label labelCwMacroF6Title;
+        private System.Windows.Forms.Label labelCwMacroF5Title;
+        private System.Windows.Forms.Label labelCwMacroF4Title;
+        private System.Windows.Forms.Label labelCwMacroF3Title;
+        private System.Windows.Forms.Label labelCwMacroF2Title;
+        private System.Windows.Forms.Label labelCwMacroF1Title;
+        private System.Windows.Forms.NumericUpDown numericUpDownMorseSpeed;
         private System.Windows.Forms.Panel panelStatusFields;
         private System.Windows.Forms.Panel panelStatFilter;
         private System.Windows.Forms.Panel panelCwMacro;
@@ -1173,6 +1187,7 @@ namespace tnxlog
         private System.Windows.Forms.TextBoxCallsign textBoxComments;
         private System.Windows.Forms.ToolStripStatusLabel connectionStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportLoc;
+        private System.Windows.Forms.Label labelMorseSpeed;
     }
 }
 

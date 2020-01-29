@@ -18,6 +18,7 @@ using HamRadio;
 using AutoUpdaterDotNET;
 using System.Reflection;
 using System.Diagnostics;
+using System.Threading;
 
 namespace tnxlog
 {
@@ -64,6 +65,8 @@ namespace tnxlog
             rplcmnt = "$1-$2"
         };
 
+        static readonly Keys[] CwMacrosKeys = new Keys[] { Keys.F1, Keys.F2, Keys.F3, Keys.F4, Keys.F5, Keys.F6, Keys.F7, Keys.F8, Keys.F9 };
+
         static readonly string AutoUpdaterURI = "http://tnxqso.com/static/files/tnxlog.xml";
         private Tnxlog tnxlog;
         private Dictionary<string, StatusFieldControls> statusFieldsControls;
@@ -71,10 +74,11 @@ namespace tnxlog
         private HashSet<string> rdaValues;
         private StringIndex callsignsDb = new StringIndex();
         private StringIndex callsignsQso = new StringIndex();
-        private Timer timer = new Timer();
+        private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         private QsoValues qsoValues;
         private InputLanguage englishInputLanguage;
-
+        private CancellationTokenSource tokenSource;
+        private List<Label> cwMacrosTitles;
         private QsoValues currentQsoValues()
         {
             return new QsoValues() {
@@ -85,13 +89,12 @@ namespace tnxlog
                 rstSnt = textBoxRstSent.Text
             };
         }
+        private TnxlogConfig tnxlogConfig { get { return (TnxlogConfig)config.parent; } }
         public FormMain(FormMainConfig _config, Tnxlog _tnxlog) : base(_config)
         {
             tnxlog = _tnxlog;
 
             InitializeComponent();
-
-            TnxlogConfig tnxlogConfig = (TnxlogConfig)config.parent;
 
             tnxlogConfig.httpService.logInOout += onLogInOut;
             tnxlog.httpService.connectionStateChanged += onLogInOut;
@@ -125,6 +128,11 @@ namespace tnxlog
                 Logger.Error(e, "Error loading callsigns list");
                 MessageBox.Show("Callsigns list could not be loaded: " + e.ToString(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            cwMacrosTitles = new List<Label>() { labelCwMacroF1Title, labelCwMacroF2Title, labelCwMacroF3Title, labelCwMacroF4Title, labelCwMacroF5Title, labelCwMacroF6Title,
+                labelCwMacroF7Title, labelCwMacroF8Title, labelCwMacroF9Title };
+            updateCwMacrosTitles();
+            numericUpDownMorseSpeed.Value = tnxlogConfig.morseSpeed;
 
             statusFieldsControls = new Dictionary<string, StatusFieldControls>()
                 {
@@ -227,6 +235,12 @@ namespace tnxlog
             connectionStatusLabel.Alignment = ToolStripItemAlignment.Right;
         }
 
+        internal void updateCwMacrosTitles()
+        {
+            for (int co = 0; co < tnxlogConfig.cwMacros.Count; co++)
+                cwMacrosTitles[co].Text = tnxlogConfig.cwMacros[co][0].Length > 3 ? tnxlogConfig.cwMacros[co][0].Substring(0,3) : tnxlogConfig.cwMacros[co][0];
+        }
+
         private void onLogInOut(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(((TnxlogConfig)config.parent).httpService.token))
@@ -297,11 +311,9 @@ namespace tnxlog
                 if (panel.Parent == flowLayoutPanel)
                     flowLayoutPanel.Controls.Remove(panel);
             }
-            TnxlogConfig rdaLogConfig = ((TnxlogConfig)config.parent);
             foreach (string panel in TnxlogConfig.MainFormPanels)
             {
-                //cwMacros temporary disabled
-                if (panels.ContainsKey(panel) && panel != "cwMacros" && rdaLogConfig.getMainFormPanelVisible(panel))
+                if (panels.ContainsKey(panel) && tnxlogConfig.getMainFormPanelVisible(panel))
                     flowLayoutPanel.Controls.Add(panels[panel]);
             }
             statusStrip.SendToBack();
@@ -775,13 +787,49 @@ namespace tnxlog
             }
         }
 
-        private void FormMain_KeyDown(object sender, KeyEventArgs e)
+        private async void FormMain_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Oemtilde || e.KeyData == (Keys.W | Keys.Alt) || e.KeyData == (Keys.W | Keys.Control))
             //clear corrrespondent field
             {
                 e.Handled = true;
                 textBoxCorrespondent.Text = "";
+            }
+            else
+            {
+                int cwMacroIdx = Array.IndexOf(CwMacrosKeys, e.KeyData);
+                if (cwMacroIdx != -1)
+                {
+                    if (tnxlog.transceiverController.busy)
+                        return;
+                    tokenSource = new CancellationTokenSource();
+                    string macro = ((TnxlogConfig)config.parent).cwMacros[cwMacroIdx][1];
+                    if (macro.Contains('}'))
+                    {
+                        Dictionary<string, string> substs = new Dictionary<string, string>()
+                        {
+                            { "MY_CALL", textBoxCallsign.Text },
+                            { "CALL", textBoxCorrespondent.Text },
+                            { "RDA", textBoxRda.Text },
+                            { "RAFA", textBoxRafa.Text },
+                            { "LOCATOR", textBoxLocator.Text },
+                            { "USER_FIELD", textBoxUserField.Text }
+                        };
+                        foreach (string subst in substs.Keys)
+                        {
+                            string tmplt = $"{{{subst}}}";
+                            if (macro.Contains(tmplt) && substs[subst] == "")
+                                return;
+                            macro = macro.Replace(tmplt, substs[subst]);
+                        }
+                        if (macro.Contains('{'))
+                            return;
+                    }
+                    await Task.Run(async () => await tnxlog.transceiverController.morseString(macro, 
+                        Convert.ToInt32(1200 / tnxlogConfig.morseSpeed), tokenSource.Token));
+                }
+                else if (e.KeyData == Keys.Escape && tnxlog.transceiverController.busy)
+                    tokenSource.Cancel();
             }
         }
 
@@ -794,11 +842,6 @@ namespace tnxlog
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             Logger.Info("------------------- Closed by user -------------------------------------");
-        }
-
-        private void ConnectionStatusLabel_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void MenuItemAdifExportLoc_Click(object sender, EventArgs e)
@@ -821,6 +864,15 @@ namespace tnxlog
         {
             ((TnxlogConfig)config.parent).userField = textBoxUserField.Text;
         }
+
+
+
+        private void NumericUpDownMorseSpeed_ValueChanged(object sender, EventArgs e)
+        {
+            tnxlogConfig.morseSpeed = Convert.ToInt32(numericUpDownMorseSpeed.Value);
+        }
+
+
     }
 
     [DataContract]
