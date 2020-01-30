@@ -40,7 +40,8 @@ namespace tnxlog
 
     }
 
-    public class TransceiverController
+
+    public class TransceiverController : IDisposable
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -57,6 +58,11 @@ namespace tnxlog
         public TransceiverController(TransceiverControllerConfig _config)
         {
             config = _config;
+        }
+
+        public void Dispose()
+        {
+            serialPort.Close();
         }
 
         public void connect()
@@ -111,10 +117,11 @@ namespace tnxlog
                                 if (ct.IsCancellationRequested)
                                     throw new TaskCanceledException();
                                 setPin("CW", false);
-                                await Task.Delay(mc == MorseCode.Dot ? speed : Convert.ToInt32(2.5 * speed), ct);
+                                await Task.Delay(mc == MorseCode.Dot ? speed : Convert.ToInt32(3 * speed), ct);
                                 setPin("CW", true);
+                                await Task.Delay(speed, ct);
                             }
-                            await Task.Delay(2 * speed, ct);
+                            await Task.Delay(speed, ct);
                         }
                         else
                             await Task.Delay(2 * speed, ct);

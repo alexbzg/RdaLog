@@ -65,6 +65,7 @@ namespace tnxlog
             this.listBoxCallsignsDb = new System.Windows.Forms.ListBox();
             this.listBoxCallsignsQso = new System.Windows.Forms.ListBox();
             this.panelCwMacro = new System.Windows.Forms.Panel();
+            this.labelMorseSpeed = new System.Windows.Forms.Label();
             this.labelCwMacroF5 = new System.Windows.Forms.Label();
             this.labelCwMacroF1 = new System.Windows.Forms.Label();
             this.labelCwMacroF2 = new System.Windows.Forms.Label();
@@ -111,7 +112,6 @@ namespace tnxlog
             this.textBoxComments = new System.Windows.Forms.TextBoxCallsign();
             this.textBoxCallsign = new System.Windows.Forms.TextBoxCallsign();
             this.textBoxCorrespondent = new System.Windows.Forms.TextBoxCallsign();
-            this.labelMorseSpeed = new System.Windows.Forms.Label();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
@@ -493,23 +493,25 @@ namespace tnxlog
             // 
             // listBoxCallsignsDb
             // 
-            this.listBoxCallsignsDb.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listBoxCallsignsDb.ColumnWidth = 85;
+            this.listBoxCallsignsDb.Cursor = System.Windows.Forms.Cursors.Default;
+            this.listBoxCallsignsDb.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxCallsignsDb.FormattingEnabled = true;
-            this.listBoxCallsignsDb.ItemHeight = 18;
+            this.listBoxCallsignsDb.ItemHeight = 16;
             this.listBoxCallsignsDb.Location = new System.Drawing.Point(184, 7);
             this.listBoxCallsignsDb.Name = "listBoxCallsignsDb";
-            this.listBoxCallsignsDb.Size = new System.Drawing.Size(170, 76);
+            this.listBoxCallsignsDb.Size = new System.Drawing.Size(170, 84);
             this.listBoxCallsignsDb.TabIndex = 1;
             this.listBoxCallsignsDb.SelectedIndexChanged += new System.EventHandler(this.ListBoxCallsigns_SelectedIndexChanged);
             // 
             // listBoxCallsignsQso
             // 
-            this.listBoxCallsignsQso.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listBoxCallsignsQso.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxCallsignsQso.FormattingEnabled = true;
-            this.listBoxCallsignsQso.ItemHeight = 18;
+            this.listBoxCallsignsQso.ItemHeight = 16;
             this.listBoxCallsignsQso.Location = new System.Drawing.Point(9, 7);
             this.listBoxCallsignsQso.Name = "listBoxCallsignsQso";
-            this.listBoxCallsignsQso.Size = new System.Drawing.Size(174, 76);
+            this.listBoxCallsignsQso.Size = new System.Drawing.Size(174, 84);
             this.listBoxCallsignsQso.TabIndex = 0;
             this.listBoxCallsignsQso.SelectedIndexChanged += new System.EventHandler(this.ListBoxCallsigns_SelectedIndexChanged);
             // 
@@ -540,6 +542,17 @@ namespace tnxlog
             this.panelCwMacro.Name = "panelCwMacro";
             this.panelCwMacro.Size = new System.Drawing.Size(364, 40);
             this.panelCwMacro.TabIndex = 62;
+            // 
+            // labelMorseSpeed
+            // 
+            this.labelMorseSpeed.AutoSize = true;
+            this.labelMorseSpeed.BackColor = System.Drawing.Color.Transparent;
+            this.labelMorseSpeed.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelMorseSpeed.Location = new System.Drawing.Point(322, 4);
+            this.labelMorseSpeed.Name = "labelMorseSpeed";
+            this.labelMorseSpeed.Size = new System.Drawing.Size(34, 13);
+            this.labelMorseSpeed.TabIndex = 63;
+            this.labelMorseSpeed.Text = "WPM";
             // 
             // labelCwMacroF5
             // 
@@ -902,12 +915,14 @@ namespace tnxlog
             // buttonPostFreq
             // 
             this.buttonPostFreq.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonPostFreq.Image = global::tnxlog.Properties.Resources.chat;
+            this.buttonPostFreq.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonPostFreq.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonPostFreq.Location = new System.Drawing.Point(330, 93);
             this.buttonPostFreq.Name = "buttonPostFreq";
             this.buttonPostFreq.Size = new System.Drawing.Size(24, 24);
             this.buttonPostFreq.TabIndex = 5;
             this.buttonPostFreq.TabStop = false;
+            this.buttonPostFreq.Text = "➤";
             this.buttonPostFreq.UseVisualStyleBackColor = false;
             this.buttonPostFreq.Click += new System.EventHandler(this.ButtonPostFreq_Click);
             // 
@@ -1037,17 +1052,6 @@ namespace tnxlog
             this.textBoxCorrespondent.TabIndex = 0;
             this.textBoxCorrespondent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxCorrespondent.TextChanged += new System.EventHandler(this.TextBoxCorrespondent_TextChanged);
-            // 
-            // labelMorseSpeed
-            // 
-            this.labelMorseSpeed.AutoSize = true;
-            this.labelMorseSpeed.BackColor = System.Drawing.Color.Transparent;
-            this.labelMorseSpeed.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelMorseSpeed.Location = new System.Drawing.Point(322, 4);
-            this.labelMorseSpeed.Name = "labelMorseSpeed";
-            this.labelMorseSpeed.Size = new System.Drawing.Size(34, 13);
-            this.labelMorseSpeed.TabIndex = 63;
-            this.labelMorseSpeed.Text = "WPM";
             // 
             // FormMain
             // 

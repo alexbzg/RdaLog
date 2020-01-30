@@ -47,7 +47,22 @@ namespace HamRadio
             { '6', new char[] { Dash, Dot, Dot, Dot, Dot }},
             { '7', new char[] { Dash, Dash, Dot, Dot, Dot }},
             { '8', new char[] { Dash, Dash, Dash, Dot, Dot }},
-            { '9', new char[] { Dash, Dash, Dash, Dash, Dot }}
+            { '9', new char[] { Dash, Dash, Dash, Dash, Dot } },
+            { '&', new char[] { Dot, Dash, Dot, Dot, Dot } },
+            { '\'', new char [] { Dot, Dash, Dash, Dash, Dash, Dot }},
+            { '@', new char [] { Dot, Dash, Dash, Dot, Dash, Dot }},
+            { ')', new char [] { Dash, Dot, Dash, Dash, Dot, Dash }},
+            { '(', new char [] { Dash, Dot, Dash, Dash, Dot }},
+            { ':', new char [] { Dash, Dash, Dash, Dot, Dot, Dot }},
+            { ',', new char [] { Dash, Dash, Dot, Dot, Dash, Dash }},
+            { '=', new char [] { Dash, Dot, Dot, Dot, Dash }},
+            { '!', new char [] { Dash, Dot, Dash, Dot, Dash, Dash }},
+            { '.', new char [] { Dot, Dash, Dot, Dash, Dot, Dash }},
+            { '-', new char [] { Dash, Dot, Dot, Dot, Dot, Dash }},
+            { '+', new char [] { Dot, Dash, Dot, Dash, Dot }},
+            { '"', new char [] { Dot, Dash, Dot, Dot, Dash, Dot }},
+            { '?', new char [] { Dot, Dot, Dash, Dash, Dot, Dot }},
+            { '/', new char [] { Dash, Dot, Dot, Dash, Dot}}
          };
     }
 }

@@ -94,7 +94,8 @@ namespace tnxlog
                 _statusFields[field] = config.getStatusFieldValue(field);
             httpService = new HttpService(config.httpService, this);
             transceiverController = new TransceiverController(config.transceiverController);
-            transceiverController.connect();
+            if (config.enableCwMacros)
+                transceiverController.connect();
             qsoFactory = new QSOFactory(this);
             qsoList = ProtoBufSerialization.Read<BindingList<QSO>>(qsoFilePath);
             if (qsoList == null)
@@ -182,7 +183,7 @@ namespace tnxlog
             foreach (KeyValuePair<string,CheckBox> item in formSettings.mainFormPanelCheckboxes)
                 item.Value.Checked = config.getMainFormPanelVisible(item.Key);
 
-            formSettings.enableCwMacros = config.enableMacros;
+            formSettings.enableCwMacros = config.enableCwMacros;
             formSettings.serialDeviceId = config.transceiverController.serialDeviceId;
             for (int co = 0; co < TransceiverController.PIN_FUNCTIONS.Count; co++)
             {
@@ -209,7 +210,7 @@ namespace tnxlog
                 foreach (KeyValuePair<string, CheckBox> item in formSettings.mainFormPanelCheckboxes)
                      config.setMainFormPanelVisible(item.Key, item.Value.Checked);
 
-                config.enableMacros = formSettings.enableCwMacros;
+                config.enableCwMacros = formSettings.enableCwMacros;
                 updateTransceiverControllerConfig(config.transceiverController, formSettings);
 
                 for (int co = 0; co < formSettings.CwMacros.Count; co++)
@@ -221,7 +222,8 @@ namespace tnxlog
                 config.write();
             }
             formSettings.Dispose();
-            transceiverController.connect();
+            if (config.enableCwMacros)
+                transceiverController.connect();
             formMain.updateCwMacrosTitles();
         }
 

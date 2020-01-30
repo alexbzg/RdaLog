@@ -621,6 +621,9 @@ namespace tnxlog
                         else
                             return a.CompareTo(b);
                     });
+                    int maxHints = 5;
+                    if (found.Count > maxHints)
+                        found.RemoveRange(maxHints, found.Count - maxHints);
                     box.Items.AddRange(found.ToArray());
                 }
             }
@@ -800,33 +803,39 @@ namespace tnxlog
                 int cwMacroIdx = Array.IndexOf(CwMacrosKeys, e.KeyData);
                 if (cwMacroIdx != -1)
                 {
-                    if (tnxlog.transceiverController.busy)
-                        return;
-                    tokenSource = new CancellationTokenSource();
-                    string macro = ((TnxlogConfig)config.parent).cwMacros[cwMacroIdx][1];
-                    if (macro.Contains('}'))
+                    if (tnxlogConfig.enableCwMacros && tnxlog.transceiverController.connected)
                     {
-                        Dictionary<string, string> substs = new Dictionary<string, string>()
-                        {
-                            { "MY_CALL", textBoxCallsign.Text },
-                            { "CALL", textBoxCorrespondent.Text },
-                            { "RDA", textBoxRda.Text },
-                            { "RAFA", textBoxRafa.Text },
-                            { "LOCATOR", textBoxLocator.Text },
-                            { "USER_FIELD", textBoxUserField.Text }
-                        };
-                        foreach (string subst in substs.Keys)
-                        {
-                            string tmplt = $"{{{subst}}}";
-                            if (macro.Contains(tmplt) && substs[subst] == "")
-                                return;
-                            macro = macro.Replace(tmplt, substs[subst]);
-                        }
-                        if (macro.Contains('{'))
+                        if (tnxlog.transceiverController.busy)
                             return;
+                        tokenSource = new CancellationTokenSource();
+                        string macro = tnxlogConfig.cwMacros[cwMacroIdx][1];
+                        if (macro.Contains('}'))
+                        {
+                            Dictionary<string, string> substs = new Dictionary<string, string>()
+                            {
+                                { "MY_CALL", textBoxCallsign.Text },
+                                { "CALL", textBoxCorrespondent.Text },
+                                { "RDA", textBoxRda.Text },
+                                { "RAFA", textBoxRafa.Text },
+                                { "LOCATOR", textBoxLocator.Text },
+                                { "USER_FIELD", textBoxUserField.Text }
+                            };
+                            foreach (string subst in substs.Keys)
+                            {
+                                string tmplt = $"{{{subst}}}";
+                                if (macro.Contains(tmplt) && substs[subst] == "")
+                                    return;
+                                macro = macro.Replace(tmplt, substs[subst]);
+                            }
+                            if (macro.Contains('{'))
+                            {
+                                showBalloon($"Bad CW macro template: \"{tnxlogConfig.cwMacros[cwMacroIdx][1]}\".", 5000);
+                                return;
+                            }
+                        }
+                        await Task.Run(async () => await tnxlog.transceiverController.morseString(macro,
+                            Convert.ToInt32(1200 / tnxlogConfig.morseSpeed), tokenSource.Token));
                     }
-                    await Task.Run(async () => await tnxlog.transceiverController.morseString(macro, 
-                        Convert.ToInt32(1200 / tnxlogConfig.morseSpeed), tokenSource.Token));
                 }
                 else if (e.KeyData == Keys.Escape && tnxlog.transceiverController.busy)
                     tokenSource.Cancel();

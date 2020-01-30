@@ -241,11 +241,6 @@
             "AssemblyAsmDisplayName" = "8:AutoUpdater.NET, Version=1.5.7.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_2BAD8694A21717A335844D30CE1286A1"
-                    {
-                    "Name" = "8:AutoUpdater.NET.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:AutoUpdater.NET.dll"
             "TargetName" = "8:"
@@ -303,11 +298,6 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_4BA7401C36A131115142F09A61C7CAA4"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
@@ -374,11 +364,6 @@
             "AssemblyAsmDisplayName" = "8:System.IO.Compression, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                 "ScatterAssemblies"
                 {
-                    "_97CC19661BB375042B3480064097B6B1"
-                    {
-                    "Name" = "8:System.IO.Compression.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.IO.Compression.dll"
             "TargetName" = "8:"
@@ -485,11 +470,6 @@
             "AssemblyAsmDisplayName" = "8:protobuf-net, Version=2.4.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_F42FF4B593DAE95808F89D83EB9B5DE5"
-                    {
-                    "Name" = "8:protobuf-net.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:protobuf-net.dll"
             "TargetName" = "8:"
@@ -516,11 +496,6 @@
             "AssemblyAsmDisplayName" = "8:NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_F903A72257AC27E2C8A3346F0A71A95E"
-                    {
-                    "Name" = "8:NLog.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:NLog.dll"
             "TargetName" = "8:"
@@ -596,15 +571,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TNXLOG"
-        "ProductCode" = "8:{2F343528-6838-4CDD-934F-6CDC8C7819F6}"
-        "PackageCode" = "8:{737E135B-77C6-4D96-8E76-3C0AABCCCE21}"
+        "ProductCode" = "8:{39EA193C-50A0-4C08-886A-D79B3EA84A6B}"
+        "PackageCode" = "8:{12EFAFE8-221E-4DCD-ADB8-8D01AF9ED861}"
         "UpgradeCode" = "8:{B0CA3AEB-7084-42FE-9464-94546D3CD25A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.1.15"
+        "ProductVersion" = "8:0.2.1"
         "Manufacturer" = "8:TNXqso"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
