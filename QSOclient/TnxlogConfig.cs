@@ -38,11 +38,11 @@ namespace tnxlog
             Tuple.Create("5NN", "5NN"),
             Tuple.Create("TU", "{CALL} TU"),
             Tuple.Create("MY", "{MY_CALL} {MY_CALL}"),
-            Tuple.Create("HIS", "{CALL} {CALL}"),
-            Tuple.Create("", ""),
+            Tuple.Create("HIS", "{CALL}"),
+            Tuple.Create("USR", "{USER_FIELD}"),
             Tuple.Create("RDA", "RDA {RDA}"),
-            Tuple.Create("RAFA", "RAFA {RAFA}"),
-            Tuple.Create("", "")
+            Tuple.Create("RAF", "RAFA {RAFA}"),
+            Tuple.Create("LOC", "{LOCATOR}")
         };
         public static readonly List<string> StatusFields = new List<string> { "rda", "rafa", "locator",  };
 

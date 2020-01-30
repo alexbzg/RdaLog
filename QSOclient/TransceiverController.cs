@@ -121,10 +121,10 @@ namespace tnxlog
                                 setPin("CW", true);
                                 await Task.Delay(speed, ct);
                             }
-                            await Task.Delay(speed, ct);
+                            await Task.Delay(2 * speed, ct);
                         }
                         else
-                            await Task.Delay(2 * speed, ct);
+                            await Task.Delay(4 * speed, ct);
                     }
                 }
                 catch (TaskCanceledException) {}
