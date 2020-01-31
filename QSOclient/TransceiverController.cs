@@ -51,7 +51,7 @@ namespace tnxlog
         private SerialPort serialPort; 
 
         public bool connected { get { return serialPort != null; } }
-        private bool _busy;
+        private volatile bool _busy;
 
         public bool busy { get { return _busy; } }
 
@@ -104,18 +104,21 @@ namespace tnxlog
                 setPin(pinFunction, true);
         }
 
-        public async Task morseString(string line, int speed, CancellationToken ct)
+        public void morseString(string line, int speed, CancellationToken ct)
         {
             if (!_busy)
             {
-                try
-                {
+                try {
                     _busy = true;
+                    int cwPinNo = getPinNumber("CW");
+                    PropertyInfo cwProp = getPortProp(cwPinNo);
+                    bool cwOn = getInvert(cwPinNo) ? true : false;
                     setPin("PTT", false);
-                    await Task.Delay(speed, ct);
+                    Thread.Sleep(speed);
                     foreach (char c in line)
                     {
-                        Logger.Debug($"Morse: {c}");
+                        if (ct.IsCancellationRequested)
+                            throw new TaskCanceledException();
                         if (c != ' ')
                         {
                             if (!MorseCode.Alphabet.ContainsKey(c))
@@ -123,17 +126,15 @@ namespace tnxlog
                             char[] code = MorseCode.Alphabet[c];
                             foreach (char mc in code)
                             {
-                                if (ct.IsCancellationRequested)
-                                    throw new TaskCanceledException();
-                                setPin("CW", false);
-                                await AccurateAsyncDelay(mc == MorseCode.Dot ? speed : Convert.ToInt32(3 * speed), ct);
-                                setPin("CW", true);
-                                await AccurateAsyncDelay(speed, ct);
+                                cwProp.SetValue(serialPort, cwOn);
+                                Thread.Sleep(mc == MorseCode.Dot ? speed : 4 * speed);
+                                cwProp.SetValue(serialPort, !cwOn);
+                                Thread.Sleep(speed);
                             }
-                            await AccurateAsyncDelay(2 * speed, ct);
+                            Thread.Sleep(2 * speed);
                         }
                         else
-                            await AccurateAsyncDelay(4 * speed, ct);
+                            Thread.Sleep(4 * speed);
                     }
                 }
                 catch (TaskCanceledException) {}
@@ -150,20 +151,39 @@ namespace tnxlog
             }
         }
 
+        private PropertyInfo getPortProp(int no)
+        {
+            if (no != -1 && config.pinout[no] != -1)
+            {
+                string pin = SerialDevice.SerialDevice.PINS[config.pinout[no]];
+                string propName = SerialDevice.SerialDevice.PIN_PROPS[pin];
+                return serialPort.GetType().GetProperty(propName);
+            }
+            else
+                return null;
+        }
+
+        private int getPinNumber(string pinFunction)
+        {
+            return PIN_FUNCTIONS.FindIndex(item => item == pinFunction);
+        }
+
+        private bool getInvert(int no)
+        {
+            if (no != -1 && config.pinout[no] != -1)
+                return config.invertPins[no];
+            else
+                return false;
+        }
+
         public void setPin(string pinFunction, bool value)
         {
             if (serialPort != null)
             {
-                int no = PIN_FUNCTIONS.FindIndex(item => item == pinFunction);
-                if (no != -1 && config.pinout[no] != -1)
-                {
-                    string pin = SerialDevice.SerialDevice.PINS[config.pinout[no]];
-                    string propName = SerialDevice.SerialDevice.PIN_PROPS[pin];
-                    PropertyInfo prop = serialPort.GetType().GetProperty(propName);
-                    bool cValue = config.invertPins[no] ? !value : value;
-                    Logger.Debug($"{propName}: {cValue}");
-                    prop.SetValue(serialPort, cValue);
-                }
+                int no = getPinNumber(pinFunction);
+                PropertyInfo prop = getPortProp(no);
+                if (prop != null)
+                    prop.SetValue(serialPort, getInvert(no) ? !value : value);
             }
         }
 

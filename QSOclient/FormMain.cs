@@ -833,7 +833,7 @@ namespace tnxlog
                                 return;
                             }
                         }
-                        await Task.Run(async () => await tnxlog.transceiverController.morseString(macro,
+                        await Task.Run(() => tnxlog.transceiverController.morseString(macro,
                             Convert.ToInt32(1200 / tnxlogConfig.morseSpeed), tokenSource.Token));
                     }
                 }
