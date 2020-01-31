@@ -60,6 +60,15 @@ namespace tnxlog
             config = _config;
         }
 
+        public static async Task AccurateAsyncDelay(int delay, CancellationToken ct)
+        {
+            //await Task.Delay(delay);
+
+            Action a = () => { new System.Threading.ManualResetEventSlim(false).Wait(delay); };
+            await Task.Factory.StartNew(a, ct);
+        }
+
+
         public void Dispose()
         {
             serialPort.Close();
@@ -117,14 +126,14 @@ namespace tnxlog
                                 if (ct.IsCancellationRequested)
                                     throw new TaskCanceledException();
                                 setPin("CW", false);
-                                await Task.Delay(mc == MorseCode.Dot ? speed : Convert.ToInt32(3 * speed), ct);
+                                await AccurateAsyncDelay(mc == MorseCode.Dot ? speed : Convert.ToInt32(3 * speed), ct);
                                 setPin("CW", true);
-                                await Task.Delay(speed, ct);
+                                await AccurateAsyncDelay(speed, ct);
                             }
-                            await Task.Delay(2 * speed, ct);
+                            await AccurateAsyncDelay(2 * speed, ct);
                         }
                         else
-                            await Task.Delay(4 * speed, ct);
+                            await AccurateAsyncDelay(4 * speed, ct);
                     }
                 }
                 catch (TaskCanceledException) {}

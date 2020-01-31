@@ -20,7 +20,7 @@ namespace tnxlog
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             bool mutexFl;
-            _mutex = new Mutex(true, "MyApplicationMutex", out mutexFl);
+            _mutex = new Mutex(true, "TnxlogMutex", out mutexFl);
             if (mutexFl)
             {
                 Tnxlog rdaLog = new Tnxlog();
