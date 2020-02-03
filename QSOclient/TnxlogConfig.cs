@@ -119,6 +119,8 @@ namespace tnxlog
                 write();
             }
         }
+
+        public int autoCqRxPause = 3;
         public bool autoLogin = true;
         public List<string[]> cwMacros;
 

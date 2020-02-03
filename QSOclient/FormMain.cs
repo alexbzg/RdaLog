@@ -19,10 +19,11 @@ using AutoUpdaterDotNET;
 using System.Reflection;
 using System.Diagnostics;
 using System.Threading;
+using System.Collections.Concurrent;
 
 namespace tnxlog
 {
-    public partial class FormMain : StorableForm.StorableForm<FormMainConfig>
+    public partial class FormMain : StorableForm.StorableForm<FormMainConfig>, IMessageFilter
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         class StatusFieldControls
@@ -79,6 +80,9 @@ namespace tnxlog
         private InputLanguage englishInputLanguage;
         private CancellationTokenSource tokenSource;
         private List<Label> cwMacrosTitles;
+        private System.Threading.Timer autoCqTimer;
+        private bool autoCq;
+        private ConcurrentQueue<string> cwQueue = new ConcurrentQueue<string>();
         private QsoValues currentQsoValues()
         {
             return new QsoValues() {
@@ -90,6 +94,14 @@ namespace tnxlog
             };
         }
         private TnxlogConfig tnxlogConfig { get { return (TnxlogConfig)config.parent; } }
+
+        private const int WM_LBUTTONDOWN = 0x201;
+        public bool PreFilterMessage(ref Message m)
+        {
+            if (m.Msg == WM_LBUTTONDOWN && autoCq)
+                stopAutoCq();
+            return false;
+        }
         public FormMain(FormMainConfig _config, Tnxlog _tnxlog) : base(_config)
         {
             tnxlog = _tnxlog;
@@ -233,6 +245,9 @@ namespace tnxlog
             qsoValues = currentQsoValues();
 
             connectionStatusLabel.Alignment = ToolStripItemAlignment.Right;
+
+            autoCqTimer = new System.Threading.Timer(async obj => await sendCwMsg(tnxlogConfig.cwMacros[0][1]), null, Timeout.Infinite, Timeout.Infinite);
+            Application.AddMessageFilter(this);
         }
 
         internal void updateCwMacrosTitles()
@@ -323,7 +338,6 @@ namespace tnxlog
         {
             tnxlog.showSettings();
         }
-
 
         private void TextBoxCallsign_Validated(object sender, EventArgs e)
         {
@@ -790,56 +804,98 @@ namespace tnxlog
             }
         }
 
+        private async Task processCwMacro(string _macro)
+        {
+            if (tnxlogConfig.enableCwMacros && tnxlog.transceiverController.connected)
+            {
+                string macro = _macro;
+                if (macro.Contains('}'))
+                {
+                    Dictionary<string, string> substs = new Dictionary<string, string>()
+                                {
+                                    { "MY_CALL", textBoxCallsign.Text },
+                                    { "CALL", textBoxCorrespondent.Text },
+                                    { "RDA", textBoxRda.Text },
+                                    { "RAFA", textBoxRafa.Text },
+                                    { "LOCATOR", textBoxLocator.Text },
+                                    { "USER_FIELD", textBoxUserField.Text }
+                                };
+                    foreach (string subst in substs.Keys)
+                    {
+                        string tmplt = $"{{{subst}}}";
+                        string substStr = substs[subst].Replace("-", "");
+                        if (macro.Contains(tmplt) && substStr == "")
+                            return;
+                        macro = macro.Replace(tmplt, substStr);
+                    }
+                    if (macro.Contains('{'))
+                    {
+                        showBalloon($"Bad CW macro template: \"{_macro}\".", 5000);
+                        return;
+                    }
+                }
+                if (macro != "")
+                    await sendCwMsg(macro);
+            }
+        }
+
+        private async Task sendCwMsg(string msg)
+        {
+            if (tnxlog.transceiverController.busy)
+                cwQueue.Enqueue(msg);
+            else
+            {
+                await _sendCwMsg(msg);
+                while (!cwQueue.IsEmpty)
+                {
+                    cwQueue.TryDequeue(out string qMsg);
+                    if (qMsg != null)
+                        await _sendCwMsg(qMsg);
+                }
+                if (autoCq)
+                    autoCqTimer.Change(1000 * tnxlogConfig.autoCqRxPause, Timeout.Infinite);
+            }
+        }
+
+        private async Task _sendCwMsg(string msg)
+        {
+            tokenSource = new CancellationTokenSource();
+            await Task.Run(() => tnxlog.transceiverController.morseString(msg, Convert.ToInt32(1200 / tnxlogConfig.morseSpeed), tokenSource.Token));
+        }
+
         private async void FormMain_KeyDown(object sender, KeyEventArgs e)
         {
+            if (autoCq)
+                stopAutoCq();
             if (e.KeyData == Keys.Oemtilde || e.KeyData == (Keys.W | Keys.Alt) || e.KeyData == (Keys.W | Keys.Control))
             //clear corrrespondent field
             {
                 e.Handled = true;
                 textBoxCorrespondent.Text = "";
+            }           
+            else if (e.KeyData == (CwMacrosKeys[0] | Keys.Control))//auto cq
+            {
+                autoCq = true;
+                await processCwMacro(tnxlogConfig.cwMacros[0][1]);
             }
-            else
+            else 
             {
                 int cwMacroIdx = Array.IndexOf(CwMacrosKeys, e.KeyData);
                 if (cwMacroIdx != -1)
-                {
-                    if (tnxlogConfig.enableCwMacros && tnxlog.transceiverController.connected)
-                    {
-                        if (tnxlog.transceiverController.busy)
-                            return;
-                        tokenSource = new CancellationTokenSource();
-                        string macro = tnxlogConfig.cwMacros[cwMacroIdx][1];
-                        if (macro.Contains('}'))
-                        {
-                            Dictionary<string, string> substs = new Dictionary<string, string>()
-                            {
-                                { "MY_CALL", textBoxCallsign.Text },
-                                { "CALL", textBoxCorrespondent.Text },
-                                { "RDA", textBoxRda.Text },
-                                { "RAFA", textBoxRafa.Text },
-                                { "LOCATOR", textBoxLocator.Text },
-                                { "USER_FIELD", textBoxUserField.Text }
-                            };
-                            foreach (string subst in substs.Keys)
-                            {
-                                string tmplt = $"{{{subst}}}";
-                                if (macro.Contains(tmplt) && substs[subst] == "")
-                                    return;
-                                macro = macro.Replace(tmplt, substs[subst]);
-                            }
-                            if (macro.Contains('{'))
-                            {
-                                showBalloon($"Bad CW macro template: \"{tnxlogConfig.cwMacros[cwMacroIdx][1]}\".", 5000);
-                                return;
-                            }
-                        }
-                        await Task.Run(() => tnxlog.transceiverController.morseString(macro,
-                            Convert.ToInt32(1200 / tnxlogConfig.morseSpeed), tokenSource.Token));
-                    }
-                }
+                    await processCwMacro(tnxlogConfig.cwMacros[cwMacroIdx][1]);
                 else if (e.KeyData == Keys.Escape && tnxlog.transceiverController.busy)
+                {
+                    while (!cwQueue.IsEmpty)
+                        cwQueue.TryDequeue(out string discard);
                     tokenSource.Cancel();
+                }
             }
+        }
+
+        private void stopAutoCq()
+        {
+            autoCq = false;
+            autoCqTimer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
         private void FormMain_Activated(object sender, EventArgs e)

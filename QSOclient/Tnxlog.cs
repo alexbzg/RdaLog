@@ -190,6 +190,7 @@ namespace tnxlog
                 formSettings.transceiverPinSettings[co].pin = SerialDevice.SerialDevice.PINS[config.transceiverController.pinout[co]];
                 formSettings.transceiverPinSettings[co].invert = config.transceiverController.invertPins[co];
             }
+            formSettings.autoCqRxPause = config.autoCqRxPause;
 
             for (int co = 0; co < formSettings.CwMacros.Count; co++)
             {
@@ -212,6 +213,7 @@ namespace tnxlog
 
                 config.enableCwMacros = formSettings.enableCwMacros;
                 updateTransceiverControllerConfig(config.transceiverController, formSettings);
+                config.autoCqRxPause = formSettings.autoCqRxPause;
 
                 for (int co = 0; co < formSettings.CwMacros.Count; co++)
                 {

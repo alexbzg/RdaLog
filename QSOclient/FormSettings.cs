@@ -57,6 +57,12 @@ namespace tnxlog
             }
         }
 
+        internal int autoCqRxPause
+        {
+            get { return Decimal.ToInt32(numericUpDownAutoCqPause.Value); }
+            set { numericUpDownAutoCqPause.Value = value; }
+        }
+
         internal bool enableCwMacros { get { return checkBoxEnableCwMacros.Checked; } set { checkBoxEnableCwMacros.Checked = value; } }
 
         private string dataPath;
@@ -166,15 +172,6 @@ namespace tnxlog
                 tpsControl.testEnabled = comboBoxPort.SelectedIndex != -1;
         }
 
-        private void LabelPort_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TabPageCwMacros_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void checkBoxEnableCwMacros_CheckedChanged(object sender, EventArgs e)
         {
@@ -203,5 +200,6 @@ namespace tnxlog
         {
             transceiverController.disconnect();
         }
+
     }
 }
