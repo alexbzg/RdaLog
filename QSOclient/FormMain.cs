@@ -96,9 +96,10 @@ namespace tnxlog
         private TnxlogConfig tnxlogConfig { get { return (TnxlogConfig)config.parent; } }
 
         private const int WM_LBUTTONDOWN = 0x201;
+        private const int WM_RBUTTONDOWN = 0x204;
         public bool PreFilterMessage(ref Message m)
         {
-            if (m.Msg == WM_LBUTTONDOWN && autoCq)
+            if ((m.Msg == WM_LBUTTONDOWN || m.Msg == WM_RBUTTONDOWN) && autoCq)
                 stopAutoCq();
             return false;
         }
