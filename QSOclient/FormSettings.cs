@@ -73,7 +73,8 @@ namespace tnxlog
 
             mainFormPanelCheckboxes = new Dictionary<string, CheckBox>()
             {
-                {"statusFields", checkBoxViewFields },
+                {"statusFields", checkBoxViewRdaRafa },
+                {"statusFieldsLocUsr", checkBoxViewLocUsr },
                 {"statFilter", checkBoxViewStatFilter },
                 {"cwMacros", checkBoxViewCwMacro },
                 {"callsignId", checkBoxViewCallsignId }
@@ -201,5 +202,9 @@ namespace tnxlog
             transceiverController.disconnect();
         }
 
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

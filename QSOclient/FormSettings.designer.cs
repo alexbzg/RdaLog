@@ -62,7 +62,7 @@
             this.textBoxCwMacroF2Title = new System.Windows.Forms.TextBox();
             this.textBoxCwMacroF1Title = new System.Windows.Forms.TextBox();
             this.checkBoxViewStatFilter = new System.Windows.Forms.CheckBox();
-            this.checkBoxViewFields = new System.Windows.Forms.CheckBox();
+            this.checkBoxViewRdaRafa = new System.Windows.Forms.CheckBox();
             this.checkBoxViewCallsignId = new System.Windows.Forms.CheckBox();
             this.checkBoxViewCwMacro = new System.Windows.Forms.CheckBox();
             this.buttonOK = new System.Windows.Forms.Button();
@@ -74,23 +74,24 @@
             this.radioButtonUpdInterval10s = new System.Windows.Forms.RadioButton();
             this.tabPageView = new System.Windows.Forms.TabPage();
             this.tabPageCwMacros = new System.Windows.Forms.TabPage();
+            this.labelAutoCqRxPause = new System.Windows.Forms.Label();
+            this.labelAutoCqPauseSec = new System.Windows.Forms.Label();
+            this.numericUpDownAutoCqPause = new System.Windows.Forms.NumericUpDown();
+            this.labelAutoCq = new System.Windows.Forms.Label();
             this.checkBoxEnableCwMacros = new System.Windows.Forms.CheckBox();
             this.labelPort = new System.Windows.Forms.Label();
             this.comboBoxPort = new System.Windows.Forms.ComboBox();
             this.tabPageDebug = new System.Windows.Forms.TabPage();
             this.textBoxDebugLog = new System.Windows.Forms.TextBox();
             this.labelDebug = new System.Windows.Forms.Label();
-            this.labelAutoCq = new System.Windows.Forms.Label();
-            this.numericUpDownAutoCqPause = new System.Windows.Forms.NumericUpDown();
-            this.labelAutoCqPauseSec = new System.Windows.Forms.Label();
-            this.labelAutoCqRxPause = new System.Windows.Forms.Label();
+            this.checkBoxViewLocUsr = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabPageServer.SuspendLayout();
             this.groupBoxUpdInterval.SuspendLayout();
             this.tabPageView.SuspendLayout();
             this.tabPageCwMacros.SuspendLayout();
-            this.tabPageDebug.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoCqPause)).BeginInit();
+            this.tabPageDebug.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxLogin
@@ -164,7 +165,7 @@
             this.labelCwMacroF1.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelCwMacroF1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF1.Location = new System.Drawing.Point(5, 220);
+            this.labelCwMacroF1.Location = new System.Drawing.Point(5, 167);
             this.labelCwMacroF1.Name = "labelCwMacroF1";
             this.labelCwMacroF1.Size = new System.Drawing.Size(19, 13);
             this.labelCwMacroF1.TabIndex = 32;
@@ -173,7 +174,7 @@
             // textBoxCwMacroF1Bindings
             // 
             this.textBoxCwMacroF1Bindings.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF1Bindings.Location = new System.Drawing.Point(134, 215);
+            this.textBoxCwMacroF1Bindings.Location = new System.Drawing.Point(134, 162);
             this.textBoxCwMacroF1Bindings.Name = "textBoxCwMacroF1Bindings";
             this.textBoxCwMacroF1Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxCwMacroF1Bindings.TabIndex = 33;
@@ -182,7 +183,7 @@
             // textBoxCwMacroF2Bindings
             // 
             this.textBoxCwMacroF2Bindings.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF2Bindings.Location = new System.Drawing.Point(134, 244);
+            this.textBoxCwMacroF2Bindings.Location = new System.Drawing.Point(134, 191);
             this.textBoxCwMacroF2Bindings.Name = "textBoxCwMacroF2Bindings";
             this.textBoxCwMacroF2Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxCwMacroF2Bindings.TabIndex = 35;
@@ -194,7 +195,7 @@
             this.labelCwMacroF2.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelCwMacroF2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF2.Location = new System.Drawing.Point(5, 249);
+            this.labelCwMacroF2.Location = new System.Drawing.Point(5, 196);
             this.labelCwMacroF2.Name = "labelCwMacroF2";
             this.labelCwMacroF2.Size = new System.Drawing.Size(19, 13);
             this.labelCwMacroF2.TabIndex = 34;
@@ -203,7 +204,7 @@
             // textBoxCwMacroF3Bindings
             // 
             this.textBoxCwMacroF3Bindings.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF3Bindings.Location = new System.Drawing.Point(134, 273);
+            this.textBoxCwMacroF3Bindings.Location = new System.Drawing.Point(134, 220);
             this.textBoxCwMacroF3Bindings.Name = "textBoxCwMacroF3Bindings";
             this.textBoxCwMacroF3Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxCwMacroF3Bindings.TabIndex = 37;
@@ -215,7 +216,7 @@
             this.labelCwMacroF3.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelCwMacroF3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF3.Location = new System.Drawing.Point(5, 278);
+            this.labelCwMacroF3.Location = new System.Drawing.Point(5, 225);
             this.labelCwMacroF3.Name = "labelCwMacroF3";
             this.labelCwMacroF3.Size = new System.Drawing.Size(19, 13);
             this.labelCwMacroF3.TabIndex = 36;
@@ -224,7 +225,7 @@
             // textBoxCwMacroF4Bindings
             // 
             this.textBoxCwMacroF4Bindings.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF4Bindings.Location = new System.Drawing.Point(134, 302);
+            this.textBoxCwMacroF4Bindings.Location = new System.Drawing.Point(134, 249);
             this.textBoxCwMacroF4Bindings.Name = "textBoxCwMacroF4Bindings";
             this.textBoxCwMacroF4Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxCwMacroF4Bindings.TabIndex = 39;
@@ -236,7 +237,7 @@
             this.labelCwMacroF4.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelCwMacroF4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF4.Location = new System.Drawing.Point(5, 307);
+            this.labelCwMacroF4.Location = new System.Drawing.Point(5, 254);
             this.labelCwMacroF4.Name = "labelCwMacroF4";
             this.labelCwMacroF4.Size = new System.Drawing.Size(19, 13);
             this.labelCwMacroF4.TabIndex = 38;
@@ -245,7 +246,7 @@
             // textBoxCwMacroF5Bindings
             // 
             this.textBoxCwMacroF5Bindings.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF5Bindings.Location = new System.Drawing.Point(134, 331);
+            this.textBoxCwMacroF5Bindings.Location = new System.Drawing.Point(134, 278);
             this.textBoxCwMacroF5Bindings.Name = "textBoxCwMacroF5Bindings";
             this.textBoxCwMacroF5Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxCwMacroF5Bindings.TabIndex = 41;
@@ -257,7 +258,7 @@
             this.labelCwMacroF5.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelCwMacroF5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF5.Location = new System.Drawing.Point(5, 336);
+            this.labelCwMacroF5.Location = new System.Drawing.Point(5, 283);
             this.labelCwMacroF5.Name = "labelCwMacroF5";
             this.labelCwMacroF5.Size = new System.Drawing.Size(19, 13);
             this.labelCwMacroF5.TabIndex = 40;
@@ -266,7 +267,7 @@
             // textBoxCwMacroF6Bindings
             // 
             this.textBoxCwMacroF6Bindings.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF6Bindings.Location = new System.Drawing.Point(134, 360);
+            this.textBoxCwMacroF6Bindings.Location = new System.Drawing.Point(134, 307);
             this.textBoxCwMacroF6Bindings.Name = "textBoxCwMacroF6Bindings";
             this.textBoxCwMacroF6Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxCwMacroF6Bindings.TabIndex = 43;
@@ -277,7 +278,7 @@
             this.labelCwMacroF6.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelCwMacroF6.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF6.Location = new System.Drawing.Point(5, 365);
+            this.labelCwMacroF6.Location = new System.Drawing.Point(5, 312);
             this.labelCwMacroF6.Name = "labelCwMacroF6";
             this.labelCwMacroF6.Size = new System.Drawing.Size(19, 13);
             this.labelCwMacroF6.TabIndex = 42;
@@ -286,7 +287,7 @@
             // textBoxCwMacroF7Bindings
             // 
             this.textBoxCwMacroF7Bindings.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF7Bindings.Location = new System.Drawing.Point(134, 389);
+            this.textBoxCwMacroF7Bindings.Location = new System.Drawing.Point(134, 336);
             this.textBoxCwMacroF7Bindings.Name = "textBoxCwMacroF7Bindings";
             this.textBoxCwMacroF7Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxCwMacroF7Bindings.TabIndex = 45;
@@ -298,7 +299,7 @@
             this.labelCwMacroF7.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelCwMacroF7.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF7.Location = new System.Drawing.Point(5, 394);
+            this.labelCwMacroF7.Location = new System.Drawing.Point(5, 341);
             this.labelCwMacroF7.Name = "labelCwMacroF7";
             this.labelCwMacroF7.Size = new System.Drawing.Size(19, 13);
             this.labelCwMacroF7.TabIndex = 44;
@@ -307,7 +308,7 @@
             // textBoxCwMacroF8Bindings
             // 
             this.textBoxCwMacroF8Bindings.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF8Bindings.Location = new System.Drawing.Point(134, 418);
+            this.textBoxCwMacroF8Bindings.Location = new System.Drawing.Point(134, 365);
             this.textBoxCwMacroF8Bindings.Name = "textBoxCwMacroF8Bindings";
             this.textBoxCwMacroF8Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxCwMacroF8Bindings.TabIndex = 47;
@@ -319,7 +320,7 @@
             this.labelCwMacroF8.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelCwMacroF8.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF8.Location = new System.Drawing.Point(5, 423);
+            this.labelCwMacroF8.Location = new System.Drawing.Point(5, 370);
             this.labelCwMacroF8.Name = "labelCwMacroF8";
             this.labelCwMacroF8.Size = new System.Drawing.Size(19, 13);
             this.labelCwMacroF8.TabIndex = 46;
@@ -328,7 +329,7 @@
             // textBoxCwMacroF9Bindings
             // 
             this.textBoxCwMacroF9Bindings.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF9Bindings.Location = new System.Drawing.Point(134, 447);
+            this.textBoxCwMacroF9Bindings.Location = new System.Drawing.Point(134, 394);
             this.textBoxCwMacroF9Bindings.Name = "textBoxCwMacroF9Bindings";
             this.textBoxCwMacroF9Bindings.Size = new System.Drawing.Size(220, 23);
             this.textBoxCwMacroF9Bindings.TabIndex = 49;
@@ -339,7 +340,7 @@
             this.labelCwMacroF9.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelCwMacroF9.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF9.Location = new System.Drawing.Point(5, 452);
+            this.labelCwMacroF9.Location = new System.Drawing.Point(5, 399);
             this.labelCwMacroF9.Name = "labelCwMacroF9";
             this.labelCwMacroF9.Size = new System.Drawing.Size(19, 13);
             this.labelCwMacroF9.TabIndex = 48;
@@ -348,7 +349,7 @@
             // textBoxCwMacroF9Title
             // 
             this.textBoxCwMacroF9Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF9Title.Location = new System.Drawing.Point(30, 447);
+            this.textBoxCwMacroF9Title.Location = new System.Drawing.Point(30, 394);
             this.textBoxCwMacroF9Title.Name = "textBoxCwMacroF9Title";
             this.textBoxCwMacroF9Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxCwMacroF9Title.TabIndex = 58;
@@ -356,7 +357,7 @@
             // textBoxCwMacroF8Title
             // 
             this.textBoxCwMacroF8Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF8Title.Location = new System.Drawing.Point(30, 418);
+            this.textBoxCwMacroF8Title.Location = new System.Drawing.Point(30, 365);
             this.textBoxCwMacroF8Title.Name = "textBoxCwMacroF8Title";
             this.textBoxCwMacroF8Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxCwMacroF8Title.TabIndex = 57;
@@ -365,7 +366,7 @@
             // textBoxCwMacroF7Title
             // 
             this.textBoxCwMacroF7Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF7Title.Location = new System.Drawing.Point(30, 389);
+            this.textBoxCwMacroF7Title.Location = new System.Drawing.Point(30, 336);
             this.textBoxCwMacroF7Title.Name = "textBoxCwMacroF7Title";
             this.textBoxCwMacroF7Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxCwMacroF7Title.TabIndex = 56;
@@ -374,7 +375,7 @@
             // textBoxCwMacroF6Title
             // 
             this.textBoxCwMacroF6Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF6Title.Location = new System.Drawing.Point(30, 360);
+            this.textBoxCwMacroF6Title.Location = new System.Drawing.Point(30, 307);
             this.textBoxCwMacroF6Title.Name = "textBoxCwMacroF6Title";
             this.textBoxCwMacroF6Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxCwMacroF6Title.TabIndex = 55;
@@ -382,7 +383,7 @@
             // textBoxCwMacroF5Title
             // 
             this.textBoxCwMacroF5Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF5Title.Location = new System.Drawing.Point(30, 331);
+            this.textBoxCwMacroF5Title.Location = new System.Drawing.Point(30, 278);
             this.textBoxCwMacroF5Title.Name = "textBoxCwMacroF5Title";
             this.textBoxCwMacroF5Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxCwMacroF5Title.TabIndex = 54;
@@ -391,7 +392,7 @@
             // textBoxCwMacroF4Title
             // 
             this.textBoxCwMacroF4Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF4Title.Location = new System.Drawing.Point(30, 302);
+            this.textBoxCwMacroF4Title.Location = new System.Drawing.Point(30, 249);
             this.textBoxCwMacroF4Title.Name = "textBoxCwMacroF4Title";
             this.textBoxCwMacroF4Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxCwMacroF4Title.TabIndex = 53;
@@ -400,7 +401,7 @@
             // textBoxCwMacroF3Title
             // 
             this.textBoxCwMacroF3Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF3Title.Location = new System.Drawing.Point(30, 273);
+            this.textBoxCwMacroF3Title.Location = new System.Drawing.Point(30, 220);
             this.textBoxCwMacroF3Title.Name = "textBoxCwMacroF3Title";
             this.textBoxCwMacroF3Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxCwMacroF3Title.TabIndex = 52;
@@ -409,7 +410,7 @@
             // textBoxCwMacroF2Title
             // 
             this.textBoxCwMacroF2Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF2Title.Location = new System.Drawing.Point(30, 244);
+            this.textBoxCwMacroF2Title.Location = new System.Drawing.Point(30, 191);
             this.textBoxCwMacroF2Title.Name = "textBoxCwMacroF2Title";
             this.textBoxCwMacroF2Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxCwMacroF2Title.TabIndex = 51;
@@ -418,7 +419,7 @@
             // textBoxCwMacroF1Title
             // 
             this.textBoxCwMacroF1Title.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCwMacroF1Title.Location = new System.Drawing.Point(30, 215);
+            this.textBoxCwMacroF1Title.Location = new System.Drawing.Point(30, 162);
             this.textBoxCwMacroF1Title.Name = "textBoxCwMacroF1Title";
             this.textBoxCwMacroF1Title.Size = new System.Drawing.Size(98, 23);
             this.textBoxCwMacroF1Title.TabIndex = 50;
@@ -430,25 +431,25 @@
             this.checkBoxViewStatFilter.Checked = true;
             this.checkBoxViewStatFilter.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxViewStatFilter.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewStatFilter.Location = new System.Drawing.Point(37, 65);
+            this.checkBoxViewStatFilter.Location = new System.Drawing.Point(37, 85);
             this.checkBoxViewStatFilter.Name = "checkBoxViewStatFilter";
             this.checkBoxViewStatFilter.Size = new System.Drawing.Size(85, 17);
             this.checkBoxViewStatFilter.TabIndex = 60;
             this.checkBoxViewStatFilter.Text = "Statistic filter";
             this.checkBoxViewStatFilter.UseVisualStyleBackColor = true;
             // 
-            // checkBoxViewFields
+            // checkBoxViewRdaRafa
             // 
-            this.checkBoxViewFields.AutoSize = true;
-            this.checkBoxViewFields.Checked = true;
-            this.checkBoxViewFields.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxViewFields.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewFields.Location = new System.Drawing.Point(37, 19);
-            this.checkBoxViewFields.Name = "checkBoxViewFields";
-            this.checkBoxViewFields.Size = new System.Drawing.Size(175, 17);
-            this.checkBoxViewFields.TabIndex = 61;
-            this.checkBoxViewFields.Text = "RDA, RAFA, Locator, User field";
-            this.checkBoxViewFields.UseVisualStyleBackColor = true;
+            this.checkBoxViewRdaRafa.AutoSize = true;
+            this.checkBoxViewRdaRafa.Checked = true;
+            this.checkBoxViewRdaRafa.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxViewRdaRafa.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBoxViewRdaRafa.Location = new System.Drawing.Point(37, 19);
+            this.checkBoxViewRdaRafa.Name = "checkBoxViewRdaRafa";
+            this.checkBoxViewRdaRafa.Size = new System.Drawing.Size(83, 17);
+            this.checkBoxViewRdaRafa.TabIndex = 61;
+            this.checkBoxViewRdaRafa.Text = "RDA, RAFA";
+            this.checkBoxViewRdaRafa.UseVisualStyleBackColor = true;
             // 
             // checkBoxViewCallsignId
             // 
@@ -456,7 +457,7 @@
             this.checkBoxViewCallsignId.Checked = true;
             this.checkBoxViewCallsignId.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxViewCallsignId.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewCallsignId.Location = new System.Drawing.Point(37, 42);
+            this.checkBoxViewCallsignId.Location = new System.Drawing.Point(37, 62);
             this.checkBoxViewCallsignId.Name = "checkBoxViewCallsignId";
             this.checkBoxViewCallsignId.Size = new System.Drawing.Size(147, 17);
             this.checkBoxViewCallsignId.TabIndex = 62;
@@ -469,7 +470,7 @@
             this.checkBoxViewCwMacro.Checked = true;
             this.checkBoxViewCwMacro.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxViewCwMacro.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewCwMacro.Location = new System.Drawing.Point(37, 88);
+            this.checkBoxViewCwMacro.Location = new System.Drawing.Point(37, 108);
             this.checkBoxViewCwMacro.Name = "checkBoxViewCwMacro";
             this.checkBoxViewCwMacro.Size = new System.Drawing.Size(110, 17);
             this.checkBoxViewCwMacro.TabIndex = 63;
@@ -480,7 +481,7 @@
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(196, 515);
+            this.buttonOK.Location = new System.Drawing.Point(196, 457);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 65;
@@ -491,7 +492,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(277, 515);
+            this.buttonCancel.Location = new System.Drawing.Point(277, 457);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 66;
@@ -508,7 +509,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(364, 502);
+            this.tabControl.Size = new System.Drawing.Size(364, 447);
             this.tabControl.TabIndex = 67;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             // 
@@ -525,7 +526,7 @@
             this.tabPageServer.Location = new System.Drawing.Point(4, 22);
             this.tabPageServer.Name = "tabPageServer";
             this.tabPageServer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageServer.Size = new System.Drawing.Size(356, 422);
+            this.tabPageServer.Size = new System.Drawing.Size(356, 476);
             this.tabPageServer.TabIndex = 0;
             this.tabPageServer.Text = "TNXQSO.com";
             // 
@@ -565,14 +566,15 @@
             // tabPageView
             // 
             this.tabPageView.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageView.Controls.Add(this.checkBoxViewLocUsr);
             this.tabPageView.Controls.Add(this.checkBoxViewCwMacro);
             this.tabPageView.Controls.Add(this.checkBoxViewStatFilter);
-            this.tabPageView.Controls.Add(this.checkBoxViewFields);
+            this.tabPageView.Controls.Add(this.checkBoxViewRdaRafa);
             this.tabPageView.Controls.Add(this.checkBoxViewCallsignId);
             this.tabPageView.Location = new System.Drawing.Point(4, 22);
             this.tabPageView.Name = "tabPageView";
             this.tabPageView.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageView.Size = new System.Drawing.Size(356, 422);
+            this.tabPageView.Size = new System.Drawing.Size(356, 476);
             this.tabPageView.TabIndex = 1;
             this.tabPageView.Text = "View";
             // 
@@ -616,9 +618,50 @@
             this.tabPageCwMacros.Location = new System.Drawing.Point(4, 22);
             this.tabPageCwMacros.Name = "tabPageCwMacros";
             this.tabPageCwMacros.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCwMacros.Size = new System.Drawing.Size(356, 476);
+            this.tabPageCwMacros.Size = new System.Drawing.Size(356, 421);
             this.tabPageCwMacros.TabIndex = 2;
             this.tabPageCwMacros.Text = "CW macros";
+            // 
+            // labelAutoCqRxPause
+            // 
+            this.labelAutoCqRxPause.AutoSize = true;
+            this.labelAutoCqRxPause.Location = new System.Drawing.Point(60, 137);
+            this.labelAutoCqRxPause.Name = "labelAutoCqRxPause";
+            this.labelAutoCqRxPause.Size = new System.Drawing.Size(99, 13);
+            this.labelAutoCqRxPause.TabIndex = 75;
+            this.labelAutoCqRxPause.Text = "(Ctrl-F1)   RX pause";
+            // 
+            // labelAutoCqPauseSec
+            // 
+            this.labelAutoCqPauseSec.AutoSize = true;
+            this.labelAutoCqPauseSec.Location = new System.Drawing.Point(211, 137);
+            this.labelAutoCqPauseSec.Name = "labelAutoCqPauseSec";
+            this.labelAutoCqPauseSec.Size = new System.Drawing.Size(47, 13);
+            this.labelAutoCqPauseSec.TabIndex = 74;
+            this.labelAutoCqPauseSec.Text = "seconds";
+            // 
+            // numericUpDownAutoCqPause
+            // 
+            this.numericUpDownAutoCqPause.Location = new System.Drawing.Point(165, 135);
+            this.numericUpDownAutoCqPause.Name = "numericUpDownAutoCqPause";
+            this.numericUpDownAutoCqPause.Size = new System.Drawing.Size(40, 20);
+            this.numericUpDownAutoCqPause.TabIndex = 73;
+            this.numericUpDownAutoCqPause.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownAutoCqPause.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // labelAutoCq
+            // 
+            this.labelAutoCq.AutoSize = true;
+            this.labelAutoCq.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelAutoCq.Location = new System.Drawing.Point(5, 137);
+            this.labelAutoCq.Name = "labelAutoCq";
+            this.labelAutoCq.Size = new System.Drawing.Size(54, 13);
+            this.labelAutoCq.TabIndex = 72;
+            this.labelAutoCq.Text = "Auto CQ";
             // 
             // checkBoxEnableCwMacros
             // 
@@ -658,14 +701,14 @@
             this.tabPageDebug.Location = new System.Drawing.Point(4, 22);
             this.tabPageDebug.Name = "tabPageDebug";
             this.tabPageDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDebug.Size = new System.Drawing.Size(356, 422);
+            this.tabPageDebug.Size = new System.Drawing.Size(356, 476);
             this.tabPageDebug.TabIndex = 3;
             this.tabPageDebug.Text = "Отладка";
             // 
             // textBoxDebugLog
             // 
             this.textBoxDebugLog.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBoxDebugLog.Location = new System.Drawing.Point(3, 211);
+            this.textBoxDebugLog.Location = new System.Drawing.Point(3, 265);
             this.textBoxDebugLog.Multiline = true;
             this.textBoxDebugLog.Name = "textBoxDebugLog";
             this.textBoxDebugLog.Size = new System.Drawing.Size(350, 208);
@@ -680,52 +723,25 @@
             this.labelDebug.TabIndex = 0;
             this.labelDebug.Text = "Скопируйте весь текст в окне ниже и отправьте по адресу 18@73.ru";
             // 
-            // labelAutoCq
+            // checkBoxViewLocUsr
             // 
-            this.labelAutoCq.AutoSize = true;
-            this.labelAutoCq.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelAutoCq.Location = new System.Drawing.Point(5, 190);
-            this.labelAutoCq.Name = "labelAutoCq";
-            this.labelAutoCq.Size = new System.Drawing.Size(54, 13);
-            this.labelAutoCq.TabIndex = 72;
-            this.labelAutoCq.Text = "Auto CQ";
-            // 
-            // numericUpDownAutoCqPause
-            // 
-            this.numericUpDownAutoCqPause.Location = new System.Drawing.Point(165, 188);
-            this.numericUpDownAutoCqPause.Name = "numericUpDownAutoCqPause";
-            this.numericUpDownAutoCqPause.Size = new System.Drawing.Size(40, 20);
-            this.numericUpDownAutoCqPause.TabIndex = 73;
-            this.numericUpDownAutoCqPause.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDownAutoCqPause.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            // 
-            // labelAutoCqPauseSec
-            // 
-            this.labelAutoCqPauseSec.AutoSize = true;
-            this.labelAutoCqPauseSec.Location = new System.Drawing.Point(211, 190);
-            this.labelAutoCqPauseSec.Name = "labelAutoCqPauseSec";
-            this.labelAutoCqPauseSec.Size = new System.Drawing.Size(47, 13);
-            this.labelAutoCqPauseSec.TabIndex = 74;
-            this.labelAutoCqPauseSec.Text = "seconds";
-            // 
-            // labelAutoCqRxPause
-            // 
-            this.labelAutoCqRxPause.AutoSize = true;
-            this.labelAutoCqRxPause.Location = new System.Drawing.Point(60, 190);
-            this.labelAutoCqRxPause.Name = "labelAutoCqRxPause";
-            this.labelAutoCqRxPause.Size = new System.Drawing.Size(99, 13);
-            this.labelAutoCqRxPause.TabIndex = 75;
-            this.labelAutoCqRxPause.Text = "(Ctrl-F1)   RX pause";
+            this.checkBoxViewLocUsr.AutoSize = true;
+            this.checkBoxViewLocUsr.Checked = true;
+            this.checkBoxViewLocUsr.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxViewLocUsr.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBoxViewLocUsr.Location = new System.Drawing.Point(37, 40);
+            this.checkBoxViewLocUsr.Name = "checkBoxViewLocUsr";
+            this.checkBoxViewLocUsr.Size = new System.Drawing.Size(112, 17);
+            this.checkBoxViewLocUsr.TabIndex = 64;
+            this.checkBoxViewLocUsr.Text = "Locator, User field";
+            this.checkBoxViewLocUsr.UseVisualStyleBackColor = true;
+            this.checkBoxViewLocUsr.CheckedChanged += new System.EventHandler(this.CheckBox1_CheckedChanged);
             // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(364, 555);
+            this.ClientSize = new System.Drawing.Size(364, 493);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
@@ -747,9 +763,9 @@
             this.tabPageView.PerformLayout();
             this.tabPageCwMacros.ResumeLayout(false);
             this.tabPageCwMacros.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoCqPause)).EndInit();
             this.tabPageDebug.ResumeLayout(false);
             this.tabPageDebug.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoCqPause)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -790,7 +806,7 @@
         private System.Windows.Forms.TextBox textBoxCwMacroF2Title;
         private System.Windows.Forms.TextBox textBoxCwMacroF1Title;
         internal System.Windows.Forms.CheckBox checkBoxViewStatFilter;
-        internal System.Windows.Forms.CheckBox checkBoxViewFields;
+        internal System.Windows.Forms.CheckBox checkBoxViewRdaRafa;
         internal System.Windows.Forms.CheckBox checkBoxViewCallsignId;
         internal System.Windows.Forms.CheckBox checkBoxViewCwMacro;
         private System.Windows.Forms.Button buttonOK;
@@ -812,5 +828,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDownAutoCqPause;
         private System.Windows.Forms.Label labelAutoCq;
         private System.Windows.Forms.Label labelAutoCqRxPause;
+        internal System.Windows.Forms.CheckBox checkBoxViewLocUsr;
     }
 }

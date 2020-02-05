@@ -168,7 +168,8 @@ namespace tnxlog
                 {"statusFields", panelStatusFields },
                 {"statFilter", panelStatFilter },
                 {"callsignId", panelCallsignId },
-                {"cwMacros", panelCwMacro }
+                {"cwMacros", panelCwMacro },
+                {"statusFieldsLocUsr", panelStatusFieldsLocUsr }
             };
             arrangePanels();
             tnxlogConfig.mainFormPanelVisibleChange += delegate (object sender, EventArgs e)
@@ -247,7 +248,7 @@ namespace tnxlog
 
             connectionStatusLabel.Alignment = ToolStripItemAlignment.Right;
 
-            autoCqTimer = new System.Threading.Timer(async obj => await sendCwMsg(tnxlogConfig.cwMacros[0][1]), null, Timeout.Infinite, Timeout.Infinite);
+            autoCqTimer = new System.Threading.Timer(async obj => await processCwMacro(tnxlogConfig.cwMacros[0][1]), null, Timeout.Infinite, Timeout.Infinite);
             Application.AddMessageFilter(this);
         }
 
@@ -938,7 +939,45 @@ namespace tnxlog
             tnxlogConfig.morseSpeed = Convert.ToInt32(numericUpDownMorseSpeed.Value);
         }
 
+        private void PanelStatusFields_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
+
+        private void LabelLocator_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBoxAutoLocator_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LabelUserField_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PanelStatusFieldsLocUsr_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void TextBoxLocator_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TextBoxUserField_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TextBoxCallsign_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
     [DataContract]

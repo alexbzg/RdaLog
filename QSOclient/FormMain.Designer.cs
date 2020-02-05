@@ -38,17 +38,18 @@ namespace tnxlog
             this.checkBoxTop = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.panelStatusFields = new System.Windows.Forms.Panel();
-            this.checkBoxAutoLocator = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoRafa = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoRda = new System.Windows.Forms.CheckBox();
-            this.labelUserField = new System.Windows.Forms.Label();
-            this.textBoxUserField = new System.Windows.Forms.TextBox();
-            this.labelLocator = new System.Windows.Forms.Label();
-            this.textBoxLocator = new System.Windows.Forms.TextBox();
             this.labelRafa = new System.Windows.Forms.Label();
             this.textBoxRafa = new System.Windows.Forms.TextBox();
             this.labelRda = new System.Windows.Forms.Label();
             this.textBoxRda = new System.Windows.Forms.TextBox();
+            this.panelStatusFieldsLocUsr = new System.Windows.Forms.Panel();
+            this.checkBoxAutoLocator = new System.Windows.Forms.CheckBox();
+            this.textBoxLocator = new System.Windows.Forms.TextBox();
+            this.labelLocator = new System.Windows.Forms.Label();
+            this.textBoxUserField = new System.Windows.Forms.TextBox();
+            this.labelUserField = new System.Windows.Forms.Label();
             this.panelStatFilter = new System.Windows.Forms.Panel();
             this.labelStatMode = new System.Windows.Forms.Label();
             this.labelStatBand = new System.Windows.Forms.Label();
@@ -114,6 +115,7 @@ namespace tnxlog
             this.textBoxCorrespondent = new System.Windows.Forms.TextBoxCallsign();
             this.flowLayoutPanel.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
+            this.panelStatusFieldsLocUsr.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
             this.panelCallsignId.SuspendLayout();
             this.panelCwMacro.SuspendLayout();
@@ -164,6 +166,7 @@ namespace tnxlog
             this.flowLayoutPanel.AutoSize = true;
             this.flowLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanel.Controls.Add(this.panelStatusFields);
+            this.flowLayoutPanel.Controls.Add(this.panelStatusFieldsLocUsr);
             this.flowLayoutPanel.Controls.Add(this.panelStatFilter);
             this.flowLayoutPanel.Controls.Add(this.panelCallsignId);
             this.flowLayoutPanel.Controls.Add(this.panelCwMacro);
@@ -171,18 +174,13 @@ namespace tnxlog
             this.flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel.Location = new System.Drawing.Point(0, 164);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 305);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 307);
             this.flowLayoutPanel.TabIndex = 63;
             // 
             // panelStatusFields
             // 
-            this.panelStatusFields.Controls.Add(this.checkBoxAutoLocator);
             this.panelStatusFields.Controls.Add(this.checkBoxAutoRafa);
             this.panelStatusFields.Controls.Add(this.checkBoxAutoRda);
-            this.panelStatusFields.Controls.Add(this.labelUserField);
-            this.panelStatusFields.Controls.Add(this.textBoxUserField);
-            this.panelStatusFields.Controls.Add(this.labelLocator);
-            this.panelStatusFields.Controls.Add(this.textBoxLocator);
             this.panelStatusFields.Controls.Add(this.labelRafa);
             this.panelStatusFields.Controls.Add(this.textBoxRafa);
             this.panelStatusFields.Controls.Add(this.labelRda);
@@ -190,20 +188,9 @@ namespace tnxlog
             this.panelStatusFields.Location = new System.Drawing.Point(0, 0);
             this.panelStatusFields.Margin = new System.Windows.Forms.Padding(0);
             this.panelStatusFields.Name = "panelStatusFields";
-            this.panelStatusFields.Size = new System.Drawing.Size(364, 102);
+            this.panelStatusFields.Size = new System.Drawing.Size(364, 54);
             this.panelStatusFields.TabIndex = 63;
-            // 
-            // checkBoxAutoLocator
-            // 
-            this.checkBoxAutoLocator.AutoSize = true;
-            this.checkBoxAutoLocator.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.checkBoxAutoLocator.Location = new System.Drawing.Point(55, 53);
-            this.checkBoxAutoLocator.Name = "checkBoxAutoLocator";
-            this.checkBoxAutoLocator.Size = new System.Drawing.Size(47, 17);
-            this.checkBoxAutoLocator.TabIndex = 27;
-            this.checkBoxAutoLocator.TabStop = false;
-            this.checkBoxAutoLocator.Text = "auto";
-            this.checkBoxAutoLocator.UseVisualStyleBackColor = true;
+            this.panelStatusFields.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelStatusFields_Paint);
             // 
             // checkBoxAutoRafa
             // 
@@ -230,51 +217,6 @@ namespace tnxlog
             this.checkBoxAutoRda.TabStop = false;
             this.checkBoxAutoRda.Text = "auto";
             this.checkBoxAutoRda.UseVisualStyleBackColor = true;
-            // 
-            // labelUserField
-            // 
-            this.labelUserField.AutoSize = true;
-            this.labelUserField.BackColor = System.Drawing.Color.Transparent;
-            this.labelUserField.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelUserField.Location = new System.Drawing.Point(188, 54);
-            this.labelUserField.Name = "labelUserField";
-            this.labelUserField.Size = new System.Drawing.Size(51, 13);
-            this.labelUserField.TabIndex = 24;
-            this.labelUserField.Text = "User field";
-            // 
-            // textBoxUserField
-            // 
-            this.textBoxUserField.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxUserField.ForeColor = System.Drawing.Color.Navy;
-            this.textBoxUserField.Location = new System.Drawing.Point(189, 70);
-            this.textBoxUserField.Name = "textBoxUserField";
-            this.textBoxUserField.Size = new System.Drawing.Size(168, 23);
-            this.textBoxUserField.TabIndex = 9;
-            this.textBoxUserField.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxUserField.Validated += new System.EventHandler(this.TextBoxUserField_Validated);
-            // 
-            // labelLocator
-            // 
-            this.labelLocator.AutoSize = true;
-            this.labelLocator.BackColor = System.Drawing.Color.Transparent;
-            this.labelLocator.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelLocator.Location = new System.Drawing.Point(11, 54);
-            this.labelLocator.Name = "labelLocator";
-            this.labelLocator.Size = new System.Drawing.Size(43, 13);
-            this.labelLocator.TabIndex = 22;
-            this.labelLocator.Text = "Locator";
-            // 
-            // textBoxLocator
-            // 
-            this.textBoxLocator.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxLocator.ForeColor = System.Drawing.Color.Navy;
-            this.textBoxLocator.Location = new System.Drawing.Point(12, 70);
-            this.textBoxLocator.Name = "textBoxLocator";
-            this.textBoxLocator.Size = new System.Drawing.Size(171, 22);
-            this.textBoxLocator.TabIndex = 8;
-            this.textBoxLocator.Text = "KN96on";
-            this.textBoxLocator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxLocator.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxLocator_Validating);
             // 
             // labelRafa
             // 
@@ -321,6 +263,82 @@ namespace tnxlog
             this.textBoxRda.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxRda.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxRda_Validating);
             // 
+            // panelStatusFieldsLocUsr
+            // 
+            this.panelStatusFieldsLocUsr.Controls.Add(this.checkBoxAutoLocator);
+            this.panelStatusFieldsLocUsr.Controls.Add(this.textBoxLocator);
+            this.panelStatusFieldsLocUsr.Controls.Add(this.labelLocator);
+            this.panelStatusFieldsLocUsr.Controls.Add(this.textBoxUserField);
+            this.panelStatusFieldsLocUsr.Controls.Add(this.labelUserField);
+            this.panelStatusFieldsLocUsr.Location = new System.Drawing.Point(0, 54);
+            this.panelStatusFieldsLocUsr.Margin = new System.Windows.Forms.Padding(0);
+            this.panelStatusFieldsLocUsr.Name = "panelStatusFieldsLocUsr";
+            this.panelStatusFieldsLocUsr.Size = new System.Drawing.Size(364, 50);
+            this.panelStatusFieldsLocUsr.TabIndex = 28;
+            this.panelStatusFieldsLocUsr.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelStatusFieldsLocUsr_Paint);
+            // 
+            // checkBoxAutoLocator
+            // 
+            this.checkBoxAutoLocator.AutoSize = true;
+            this.checkBoxAutoLocator.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.checkBoxAutoLocator.Location = new System.Drawing.Point(55, 6);
+            this.checkBoxAutoLocator.Name = "checkBoxAutoLocator";
+            this.checkBoxAutoLocator.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxAutoLocator.TabIndex = 27;
+            this.checkBoxAutoLocator.TabStop = false;
+            this.checkBoxAutoLocator.Text = "auto";
+            this.checkBoxAutoLocator.UseVisualStyleBackColor = true;
+            this.checkBoxAutoLocator.CheckedChanged += new System.EventHandler(this.CheckBoxAutoLocator_CheckedChanged);
+            // 
+            // textBoxLocator
+            // 
+            this.textBoxLocator.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxLocator.ForeColor = System.Drawing.Color.Navy;
+            this.textBoxLocator.Location = new System.Drawing.Point(12, 23);
+            this.textBoxLocator.Name = "textBoxLocator";
+            this.textBoxLocator.Size = new System.Drawing.Size(171, 22);
+            this.textBoxLocator.TabIndex = 8;
+            this.textBoxLocator.Text = "KN96on";
+            this.textBoxLocator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxLocator.TextChanged += new System.EventHandler(this.TextBoxLocator_TextChanged);
+            this.textBoxLocator.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxLocator_Validating);
+            // 
+            // labelLocator
+            // 
+            this.labelLocator.AutoSize = true;
+            this.labelLocator.BackColor = System.Drawing.Color.Transparent;
+            this.labelLocator.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelLocator.Location = new System.Drawing.Point(11, 7);
+            this.labelLocator.Name = "labelLocator";
+            this.labelLocator.Size = new System.Drawing.Size(43, 13);
+            this.labelLocator.TabIndex = 22;
+            this.labelLocator.Text = "Locator";
+            this.labelLocator.Click += new System.EventHandler(this.LabelLocator_Click);
+            // 
+            // textBoxUserField
+            // 
+            this.textBoxUserField.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
+            this.textBoxUserField.ForeColor = System.Drawing.Color.Navy;
+            this.textBoxUserField.Location = new System.Drawing.Point(189, 23);
+            this.textBoxUserField.Name = "textBoxUserField";
+            this.textBoxUserField.Size = new System.Drawing.Size(168, 23);
+            this.textBoxUserField.TabIndex = 9;
+            this.textBoxUserField.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxUserField.TextChanged += new System.EventHandler(this.TextBoxUserField_TextChanged);
+            this.textBoxUserField.Validated += new System.EventHandler(this.TextBoxUserField_Validated);
+            // 
+            // labelUserField
+            // 
+            this.labelUserField.AutoSize = true;
+            this.labelUserField.BackColor = System.Drawing.Color.Transparent;
+            this.labelUserField.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelUserField.Location = new System.Drawing.Point(188, 7);
+            this.labelUserField.Name = "labelUserField";
+            this.labelUserField.Size = new System.Drawing.Size(51, 13);
+            this.labelUserField.TabIndex = 24;
+            this.labelUserField.Text = "User field";
+            this.labelUserField.Click += new System.EventHandler(this.LabelUserField_Click);
+            // 
             // panelStatFilter
             // 
             this.panelStatFilter.Controls.Add(this.labelStatMode);
@@ -334,7 +352,7 @@ namespace tnxlog
             this.panelStatFilter.Controls.Add(this.comboBoxStatFilterMode);
             this.panelStatFilter.Controls.Add(this.checkBoxAutoStatFilter);
             this.panelStatFilter.Controls.Add(this.labelStatFilter);
-            this.panelStatFilter.Location = new System.Drawing.Point(0, 102);
+            this.panelStatFilter.Location = new System.Drawing.Point(0, 104);
             this.panelStatFilter.Margin = new System.Windows.Forms.Padding(0);
             this.panelStatFilter.Name = "panelStatFilter";
             this.panelStatFilter.Size = new System.Drawing.Size(363, 50);
@@ -485,7 +503,7 @@ namespace tnxlog
             // 
             this.panelCallsignId.Controls.Add(this.listBoxCallsignsDb);
             this.panelCallsignId.Controls.Add(this.listBoxCallsignsQso);
-            this.panelCallsignId.Location = new System.Drawing.Point(0, 152);
+            this.panelCallsignId.Location = new System.Drawing.Point(0, 154);
             this.panelCallsignId.Margin = new System.Windows.Forms.Padding(0);
             this.panelCallsignId.Name = "panelCallsignId";
             this.panelCallsignId.Size = new System.Drawing.Size(363, 91);
@@ -537,7 +555,7 @@ namespace tnxlog
             this.panelCwMacro.Controls.Add(this.labelCwMacroF1Title);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF3Title);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF2Title);
-            this.panelCwMacro.Location = new System.Drawing.Point(0, 243);
+            this.panelCwMacro.Location = new System.Drawing.Point(0, 245);
             this.panelCwMacro.Margin = new System.Windows.Forms.Padding(0);
             this.panelCwMacro.Name = "panelCwMacro";
             this.panelCwMacro.Size = new System.Drawing.Size(364, 40);
@@ -772,7 +790,7 @@ namespace tnxlog
             this.loginLabel,
             this.connectionStatusLabel});
             this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.statusStrip.Location = new System.Drawing.Point(0, 283);
+            this.statusStrip.Location = new System.Drawing.Point(0, 285);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(364, 22);
             this.statusStrip.SizingGrip = false;
@@ -1040,6 +1058,7 @@ namespace tnxlog
             this.textBoxCallsign.Size = new System.Drawing.Size(156, 23);
             this.textBoxCallsign.TabIndex = 3;
             this.textBoxCallsign.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxCallsign.TextChanged += new System.EventHandler(this.TextBoxCallsign_TextChanged);
             this.textBoxCallsign.Validated += new System.EventHandler(this.TextBoxCallsign_Validated);
             // 
             // textBoxCorrespondent
@@ -1092,6 +1111,8 @@ namespace tnxlog
             this.flowLayoutPanel.ResumeLayout(false);
             this.panelStatusFields.ResumeLayout(false);
             this.panelStatusFields.PerformLayout();
+            this.panelStatusFieldsLocUsr.ResumeLayout(false);
+            this.panelStatusFieldsLocUsr.PerformLayout();
             this.panelStatFilter.ResumeLayout(false);
             this.panelStatFilter.PerformLayout();
             this.panelCallsignId.ResumeLayout(false);
@@ -1192,6 +1213,7 @@ namespace tnxlog
         private System.Windows.Forms.ToolStripStatusLabel connectionStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportLoc;
         private System.Windows.Forms.Label labelMorseSpeed;
+        private System.Windows.Forms.Panel panelStatusFieldsLocUsr;
     }
 }
 
