@@ -112,31 +112,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_97CC19661BB375042B3480064097B6B1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2BAD8694A21717A335844D30CE1286A1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4BA7401C36A131115142F09A61C7CAA4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F903A72257AC27E2C8A3346F0A71A95E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F42FF4B593DAE95808F89D83EB9B5DE5"
+        "OwnerKey" = "8:_439091F2B9791EDEC6C4830D7C548C19"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -148,7 +124,31 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_439091F2B9791EDEC6C4830D7C548C19"
+        "OwnerKey" = "8:_F42FF4B593DAE95808F89D83EB9B5DE5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_F903A72257AC27E2C8A3346F0A71A95E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4BA7401C36A131115142F09A61C7CAA4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2BAD8694A21717A335844D30CE1286A1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_97CC19661BB375042B3480064097B6B1"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -609,15 +609,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TNXLOG"
-        "ProductCode" = "8:{434E60C3-09F1-4AC4-A7BF-14B592AFB4C4}"
-        "PackageCode" = "8:{6BF4BA9A-06A4-46E6-A2AB-EA69C9882662}"
+        "ProductCode" = "8:{BD315EF9-C60D-4CBA-A9B1-DC3D81E2BDA3}"
+        "PackageCode" = "8:{6F0CC532-274E-43BA-A1D7-134F016849FC}"
         "UpgradeCode" = "8:{B0CA3AEB-7084-42FE-9464-94546D3CD25A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.2.9"
+        "ProductVersion" = "8:0.2.10"
         "Manufacturer" = "8:TNXqso"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1159,7 +1159,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2F6D37946092437D8276264EEC1878A3"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\QSOclient\\obj\\Release\\TNXLOG.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_07A611DB238C4376884334BC497653C3"

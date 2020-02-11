@@ -701,9 +701,20 @@ namespace tnxlog
             }
         }
 
-        private void NumericUpDownFreq_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownFreq_TextChanged(object sender, EventArgs e)
         {
             config.freq = numericUpDownFreq.Value;
+            string searchVal = Decimal.ToInt32(numericUpDownFreq.Value).ToString();
+            if (searchVal.Length > 1 && comboBoxMode.SelectedIndex != -1 && HamRadio.Mode.DefFreq.ContainsKey(comboBoxMode.SelectedItem.ToString()))
+            {
+                int defFreq = HamRadio.Mode.DefFreq[comboBoxMode.SelectedItem.ToString()].FirstOrDefault(item => item.ToString().StartsWith(searchVal));
+                if (defFreq != 0)
+                {
+                    numericUpDownFreq.TextChanged -= NumericUpDownFreq_TextChanged;
+                    numericUpDownFreq.Value = defFreq;
+                    numericUpDownFreq.TextChanged += NumericUpDownFreq_TextChanged;
+                }
+            }
             config.write();
             setStatFilter();
         }
@@ -939,45 +950,7 @@ namespace tnxlog
             tnxlogConfig.morseSpeed = Convert.ToInt32(numericUpDownMorseSpeed.Value);
         }
 
-        private void PanelStatusFields_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
-
-        private void LabelLocator_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CheckBoxAutoLocator_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void LabelUserField_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void PanelStatusFieldsLocUsr_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void TextBoxLocator_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TextBoxUserField_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TextBoxCallsign_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 
     [DataContract]

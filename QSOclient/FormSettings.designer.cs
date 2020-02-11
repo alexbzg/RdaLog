@@ -735,7 +735,6 @@
             this.checkBoxViewLocUsr.TabIndex = 64;
             this.checkBoxViewLocUsr.Text = "Locator, User field";
             this.checkBoxViewLocUsr.UseVisualStyleBackColor = true;
-            this.checkBoxViewLocUsr.CheckedChanged += new System.EventHandler(this.CheckBox1_CheckedChanged);
             // 
             // FormSettings
             // 

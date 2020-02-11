@@ -19,6 +19,12 @@ namespace HamRadio
             { "FT4", "-10" },
             { "JT65", "-10" }
         };
+        public static readonly Dictionary<string, int[]> DefFreq = new Dictionary<string, int[]>
+        {
+            { "FT8", new int[] {1840, 3580, 7046, 7074, 10136,	14074,	18100,	21074,	24915,	28074} },
+            { "JT65", new int[] {1838, 3586, 7046, 7076, 10140, 14076,  18102,  21076,  24917,  28076} }
+        };
+
     }
     public class Band
     {

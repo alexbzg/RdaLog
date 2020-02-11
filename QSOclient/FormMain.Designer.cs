@@ -190,7 +190,6 @@ namespace tnxlog
             this.panelStatusFields.Name = "panelStatusFields";
             this.panelStatusFields.Size = new System.Drawing.Size(364, 54);
             this.panelStatusFields.TabIndex = 63;
-            this.panelStatusFields.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelStatusFields_Paint);
             // 
             // checkBoxAutoRafa
             // 
@@ -275,7 +274,6 @@ namespace tnxlog
             this.panelStatusFieldsLocUsr.Name = "panelStatusFieldsLocUsr";
             this.panelStatusFieldsLocUsr.Size = new System.Drawing.Size(364, 50);
             this.panelStatusFieldsLocUsr.TabIndex = 28;
-            this.panelStatusFieldsLocUsr.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelStatusFieldsLocUsr_Paint);
             // 
             // checkBoxAutoLocator
             // 
@@ -288,7 +286,6 @@ namespace tnxlog
             this.checkBoxAutoLocator.TabStop = false;
             this.checkBoxAutoLocator.Text = "auto";
             this.checkBoxAutoLocator.UseVisualStyleBackColor = true;
-            this.checkBoxAutoLocator.CheckedChanged += new System.EventHandler(this.CheckBoxAutoLocator_CheckedChanged);
             // 
             // textBoxLocator
             // 
@@ -300,7 +297,6 @@ namespace tnxlog
             this.textBoxLocator.TabIndex = 8;
             this.textBoxLocator.Text = "KN96on";
             this.textBoxLocator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxLocator.TextChanged += new System.EventHandler(this.TextBoxLocator_TextChanged);
             this.textBoxLocator.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxLocator_Validating);
             // 
             // labelLocator
@@ -313,7 +309,6 @@ namespace tnxlog
             this.labelLocator.Size = new System.Drawing.Size(43, 13);
             this.labelLocator.TabIndex = 22;
             this.labelLocator.Text = "Locator";
-            this.labelLocator.Click += new System.EventHandler(this.LabelLocator_Click);
             // 
             // textBoxUserField
             // 
@@ -324,7 +319,6 @@ namespace tnxlog
             this.textBoxUserField.Size = new System.Drawing.Size(168, 23);
             this.textBoxUserField.TabIndex = 9;
             this.textBoxUserField.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxUserField.TextChanged += new System.EventHandler(this.TextBoxUserField_TextChanged);
             this.textBoxUserField.Validated += new System.EventHandler(this.TextBoxUserField_Validated);
             // 
             // labelUserField
@@ -337,7 +331,6 @@ namespace tnxlog
             this.labelUserField.Size = new System.Drawing.Size(51, 13);
             this.labelUserField.TabIndex = 24;
             this.labelUserField.Text = "User field";
-            this.labelUserField.Click += new System.EventHandler(this.LabelUserField_Click);
             // 
             // panelStatFilter
             // 
@@ -856,12 +849,12 @@ namespace tnxlog
             65536});
             this.numericUpDownFreq.Location = new System.Drawing.Point(248, 94);
             this.numericUpDownFreq.Maximum = new decimal(new int[] {
-            29000,
+            29000000,
             0,
             0,
             0});
             this.numericUpDownFreq.Minimum = new decimal(new int[] {
-            1800,
+            0,
             0,
             0,
             0});
@@ -875,7 +868,7 @@ namespace tnxlog
             0,
             0,
             65536});
-            this.numericUpDownFreq.ValueChanged += new System.EventHandler(this.NumericUpDownFreq_ValueChanged);
+            this.numericUpDownFreq.TextChanged += new System.EventHandler(this.NumericUpDownFreq_TextChanged);
             // 
             // labelCallsign
             // 
@@ -1058,7 +1051,6 @@ namespace tnxlog
             this.textBoxCallsign.Size = new System.Drawing.Size(156, 23);
             this.textBoxCallsign.TabIndex = 3;
             this.textBoxCallsign.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxCallsign.TextChanged += new System.EventHandler(this.TextBoxCallsign_TextChanged);
             this.textBoxCallsign.Validated += new System.EventHandler(this.TextBoxCallsign_Validated);
             // 
             // textBoxCorrespondent

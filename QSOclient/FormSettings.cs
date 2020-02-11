@@ -202,9 +202,5 @@ namespace tnxlog
             transceiverController.disconnect();
         }
 
-        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
