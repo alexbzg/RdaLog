@@ -37,6 +37,8 @@ namespace tnxlog
             this.labelDupe = new System.Windows.Forms.Label();
             this.checkBoxTop = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.panelQsoComments = new System.Windows.Forms.Panel();
+            this.textBoxComments = new System.Windows.Forms.TextBoxCallsign();
             this.panelStatusFields = new System.Windows.Forms.Panel();
             this.checkBoxAutoRafa = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoRda = new System.Windows.Forms.CheckBox();
@@ -110,10 +112,10 @@ namespace tnxlog
             this.menuItemAdifExportAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
-            this.textBoxComments = new System.Windows.Forms.TextBoxCallsign();
             this.textBoxCallsign = new System.Windows.Forms.TextBoxCallsign();
             this.textBoxCorrespondent = new System.Windows.Forms.TextBoxCallsign();
             this.flowLayoutPanel.SuspendLayout();
+            this.panelQsoComments.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
             this.panelStatusFieldsLocUsr.SuspendLayout();
             this.panelStatFilter.SuspendLayout();
@@ -130,7 +132,7 @@ namespace tnxlog
             this.labelComments.AutoSize = true;
             this.labelComments.BackColor = System.Drawing.Color.Transparent;
             this.labelComments.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelComments.Location = new System.Drawing.Point(12, 120);
+            this.labelComments.Location = new System.Drawing.Point(12, 5);
             this.labelComments.Name = "labelComments";
             this.labelComments.Size = new System.Drawing.Size(56, 13);
             this.labelComments.TabIndex = 67;
@@ -165,6 +167,7 @@ namespace tnxlog
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel.AutoSize = true;
             this.flowLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.flowLayoutPanel.Controls.Add(this.panelQsoComments);
             this.flowLayoutPanel.Controls.Add(this.panelStatusFields);
             this.flowLayoutPanel.Controls.Add(this.panelStatusFieldsLocUsr);
             this.flowLayoutPanel.Controls.Add(this.panelStatFilter);
@@ -172,10 +175,30 @@ namespace tnxlog
             this.flowLayoutPanel.Controls.Add(this.panelCwMacro);
             this.flowLayoutPanel.Controls.Add(this.statusStrip);
             this.flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel.Location = new System.Drawing.Point(0, 164);
+            this.flowLayoutPanel.Location = new System.Drawing.Point(0, 123);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 307);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 351);
             this.flowLayoutPanel.TabIndex = 63;
+            // 
+            // panelQsoComments
+            // 
+            this.panelQsoComments.Controls.Add(this.labelComments);
+            this.panelQsoComments.Controls.Add(this.textBoxComments);
+            this.panelQsoComments.Location = new System.Drawing.Point(0, 0);
+            this.panelQsoComments.Margin = new System.Windows.Forms.Padding(0);
+            this.panelQsoComments.Name = "panelQsoComments";
+            this.panelQsoComments.Size = new System.Drawing.Size(364, 50);
+            this.panelQsoComments.TabIndex = 29;
+            // 
+            // textBoxComments
+            // 
+            this.textBoxComments.BackColor = System.Drawing.SystemColors.Window;
+            this.textBoxComments.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxComments.Location = new System.Drawing.Point(13, 21);
+            this.textBoxComments.Name = "textBoxComments";
+            this.textBoxComments.Size = new System.Drawing.Size(344, 22);
+            this.textBoxComments.TabIndex = 6;
+            this.textBoxComments.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // panelStatusFields
             // 
@@ -185,10 +208,10 @@ namespace tnxlog
             this.panelStatusFields.Controls.Add(this.textBoxRafa);
             this.panelStatusFields.Controls.Add(this.labelRda);
             this.panelStatusFields.Controls.Add(this.textBoxRda);
-            this.panelStatusFields.Location = new System.Drawing.Point(0, 0);
+            this.panelStatusFields.Location = new System.Drawing.Point(0, 50);
             this.panelStatusFields.Margin = new System.Windows.Forms.Padding(0);
             this.panelStatusFields.Name = "panelStatusFields";
-            this.panelStatusFields.Size = new System.Drawing.Size(364, 54);
+            this.panelStatusFields.Size = new System.Drawing.Size(364, 48);
             this.panelStatusFields.TabIndex = 63;
             // 
             // checkBoxAutoRafa
@@ -269,7 +292,7 @@ namespace tnxlog
             this.panelStatusFieldsLocUsr.Controls.Add(this.labelLocator);
             this.panelStatusFieldsLocUsr.Controls.Add(this.textBoxUserField);
             this.panelStatusFieldsLocUsr.Controls.Add(this.labelUserField);
-            this.panelStatusFieldsLocUsr.Location = new System.Drawing.Point(0, 54);
+            this.panelStatusFieldsLocUsr.Location = new System.Drawing.Point(0, 98);
             this.panelStatusFieldsLocUsr.Margin = new System.Windows.Forms.Padding(0);
             this.panelStatusFieldsLocUsr.Name = "panelStatusFieldsLocUsr";
             this.panelStatusFieldsLocUsr.Size = new System.Drawing.Size(364, 50);
@@ -345,7 +368,7 @@ namespace tnxlog
             this.panelStatFilter.Controls.Add(this.comboBoxStatFilterMode);
             this.panelStatFilter.Controls.Add(this.checkBoxAutoStatFilter);
             this.panelStatFilter.Controls.Add(this.labelStatFilter);
-            this.panelStatFilter.Location = new System.Drawing.Point(0, 104);
+            this.panelStatFilter.Location = new System.Drawing.Point(0, 148);
             this.panelStatFilter.Margin = new System.Windows.Forms.Padding(0);
             this.panelStatFilter.Name = "panelStatFilter";
             this.panelStatFilter.Size = new System.Drawing.Size(363, 50);
@@ -496,7 +519,7 @@ namespace tnxlog
             // 
             this.panelCallsignId.Controls.Add(this.listBoxCallsignsDb);
             this.panelCallsignId.Controls.Add(this.listBoxCallsignsQso);
-            this.panelCallsignId.Location = new System.Drawing.Point(0, 154);
+            this.panelCallsignId.Location = new System.Drawing.Point(0, 198);
             this.panelCallsignId.Margin = new System.Windows.Forms.Padding(0);
             this.panelCallsignId.Name = "panelCallsignId";
             this.panelCallsignId.Size = new System.Drawing.Size(363, 91);
@@ -548,7 +571,7 @@ namespace tnxlog
             this.panelCwMacro.Controls.Add(this.labelCwMacroF1Title);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF3Title);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF2Title);
-            this.panelCwMacro.Location = new System.Drawing.Point(0, 245);
+            this.panelCwMacro.Location = new System.Drawing.Point(0, 289);
             this.panelCwMacro.Margin = new System.Windows.Forms.Padding(0);
             this.panelCwMacro.Name = "panelCwMacro";
             this.panelCwMacro.Size = new System.Drawing.Size(364, 40);
@@ -783,7 +806,7 @@ namespace tnxlog
             this.loginLabel,
             this.connectionStatusLabel});
             this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.statusStrip.Location = new System.Drawing.Point(0, 285);
+            this.statusStrip.Location = new System.Drawing.Point(0, 329);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(364, 22);
             this.statusStrip.SizingGrip = false;
@@ -850,11 +873,6 @@ namespace tnxlog
             this.numericUpDownFreq.Location = new System.Drawing.Point(248, 94);
             this.numericUpDownFreq.Maximum = new decimal(new int[] {
             29000000,
-            0,
-            0,
-            0});
-            this.numericUpDownFreq.Minimum = new decimal(new int[] {
-            0,
             0,
             0,
             0});
@@ -1032,16 +1050,6 @@ namespace tnxlog
             this.toolStripLabelLog.Text = "Log";
             this.toolStripLabelLog.Click += new System.EventHandler(this.ToolStripLabelLog_Click);
             // 
-            // textBoxComments
-            // 
-            this.textBoxComments.BackColor = System.Drawing.SystemColors.Window;
-            this.textBoxComments.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxComments.Location = new System.Drawing.Point(13, 136);
-            this.textBoxComments.Name = "textBoxComments";
-            this.textBoxComments.Size = new System.Drawing.Size(344, 22);
-            this.textBoxComments.TabIndex = 6;
-            this.textBoxComments.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // textBoxCallsign
             // 
             this.textBoxCallsign.BackColor = System.Drawing.SystemColors.Window;
@@ -1071,8 +1079,6 @@ namespace tnxlog
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(364, 474);
-            this.Controls.Add(this.labelComments);
-            this.Controls.Add(this.textBoxComments);
             this.Controls.Add(this.labelDupe);
             this.Controls.Add(this.checkBoxTop);
             this.Controls.Add(this.flowLayoutPanel);
@@ -1101,6 +1107,8 @@ namespace tnxlog
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormMain_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormMain_KeyPress);
             this.flowLayoutPanel.ResumeLayout(false);
+            this.panelQsoComments.ResumeLayout(false);
+            this.panelQsoComments.PerformLayout();
             this.panelStatusFields.ResumeLayout(false);
             this.panelStatusFields.PerformLayout();
             this.panelStatusFieldsLocUsr.ResumeLayout(false);
@@ -1206,6 +1214,7 @@ namespace tnxlog
         private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportLoc;
         private System.Windows.Forms.Label labelMorseSpeed;
         private System.Windows.Forms.Panel panelStatusFieldsLocUsr;
+        private System.Windows.Forms.Panel panelQsoComments;
     }
 }
 

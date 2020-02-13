@@ -75,6 +75,7 @@ namespace tnxlog
             {
                 {"statusFields", checkBoxViewRdaRafa },
                 {"statusFieldsLocUsr", checkBoxViewLocUsr },
+                {"qsoComments", checkBoxViewQsoComments },
                 {"statFilter", checkBoxViewStatFilter },
                 {"cwMacros", checkBoxViewCwMacro },
                 {"callsignId", checkBoxViewCallsignId }

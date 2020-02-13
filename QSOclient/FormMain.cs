@@ -165,6 +165,7 @@ namespace tnxlog
 
             panels = new Dictionary<string, Panel>()
             {
+                {"qsoComments", panelQsoComments },
                 {"statusFields", panelStatusFields },
                 {"statFilter", panelStatFilter },
                 {"callsignId", panelCallsignId },

@@ -46,7 +46,7 @@ namespace tnxlog
         };
         public static readonly List<string> StatusFields = new List<string> { "rda", "rafa", "locator",  };
 
-        public static readonly List<string> MainFormPanels = new List<string> { "statusFields", "statusFieldsLocUsr", "statFilter", "callsignId", "cwMacros" };
+        public static readonly List<string> MainFormPanels = new List<string> { "qsoComments", "statusFields", "statusFieldsLocUsr", "statFilter", "callsignId", "cwMacros" };
 
         public FormMainConfig formMain;
         public HttpServiceConfig httpService;

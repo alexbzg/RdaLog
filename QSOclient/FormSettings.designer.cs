@@ -73,6 +73,7 @@
             this.radioButtonUpdInterval1m = new System.Windows.Forms.RadioButton();
             this.radioButtonUpdInterval10s = new System.Windows.Forms.RadioButton();
             this.tabPageView = new System.Windows.Forms.TabPage();
+            this.checkBoxViewLocUsr = new System.Windows.Forms.CheckBox();
             this.tabPageCwMacros = new System.Windows.Forms.TabPage();
             this.labelAutoCqRxPause = new System.Windows.Forms.Label();
             this.labelAutoCqPauseSec = new System.Windows.Forms.Label();
@@ -84,7 +85,7 @@
             this.tabPageDebug = new System.Windows.Forms.TabPage();
             this.textBoxDebugLog = new System.Windows.Forms.TextBox();
             this.labelDebug = new System.Windows.Forms.Label();
-            this.checkBoxViewLocUsr = new System.Windows.Forms.CheckBox();
+            this.checkBoxViewQsoComments = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabPageServer.SuspendLayout();
             this.groupBoxUpdInterval.SuspendLayout();
@@ -431,7 +432,7 @@
             this.checkBoxViewStatFilter.Checked = true;
             this.checkBoxViewStatFilter.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxViewStatFilter.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewStatFilter.Location = new System.Drawing.Point(37, 85);
+            this.checkBoxViewStatFilter.Location = new System.Drawing.Point(37, 109);
             this.checkBoxViewStatFilter.Name = "checkBoxViewStatFilter";
             this.checkBoxViewStatFilter.Size = new System.Drawing.Size(85, 17);
             this.checkBoxViewStatFilter.TabIndex = 60;
@@ -457,7 +458,7 @@
             this.checkBoxViewCallsignId.Checked = true;
             this.checkBoxViewCallsignId.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxViewCallsignId.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewCallsignId.Location = new System.Drawing.Point(37, 62);
+            this.checkBoxViewCallsignId.Location = new System.Drawing.Point(37, 86);
             this.checkBoxViewCallsignId.Name = "checkBoxViewCallsignId";
             this.checkBoxViewCallsignId.Size = new System.Drawing.Size(147, 17);
             this.checkBoxViewCallsignId.TabIndex = 62;
@@ -470,7 +471,7 @@
             this.checkBoxViewCwMacro.Checked = true;
             this.checkBoxViewCwMacro.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxViewCwMacro.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewCwMacro.Location = new System.Drawing.Point(37, 108);
+            this.checkBoxViewCwMacro.Location = new System.Drawing.Point(37, 132);
             this.checkBoxViewCwMacro.Name = "checkBoxViewCwMacro";
             this.checkBoxViewCwMacro.Size = new System.Drawing.Size(110, 17);
             this.checkBoxViewCwMacro.TabIndex = 63;
@@ -526,7 +527,7 @@
             this.tabPageServer.Location = new System.Drawing.Point(4, 22);
             this.tabPageServer.Name = "tabPageServer";
             this.tabPageServer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageServer.Size = new System.Drawing.Size(356, 476);
+            this.tabPageServer.Size = new System.Drawing.Size(356, 421);
             this.tabPageServer.TabIndex = 0;
             this.tabPageServer.Text = "TNXQSO.com";
             // 
@@ -566,6 +567,7 @@
             // tabPageView
             // 
             this.tabPageView.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageView.Controls.Add(this.checkBoxViewQsoComments);
             this.tabPageView.Controls.Add(this.checkBoxViewLocUsr);
             this.tabPageView.Controls.Add(this.checkBoxViewCwMacro);
             this.tabPageView.Controls.Add(this.checkBoxViewStatFilter);
@@ -574,9 +576,22 @@
             this.tabPageView.Location = new System.Drawing.Point(4, 22);
             this.tabPageView.Name = "tabPageView";
             this.tabPageView.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageView.Size = new System.Drawing.Size(356, 476);
+            this.tabPageView.Size = new System.Drawing.Size(356, 421);
             this.tabPageView.TabIndex = 1;
             this.tabPageView.Text = "View";
+            // 
+            // checkBoxViewLocUsr
+            // 
+            this.checkBoxViewLocUsr.AutoSize = true;
+            this.checkBoxViewLocUsr.Checked = true;
+            this.checkBoxViewLocUsr.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxViewLocUsr.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBoxViewLocUsr.Location = new System.Drawing.Point(37, 40);
+            this.checkBoxViewLocUsr.Name = "checkBoxViewLocUsr";
+            this.checkBoxViewLocUsr.Size = new System.Drawing.Size(112, 17);
+            this.checkBoxViewLocUsr.TabIndex = 64;
+            this.checkBoxViewLocUsr.Text = "Locator, User field";
+            this.checkBoxViewLocUsr.UseVisualStyleBackColor = true;
             // 
             // tabPageCwMacros
             // 
@@ -701,14 +716,14 @@
             this.tabPageDebug.Location = new System.Drawing.Point(4, 22);
             this.tabPageDebug.Name = "tabPageDebug";
             this.tabPageDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDebug.Size = new System.Drawing.Size(356, 476);
+            this.tabPageDebug.Size = new System.Drawing.Size(356, 421);
             this.tabPageDebug.TabIndex = 3;
             this.tabPageDebug.Text = "Отладка";
             // 
             // textBoxDebugLog
             // 
             this.textBoxDebugLog.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBoxDebugLog.Location = new System.Drawing.Point(3, 265);
+            this.textBoxDebugLog.Location = new System.Drawing.Point(3, 210);
             this.textBoxDebugLog.Multiline = true;
             this.textBoxDebugLog.Name = "textBoxDebugLog";
             this.textBoxDebugLog.Size = new System.Drawing.Size(350, 208);
@@ -723,18 +738,18 @@
             this.labelDebug.TabIndex = 0;
             this.labelDebug.Text = "Скопируйте весь текст в окне ниже и отправьте по адресу 18@73.ru";
             // 
-            // checkBoxViewLocUsr
+            // checkBoxVieQsoComments
             // 
-            this.checkBoxViewLocUsr.AutoSize = true;
-            this.checkBoxViewLocUsr.Checked = true;
-            this.checkBoxViewLocUsr.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxViewLocUsr.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewLocUsr.Location = new System.Drawing.Point(37, 40);
-            this.checkBoxViewLocUsr.Name = "checkBoxViewLocUsr";
-            this.checkBoxViewLocUsr.Size = new System.Drawing.Size(112, 17);
-            this.checkBoxViewLocUsr.TabIndex = 64;
-            this.checkBoxViewLocUsr.Text = "Locator, User field";
-            this.checkBoxViewLocUsr.UseVisualStyleBackColor = true;
+            this.checkBoxViewQsoComments.AutoSize = true;
+            this.checkBoxViewQsoComments.Checked = true;
+            this.checkBoxViewQsoComments.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxViewQsoComments.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBoxViewQsoComments.Location = new System.Drawing.Point(37, 63);
+            this.checkBoxViewQsoComments.Name = "checkBoxVieQsoComments";
+            this.checkBoxViewQsoComments.Size = new System.Drawing.Size(100, 17);
+            this.checkBoxViewQsoComments.TabIndex = 65;
+            this.checkBoxViewQsoComments.Text = "QSO comments";
+            this.checkBoxViewQsoComments.UseVisualStyleBackColor = true;
             // 
             // FormSettings
             // 
@@ -828,5 +843,6 @@
         private System.Windows.Forms.Label labelAutoCq;
         private System.Windows.Forms.Label labelAutoCqRxPause;
         internal System.Windows.Forms.CheckBox checkBoxViewLocUsr;
+        internal System.Windows.Forms.CheckBox checkBoxViewQsoComments;
     }
 }
