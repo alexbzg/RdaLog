@@ -140,6 +140,17 @@ namespace tnxlog
         private Tnxlog rdaLog;
         public int no = 1;
 
+        public static string getAdifField(string line, string fieldName)
+        {
+            int head = line.IndexOf($"<{fieldName}:");
+            if (head < 0)
+                return null;
+            int idx = line.IndexOf('>', head) + 1;
+            string result = "";
+            while (idx < line.Length && line[idx] != ' ' && line[idx] != '<')
+                result += line[idx++];
+            return result;
+        }
 
 
         public QSOFactory(Tnxlog _qsoClient)
@@ -148,7 +159,27 @@ namespace tnxlog
         }
 
 
+        public QSO fromADIF(string adif)
+        {
+            return new QSO
+            {
+                _ts = getAdifField(adif, "QSO_DATE") + " " + getAdifField(adif, "TIME_ON"),
+                _myCS = getAdifField(adif, "STATION_CALLSIGN"),
+                _band = getAdifField(adif, "BAND"),
+                _freq = getAdifField(adif, "FREQ"),
+                _mode = getAdifField(adif, "MODE"),
+                _cs = getAdifField(adif, "CALL"),
+                _snt = getAdifField(adif, "RST_SENT"),
+                _rcv = getAdifField(adif, "RST_RCVD"),
+                _freqRx = getAdifField(adif, "FREQ"),
+                _no = no++,
+                _rda = rdaLog.getStatusFieldValue("rda"),
+                _rafa = rdaLog.getStatusFieldValue("rafa"),
+                _loc = rdaLog.getStatusFieldValue("locator"),
+                _userFields = new string[] { rdaLog.userField }
+            };
 
+        }
         public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, string comments, DateTime? timestamp = null)
         {           
             return new QSO {
