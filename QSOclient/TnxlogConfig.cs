@@ -120,6 +120,9 @@ namespace tnxlog
             }
         }
 
+        public bool watchAdifLog = false;
+        public string watchAdifLogPath = "";
+
         public int autoCqRxPause = 3;
         public bool autoLogin = true;
         public List<string[]> cwMacros;

@@ -298,14 +298,15 @@ namespace tnxlog
                 string[] rdas = qso.rda.Split(' ');
                 foreach (string rda in rdas)
                     if (!comboBoxStatFilterRda.Items.Contains(rda))
-                    {
-                        comboBoxStatFilterRda.Items.Add(rda);
-                        if (!flag)
+                        DoInvoke(() =>
                         {
-                            flag = true;
-                            comboBoxStatFilterRda.SelectedItem = rda;
-                        }
-                    }
+                            comboBoxStatFilterRda.Items.Add(rda);
+                            if (!flag)
+                            {
+                                flag = true;
+                                comboBoxStatFilterRda.SelectedItem = rda;
+                            }
+                        });
                 if (!flag && updateStatsFlag)
                     updateStats();
             }
@@ -313,13 +314,16 @@ namespace tnxlog
 
         private void buildQsoIndices()
         {
-            if (comboBoxStatFilterRda.Items.Count > 1)
-                for (int co = 1; co < comboBoxStatFilterRda.Items.Count; co++)
-                    comboBoxStatFilterRda.Items.RemoveAt(co);
-            callsignsQso.clear();
-            foreach (QSO qso in tnxlog.qsoList)
-                indexQso(qso);
-            setStatFilter();
+            DoInvoke(() =>
+            {
+                if (comboBoxStatFilterRda.Items.Count > 1)
+                    for (int co = 1; co < comboBoxStatFilterRda.Items.Count; co++)
+                        comboBoxStatFilterRda.Items.RemoveAt(co);
+                callsignsQso.clear();
+                foreach (QSO qso in tnxlog.qsoList)
+                    indexQso(qso);
+                setStatFilter();
+            });
         }
 
         private void arrangePanels()
@@ -756,19 +760,22 @@ namespace tnxlog
 
         private void updateStats()
         {
-            HashSet<string> callsigns = new HashSet<string>();
-            int qsoCount = 0;
-            foreach (QSO qso in tnxlog.qsoList)
-                if ((comboBoxStatFilterRda.SelectedIndex == 0 || comboBoxStatFilterRda.SelectedItem == null || 
-                    (!string.IsNullOrEmpty(qso.rda) && qso.rda.Contains(comboBoxStatFilterRda.SelectedItem.ToString()))) &&
-                    (comboBoxStatFilterMode.SelectedIndex == 0 || comboBoxStatFilterMode.SelectedItem == null || comboBoxStatFilterMode.SelectedItem.ToString() == qso.mode) &&
-                    (comboBoxStatFilterBand.SelectedIndex == 0 || comboBoxStatFilterBand.SelectedItem == null || comboBoxStatFilterBand.SelectedItem.ToString() == qso.band))
-                {
-                    qsoCount++;
-                    callsigns.Add(qso.cs);
-                }
-            labelStatQso.Text = qsoCount.ToString();
-            labelStatCallsigns.Text = callsigns.Count.ToString();
+            DoInvoke(() =>
+            {
+                HashSet<string> callsigns = new HashSet<string>();
+                int qsoCount = 0;
+                foreach (QSO qso in tnxlog.qsoList)
+                    if ((comboBoxStatFilterRda.SelectedIndex == 0 || comboBoxStatFilterRda.SelectedItem == null ||
+                        (!string.IsNullOrEmpty(qso.rda) && qso.rda.Contains(comboBoxStatFilterRda.SelectedItem.ToString()))) &&
+                        (comboBoxStatFilterMode.SelectedIndex == 0 || comboBoxStatFilterMode.SelectedItem == null || comboBoxStatFilterMode.SelectedItem.ToString() == qso.mode) &&
+                        (comboBoxStatFilterBand.SelectedIndex == 0 || comboBoxStatFilterBand.SelectedItem == null || comboBoxStatFilterBand.SelectedItem.ToString() == qso.band))
+                    {
+                        qsoCount++;
+                        callsigns.Add(qso.cs);
+                    }
+                labelStatQso.Text = qsoCount.ToString();
+                labelStatCallsigns.Text = callsigns.Count.ToString();
+            });
         }
 
         private void StatFilter_SelectedIndexChanged(object sender, EventArgs e)

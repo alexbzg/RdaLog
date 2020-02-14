@@ -31,6 +31,7 @@ namespace tnxlog
         private TnxlogConfig config;
         public HttpService httpService;
         public TransceiverController transceiverController;
+        public AdifLogWatcher adifLogWatcher = new AdifLogWatcher();
         internal string dataPath;
         private NLog.Targets.FileTarget logfile;
         private string qsoFilePath;
@@ -94,8 +95,7 @@ namespace tnxlog
                 _statusFields[field] = config.getStatusFieldValue(field);
             httpService = new HttpService(config.httpService, this);
             transceiverController = new TransceiverController(config.transceiverController);
-            if (config.enableCwMacros)
-                transceiverController.connect();
+            adifLogWatcher.OnNewAdifEntry += newAdifLogEntry;   
             qsoFactory = new QSOFactory(this);
             qsoList = ProtoBufSerialization.Read<BindingList<QSO>>(qsoFilePath);
             if (qsoList == null)
@@ -110,6 +110,25 @@ namespace tnxlog
             if (config.autoLogin)
                 Task.Run(async () => await httpService.login(true));
             qsoList.Where(qso => qso.serverTs == 0).Select(async qso => await httpService.postQso(qso));
+            initServices();
+        }
+
+        private async void newAdifLogEntry(object sender, NewAdifEntryEventArgs e)
+        {
+            QSO qso = qsoFactory.fromADIF(e.adif);
+            qsoList.Insert(0, qso);
+            writeQsoList();
+            await httpService.postQso(qso);
+        }
+
+        private void initServices()
+        {
+            if (config.enableCwMacros)
+                transceiverController.connect();
+            if (config.watchAdifLog)
+                adifLogWatcher.start(config.watchAdifLogPath);
+            else
+                adifLogWatcher.stop();
         }
 
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
@@ -198,6 +217,9 @@ namespace tnxlog
                 formSettings.CwMacros[co].Item2.Text = config.cwMacros[co][1];
             }
 
+            formSettings.watchAdifLog = config.watchAdifLog;
+            formSettings.watchAdifLogPath = config.watchAdifLogPath;
+
             if (formSettings.ShowDialog(this.formMain) == System.Windows.Forms.DialogResult.OK)
             {
                 config.httpService.callsign = formSettings.textBoxLogin.Text;
@@ -221,11 +243,13 @@ namespace tnxlog
                     config.cwMacros[co][1] = formSettings.CwMacros[co].Item2.Text;
                 }
 
+                config.watchAdifLog = formSettings.watchAdifLog;
+                config.watchAdifLogPath = formSettings.watchAdifLogPath;
+
                 config.write();
             }
             formSettings.Dispose();
-            if (config.enableCwMacros)
-                transceiverController.connect();
+            initServices();
             formMain.updateCwMacrosTitles();
         }
 

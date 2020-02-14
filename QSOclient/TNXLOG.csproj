@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdifLogWatcher.cs" />
     <Compile Include="MorseCode.cs" />
     <Compile Include="SerialDevice.cs" />
     <Compile Include="StringIndex.cs" />

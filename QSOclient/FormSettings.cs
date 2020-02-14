@@ -57,6 +57,18 @@ namespace tnxlog
             }
         }
 
+        internal bool watchAdifLog
+        {
+            get { return checkBoxWatchAdifLog.Checked; }
+            set { checkBoxWatchAdifLog.Checked = value; }
+        }
+
+        internal string watchAdifLogPath
+        {
+            get { return textBoxWatchAdifLogPath.Text; }
+            set { textBoxWatchAdifLogPath.Text = value; }
+        }
+
         internal int autoCqRxPause
         {
             get { return Decimal.ToInt32(numericUpDownAutoCqPause.Value); }
@@ -203,5 +215,26 @@ namespace tnxlog
             transceiverController.disconnect();
         }
 
+        private void Label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBoxWatchAdifLog_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxWatchAdifLogPath.Enabled = watchAdifLog;
+            buttonAdifLogBrowse.Enabled = watchAdifLog;
+        }
+
+        private void ButtonAdifLogBrowse_Click(object sender, EventArgs e)
+        {
+            if (openFileDialogAdifLog.ShowDialog() == DialogResult.OK)
+                textBoxWatchAdifLogPath.Text = openFileDialogAdifLog.FileName;
+        }
+
+        private void TextBoxWatchAdifLogPath_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
