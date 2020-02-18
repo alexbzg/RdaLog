@@ -162,7 +162,7 @@ namespace tnxlog
         private void DataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             if (dataGridView[e.ColumnIndex, e.RowIndex].IsInEditMode)
-                dataGridView.EndEdit();
+                dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
         }
 
         private async void MenuItemDeleteQso_Click(object sender, EventArgs e)

@@ -520,7 +520,6 @@
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(364, 447);
             this.tabControl.TabIndex = 67;
-            this.tabControl.Visible = false;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             // 
             // tabPageServer

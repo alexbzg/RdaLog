@@ -95,7 +95,9 @@ namespace tnxlog
                     return null;
             }
             set {
-                if (userFields != null && userFields.Length > 0)
+                if (userFields == null || userFields.Length == 0)
+                    userFields = new string[] {value };
+                else 
                     userFields[0] = value;
             }
         }
