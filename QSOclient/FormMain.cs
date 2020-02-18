@@ -708,20 +708,19 @@ namespace tnxlog
 
         private void NumericUpDownFreq_TextChanged(object sender, EventArgs e)
         {
-            config.freq = numericUpDownFreq.Value;
-            string searchVal = Decimal.ToInt32(numericUpDownFreq.Value).ToString();
+            string searchVal = numericUpDownFreq.Text.Split(',')[0].Trim().TrimStart('0');
+            Logger.Debug($"Search: {searchVal}");
             if (searchVal.Length > 1 && comboBoxMode.SelectedIndex != -1 && HamRadio.Mode.DefFreq.ContainsKey(comboBoxMode.SelectedItem.ToString()))
             {
                 int defFreq = HamRadio.Mode.DefFreq[comboBoxMode.SelectedItem.ToString()].FirstOrDefault(item => item.ToString().StartsWith(searchVal));
-                if (defFreq != 0)
+                Logger.Debug($"Def freq found: {defFreq}");
+                if (defFreq != 0 && Convert.ToInt32(searchVal) != defFreq)
                 {
                     numericUpDownFreq.TextChanged -= NumericUpDownFreq_TextChanged;
-                    numericUpDownFreq.Value = defFreq;
+                    numericUpDownFreq.Text = defFreq.ToString();
                     numericUpDownFreq.TextChanged += NumericUpDownFreq_TextChanged;
                 }
             }
-            config.write();
-            setStatFilter();
         }
 
         private void ComboBoxMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -958,7 +957,12 @@ namespace tnxlog
             tnxlogConfig.morseSpeed = Convert.ToInt32(numericUpDownMorseSpeed.Value);
         }
 
-
+        private void NumericUpDownFreq_ValueChanged(object sender, EventArgs e)
+        {
+            config.freq = numericUpDownFreq.Value;
+            config.write();
+            setStatFilter();
+        }
     }
 
     [DataContract]

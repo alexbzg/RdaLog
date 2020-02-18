@@ -16,7 +16,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2BAD8694A21717A335844D30CE1286A1"
-        "OwnerKey" = "8:_7D81F8F5455A475BA0FD54B1402F1AE1"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -28,7 +28,7 @@
         "Entry"
         {
         "MsmKey" = "8:_41180769FAD8F434555DA1C98BEB87F5"
-        "OwnerKey" = "8:_7D81F8F5455A475BA0FD54B1402F1AE1"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -39,14 +39,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_439091F2B9791EDEC6C4830D7C548C19"
-        "OwnerKey" = "8:_7D81F8F5455A475BA0FD54B1402F1AE1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4BA7401C36A131115142F09A61C7CAA4"
-        "OwnerKey" = "8:_7D81F8F5455A475BA0FD54B1402F1AE1"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,14 +57,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7D81F8F5455A475BA0FD54B1402F1AE1"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_97CC19661BB375042B3480064097B6B1"
-        "OwnerKey" = "8:_7D81F8F5455A475BA0FD54B1402F1AE1"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -106,13 +94,13 @@
         "Entry"
         {
         "MsmKey" = "8:_F42FF4B593DAE95808F89D83EB9B5DE5"
-        "OwnerKey" = "8:_7D81F8F5455A475BA0FD54B1402F1AE1"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_F903A72257AC27E2C8A3346F0A71A95E"
-        "OwnerKey" = "8:_7D81F8F5455A475BA0FD54B1402F1AE1"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -124,7 +112,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7D81F8F5455A475BA0FD54B1402F1AE1"
+        "OwnerKey" = "8:_439091F2B9791EDEC6C4830D7C548C19"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -161,12 +149,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_97CC19661BB375042B3480064097B6B1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_439091F2B9791EDEC6C4830D7C548C19"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -241,17 +223,17 @@
     {
         "CustomAction"
         {
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_C7B3D0FFB8064CCD89A6A462E849DD26"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_23DD4DA46493414DAC33818139DCAF6B"
             {
-            "Name" = "8:Основные выходные файлы from TNXLOG (Active)"
+            "Name" = "8:Основные выходные файлы from TNXLOG (Release Any CPU)"
             "Condition" = "8:"
-            "Object" = "8:_7D81F8F5455A475BA0FD54B1402F1AE1"
+            "Object" = "8:_2F6D37946092437D8276264EEC1878A3"
             "FileType" = "3:2"
             "InstallAction" = "3:2"
-            "Arguments" = "8:"
+            "Arguments" = "8:INSTALLER"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_C010C72E_57C4_4ABE_86F7_4AE38AC749DB"
+            "Identifier" = "8:_8239AEED_944E_42CF_BF06_6D7C83D19113"
             "InstallerClass" = "11:FALSE"
             "CustomActionData" = "8:"
             }
@@ -671,15 +653,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TNXLOG"
-        "ProductCode" = "8:{BD315EF9-C60D-4CBA-A9B1-DC3D81E2BDA3}"
-        "PackageCode" = "8:{6F0CC532-274E-43BA-A1D7-134F016849FC}"
+        "ProductCode" = "8:{C4055A49-367A-4E1F-B835-024D2A3F5264}"
+        "PackageCode" = "8:{9415344E-E876-40CD-94FB-0C0AF38D27D2}"
         "UpgradeCode" = "8:{B0CA3AEB-7084-42FE-9464-94546D3CD25A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.2.10"
+        "ProductVersion" = "8:0.2.11"
         "Manufacturer" = "8:TNXqso"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1221,7 +1203,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2F6D37946092437D8276264EEC1878A3"
             {
-            "SourcePath" = "8:..\\QSOclient\\obj\\Debug\\TNXLOG.exe"
+            "SourcePath" = "8:..\\QSOclient\\obj\\Release\\TNXLOG.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_07A611DB238C4376884334BC497653C3"
@@ -1240,34 +1222,6 @@
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:Release|Any CPU"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{47BB38FF-680E-4790-9115-1052190565B5}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7D81F8F5455A475BA0FD54B1402F1AE1"
-            {
-            "SourcePath" = "8:..\\QSOclient\\obj\\Debug\\TNXLOG.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{47BB38FF-680E-4790-9115-1052190565B5}"
             "ShowKeyOutput" = "11:TRUE"

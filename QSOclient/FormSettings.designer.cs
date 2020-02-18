@@ -83,14 +83,14 @@
             this.checkBoxEnableCwMacros = new System.Windows.Forms.CheckBox();
             this.labelPort = new System.Windows.Forms.Label();
             this.comboBoxPort = new System.Windows.Forms.ComboBox();
+            this.tabPageDigi = new System.Windows.Forms.TabPage();
+            this.checkBoxWatchAdifLog = new System.Windows.Forms.CheckBox();
+            this.buttonAdifLogBrowse = new System.Windows.Forms.Button();
+            this.textBoxWatchAdifLogPath = new System.Windows.Forms.TextBox();
+            this.labelAdifLog = new System.Windows.Forms.Label();
             this.tabPageDebug = new System.Windows.Forms.TabPage();
             this.textBoxDebugLog = new System.Windows.Forms.TextBox();
             this.labelDebug = new System.Windows.Forms.Label();
-            this.tabPageDigi = new System.Windows.Forms.TabPage();
-            this.labelAdifLog = new System.Windows.Forms.Label();
-            this.textBoxWatchAdifLogPath = new System.Windows.Forms.TextBox();
-            this.buttonAdifLogBrowse = new System.Windows.Forms.Button();
-            this.checkBoxWatchAdifLog = new System.Windows.Forms.CheckBox();
             this.openFileDialogAdifLog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl.SuspendLayout();
             this.tabPageServer.SuspendLayout();
@@ -98,8 +98,8 @@
             this.tabPageView.SuspendLayout();
             this.tabPageCwMacros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoCqPause)).BeginInit();
-            this.tabPageDebug.SuspendLayout();
             this.tabPageDigi.SuspendLayout();
+            this.tabPageDebug.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxLogin
@@ -520,6 +520,7 @@
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(364, 447);
             this.tabControl.TabIndex = 67;
+            this.tabControl.Visible = false;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             // 
             // tabPageServer
@@ -729,6 +730,61 @@
             this.comboBoxPort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxPort_SelectedIndexChanged);
             this.comboBoxPort.SelectedValueChanged += new System.EventHandler(this.ComboBoxPort_SelectedValueChanged);
             // 
+            // tabPageDigi
+            // 
+            this.tabPageDigi.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageDigi.Controls.Add(this.checkBoxWatchAdifLog);
+            this.tabPageDigi.Controls.Add(this.buttonAdifLogBrowse);
+            this.tabPageDigi.Controls.Add(this.textBoxWatchAdifLogPath);
+            this.tabPageDigi.Controls.Add(this.labelAdifLog);
+            this.tabPageDigi.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDigi.Name = "tabPageDigi";
+            this.tabPageDigi.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageDigi.Size = new System.Drawing.Size(356, 421);
+            this.tabPageDigi.TabIndex = 4;
+            this.tabPageDigi.Text = "DIGI";
+            // 
+            // checkBoxWatchAdifLog
+            // 
+            this.checkBoxWatchAdifLog.AutoSize = true;
+            this.checkBoxWatchAdifLog.Location = new System.Drawing.Point(8, 9);
+            this.checkBoxWatchAdifLog.Name = "checkBoxWatchAdifLog";
+            this.checkBoxWatchAdifLog.Size = new System.Drawing.Size(102, 17);
+            this.checkBoxWatchAdifLog.TabIndex = 3;
+            this.checkBoxWatchAdifLog.Text = "Watch ADIF log";
+            this.checkBoxWatchAdifLog.UseVisualStyleBackColor = true;
+            this.checkBoxWatchAdifLog.CheckedChanged += new System.EventHandler(this.CheckBoxWatchAdifLog_CheckedChanged);
+            // 
+            // buttonAdifLogBrowse
+            // 
+            this.buttonAdifLogBrowse.Enabled = false;
+            this.buttonAdifLogBrowse.Location = new System.Drawing.Point(285, 31);
+            this.buttonAdifLogBrowse.Name = "buttonAdifLogBrowse";
+            this.buttonAdifLogBrowse.Size = new System.Drawing.Size(68, 23);
+            this.buttonAdifLogBrowse.TabIndex = 2;
+            this.buttonAdifLogBrowse.Text = "Browse";
+            this.buttonAdifLogBrowse.UseVisualStyleBackColor = true;
+            this.buttonAdifLogBrowse.Click += new System.EventHandler(this.ButtonAdifLogBrowse_Click);
+            // 
+            // textBoxWatchAdifLogPath
+            // 
+            this.textBoxWatchAdifLogPath.Enabled = false;
+            this.textBoxWatchAdifLogPath.Location = new System.Drawing.Point(73, 33);
+            this.textBoxWatchAdifLogPath.Name = "textBoxWatchAdifLogPath";
+            this.textBoxWatchAdifLogPath.Size = new System.Drawing.Size(209, 20);
+            this.textBoxWatchAdifLogPath.TabIndex = 1;
+            this.textBoxWatchAdifLogPath.TextChanged += new System.EventHandler(this.TextBoxWatchAdifLogPath_TextChanged);
+            // 
+            // labelAdifLog
+            // 
+            this.labelAdifLog.AutoSize = true;
+            this.labelAdifLog.Location = new System.Drawing.Point(8, 36);
+            this.labelAdifLog.Name = "labelAdifLog";
+            this.labelAdifLog.Size = new System.Drawing.Size(64, 13);
+            this.labelAdifLog.TabIndex = 0;
+            this.labelAdifLog.Text = "ADIF log file";
+            this.labelAdifLog.Click += new System.EventHandler(this.Label1_Click);
+            // 
             // tabPageDebug
             // 
             this.tabPageDebug.BackColor = System.Drawing.SystemColors.Control;
@@ -759,61 +815,6 @@
             this.labelDebug.TabIndex = 0;
             this.labelDebug.Text = "Скопируйте весь текст в окне ниже и отправьте по адресу 18@73.ru";
             // 
-            // tabPageDigi
-            // 
-            this.tabPageDigi.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPageDigi.Controls.Add(this.checkBoxWatchAdifLog);
-            this.tabPageDigi.Controls.Add(this.buttonAdifLogBrowse);
-            this.tabPageDigi.Controls.Add(this.textBoxWatchAdifLogPath);
-            this.tabPageDigi.Controls.Add(this.labelAdifLog);
-            this.tabPageDigi.Location = new System.Drawing.Point(4, 22);
-            this.tabPageDigi.Name = "tabPageDigi";
-            this.tabPageDigi.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDigi.Size = new System.Drawing.Size(356, 421);
-            this.tabPageDigi.TabIndex = 4;
-            this.tabPageDigi.Text = "DIGI";
-            // 
-            // labelAdifLog
-            // 
-            this.labelAdifLog.AutoSize = true;
-            this.labelAdifLog.Location = new System.Drawing.Point(8, 36);
-            this.labelAdifLog.Name = "labelAdifLog";
-            this.labelAdifLog.Size = new System.Drawing.Size(64, 13);
-            this.labelAdifLog.TabIndex = 0;
-            this.labelAdifLog.Text = "ADIF log file";
-            this.labelAdifLog.Click += new System.EventHandler(this.Label1_Click);
-            // 
-            // textBoxWatchAdifLogPath
-            // 
-            this.textBoxWatchAdifLogPath.Enabled = false;
-            this.textBoxWatchAdifLogPath.Location = new System.Drawing.Point(73, 33);
-            this.textBoxWatchAdifLogPath.Name = "textBoxWatchAdifLogPath";
-            this.textBoxWatchAdifLogPath.Size = new System.Drawing.Size(209, 20);
-            this.textBoxWatchAdifLogPath.TabIndex = 1;
-            this.textBoxWatchAdifLogPath.TextChanged += new System.EventHandler(this.TextBoxWatchAdifLogPath_TextChanged);
-            // 
-            // buttonAdifLogBrowse
-            // 
-            this.buttonAdifLogBrowse.Enabled = false;
-            this.buttonAdifLogBrowse.Location = new System.Drawing.Point(285, 31);
-            this.buttonAdifLogBrowse.Name = "buttonAdifLogBrowse";
-            this.buttonAdifLogBrowse.Size = new System.Drawing.Size(68, 23);
-            this.buttonAdifLogBrowse.TabIndex = 2;
-            this.buttonAdifLogBrowse.Text = "Browse";
-            this.buttonAdifLogBrowse.UseVisualStyleBackColor = true;
-            this.buttonAdifLogBrowse.Click += new System.EventHandler(this.ButtonAdifLogBrowse_Click);
-            // 
-            // checkBoxWatchAdifLog
-            // 
-            this.checkBoxWatchAdifLog.AutoSize = true;
-            this.checkBoxWatchAdifLog.Location = new System.Drawing.Point(8, 9);
-            this.checkBoxWatchAdifLog.Name = "checkBoxWatchAdifLog";
-            this.checkBoxWatchAdifLog.Size = new System.Drawing.Size(102, 17);
-            this.checkBoxWatchAdifLog.TabIndex = 3;
-            this.checkBoxWatchAdifLog.Text = "Watch ADIF log";
-            this.checkBoxWatchAdifLog.UseVisualStyleBackColor = true;
-            this.checkBoxWatchAdifLog.CheckedChanged += new System.EventHandler(this.CheckBoxWatchAdifLog_CheckedChanged);
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -841,10 +842,10 @@
             this.tabPageCwMacros.ResumeLayout(false);
             this.tabPageCwMacros.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoCqPause)).EndInit();
-            this.tabPageDebug.ResumeLayout(false);
-            this.tabPageDebug.PerformLayout();
             this.tabPageDigi.ResumeLayout(false);
             this.tabPageDigi.PerformLayout();
+            this.tabPageDebug.ResumeLayout(false);
+            this.tabPageDebug.PerformLayout();
             this.ResumeLayout(false);
 
         }

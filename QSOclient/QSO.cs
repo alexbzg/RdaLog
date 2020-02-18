@@ -94,7 +94,10 @@ namespace tnxlog
                 else
                     return null;
             }
-            set { }
+            set {
+                if (userFields != null && userFields.Length > 0)
+                    userFields[0] = value;
+            }
         }
 
         public static string formatFreq(decimal freq)

@@ -35,7 +35,7 @@ namespace System.Windows.Forms
             int selStart = SelectionStart;
             int newSelStart = 0;
             string newText = "";
-            Text = Text.ToUpper();
+            Text = Text.ToUpper().Trim();
             for (int co = 0; co < Text.Length; co++)
                 if (CallsignChar(Text[co]))
                 {

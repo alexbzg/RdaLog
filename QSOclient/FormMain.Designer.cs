@@ -887,6 +887,7 @@ namespace tnxlog
             0,
             65536});
             this.numericUpDownFreq.TextChanged += new System.EventHandler(this.NumericUpDownFreq_TextChanged);
+            this.numericUpDownFreq.ValueChanged += new System.EventHandler(this.NumericUpDownFreq_ValueChanged);
             // 
             // labelCallsign
             // 
