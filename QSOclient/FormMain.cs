@@ -708,17 +708,34 @@ namespace tnxlog
 
         private void NumericUpDownFreq_TextChanged(object sender, EventArgs e)
         {
-            string searchVal = numericUpDownFreq.Text.Split(',')[0].Trim().TrimStart('0');
-            Logger.Debug($"Search: {searchVal}");
+            searchDefFreq();
+        }
+
+        private void searchDefFreq()
+        {
+            string searchVal = numericUpDownFreq.Text.Split(',')[0];
+            char[] charSrc = searchVal.ToCharArray();
+            int dstIdx = 0;
+            int srcLen = charSrc.Length;
+            for (int i = 0; i < srcLen; i++)
+                if (Char.IsDigit(charSrc[i]))
+                    charSrc[dstIdx++] = charSrc[i];
+            searchVal = new string(charSrc, 0, dstIdx);
+            searchVal = searchVal.TrimStart('0');
             if (searchVal.Length > 1 && comboBoxMode.SelectedIndex != -1 && HamRadio.Mode.DefFreq.ContainsKey(comboBoxMode.SelectedItem.ToString()))
             {
-                int defFreq = HamRadio.Mode.DefFreq[comboBoxMode.SelectedItem.ToString()].FirstOrDefault(item => item.ToString().StartsWith(searchVal));
-                Logger.Debug($"Def freq found: {defFreq}");
-                if (defFreq != 0 && Convert.ToInt32(searchVal) != defFreq)
+                int[] defFreqs = HamRadio.Mode.DefFreq[comboBoxMode.SelectedItem.ToString()].Where(item => item.ToString().StartsWith(searchVal.Substring(0,2))).ToArray();
+                if (defFreqs.Length > 0)
                 {
-                    numericUpDownFreq.TextChanged -= NumericUpDownFreq_TextChanged;
-                    numericUpDownFreq.Text = defFreq.ToString();
-                    numericUpDownFreq.TextChanged += NumericUpDownFreq_TextChanged;
+                    int defFreq = defFreqs.FirstOrDefault(item => item.ToString().Length == searchVal.Length);
+                    if (defFreq == 0)
+                        defFreq = defFreqs[0];
+                    if (defFreq.ToString() != searchVal)
+                    {
+                        numericUpDownFreq.TextChanged -= NumericUpDownFreq_TextChanged;
+                        numericUpDownFreq.Text = defFreq.ToString();
+                        numericUpDownFreq.TextChanged += NumericUpDownFreq_TextChanged;
+                    }
                 }
             }
         }
@@ -730,6 +747,7 @@ namespace tnxlog
             config.write();
             setDefRst();
             setStatFilter();
+            searchDefFreq();
         }
 
         private void setStatFilter()
