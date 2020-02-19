@@ -70,6 +70,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdifLogWatcher.cs" />
+    <Compile Include="FormCwSend.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCwSend.Designer.cs">
+      <DependentUpon>FormCwSend.cs</DependentUpon>
+    </Compile>
     <Compile Include="MorseCode.cs" />
     <Compile Include="SerialDevice.cs" />
     <Compile Include="StringIndex.cs" />
@@ -120,6 +126,9 @@
       <DependentUpon>TransceiverPinSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="XmlConfig.cs" />
+    <EmbeddedResource Include="FormCwSend.resx">
+      <DependentUpon>FormCwSend.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormLog.resx">
       <DependentUpon>FormLog.cs</DependentUpon>
     </EmbeddedResource>

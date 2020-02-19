@@ -714,12 +714,16 @@ namespace tnxlog
         private void searchDefFreq()
         {
             string searchVal = numericUpDownFreq.Text.Split(',')[0];
+            TextBox freqTextBox = numericUpDownFreq.Controls.OfType<TextBox>().FirstOrDefault() as TextBox;
+            int selStart = freqTextBox.SelectionStart;
             char[] charSrc = searchVal.ToCharArray();
             int dstIdx = 0;
             int srcLen = charSrc.Length;
             for (int i = 0; i < srcLen; i++)
                 if (Char.IsDigit(charSrc[i]))
                     charSrc[dstIdx++] = charSrc[i];
+                else if (i < selStart)
+                    selStart--;
             searchVal = new string(charSrc, 0, dstIdx);
             searchVal = searchVal.TrimStart('0');
             if (searchVal.Length > 1 && comboBoxMode.SelectedIndex != -1 && HamRadio.Mode.DefFreq.ContainsKey(comboBoxMode.SelectedItem.ToString()))
@@ -735,6 +739,11 @@ namespace tnxlog
                         numericUpDownFreq.TextChanged -= NumericUpDownFreq_TextChanged;
                         numericUpDownFreq.Text = defFreq.ToString();
                         numericUpDownFreq.TextChanged += NumericUpDownFreq_TextChanged;
+                        char[] charFreq = numericUpDownFreq.Text.ToCharArray();
+                        for (int i = 0; i < selStart; i++)
+                            if (!Char.IsDigit(charFreq[i]))
+                                selStart++;
+                        numericUpDownFreq.Select(selStart, 0);
                     }
                 }
             }
@@ -905,6 +914,17 @@ namespace tnxlog
         {
             if (autoCq)
                 stopAutoCq();
+            if (e.KeyData == (Keys.Alt | Keys.K))
+            {
+                FormCwSend fSend = new FormCwSend();
+                fSend.Width = Width;
+                fSend.charEntered += async delegate (object _sender, CharEnteredEventArgs _e)
+                {
+                    await sendCwMsg(new string(_e.Char, 1));
+                };
+                fSend.ShowDialog();
+                fSend.Dispose();
+            }
             if (e.KeyData == Keys.Oemtilde || e.KeyData == (Keys.W | Keys.Alt) || e.KeyData == (Keys.W | Keys.Control))
             //clear corrrespondent field
             {

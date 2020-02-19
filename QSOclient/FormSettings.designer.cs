@@ -661,7 +661,7 @@
             // labelAutoCqRxPause
             // 
             this.labelAutoCqRxPause.AutoSize = true;
-            this.labelAutoCqRxPause.Location = new System.Drawing.Point(60, 137);
+            this.labelAutoCqRxPause.Location = new System.Drawing.Point(108, 137);
             this.labelAutoCqRxPause.Name = "labelAutoCqRxPause";
             this.labelAutoCqRxPause.Size = new System.Drawing.Size(99, 13);
             this.labelAutoCqRxPause.TabIndex = 75;
@@ -670,7 +670,7 @@
             // labelAutoCqPauseSec
             // 
             this.labelAutoCqPauseSec.AutoSize = true;
-            this.labelAutoCqPauseSec.Location = new System.Drawing.Point(211, 137);
+            this.labelAutoCqPauseSec.Location = new System.Drawing.Point(259, 137);
             this.labelAutoCqPauseSec.Name = "labelAutoCqPauseSec";
             this.labelAutoCqPauseSec.Size = new System.Drawing.Size(47, 13);
             this.labelAutoCqPauseSec.TabIndex = 74;
@@ -678,7 +678,7 @@
             // 
             // numericUpDownAutoCqPause
             // 
-            this.numericUpDownAutoCqPause.Location = new System.Drawing.Point(165, 135);
+            this.numericUpDownAutoCqPause.Location = new System.Drawing.Point(213, 135);
             this.numericUpDownAutoCqPause.Name = "numericUpDownAutoCqPause";
             this.numericUpDownAutoCqPause.Size = new System.Drawing.Size(40, 20);
             this.numericUpDownAutoCqPause.TabIndex = 73;
@@ -693,7 +693,7 @@
             // 
             this.labelAutoCq.AutoSize = true;
             this.labelAutoCq.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelAutoCq.Location = new System.Drawing.Point(5, 137);
+            this.labelAutoCq.Location = new System.Drawing.Point(53, 137);
             this.labelAutoCq.Name = "labelAutoCq";
             this.labelAutoCq.Size = new System.Drawing.Size(54, 13);
             this.labelAutoCq.TabIndex = 72;
