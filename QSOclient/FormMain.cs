@@ -83,6 +83,7 @@ namespace tnxlog
         private System.Threading.Timer autoCqTimer;
         private bool autoCq;
         private ConcurrentQueue<string> cwQueue = new ConcurrentQueue<string>();
+        private string clearedCS = "";
         private QsoValues currentQsoValues()
         {
             return new QsoValues() {
@@ -251,6 +252,7 @@ namespace tnxlog
 
             autoCqTimer = new System.Threading.Timer(async obj => await processCwMacro(tnxlogConfig.cwMacros[0][1]), null, Timeout.Infinite, Timeout.Infinite);
             Application.AddMessageFilter(this);
+            updateLabelEsm();
         }
 
         internal void updateCwMacrosTitles()
@@ -369,44 +371,6 @@ namespace tnxlog
             });
         }
 
-        private async void FormMain_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-            {
-                e.Handled = true;
-                if (!textBoxCorrespondent.validCallsign)
-                {
-                    textBoxCorrespondent.Focus();
-                    return;
-                }
-                if (!textBoxCallsign.validCallsign)
-                {
-                    MessageBox.Show(string.IsNullOrEmpty(textBoxCallsign.Text) ? "Please enter your callsign." : $"Your callsign {textBoxCallsign.Text} is invalid.",
-                        Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    textBoxCallsign.Focus();
-                    return;
-                }
-                if (ActiveControl != textBoxCorrespondent)
-                {
-                    QsoValues newQsoValues = currentQsoValues();
-                    if (!newQsoValues.isEqual(qsoValues))
-                    {
-                        textBoxCorrespondent.Focus();
-                        qsoValues = newQsoValues;
-                        return;
-                    }
-                }
-                qsoValues = currentQsoValues();
-                string correspondent = textBoxCorrespondent.Text;
-                string comments = textBoxComments.Text;
-                textBoxCorrespondent.Text = "";
-                textBoxComments.Text = "";
-                textBoxCorrespondent.Focus();
-                setDefRst();
-                await tnxlog.newQso(correspondent, qsoValues.callsign, qsoValues.freq, qsoValues.mode, qsoValues.rstRcvd, qsoValues.rstSnt, comments);                
-            }
-        }
-
         private void setDefRst()
         {
             string mode = comboBoxMode.SelectedItem.ToString();
@@ -416,7 +380,6 @@ namespace tnxlog
                 textBoxRstRcvd.Text = HamRadio.Mode.DefRst[mode];
             }
         }
-
 
         private List<string> parseValues(Regex reMatch, ref string values, HashSet<string> valuesSet, RegexReplace reReplace)
         {
@@ -757,6 +720,7 @@ namespace tnxlog
             setDefRst();
             setStatFilter();
             searchDefFreq();
+            updateLabelEsm();
         }
 
         private void setStatFilter()
@@ -858,22 +822,26 @@ namespace tnxlog
                 string macro = _macro;
                 if (macro.Contains('}'))
                 {
-                    Dictionary<string, string> substs = new Dictionary<string, string>()
+                    Dictionary<string, string[]> substs = new Dictionary<string, string[]>()
                                 {
-                                    { "MY_CALL", textBoxCallsign.Text },
-                                    { "CALL", textBoxCorrespondent.Text },
-                                    { "RDA", textBoxRda.Text },
-                                    { "RAFA", textBoxRafa.Text },
-                                    { "LOCATOR", textBoxLocator.Text },
-                                    { "USER_FIELD", textBoxUserField.Text }
+                                    { "MY_CALL", new string[] { textBoxCallsign.Text } },
+                                    { "CALL", new string[] { textBoxCorrespondent.Text, tnxlog.qsoList.FirstOrDefault()?.cs } },
+                                    { "RDA", new string[] { textBoxRda.Text } },
+                                    { "RAFA", new string[] { textBoxRafa.Text } },
+                                    { "LOCATOR", new string[] { textBoxLocator.Text } },
+                                    { "USER_FIELD", new string[] { textBoxUserField.Text } }
                                 };
                     foreach (string subst in substs.Keys)
                     {
                         string tmplt = $"{{{subst}}}";
-                        string substStr = substs[subst].Replace("-", "");
-                        if (macro.Contains(tmplt) && substStr == "")
-                            return;
-                        macro = macro.Replace(tmplt, substStr);
+                        if (macro.Contains(tmplt))
+                        {
+                            string substStr = substs[subst].FirstOrDefault(item => item != null && item != "");
+                            if (substStr == null || substStr == "")
+                                return;
+                            substStr.Replace("-", "");
+                            macro.Replace(tmplt, substStr);
+                        }
                     }
                     if (macro.Contains('{'))
                     {
@@ -910,11 +878,59 @@ namespace tnxlog
             await Task.Run(() => tnxlog.transceiverController.morseString(msg, Convert.ToInt32(1200 / tnxlogConfig.morseSpeed), tokenSource.Token));
         }
 
+        private void updateLabelEsm()
+        {
+            labelEsm.Visible = tnxlogConfig.esm && comboBoxMode.SelectedItem.ToString() == "CW";
+        }
+
+        private async void storeQso()
+        {
+            if (!textBoxCorrespondent.validCallsign)
+            {
+                textBoxCorrespondent.Focus();
+                return;
+            }
+            if (!textBoxCallsign.validCallsign)
+            {
+                MessageBox.Show(string.IsNullOrEmpty(textBoxCallsign.Text) ? "Please enter your callsign." : $"Your callsign {textBoxCallsign.Text} is invalid.",
+                    Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                textBoxCallsign.Focus();
+                return;
+            }
+            if (ActiveControl != textBoxCorrespondent)
+            {
+                QsoValues newQsoValues = currentQsoValues();
+                if (!newQsoValues.isEqual(qsoValues))
+                {
+                    textBoxCorrespondent.Focus();
+                    qsoValues = newQsoValues;
+                    return;
+                }
+            }
+            qsoValues = currentQsoValues();
+            string correspondent = textBoxCorrespondent.Text;
+            string comments = textBoxComments.Text;
+            textBoxCorrespondent.Text = "";
+            textBoxComments.Text = "";
+            textBoxCorrespondent.Focus();
+            setDefRst();
+            if (labelEsm.Visible)
+                await Task.Run(async () => await processCwMacro(tnxlogConfig.esmMacro));
+            await tnxlog.newQso(correspondent, qsoValues.callsign, qsoValues.freq, qsoValues.mode, qsoValues.rstRcvd, qsoValues.rstSnt, comments);
+        }
+
         private async void FormMain_KeyDown(object sender, KeyEventArgs e)
         {
             if (autoCq)
                 stopAutoCq();
-            if (e.KeyData == (Keys.Control | Keys.Q))
+            if (e.KeyData == (Keys.Control | Keys.M)) //ESM switch
+            {
+                tnxlogConfig.esm = !tnxlogConfig.esm;
+                updateLabelEsm();
+            }
+            else if (e.KeyData == Keys.Enter) //store QSO
+                storeQso();
+            else if (e.KeyData == (Keys.Control | Keys.Q)) //recall last QSO
             {
                 QSO qso = tnxlog.qsoList[0];
                 textBoxCallsign.Text = qso.myCS;
@@ -925,7 +941,7 @@ namespace tnxlog
                 textBoxRstSent.Text = qso.snt;
                 await tnxlog.deleteQso(qso);
             }
-            if (e.KeyData == (Keys.Alt | Keys.K))
+            else if (e.KeyData == (Keys.Control | Keys.K)) //manual CW
             {
                 FormCwSend fSend = new FormCwSend();
                 fSend.Width = Width;
@@ -935,15 +951,22 @@ namespace tnxlog
                 };
                 fSend.ShowDialog();
                 fSend.Dispose();
-                return;
             }
-            if (e.KeyData == Keys.Oemtilde || e.KeyData == (Keys.W | Keys.Alt) || e.KeyData == (Keys.W | Keys.Control))
-            //clear corrrespondent field
+            else if (e.KeyData == Keys.Oemtilde || e.KeyData == (Keys.W | Keys.Alt) || e.KeyData == (Keys.W | Keys.Control))
+            //clear/restore corrrespondent field
             {
-                e.Handled = true;
-                textBoxCorrespondent.Text = "";
+                if (textBoxCorrespondent.Text != "")
+                {
+                    clearedCS = textBoxCorrespondent.Text;
+                    textBoxCorrespondent.Text = "";
+                } else if (clearedCS != "")
+                {
+                    textBoxCorrespondent.Text = clearedCS;
+                    textBoxCorrespondent.SelectionStart = clearedCS.Length;
+                    clearedCS = "";
+                }
             }           
-            else if (e.KeyData == (CwMacrosKeys[0] | Keys.Control))//auto cq
+            else if (e.KeyData == (CwMacrosKeys[0] | Keys.Control))//auto cq toggle
             {
                 autoCq = true;
                 await processCwMacro(tnxlogConfig.cwMacros[0][1]);
@@ -951,9 +974,9 @@ namespace tnxlog
             else 
             {
                 int cwMacroIdx = Array.IndexOf(CwMacrosKeys, e.KeyData);
-                if (cwMacroIdx != -1)
+                if (cwMacroIdx != -1) //CW macro
                     await processCwMacro(tnxlogConfig.cwMacros[cwMacroIdx][1]);
-                else if (e.KeyData == Keys.Escape && tnxlog.transceiverController.busy)
+                else if (e.KeyData == Keys.Escape && tnxlog.transceiverController.busy) //cancel CW transmission
                 {
                     while (!cwQueue.IsEmpty)
                         cwQueue.TryDequeue(out string discard);

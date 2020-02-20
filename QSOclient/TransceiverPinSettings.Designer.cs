@@ -37,7 +37,7 @@
             // labelFunction
             // 
             this.labelFunction.AutoSize = true;
-            this.labelFunction.Location = new System.Drawing.Point(3, 11);
+            this.labelFunction.Location = new System.Drawing.Point(3, 8);
             this.labelFunction.Name = "labelFunction";
             this.labelFunction.Size = new System.Drawing.Size(28, 13);
             this.labelFunction.TabIndex = 0;
@@ -46,7 +46,7 @@
             // comboBoxPin
             // 
             this.comboBoxPin.FormattingEnabled = true;
-            this.comboBoxPin.Location = new System.Drawing.Point(37, 8);
+            this.comboBoxPin.Location = new System.Drawing.Point(37, 5);
             this.comboBoxPin.Name = "comboBoxPin";
             this.comboBoxPin.Size = new System.Drawing.Size(65, 21);
             this.comboBoxPin.TabIndex = 1;
@@ -55,7 +55,7 @@
             // checkBoxInvert
             // 
             this.checkBoxInvert.AutoSize = true;
-            this.checkBoxInvert.Location = new System.Drawing.Point(108, 11);
+            this.checkBoxInvert.Location = new System.Drawing.Point(108, 8);
             this.checkBoxInvert.Name = "checkBoxInvert";
             this.checkBoxInvert.Size = new System.Drawing.Size(53, 17);
             this.checkBoxInvert.TabIndex = 2;
@@ -66,7 +66,7 @@
             // buttonTest
             // 
             this.buttonTest.Enabled = false;
-            this.buttonTest.Location = new System.Drawing.Point(167, 6);
+            this.buttonTest.Location = new System.Drawing.Point(167, 3);
             this.buttonTest.Name = "buttonTest";
             this.buttonTest.Size = new System.Drawing.Size(75, 23);
             this.buttonTest.TabIndex = 3;
@@ -84,7 +84,7 @@
             this.Controls.Add(this.comboBoxPin);
             this.Controls.Add(this.labelFunction);
             this.Name = "TransceiverPinSettings";
-            this.Size = new System.Drawing.Size(356, 37);
+            this.Size = new System.Drawing.Size(356, 26);
             this.ResumeLayout(false);
             this.PerformLayout();
 

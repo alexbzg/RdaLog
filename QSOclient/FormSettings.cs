@@ -69,6 +69,12 @@ namespace tnxlog
             set { textBoxWatchAdifLogPath.Text = value; }
         }
 
+        internal string esmMacro
+        {
+            get { return textBoxEsmMacro.Text; }
+            set { textBoxEsmMacro.Text = value; }
+        }
+
         internal int autoCqRxPause
         {
             get { return Decimal.ToInt32(numericUpDownAutoCqPause.Value); }
@@ -113,7 +119,7 @@ namespace tnxlog
                 TransceiverPinSettings tpsControl = new TransceiverPinSettings(pinFunction);
                 transceiverPinSettings.Add(tpsControl);
                 tabPageCwMacros.Controls.Add(tpsControl);
-                tpsControl.Location = new Point(1, 45 + (pinCount++) * (tpsControl.Height + 2));
+                tpsControl.Location = new Point(1, 48 + (pinCount++) * (tpsControl.Height + 2));
                 tpsControl.pinChanged += transceiverPinChanged;
                 tpsControl.invertChanged += transceiverPinInvertChanged;
                 tpsControl.testMouseDown += testPinMouseDown;

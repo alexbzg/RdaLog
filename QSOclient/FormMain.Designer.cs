@@ -33,11 +33,11 @@ namespace tnxlog
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.labelComments = new System.Windows.Forms.Label();
             this.labelDupe = new System.Windows.Forms.Label();
             this.checkBoxTop = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.panelQsoComments = new System.Windows.Forms.Panel();
+            this.labelComments = new System.Windows.Forms.Label();
             this.textBoxComments = new System.Windows.Forms.TextBoxCallsign();
             this.panelStatusFields = new System.Windows.Forms.Panel();
             this.checkBoxAutoRafa = new System.Windows.Forms.CheckBox();
@@ -96,10 +96,12 @@ namespace tnxlog
             this.labelFreq = new System.Windows.Forms.Label();
             this.numericUpDownFreq = new System.Windows.Forms.NumericUpDown();
             this.labelCallsign = new System.Windows.Forms.Label();
+            this.textBoxCallsign = new System.Windows.Forms.TextBoxCallsign();
             this.labelRstRcvd = new System.Windows.Forms.Label();
             this.textBoxRstRcvd = new System.Windows.Forms.TextBox();
             this.labelRstSent = new System.Windows.Forms.Label();
             this.textBoxRstSent = new System.Windows.Forms.TextBox();
+            this.textBoxCorrespondent = new System.Windows.Forms.TextBoxCallsign();
             this.buttonPostFreq = new System.Windows.Forms.Button();
             this.labelDateTime = new System.Windows.Forms.Label();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
@@ -112,8 +114,7 @@ namespace tnxlog
             this.menuItemAdifExportAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
-            this.textBoxCallsign = new System.Windows.Forms.TextBoxCallsign();
-            this.textBoxCorrespondent = new System.Windows.Forms.TextBoxCallsign();
+            this.labelEsm = new System.Windows.Forms.Label();
             this.flowLayoutPanel.SuspendLayout();
             this.panelQsoComments.SuspendLayout();
             this.panelStatusFields.SuspendLayout();
@@ -126,17 +127,6 @@ namespace tnxlog
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).BeginInit();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // labelComments
-            // 
-            this.labelComments.AutoSize = true;
-            this.labelComments.BackColor = System.Drawing.Color.Transparent;
-            this.labelComments.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelComments.Location = new System.Drawing.Point(12, 5);
-            this.labelComments.Name = "labelComments";
-            this.labelComments.Size = new System.Drawing.Size(56, 13);
-            this.labelComments.TabIndex = 67;
-            this.labelComments.Text = "Comments";
             // 
             // labelDupe
             // 
@@ -189,6 +179,17 @@ namespace tnxlog
             this.panelQsoComments.Name = "panelQsoComments";
             this.panelQsoComments.Size = new System.Drawing.Size(364, 50);
             this.panelQsoComments.TabIndex = 29;
+            // 
+            // labelComments
+            // 
+            this.labelComments.AutoSize = true;
+            this.labelComments.BackColor = System.Drawing.Color.Transparent;
+            this.labelComments.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelComments.Location = new System.Drawing.Point(12, 5);
+            this.labelComments.Name = "labelComments";
+            this.labelComments.Size = new System.Drawing.Size(56, 13);
+            this.labelComments.TabIndex = 67;
+            this.labelComments.Text = "Comments";
             // 
             // textBoxComments
             // 
@@ -900,6 +901,17 @@ namespace tnxlog
             this.labelCallsign.TabIndex = 12;
             this.labelCallsign.Text = "My callsign";
             // 
+            // textBoxCallsign
+            // 
+            this.textBoxCallsign.BackColor = System.Drawing.SystemColors.Window;
+            this.textBoxCallsign.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
+            this.textBoxCallsign.Location = new System.Drawing.Point(12, 94);
+            this.textBoxCallsign.Name = "textBoxCallsign";
+            this.textBoxCallsign.Size = new System.Drawing.Size(156, 23);
+            this.textBoxCallsign.TabIndex = 3;
+            this.textBoxCallsign.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxCallsign.Validated += new System.EventHandler(this.TextBoxCallsign_Validated);
+            // 
             // labelRstRcvd
             // 
             this.labelRstRcvd.AutoSize = true;
@@ -941,6 +953,17 @@ namespace tnxlog
             this.textBoxRstSent.TabIndex = 1;
             this.textBoxRstSent.Text = "599";
             this.textBoxRstSent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxCorrespondent
+            // 
+            this.textBoxCorrespondent.BackColor = System.Drawing.SystemColors.Info;
+            this.textBoxCorrespondent.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxCorrespondent.Location = new System.Drawing.Point(12, 46);
+            this.textBoxCorrespondent.Name = "textBoxCorrespondent";
+            this.textBoxCorrespondent.Size = new System.Drawing.Size(229, 29);
+            this.textBoxCorrespondent.TabIndex = 0;
+            this.textBoxCorrespondent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxCorrespondent.TextChanged += new System.EventHandler(this.TextBoxCorrespondent_TextChanged);
             // 
             // buttonPostFreq
             // 
@@ -1051,27 +1074,17 @@ namespace tnxlog
             this.toolStripLabelLog.Text = "Log";
             this.toolStripLabelLog.Click += new System.EventHandler(this.ToolStripLabelLog_Click);
             // 
-            // textBoxCallsign
+            // labelEsm
             // 
-            this.textBoxCallsign.BackColor = System.Drawing.SystemColors.Window;
-            this.textBoxCallsign.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxCallsign.Location = new System.Drawing.Point(12, 94);
-            this.textBoxCallsign.Name = "textBoxCallsign";
-            this.textBoxCallsign.Size = new System.Drawing.Size(156, 23);
-            this.textBoxCallsign.TabIndex = 3;
-            this.textBoxCallsign.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxCallsign.Validated += new System.EventHandler(this.TextBoxCallsign_Validated);
-            // 
-            // textBoxCorrespondent
-            // 
-            this.textBoxCorrespondent.BackColor = System.Drawing.SystemColors.Info;
-            this.textBoxCorrespondent.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxCorrespondent.Location = new System.Drawing.Point(12, 46);
-            this.textBoxCorrespondent.Name = "textBoxCorrespondent";
-            this.textBoxCorrespondent.Size = new System.Drawing.Size(229, 29);
-            this.textBoxCorrespondent.TabIndex = 0;
-            this.textBoxCorrespondent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxCorrespondent.TextChanged += new System.EventHandler(this.TextBoxCorrespondent_TextChanged);
+            this.labelEsm.BackColor = System.Drawing.Color.Transparent;
+            this.labelEsm.ForeColor = System.Drawing.Color.DarkGreen;
+            this.labelEsm.Location = new System.Drawing.Point(11, 30);
+            this.labelEsm.Name = "labelEsm";
+            this.labelEsm.Size = new System.Drawing.Size(45, 13);
+            this.labelEsm.TabIndex = 66;
+            this.labelEsm.Text = "ESM";
+            this.labelEsm.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.labelEsm.Visible = false;
             // 
             // FormMain
             // 
@@ -1080,6 +1093,7 @@ namespace tnxlog
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(364, 474);
+            this.Controls.Add(this.labelEsm);
             this.Controls.Add(this.labelDupe);
             this.Controls.Add(this.checkBoxTop);
             this.Controls.Add(this.flowLayoutPanel);
@@ -1106,7 +1120,6 @@ namespace tnxlog
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormMain_KeyDown);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormMain_KeyPress);
             this.flowLayoutPanel.ResumeLayout(false);
             this.panelQsoComments.ResumeLayout(false);
             this.panelQsoComments.PerformLayout();
@@ -1216,6 +1229,7 @@ namespace tnxlog
         private System.Windows.Forms.Label labelMorseSpeed;
         private System.Windows.Forms.Panel panelStatusFieldsLocUsr;
         private System.Windows.Forms.Panel panelQsoComments;
+        private System.Windows.Forms.Label labelEsm;
     }
 }
 

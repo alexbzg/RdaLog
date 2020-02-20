@@ -216,6 +216,7 @@ namespace tnxlog
                 formSettings.transceiverPinSettings[co].invert = config.transceiverController.invertPins[co];
             }
             formSettings.autoCqRxPause = config.autoCqRxPause;
+            formSettings.esmMacro = config.esmMacro;
 
             for (int co = 0; co < formSettings.CwMacros.Count; co++)
             {
@@ -242,6 +243,7 @@ namespace tnxlog
                 config.enableCwMacros = formSettings.enableCwMacros;
                 updateTransceiverControllerConfig(config.transceiverController, formSettings);
                 config.autoCqRxPause = formSettings.autoCqRxPause;
+                config.esmMacro = formSettings.esmMacro;
 
                 for (int co = 0; co < formSettings.CwMacros.Count; co++)
                 {

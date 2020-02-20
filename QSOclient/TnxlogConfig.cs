@@ -92,6 +92,15 @@ namespace tnxlog
                 } }
         }
 
+        public string esmMacro = "{CALL} TU DE {MY_CALL}";
+
+        private bool _esm = false;
+        public bool esm
+        {
+            get { return _esm; }
+            set { _esm = value; write(); }
+        }
+
         private Dictionary<string, bool> _mainFormPanels;
         public List<SerPropEnable> serMainFormPanels;
         [XmlIgnore]
