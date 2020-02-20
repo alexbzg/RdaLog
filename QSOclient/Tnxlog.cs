@@ -131,6 +131,12 @@ namespace tnxlog
                 adifLogWatcher.stop();
         }
 
+        public async Task deleteQso(QSO qso)
+        {
+            qsoList.Remove(qso);
+            await httpService.deleteQso(qso);
+        }
+
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
         {
             writeQsoList();

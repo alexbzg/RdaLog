@@ -168,11 +168,7 @@ namespace tnxlog
         private async void MenuItemDeleteQso_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Do you really want to delete the QSO?", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                QSO qso = getCurrentQso();
-                tnxlog.qsoList.Remove(qso);
-                await tnxlog.httpService.deleteQso(qso);
-            }
+                await tnxlog.deleteQso(getCurrentQso());
         }
 
         private QSO getCurrentQso()

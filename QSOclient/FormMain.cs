@@ -914,6 +914,17 @@ namespace tnxlog
         {
             if (autoCq)
                 stopAutoCq();
+            if (e.KeyData == (Keys.Control | Keys.Q))
+            {
+                QSO qso = tnxlog.qsoList[0];
+                textBoxCallsign.Text = qso.myCS;
+                textBoxCorrespondent.Text = qso.cs;
+                comboBoxMode.SelectedItem = qso.mode;
+                numericUpDownFreq.Value = Convert.ToDecimal(qso.freq, System.Globalization.NumberFormatInfo.InvariantInfo);
+                textBoxRstRcvd.Text = qso.rcv;
+                textBoxRstSent.Text = qso.snt;
+                await tnxlog.deleteQso(qso);
+            }
             if (e.KeyData == (Keys.Alt | Keys.K))
             {
                 FormCwSend fSend = new FormCwSend();
@@ -924,6 +935,7 @@ namespace tnxlog
                 };
                 fSend.ShowDialog();
                 fSend.Dispose();
+                return;
             }
             if (e.KeyData == Keys.Oemtilde || e.KeyData == (Keys.W | Keys.Alt) || e.KeyData == (Keys.W | Keys.Control))
             //clear corrrespondent field

@@ -119,8 +119,9 @@ namespace tnxlog
                 tpsControl.testMouseDown += testPinMouseDown;
                 tpsControl.testMouseUp += testPinMouseUp;
             }
-
+#if !DEBUG
             tabControl.TabPages.Remove(tabPageDigi);
+#endif
         }
 
         private void testPinMouseUp(object sender, EventArgs e)
