@@ -62,9 +62,9 @@ namespace tnxlog
         private static int pingIntervalNoConnection = 5 * 1000;
         HttpClient client = new HttpClient();
 #if DEBUG && TEST_SRV
-        private static readonly Uri srvURI = new Uri("http://test.tnxqso.com/aiohttp/");
+        private static readonly Uri srvURI = new Uri("https://test.tnxqso.com/aiohttp/");
 #else
-        private static readonly Uri srvURI = new Uri("http://tnxqso.com/aiohttp/");
+        private static readonly Uri srvURI = new Uri("https://tnxqso.com/aiohttp/");
 #endif
         System.Threading.Timer pingTimer;
         System.Threading.Timer loginRetryTimer;

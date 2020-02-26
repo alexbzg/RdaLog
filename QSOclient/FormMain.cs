@@ -68,7 +68,7 @@ namespace tnxlog
 
         static readonly Keys[] CwMacrosKeys = new Keys[] { Keys.F1, Keys.F2, Keys.F3, Keys.F4, Keys.F5, Keys.F6, Keys.F7, Keys.F8, Keys.F9 };
 
-        static readonly string AutoUpdaterURI = "http://tnxqso.com/static/files/tnxlog.xml";
+        static readonly string AutoUpdaterURI = "https://tnxqso.com/static/files/tnxlog.xml";
         private Tnxlog tnxlog;
         private Dictionary<string, StatusFieldControls> statusFieldsControls;
         private Dictionary<string, Panel> panels;
@@ -839,8 +839,8 @@ namespace tnxlog
                             string substStr = substs[subst].FirstOrDefault(item => item != null && item != "");
                             if (substStr == null || substStr == "")
                                 return;
-                            substStr.Replace("-", "");
-                            macro.Replace(tmplt, substStr);
+                            substStr = substStr.Replace("-", "");
+                            macro = macro.Replace(tmplt, substStr);
                         }
                     }
                     if (macro.Contains('{'))
@@ -941,7 +941,7 @@ namespace tnxlog
                 textBoxRstSent.Text = qso.snt;
                 await tnxlog.deleteQso(qso);
             }
-            else if (e.KeyData == (Keys.Control | Keys.K)) //manual CW
+            else if (e.KeyData == (Keys.Control | Keys.K) || e.KeyData == (Keys.Alt | Keys.K)) //manual CW
             {
                 FormCwSend fSend = new FormCwSend();
                 fSend.Width = Width;
