@@ -4,6 +4,7 @@ using SerialPortTester;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
@@ -55,9 +56,12 @@ namespace tnxlog
 
         public bool busy { get { return _busy; } }
 
+        private Stopwatch sw = new Stopwatch();
+
         public TransceiverController(TransceiverControllerConfig _config)
         {
             config = _config;
+            Logger.Debug($"Stopwatch frequency: {Stopwatch.Frequency}");
         }
 
         public static async Task AccurateAsyncDelay(int delay, CancellationToken ct)
@@ -104,6 +108,15 @@ namespace tnxlog
                 setPin(pinFunction, true);
         }
 
+        private void delay(int delayMs)
+        {
+            Logger.Debug($"Delay {delayMs}ms");
+            sw.Restart();
+            while (delayMs > sw.ElapsedMilliseconds);
+            sw.Stop();
+            Logger.Debug($"Actual delay: {sw.ElapsedMilliseconds} ms");
+        }
+
         public void morseString(string line, int speed, CancellationToken ct)
         {
             if (!_busy)
@@ -114,7 +127,7 @@ namespace tnxlog
                     PropertyInfo cwProp = getPortProp(cwPinNo);
                     bool cwOn = getInvert(cwPinNo) ? true : false;
                     setPin("PTT", false);
-                    Thread.Sleep(speed);
+                    delay(speed);
                     foreach (char c in line)
                     {
                         if (ct.IsCancellationRequested)
@@ -123,18 +136,19 @@ namespace tnxlog
                         {
                             if (!MorseCode.Alphabet.ContainsKey(c))
                                 continue;
+                            Logger.Debug(c);
                             char[] code = MorseCode.Alphabet[c];
                             foreach (char mc in code)
                             {
                                 cwProp.SetValue(serialPort, cwOn);
-                                Thread.Sleep(mc == MorseCode.Dot ? speed : 4 * speed);
+                                delay(mc == MorseCode.Dot ? speed : 4 * speed);
                                 cwProp.SetValue(serialPort, !cwOn);
-                                Thread.Sleep(speed);
+                                delay(speed);
                             }
-                            Thread.Sleep(2 * speed);
+                            delay(2 * speed);
                         }
                         else
-                            Thread.Sleep(4 * speed);
+                            delay(4 * speed);
                     }
                 }
                 catch (TaskCanceledException) {}

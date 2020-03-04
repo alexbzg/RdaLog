@@ -945,6 +945,7 @@ namespace tnxlog
             {
                 FormCwSend fSend = new FormCwSend();
                 fSend.Width = Width;
+                fSend.TopMost = TopMost;
                 fSend.charEntered += async delegate (object _sender, CharEnteredEventArgs _e)
                 {
                     await sendCwMsg(new string(_e.Char, 1));

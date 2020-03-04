@@ -10,14 +10,15 @@ namespace HamRadio
 
     public class Mode
     {
-        public static readonly string[] Names = new string[] {"CW", "SSB", "FT8", "FT4", "JT65"};
+        public static readonly string[] Names = new string[] {"CW", "SSB", "FT8", "FT4", "JT65", "MFSK"};
         public static readonly Dictionary<string, string> DefRst = new Dictionary<string, string>
         {
             {"CW", "599" },
             {"SSB", "59" },
             { "FT8", "-10" },
             { "FT4", "-10" },
-            { "JT65", "-10" }
+            { "JT65", "-10" },
+            { "MFSK", "-10" }
         };
         public static readonly Dictionary<string, int[]> DefFreq = new Dictionary<string, int[]>
         {
