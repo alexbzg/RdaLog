@@ -22,6 +22,7 @@ namespace tnxlog
         private BindingSource bsQSO;
         private BindingList<QSO> searchResults = new BindingList<QSO>();
         private Regex reFilter;
+        private DataGridViewTextBoxColumn[] qthColumns;
         public FormLog(FormLogConfig _config, Tnxlog _tnxlog) : base(_config)
         {
             tnxlog = _tnxlog;
@@ -39,7 +40,17 @@ namespace tnxlog
                 for (int co = _config.dataGridColumnsWidth.Count; co < dataGridView.Columns.Count; co++)
                     _config.dataGridColumnsWidth.Add(dataGridView.Columns[co].Width);
 
+            qthColumns = new DataGridViewTextBoxColumn[] { QthField0, QthField1, QthField2 };
+            for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+                qthColumns[field].HeaderText = ((TnxlogConfig)(config.parent)).qthFieldTitles[field];
+            tnxlog.qthFieldTitleChange += qthFieldTitleChange;
+
             tnxlog.qsoList.ListChanged += QsoList_ListChanged;
+        }
+
+        private void qthFieldTitleChange(object sender, QthFieldChangeEventArgs e)
+        {
+            DoInvoke(() => { qthColumns[e.field].HeaderText = e.value; });
         }
 
         private void BsQSO_ListChanged(object sender, ListChangedEventArgs e)

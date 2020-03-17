@@ -26,10 +26,11 @@ namespace tnxlog
     public partial class FormMain : StorableForm.StorableForm<FormMainConfig>, IMessageFilter
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        class StatusFieldControls
+        class QthFieldControls
         {
             internal CheckBox auto;
             internal TextBox value;
+            internal Label label;
         }
 
         class QsoValues
@@ -57,22 +58,39 @@ namespace tnxlog
             }
         }
 
-        static Regex RdaMatchRegex = new Regex(@"[A-Z][A-Z][\- ]?\d\d", RegexOptions.Compiled);
-        static Regex LocatorRegex = new Regex(@"[A-Z][A-Z]\d\d[A-Z][A-Z]", RegexOptions.Compiled);
-        static Regex RafaRegex = new Regex(@"[A-Z\d]{4}", RegexOptions.Compiled);
-        static RegexReplace RdaEditRegex = new RegexReplace()
+        class QthRegex
         {
-            re = new Regex(@"([A-Z][A-Z])[\- ]?(\d\d)", RegexOptions.Compiled),
-            rplcmnt = "$1-$2"
+            internal Regex match;
+            internal RegexReplace edit;
+        }
+
+        static Dictionary<string, QthRegex> QthRegexes = new Dictionary<string, QthRegex>() {
+            {"RDA", new QthRegex() {
+                match = new Regex(@"[A-Z][A-Z][\- ]?\d\d", RegexOptions.Compiled),
+                edit =  new RegexReplace() {
+                    re = new Regex(@"([A-Z][A-Z])[\- ]?(\d\d)", RegexOptions.Compiled),
+                    rplcmnt = "$1-$2"
+                }
+            }
+            },
+            {"Locator", new QthRegex()
+            {
+                match = new Regex(@"[A-Z][A-Z]\d\d[A-Z][A-Z]", RegexOptions.Compiled)
+            } },
+            {"RAFA", new QthRegex()
+            {
+                match = new Regex(@"[A-Z\d]{4}", RegexOptions.Compiled)
+            } }
+
         };
 
         static readonly Keys[] CwMacrosKeys = new Keys[] { Keys.F1, Keys.F2, Keys.F3, Keys.F4, Keys.F5, Keys.F6, Keys.F7, Keys.F8, Keys.F9 };
 
         static readonly string AutoUpdaterURI = "https://tnxqso.com/static/files/tnxlog.xml";
         private Tnxlog tnxlog;
-        private Dictionary<string, StatusFieldControls> statusFieldsControls;
+        private QthFieldControls[] qthFieldsControls;
         private Dictionary<string, Panel> panels;
-        private HashSet<string> rdaValues;
+        private Dictionary<string, HashSet<string>> qthValues = new Dictionary<string, HashSet<string>>();
         private StringIndex callsignsDb = new StringIndex();
         private StringIndex callsignsQso = new StringIndex();
         private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
@@ -84,6 +102,8 @@ namespace tnxlog
         private bool autoCq;
         private ConcurrentQueue<string> cwQueue = new ConcurrentQueue<string>();
         private string clearedCS = "";
+        private bool isClosing;
+
         private QsoValues currentQsoValues()
         {
             return new QsoValues() {
@@ -122,8 +142,10 @@ namespace tnxlog
 
             try
             {
-                string rdaValuesStr = File.ReadAllText(Application.StartupPath + @"\rdaValues.json");
-                rdaValues = new HashSet<string>(JsonConvert.DeserializeObject<string[]>(rdaValuesStr));
+                string qthValuesStr = File.ReadAllText(Application.StartupPath + @"\qthValues.json");
+                Dictionary<string, string[]> qthValuesDict = JsonConvert.DeserializeObject<Dictionary<string,string[]>>(qthValuesStr);
+                foreach (string qthField in qthValuesDict.Keys)
+                    qthValues[qthField] = new HashSet<string>(qthValuesDict[qthField]);
             }
             catch (Exception e)
             {
@@ -148,30 +170,33 @@ namespace tnxlog
             updateCwMacrosTitles();
             numericUpDownMorseSpeed.Value = tnxlogConfig.morseSpeed;
 
-            statusFieldsControls = new Dictionary<string, StatusFieldControls>()
+            qthFieldsControls = new QthFieldControls[]
                 {
-                    {"rda", new StatusFieldControls(){
-                        auto = checkBoxAutoRda,
-                        value = textBoxRda
-                    } },
-                    {"rafa", new StatusFieldControls(){
-                        auto = checkBoxAutoRafa,
-                        value = textBoxRafa
-                    } },
-                    {"locator", new StatusFieldControls(){
-                        auto = checkBoxAutoLocator,
-                        value = textBoxLocator
-                    } }
+                    new QthFieldControls(){
+                        auto = checkBoxAutoQth1,
+                        value = textBoxQth1,
+                        label = labelQth1
+                    },
+                    new QthFieldControls(){
+                        auto = checkBoxAutoQth2,
+                        value = textBoxQth2,
+                        label = labelQth2
+                    },
+                    new QthFieldControls(){
+                        auto = checkBoxAutoQth3,
+                        value = textBoxQth3,
+                        label = labelQth3
+                    },
                 };
 
             panels = new Dictionary<string, Panel>()
             {
                 {"qsoComments", panelQsoComments },
-                {"statusFields", panelStatusFields },
+                {"qth1_2", panelQth1_2 },
                 {"statFilter", panelStatFilter },
                 {"callsignId", panelCallsignId },
                 {"cwMacros", panelCwMacro },
-                {"statusFieldsLocUsr", panelStatusFieldsLocUsr }
+                {"qth3Loc", panelQth3Loc }
             };
             arrangePanels();
             tnxlogConfig.mainFormPanelVisibleChange += delegate (object sender, EventArgs e)
@@ -199,24 +224,56 @@ namespace tnxlog
 
             checkBoxAutoStatFilter.Checked = config.statFilterAuto;
 
-            foreach (KeyValuePair<string, StatusFieldControls> item in statusFieldsControls)
+            for (int co = 0; co < TnxlogConfig.QthFieldCount; co++)
             {
-                string field = item.Key;
-                bool auto = tnxlogConfig.getStatusFieldAuto(field);
-                CheckBox checkBoxAuto = item.Value.auto;
-                TextBox textBoxValue = item.Value.value;
+                int field = co;
+                bool auto = tnxlogConfig.getQthFieldAuto(field);
+                CheckBox checkBoxAuto = qthFieldsControls[co].auto;
+                TextBox textBoxValue = qthFieldsControls[co].value;
+                Label label = qthFieldsControls[co].label;
                 checkBoxAuto.Checked = auto;
                 textBoxValue.Enabled = !auto;
-                textBoxValue.Text = tnxlogConfig.getStatusFieldValue(field);
+                textBoxValue.Text = tnxlogConfig.getQthFieldValue(field);
+                label.Text = tnxlogConfig.qthFieldTitles[field];
+
                 checkBoxAuto.CheckedChanged += delegate (object sender, EventArgs e)
                 {
-                    tnxlogConfig.setStatusFieldAuto(field, checkBoxAuto.Checked);
+                    tnxlogConfig.setQthFieldAuto(field, checkBoxAuto.Checked);
                     textBoxValue.Enabled = !checkBoxAuto.Checked;
                 };
+
+                textBoxValue.Validating += delegate (object sender, CancelEventArgs e)
+                {
+                    if (this.ActiveControl.Equals(sender))
+                        return;
+                    if (!isClosing)
+                    {
+                        string txt = textBoxValue.Text;
+                        try
+                        {
+                            List<string> qthFieldValues = parseValues(label.Text, ref txt);
+                            textBoxValue.Text = String.Join(" ", qthFieldValues);
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            txt = ex.Message;
+                        }
+                        if (txt.Length > 0)
+                        {
+                            MessageBox.Show($"Invalid {label.Text}: {txt}", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            e.Cancel = true;
+                        }
+                    }
+                };
+
                 textBoxValue.Validated += delegate (object sender, EventArgs e)
                 {
-                    tnxlog.setStatusFieldValue(field, textBoxValue.Text);
+                    if (this.ActiveControl.Equals(sender))
+                        return;
+                    if (!isClosing)
+                        tnxlog.setQthField(field, textBoxValue.Text);
                 };
+
                 textBoxValue.TextChanged += delegate (object sender, EventArgs e)
                 {
                     int selStart = textBoxValue.SelectionStart;
@@ -224,7 +281,7 @@ namespace tnxlog
                     textBoxValue.SelectionStart = selStart;
                 };
 
-                tnxlog.statusFieldChange += delegate (object sender, StatusFieldChangeEventArgs e)
+                tnxlog.qthFieldChange += delegate (object sender, QthFieldChangeEventArgs e)
                 {
                     if (e.field == field)
                         DoInvoke(() =>
@@ -232,11 +289,19 @@ namespace tnxlog
                             textBoxValue.Text = e.value;
                         });
                 };
+
+                tnxlog.qthFieldTitleChange += delegate (object sender, QthFieldChangeEventArgs e)
+                {
+                    if (e.field == field)
+                        DoInvoke(() =>
+                        {
+                            label.Text = e.value;
+                        });
+                };
             }
 
-            tnxlog.statusFieldChange += rdaLog_statusFieldChange;
+            tnxlog.locChange += locChange;
 
-            textBoxUserField.Text = tnxlogConfig.userField;
             textBoxCallsign.Text = config.callsign;
 
             tnxlog.qsoList.ListChanged += QsoList_ListChanged;
@@ -253,6 +318,14 @@ namespace tnxlog
             autoCqTimer = new System.Threading.Timer(async obj => await processCwMacro(tnxlogConfig.cwMacros[0][1]), null, Timeout.Infinite, Timeout.Infinite);
             Application.AddMessageFilter(this);
             updateLabelEsm();
+        }
+
+        private void locChange(object sender, EventArgs e)
+        {
+            DoInvoke(() =>
+            {
+                textBoxLocator.Text = tnxlog.loc;
+            });
         }
 
         internal void updateCwMacrosTitles()
@@ -272,11 +345,6 @@ namespace tnxlog
                 DoInvoke(() => { connectionStatusLabel.BackColor = backColor; });
         }
 
-        private void rdaLog_statusFieldChange (object sender, StatusFieldChangeEventArgs e)
-        {
-            string value = string.IsNullOrEmpty(e.value) ? "N/A" : e.value;
-            //showBalloon($"New {e.field}: {value}", 20 * 1000);
-        }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -294,10 +362,10 @@ namespace tnxlog
         private void indexQso(QSO qso, bool updateStatsFlag = false)
         {
             callsignsQso.add(qso.cs);
-            if (!string.IsNullOrEmpty(qso.rda))
+            if (!string.IsNullOrEmpty(qso.qth[0]))
             {
                 bool flag = false;
-                string[] rdas = qso.rda.Split(' ');
+                string[] rdas = qso.qth[0].Split(' ');
                 foreach (string rda in rdas)
                     if (!comboBoxStatFilterRda.Items.Contains(rda))
                         DoInvoke(() =>
@@ -381,10 +449,20 @@ namespace tnxlog
             }
         }
 
-        private List<string> parseValues(Regex reMatch, ref string values, HashSet<string> valuesSet, RegexReplace reReplace)
+        private List<string> parseValues(string qthField, ref string values)
         {
             values = values.ToUpper().Trim();
             List<string> result = new List<string>();
+            Regex reMatch = null;
+            RegexReplace reReplace = null;
+            if (QthRegexes.ContainsKey(qthField))
+            {
+                reMatch = QthRegexes[qthField].match;
+                reReplace = QthRegexes[qthField].edit;
+            }
+            HashSet<string> valuesSet = null;
+            if (qthValues.ContainsKey(qthField))
+                valuesSet = qthValues[qthField];
             Match match = reMatch.Match(values);
             while (match.Success)
             {
@@ -422,32 +500,13 @@ namespace tnxlog
             return result;
         }
 
-        private void TextBoxRda_Validating(object sender, CancelEventArgs e)
-        {
-            string txt = textBoxRda.Text;
-            try
-            {
-                List<string> rdas = parseValues(RdaMatchRegex, ref txt, rdaValues, RdaEditRegex);
-                textBoxRda.Text = String.Join(" ", rdas);
-            }
-            catch (ArgumentException ex)
-            {
-                txt = ex.Message;
-            }
-            if (txt.Length > 0)
-            {
-                MessageBox.Show("Invalid rda: " + txt, Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                e.Cancel = true;
-            }
-        }
-
         private void TextBoxLocator_Validating(object sender, CancelEventArgs e)
         {
             string txt = textBoxLocator.Text;
             bool ok = false;
             try
             {
-                List<string> locators = parseValues(LocatorRegex, ref txt, null, null);
+                List<string> locators = parseValues("Locator", ref txt);
                 if (locators.Count > 0)
                 {
                     textBoxLocator.Text = locators[0];
@@ -520,8 +579,11 @@ namespace tnxlog
                             string valItem = fieldValItems[co];
                             if (!r.ContainsKey(valItem))
                                 r[valItem] = new List<QSO>();
-                            r[valItem].Add(co == 0 ? qso :
-                                new QSO
+                            QSO qsoAdd;
+                            if (co == 0)
+                                qsoAdd = qso;
+                            else {
+                                qsoAdd = new QSO
                                 {
                                     _ts = DateTime.ParseExact(qso.ts, "yyyy-MM-dd HH:mm:ss",
                                         System.Globalization.CultureInfo.InvariantCulture).AddMinutes(co).ToString("yyyy-MM-dd HH:mm:ss"),
@@ -534,11 +596,12 @@ namespace tnxlog
                                     _rcv = qso.rcv,
                                     _freqRx = qso.freq,
                                     _no = qso.no,
-                                    _rda = qso.rda,
-                                    _rafa = qso.rafa,
                                     _loc = qso.loc,
-                                    _userFields = qso.userFields
-                                });
+                                };
+                                for (int qthField = 0; qthField < TnxlogConfig.QthFieldCount; qthField++)
+                                    qsoAdd.qth[qthField] = qso.qth[qthField];
+                            }
+                            r[valItem].Add(qsoAdd);
                         }
                     }
                 }
@@ -627,7 +690,7 @@ namespace tnxlog
                 if (tnxlog.qsoList.FirstOrDefault(x =>
                 {
                     return x.cs == textBoxCorrespondent.Text && x.mode == comboBoxMode.SelectedItem.ToString() && x.band == Band.fromFreq(numericUpDownFreq.Value)
-                        && x.rda == tnxlogConfig.getStatusFieldValue("rda") && x.ts.StartsWith(today);
+                        && x.qth[0] == tnxlogConfig.getQthFieldValue(0) && x.ts.StartsWith(today);
                 }) != null) {
                     toggleDupe(true);
                     return;
@@ -728,10 +791,10 @@ namespace tnxlog
             if (checkBoxAutoStatFilter.Checked)
             {
                 object selection = comboBoxStatFilterRda.SelectedItem;
-                if (!string.IsNullOrEmpty(textBoxRda.Text) && (selection == null || string.IsNullOrEmpty(selection.ToString()) ||
-                    !textBoxRda.Text.Contains(selection.ToString())))
+                if (!string.IsNullOrEmpty(textBoxQth1.Text) && (selection == null || string.IsNullOrEmpty(selection.ToString()) ||
+                    !textBoxQth1.Text.Contains(selection.ToString())))
                 {
-                    string[] rdas = textBoxRda.Text.Split(' ');
+                    string[] rdas = textBoxQth1.Text.Split(' ');
                     bool flag = false;
                     foreach (string rda in rdas)
                         if (comboBoxStatFilterRda.Items.Contains(rda))
@@ -756,7 +819,7 @@ namespace tnxlog
                 int qsoCount = 0;
                 foreach (QSO qso in tnxlog.qsoList)
                     if ((comboBoxStatFilterRda.SelectedIndex == 0 || comboBoxStatFilterRda.SelectedItem == null ||
-                        (!string.IsNullOrEmpty(qso.rda) && qso.rda.Contains(comboBoxStatFilterRda.SelectedItem.ToString()))) &&
+                        (!string.IsNullOrEmpty(qso.qth[0]) && qso.qth[0].Contains(comboBoxStatFilterRda.SelectedItem.ToString()))) &&
                         (comboBoxStatFilterMode.SelectedIndex == 0 || comboBoxStatFilterMode.SelectedItem == null || comboBoxStatFilterMode.SelectedItem.ToString() == qso.mode) &&
                         (comboBoxStatFilterBand.SelectedIndex == 0 || comboBoxStatFilterBand.SelectedItem == null || comboBoxStatFilterBand.SelectedItem.ToString() == qso.band))
                     {
@@ -826,10 +889,10 @@ namespace tnxlog
                                 {
                                     { "MY_CALL", new string[] { textBoxCallsign.Text } },
                                     { "CALL", new string[] { textBoxCorrespondent.Text, tnxlog.qsoList.FirstOrDefault()?.cs } },
-                                    { "RDA", new string[] { textBoxRda.Text } },
-                                    { "RAFA", new string[] { textBoxRafa.Text } },
+                                    { "RDA", new string[] { textBoxQth1.Text } },
+                                    { "RAFA", new string[] { textBoxQth2.Text } },
                                     { "LOCATOR", new string[] { textBoxLocator.Text } },
-                                    { "USER_FIELD", new string[] { textBoxUserField.Text } }
+                                    { "USER_FIELD", new string[] { textBoxQth3.Text } }
                                 };
                     foreach (string subst in substs.Keys)
                     {
@@ -1001,6 +1064,7 @@ namespace tnxlog
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             Logger.Info("------------------- Closed by user -------------------------------------");
+            isClosing = true;
         }
 
         private void MenuItemAdifExportLoc_Click(object sender, EventArgs e)
@@ -1019,12 +1083,6 @@ namespace tnxlog
             }
         }
 
-        private void TextBoxUserField_Validated(object sender, EventArgs e)
-        {
-            ((TnxlogConfig)config.parent).userField = textBoxUserField.Text;
-        }
-
-
 
         private void NumericUpDownMorseSpeed_ValueChanged(object sender, EventArgs e)
         {
@@ -1036,6 +1094,24 @@ namespace tnxlog
             config.freq = numericUpDownFreq.Value;
             config.write();
             setStatFilter();
+        }
+
+        private void TextBoxLocator_TextChanged(object sender, EventArgs e)
+        {
+            tnxlog.loc = textBoxLocator.Text;
+        }
+
+        private void TextBoxLocator_Validated(object sender, EventArgs e)
+        {
+            int selStart = textBoxLocator.SelectionStart;
+            textBoxLocator.Text = textBoxLocator.Text.ToUpper();
+            textBoxLocator.SelectionStart = selStart;
+        }
+
+        private void CheckBoxAutoLocator_CheckedChanged(object sender, EventArgs e)
+        {
+            tnxlogConfig.locAuto = checkBoxAutoLocator.Checked;
+            textBoxLocator.Enabled = !checkBoxAutoLocator.Checked;
         }
     }
 

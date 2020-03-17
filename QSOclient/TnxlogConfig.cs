@@ -44,52 +44,66 @@ namespace tnxlog
             Tuple.Create("RAF", "RAFA {RAFA}"),
             Tuple.Create("LOC", "{LOCATOR}")
         };
-        public static readonly List<string> StatusFields = new List<string> { "rda", "rafa", "locator",  };
 
-        public static readonly List<string> MainFormPanels = new List<string> { "qsoComments", "statusFields", "statusFieldsLocUsr", "statFilter", "callsignId", "cwMacros" };
+        public static readonly List<string> MainFormPanels = new List<string> { "qsoComments", "qth1_2", "qth3Loc", "statFilter", "callsignId", "cwMacros" };
+        public static readonly int QthFieldCount = 3;
 
         public FormMainConfig formMain;
         public HttpServiceConfig httpService;
         public FormLogConfig formLog;
         public TransceiverControllerConfig transceiverController;
 
-        private Dictionary<string, StatusField> _statusFields;
-        public List<SerStatusField> serStatusFields;
-        public void setStatusFieldValue(string field, string value)
+        public string[] qthFields = new string[QthFieldCount];
+        public void setQthFieldValue(int field, string value)
         {
-            if (_statusFields[field].value != value)
+            if (qthFields[field] != value)
             {
-                _statusFields[field].value = value;
+                qthFields[field] = value;
                 write();
             }
         }
-        public void setStatusFieldAuto(string field, bool value)
+
+        public string[] qthFieldTitles = new string[] { "QTH Field", "QTH Field", "QTH Field" };
+
+        public void setQthFieldTitle(int field, string value)
         {
-            if (_statusFields[field].auto != value)
+            if (qthFieldTitles[field] != value)
             {
-                _statusFields[field].auto = value;
+                qthFieldTitles[field] = value;
                 write();
             }
         }
-        public string getStatusFieldValue(string field)
+
+        public bool[] qthFieldsAuto = new bool[QthFieldCount];
+        public void setQthFieldAuto(int field, bool value)
         {
-            return _statusFields[field].auto ? null : _statusFields[field].value;
+            if (qthFieldsAuto[field] != value)
+            {
+                qthFieldsAuto[field] = value;
+                write();
+            }
         }
-        public bool getStatusFieldAuto(string field)
+        public string getQthFieldValue(int field)
         {
-            return _statusFields[field].auto;
+            return qthFieldsAuto[field] ? null : qthFields[field];
+        }
+        public bool getQthFieldAuto(int field)
+        {
+            return qthFieldsAuto[field];
         }
 
-        private string _userField;
-
-        public string userField
+        private string _loc;
+        public string loc
         {
-            get { return _userField; }
-            set { if (_userField != value )
-                {
-                    _userField = value;
-                    write();
-                } }
+            get { return _loc; }
+            set { _loc = loc; write(); }
+        }
+
+        private bool _locAuto;
+        public bool locAuto
+        {
+            get { return _locAuto; }
+            set { _locAuto = value; write(); }
         }
 
         public string esmMacro = "{CALL} TU DE {MY_CALL}";
@@ -167,14 +181,6 @@ namespace tnxlog
             for (int co = cwMacros.Count; co < CwMacrosDefaults.Count; co++)
                 cwMacros.Add(new string[] { CwMacrosDefaults[co].Item1, CwMacrosDefaults[co].Item2 });
 
-            if (serStatusFields != null)
-                _statusFields = serStatusFields.ToDictionary(item => item.field, item => new StatusField() { auto = item.auto, value = item.value });
-            else
-                _statusFields = new Dictionary<string, StatusField>();
-            foreach (string field in StatusFields)
-                if (!_statusFields.ContainsKey(field))
-                    _statusFields[field] = new StatusField() { auto = true, value = null };
-
             if (serMainFormPanels != null)
                 _mainFormPanels = serMainFormPanels.ToDictionary(item => item.name, item => item.enabled);
             else
@@ -190,13 +196,6 @@ namespace tnxlog
         {
             if (initialized)
             {
-                serStatusFields = _statusFields.Select(item => new SerStatusField()
-                {
-                    field = item.Key,
-                    auto = item.Value.auto,
-                    value = item.Value.value
-                }).ToList();
-
                 serMainFormPanels = _mainFormPanels.Select(item => new SerPropEnable()
                 {
                     name = item.Key,

@@ -16,9 +16,9 @@ using XmlConfigNS;
 
 namespace tnxlog
 {
-    public class StatusFieldChangeEventArgs: EventArgs
+    public class QthFieldChangeEventArgs: EventArgs
     {
-        public string field;
+        public int field;
         public string value;
     }
 
@@ -37,29 +37,57 @@ namespace tnxlog
         private string qsoFilePath;
         internal BindingList<QSO> qsoList;
         private QSOFactory qsoFactory;
-        public EventHandler<StatusFieldChangeEventArgs> statusFieldChange;
-        private Dictionary<string, string> _statusFields = new Dictionary<string, string>();
-        public void setStatusFieldValue(string field, string value)
+        public EventHandler<QthFieldChangeEventArgs> qthFieldChange;
+        public EventHandler locChange;
+        public EventHandler<QthFieldChangeEventArgs> qthFieldTitleChange;
+        private string[] qthFields = new string[TnxlogConfig.QthFieldCount];
+        public void setQthField(int field, string value)
         {
-            if (_statusFields[field] != value)
+            if (qthFields[field] != value)
             {
-                _statusFields[field] = value;
-                config.setStatusFieldValue(field, value);
-                statusFieldChange?.Invoke(this, new StatusFieldChangeEventArgs()
+                qthFields[field] = value;
+                config.setQthFieldValue(field, value);
+                qthFieldChange?.Invoke(this, new QthFieldChangeEventArgs()
                 {
                     field = field,
                     value = value
                 });
             }
         }
-        public string getStatusFieldValue(string field)
+        public string getQthFieldValue(int field)
         {
-            return _statusFields[field];
+            return qthFields[field];
         }
 
-        public string userField { get { return config.userField; } }
+        private string _loc;
+        public string loc
+        {
+            get { return _loc; }
+            set
+            {
+                if (_loc != value)
+                {
+                    _loc = value;
+                    config.loc = value;
+                    locChange?.Invoke(this, new EventArgs());
+                }
+            }
+        }
 
-
+        private string[] qthFieldTitles = new string[TnxlogConfig.QthFieldCount];
+        public void setQthFieldTitle(int field, string value)
+        {
+            if (qthFieldTitles[field] != value)
+            {
+                qthFieldTitles[field] = value;
+                config.setQthFieldTitle(field, value);
+                qthFieldTitleChange?.Invoke(this, new QthFieldChangeEventArgs()
+                {
+                    field = field,
+                    value = value
+                });
+            }
+        }
 
         public Tnxlog()
         {
@@ -91,8 +119,8 @@ namespace tnxlog
 #endif
             qsoFilePath = Path.Combine(dataPath, "qso.dat");
             config = XmlConfig.create<TnxlogConfig>(Path.Combine(dataPath, "config.xml"));
-            foreach (string field in TnxlogConfig.StatusFields)
-                _statusFields[field] = config.getStatusFieldValue(field);
+            for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+                qthFields[field] = config.getQthFieldValue(field);
             httpService = new HttpService(config.httpService, this);
             transceiverController = new TransceiverController(config.transceiverController);
             adifLogWatcher.OnNewAdifEntry += newAdifLogEntry;   
@@ -111,6 +139,20 @@ namespace tnxlog
                 Task.Run(async () => await httpService.login(true));
             qsoList.Where(qso => qso.serverTs == 0).Select(async qso => await httpService.postQso(qso));
             initServices();
+        }
+
+        public string statusJson()
+        {
+            string r = "{\"qth\": {\"fields\": {";
+            List<string> fields = new List<string>();
+            for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+                if (!config.getQthFieldAuto(field))
+                    fields.Add($"\"{field}\": \"{config.getQthFieldValue(field)}\"");
+            r += String.Join(", ", fields) + "}";
+            if (!config.locAuto)
+                r += $", \"loc\": \"{config.loc}\"";
+            r += $"}}, \"token\": \"{config.httpService.token}\"}}";
+            return r;
         }
 
         private async void newAdifLogEntry(object sender, NewAdifEntryEventArgs e)

@@ -62,7 +62,7 @@
             this.textBoxCwMacroF2Title = new System.Windows.Forms.TextBox();
             this.textBoxCwMacroF1Title = new System.Windows.Forms.TextBox();
             this.checkBoxViewStatFilter = new System.Windows.Forms.CheckBox();
-            this.checkBoxViewRdaRafa = new System.Windows.Forms.CheckBox();
+            this.checkBoxViewQth1_2 = new System.Windows.Forms.CheckBox();
             this.checkBoxViewCallsignId = new System.Windows.Forms.CheckBox();
             this.checkBoxViewCwMacro = new System.Windows.Forms.CheckBox();
             this.buttonOK = new System.Windows.Forms.Button();
@@ -74,8 +74,10 @@
             this.radioButtonUpdInterval10s = new System.Windows.Forms.RadioButton();
             this.tabPageView = new System.Windows.Forms.TabPage();
             this.checkBoxViewQsoComments = new System.Windows.Forms.CheckBox();
-            this.checkBoxViewLocUsr = new System.Windows.Forms.CheckBox();
+            this.checkBoxViewQth3Loc = new System.Windows.Forms.CheckBox();
             this.tabPageCwMacros = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxEsmMacro = new System.Windows.Forms.TextBox();
             this.labelAutoCqRxPause = new System.Windows.Forms.Label();
             this.labelAutoCqPauseSec = new System.Windows.Forms.Label();
             this.numericUpDownAutoCqPause = new System.Windows.Forms.NumericUpDown();
@@ -92,8 +94,6 @@
             this.textBoxDebugLog = new System.Windows.Forms.TextBox();
             this.labelDebug = new System.Windows.Forms.Label();
             this.openFileDialogAdifLog = new System.Windows.Forms.OpenFileDialog();
-            this.textBoxEsmMacro = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPageServer.SuspendLayout();
             this.groupBoxUpdInterval.SuspendLayout();
@@ -448,18 +448,18 @@
             this.checkBoxViewStatFilter.Text = "Statistic filter";
             this.checkBoxViewStatFilter.UseVisualStyleBackColor = true;
             // 
-            // checkBoxViewRdaRafa
+            // checkBoxViewQth1_2
             // 
-            this.checkBoxViewRdaRafa.AutoSize = true;
-            this.checkBoxViewRdaRafa.Checked = true;
-            this.checkBoxViewRdaRafa.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxViewRdaRafa.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewRdaRafa.Location = new System.Drawing.Point(37, 19);
-            this.checkBoxViewRdaRafa.Name = "checkBoxViewRdaRafa";
-            this.checkBoxViewRdaRafa.Size = new System.Drawing.Size(83, 17);
-            this.checkBoxViewRdaRafa.TabIndex = 61;
-            this.checkBoxViewRdaRafa.Text = "RDA, RAFA";
-            this.checkBoxViewRdaRafa.UseVisualStyleBackColor = true;
+            this.checkBoxViewQth1_2.AutoSize = true;
+            this.checkBoxViewQth1_2.Checked = true;
+            this.checkBoxViewQth1_2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxViewQth1_2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBoxViewQth1_2.Location = new System.Drawing.Point(37, 19);
+            this.checkBoxViewQth1_2.Name = "checkBoxViewQth1_2";
+            this.checkBoxViewQth1_2.Size = new System.Drawing.Size(146, 17);
+            this.checkBoxViewQth1_2.TabIndex = 61;
+            this.checkBoxViewQth1_2.Text = "QTH Field 1, QTH Field 2";
+            this.checkBoxViewQth1_2.UseVisualStyleBackColor = true;
             // 
             // checkBoxViewCallsignId
             // 
@@ -537,7 +537,7 @@
             this.tabPageServer.Location = new System.Drawing.Point(4, 22);
             this.tabPageServer.Name = "tabPageServer";
             this.tabPageServer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageServer.Size = new System.Drawing.Size(356, 421);
+            this.tabPageServer.Size = new System.Drawing.Size(356, 430);
             this.tabPageServer.TabIndex = 0;
             this.tabPageServer.Text = "TNXQSO.com";
             // 
@@ -578,15 +578,15 @@
             // 
             this.tabPageView.BackColor = System.Drawing.SystemColors.Control;
             this.tabPageView.Controls.Add(this.checkBoxViewQsoComments);
-            this.tabPageView.Controls.Add(this.checkBoxViewLocUsr);
+            this.tabPageView.Controls.Add(this.checkBoxViewQth3Loc);
             this.tabPageView.Controls.Add(this.checkBoxViewCwMacro);
             this.tabPageView.Controls.Add(this.checkBoxViewStatFilter);
-            this.tabPageView.Controls.Add(this.checkBoxViewRdaRafa);
+            this.tabPageView.Controls.Add(this.checkBoxViewQth1_2);
             this.tabPageView.Controls.Add(this.checkBoxViewCallsignId);
             this.tabPageView.Location = new System.Drawing.Point(4, 22);
             this.tabPageView.Name = "tabPageView";
             this.tabPageView.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageView.Size = new System.Drawing.Size(356, 421);
+            this.tabPageView.Size = new System.Drawing.Size(356, 430);
             this.tabPageView.TabIndex = 1;
             this.tabPageView.Text = "View";
             // 
@@ -603,18 +603,18 @@
             this.checkBoxViewQsoComments.Text = "QSO comments";
             this.checkBoxViewQsoComments.UseVisualStyleBackColor = true;
             // 
-            // checkBoxViewLocUsr
+            // checkBoxViewQth3Loc
             // 
-            this.checkBoxViewLocUsr.AutoSize = true;
-            this.checkBoxViewLocUsr.Checked = true;
-            this.checkBoxViewLocUsr.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxViewLocUsr.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewLocUsr.Location = new System.Drawing.Point(37, 40);
-            this.checkBoxViewLocUsr.Name = "checkBoxViewLocUsr";
-            this.checkBoxViewLocUsr.Size = new System.Drawing.Size(112, 17);
-            this.checkBoxViewLocUsr.TabIndex = 64;
-            this.checkBoxViewLocUsr.Text = "Locator, User field";
-            this.checkBoxViewLocUsr.UseVisualStyleBackColor = true;
+            this.checkBoxViewQth3Loc.AutoSize = true;
+            this.checkBoxViewQth3Loc.Checked = true;
+            this.checkBoxViewQth3Loc.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxViewQth3Loc.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBoxViewQth3Loc.Location = new System.Drawing.Point(37, 40);
+            this.checkBoxViewQth3Loc.Name = "checkBoxViewQth3Loc";
+            this.checkBoxViewQth3Loc.Size = new System.Drawing.Size(125, 17);
+            this.checkBoxViewQth3Loc.TabIndex = 64;
+            this.checkBoxViewQth3Loc.Text = "QTH Field 3, Locator";
+            this.checkBoxViewQth3Loc.UseVisualStyleBackColor = true;
             // 
             // tabPageCwMacros
             // 
@@ -661,6 +661,24 @@
             this.tabPageCwMacros.Size = new System.Drawing.Size(356, 430);
             this.tabPageCwMacros.TabIndex = 2;
             this.tabPageCwMacros.Text = "CW macros";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(27, 400);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(95, 13);
+            this.label1.TabIndex = 79;
+            this.label1.Text = "ESM mode (Ctrl-M)";
+            // 
+            // textBoxEsmMacro
+            // 
+            this.textBoxEsmMacro.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
+            this.textBoxEsmMacro.Location = new System.Drawing.Point(134, 395);
+            this.textBoxEsmMacro.Name = "textBoxEsmMacro";
+            this.textBoxEsmMacro.Size = new System.Drawing.Size(220, 23);
+            this.textBoxEsmMacro.TabIndex = 78;
+            this.textBoxEsmMacro.Text = "RAFA {RAFA}";
             // 
             // labelAutoCqRxPause
             // 
@@ -743,7 +761,7 @@
             this.tabPageDigi.Location = new System.Drawing.Point(4, 22);
             this.tabPageDigi.Name = "tabPageDigi";
             this.tabPageDigi.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDigi.Size = new System.Drawing.Size(356, 421);
+            this.tabPageDigi.Size = new System.Drawing.Size(356, 430);
             this.tabPageDigi.TabIndex = 4;
             this.tabPageDigi.Text = "DIGI";
             // 
@@ -796,14 +814,14 @@
             this.tabPageDebug.Location = new System.Drawing.Point(4, 22);
             this.tabPageDebug.Name = "tabPageDebug";
             this.tabPageDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDebug.Size = new System.Drawing.Size(356, 421);
+            this.tabPageDebug.Size = new System.Drawing.Size(356, 430);
             this.tabPageDebug.TabIndex = 3;
             this.tabPageDebug.Text = "Отладка";
             // 
             // textBoxDebugLog
             // 
             this.textBoxDebugLog.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBoxDebugLog.Location = new System.Drawing.Point(3, 210);
+            this.textBoxDebugLog.Location = new System.Drawing.Point(3, 219);
             this.textBoxDebugLog.Multiline = true;
             this.textBoxDebugLog.Name = "textBoxDebugLog";
             this.textBoxDebugLog.Size = new System.Drawing.Size(350, 208);
@@ -817,24 +835,6 @@
             this.labelDebug.Size = new System.Drawing.Size(340, 34);
             this.labelDebug.TabIndex = 0;
             this.labelDebug.Text = "Скопируйте весь текст в окне ниже и отправьте по адресу 18@73.ru";
-            // 
-            // textBoxEsmMacro
-            // 
-            this.textBoxEsmMacro.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.textBoxEsmMacro.Location = new System.Drawing.Point(134, 395);
-            this.textBoxEsmMacro.Name = "textBoxEsmMacro";
-            this.textBoxEsmMacro.Size = new System.Drawing.Size(220, 23);
-            this.textBoxEsmMacro.TabIndex = 78;
-            this.textBoxEsmMacro.Text = "RAFA {RAFA}";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 400);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 13);
-            this.label1.TabIndex = 79;
-            this.label1.Text = "ESM mode (Ctrl-M)";
             // 
             // FormSettings
             // 
@@ -907,7 +907,7 @@
         private System.Windows.Forms.TextBox textBoxCwMacroF2Title;
         private System.Windows.Forms.TextBox textBoxCwMacroF1Title;
         internal System.Windows.Forms.CheckBox checkBoxViewStatFilter;
-        internal System.Windows.Forms.CheckBox checkBoxViewRdaRafa;
+        internal System.Windows.Forms.CheckBox checkBoxViewQth1_2;
         internal System.Windows.Forms.CheckBox checkBoxViewCallsignId;
         internal System.Windows.Forms.CheckBox checkBoxViewCwMacro;
         private System.Windows.Forms.Button buttonOK;
@@ -929,7 +929,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownAutoCqPause;
         private System.Windows.Forms.Label labelAutoCq;
         private System.Windows.Forms.Label labelAutoCqRxPause;
-        internal System.Windows.Forms.CheckBox checkBoxViewLocUsr;
+        internal System.Windows.Forms.CheckBox checkBoxViewQth3Loc;
         internal System.Windows.Forms.CheckBox checkBoxViewQsoComments;
         private System.Windows.Forms.TabPage tabPageDigi;
         private System.Windows.Forms.CheckBox checkBoxWatchAdifLog;

@@ -20,6 +20,7 @@ using Newtonsoft.Json;
 using System.Reflection;
 using ProtoBuf;
 using System.Diagnostics;
+using Newtonsoft.Json.Linq;
 
 namespace tnxlog
 {
@@ -83,14 +84,14 @@ namespace tnxlog
         }
         public EventHandler<EventArgs> connectionStateChanged;
         private HttpServiceConfig config;
-        private Tnxlog rdaLog;
+        private Tnxlog tnxlog;
         public bool gpsServerLoad;
 
 
         public HttpService(HttpServiceConfig _config, Tnxlog _rdaLog)
         {
             config = _config;
-            rdaLog = _rdaLog;
+            tnxlog = _rdaLog;
             //for backwards compatibility
             List<QSO> unsentQSOs = ProtoBufSerialization.Read<List<QSO>>(unsentFilePath);
             if (unsentQSOs != null && unsentQSOs.Count > 0)
@@ -130,7 +131,7 @@ namespace tnxlog
 
         private async Task<HttpResponseMessage> post(string _URI, object data, bool warnings)
         {
-            string sContent = JsonConvert.SerializeObject(data);
+            string sContent = data.GetType() == typeof(string) ? (string)data : JsonConvert.SerializeObject(data);
 #if !DISABLE_HTTP_LOGGING
             System.Diagnostics.Debug.WriteLine(sContent);
 #endif
@@ -256,49 +257,23 @@ namespace tnxlog
             }
         }
 
-        private static string stringJSONfield(string val)
-        {
-            return val == null || val == "" ? "null" : "\"" + val + "\"";
-        }
-
-        private static string JSONfield(string val)
-        {
-            return val == null || val == "" ? "null" : val;
-        }
-
-        public async Task getLocation()
-        {
-            Uri statusUri = new Uri($"{srvURI.Scheme}://{srvURI.Host}/{stationCallsign}/status.json");
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(statusUri);
-                if (response.IsSuccessStatusCode)
-                {
-                    LocationResponse location = JsonConvert.DeserializeObject<LocationResponse>(await response.Content.ReadAsStringAsync());
-                    rdaLog.setStatusFieldValue("rafa", location.rafa);
-                    rdaLog.setStatusFieldValue("rda", location.rda);
-                    rdaLog.setStatusFieldValue("locator", location.loc);
-                }
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, "HTTP get location error");
-            }
-        }
 
         public async Task ping()
         {
             if (config.token == null)
                 return;
-            HttpResponseMessage response = await post("location", new StatusData(config));
+            HttpResponseMessage response = await post("location", tnxlog.statusJson());
             if (stationCallsign == null)
                 await getUserData();
             if (stationCallsign != null && response.IsSuccessStatusCode)
             {
                 LocationResponse location = JsonConvert.DeserializeObject<LocationResponse>(await response.Content.ReadAsStringAsync());
-                rdaLog.setStatusFieldValue("rafa", location.rafa);
-                rdaLog.setStatusFieldValue("rda", location.rda);
-                rdaLog.setStatusFieldValue("locator", location.loc);
+                for (int co = 0; co < TnxlogConfig.QthFieldCount; co++)
+                {
+                    tnxlog.setQthField(co, location.qth.fields.values[co]);
+                    tnxlog.setQthFieldTitle(co, location.qth.fields.titles[co]);
+                    tnxlog.loc = location.qth.loc;
+                }
             }
             pingTimer.Change(response != null && response.IsSuccessStatusCode ? config.updateIterval : pingIntervalNoConnection, Timeout.Infinite);
         }
@@ -388,11 +363,20 @@ namespace tnxlog
         public string password;
     }
 
+    public class LocationQthFields
+    {
+        public string[] values;
+        public string[] titles;
+    }
+
+    public class LocationQth
+    {
+        public LocationQthFields fields;
+        public string loc;
+    }
     public class LocationResponse
     {
-        public string rafa;
-        public string rda;
-        public string loc;
+        public LocationQth qth;
     }
 
     public class LoginResponse
@@ -456,29 +440,5 @@ namespace tnxlog
         public string freq;
     }
 
-    class StatusData : JSONToken
-    {
-        public string loc { get { return ((TnxlogConfig)config.parent).getStatusFieldValue("locator"); } set { } }
-        public bool ShouldSerializeloc()
-        {
-            return !((TnxlogConfig)config.parent).getStatusFieldAuto("locator");
-        }
-        public string rafa { get { return ((TnxlogConfig)config.parent).getStatusFieldValue("rafa"); } set { } }
-        public bool ShouldSerializerafa()
-        {
-            return !((TnxlogConfig)config.parent).getStatusFieldAuto("rafa");
-        }
-
-        public string rda { get { return ((TnxlogConfig)config.parent).getStatusFieldValue("rda"); } set { } }
-        public bool ShouldSerializerda()
-        {
-            return !((TnxlogConfig)config.parent).getStatusFieldAuto("rda");
-        }
-
-        public string[] userFields { get { return new string[] { ((TnxlogConfig)config.parent).userField }; } set { } }
-
-        internal StatusData(HttpServiceConfig _config) : base(_config) { }
-
-    }
 
 }

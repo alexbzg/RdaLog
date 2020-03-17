@@ -25,14 +25,11 @@ namespace tnxlog
         internal string _cs;
         internal string _snt;
         internal string _rcv;
-        internal string _rda;
-        internal string _rafa;
-        internal string _wff;
         internal string _loc;
         internal string _freqRx;
         internal string _comments;
         internal int _no;
-        internal string[] _userFields;
+        internal string[] _qth = new string[TnxlogConfig.QthFieldCount];
         internal decimal _serverTs = 0;
         internal bool _deleted = false;
 
@@ -60,23 +57,15 @@ namespace tnxlog
         [DataMember, ProtoMember(8)]
         public string rcv { get { return _rcv; } set { _rcv = value; } }
 
-        [DataMember, ProtoMember(9)]
-        public string rda { get { return _rda; } set { _rda = value; } }
-
-        [DataMember, ProtoMember(10)]
-        public string wff { get { return _wff; } set { _wff = value; } }
 
         [DataMember, ProtoMember(11)]
         public int no { get { return _no; } set { _no = value; } }
-
-        [DataMember, ProtoMember(12)]
-        public string rafa { get { return _rafa; } set { _rafa = value; } }
 
         [DataMember, ProtoMember(13)]
         public string loc { get { return _loc; } set { _loc = value; } }
 
         [DataMember, ProtoMember(14)]
-        public string[] userFields { get { return _userFields; } set { _userFields = value; } }
+        public string[] qth { get { return _qth; } set { _qth = value; } }
 
         [DataMember, ProtoMember(15)]
         public string comments { get { return _comments; } set { _comments = value; } }
@@ -85,22 +74,60 @@ namespace tnxlog
 
 
         [IgnoreDataMember]
-        public string userField0
+        public string qthField0
         {
             get
             {
-                if (userFields != null && userFields.Length > 0)
-                    return userFields[0];
+                if (qth != null && qth.Length > 0)
+                    return qth[0];
                 else
                     return null;
             }
             set {
-                if (userFields == null || userFields.Length == 0)
-                    userFields = new string[] {value };
+                if (qth == null || qth.Length == 0)
+                    qth = new string[] {value };
                 else 
-                    userFields[0] = value;
+                    qth[0] = value;
             }
         }
+
+        [IgnoreDataMember]
+        public string qthField1
+        {
+            get
+            {
+                if (qth != null && qth.Length > 1)
+                    return qth[1];
+                else
+                    return null;
+            }
+            set
+            {
+                if (qth == null || qth.Length == 1)
+                    qth = new string[] { value };
+                else
+                    qth[1] = value;
+            }
+        }
+        [IgnoreDataMember]
+        public string qthField2
+        {
+            get
+            {
+                if (qth != null && qth.Length > 2)
+                    return qth[2];
+                else
+                    return null;
+            }
+            set
+            {
+                if (qth == null || qth.Length < 3)
+                    qth = new string[] { value };
+                else
+                    qth[2] = value;
+            }
+        }
+
 
         public static string formatFreq(decimal freq)
         {
@@ -134,8 +161,6 @@ namespace tnxlog
                 adifField("RST_RCVD", rcv) +
                 adifField("RST_SENT", snt) +
                 adifField("MY_GRIDSQUARE", loc) +
-                adifField("MY_CITY", adifParams.ContainsKey("RDA") ? adifParams["RDA"] : rda) +
-                adifField("RAFA", adifParams.ContainsKey("RAFA") ? adifParams["RAFA"] : rafa) +
                 " <EOR>";
         }
     }
@@ -178,16 +203,13 @@ namespace tnxlog
                 _rcv = getAdifField(adif, "RST_RCVD"),
                 _freqRx = getAdifField(adif, "FREQ"),
                 _no = no++,
-                _rda = rdaLog.getStatusFieldValue("rda"),
-                _rafa = rdaLog.getStatusFieldValue("rafa"),
-                _loc = rdaLog.getStatusFieldValue("locator"),
-                _userFields = new string[] { rdaLog.userField }
+                _loc = rdaLog.loc,
             };
 
         }
         public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, string comments, DateTime? timestamp = null)
         {           
-            return new QSO {
+            QSO qso = new QSO {
                 _ts = (timestamp == null ? DateTime.UtcNow : (DateTime)timestamp).ToString("yyyy-MM-dd HH:mm:ss"),
                 _myCS = myCallsign,
                 _band = Band.fromFreq(freq),
@@ -198,12 +220,12 @@ namespace tnxlog
                 _rcv = rstRcvd,
                 _freqRx = freq.ToString(),
                 _no = no++,
-                _rda = rdaLog.getStatusFieldValue("rda"),
-                _rafa = rdaLog.getStatusFieldValue("rafa"),
-                _loc = rdaLog.getStatusFieldValue("locator"),
-                _userFields = new string[] { rdaLog.userField },
+                _loc = rdaLog.loc,
                 _comments = comments
             };
+            for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+                qso._qth[field] = rdaLog.getQthFieldValue(field);
+            return qso;
         }
     }
 }
