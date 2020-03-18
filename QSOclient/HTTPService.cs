@@ -70,7 +70,7 @@ namespace tnxlog
         System.Threading.Timer pingTimer;
         System.Threading.Timer loginRetryTimer;
         ConcurrentQueue<LogRequest> logQueue = new ConcurrentQueue<LogRequest>();
-        private string unsentFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "unsent.dat");
+        private string unsentFilePath;
         private string stationCallsign = null;
         private volatile bool _connected;
         public bool connected { get { return _connected; }
@@ -85,22 +85,14 @@ namespace tnxlog
         public EventHandler<EventArgs> connectionStateChanged;
         private HttpServiceConfig config;
         private Tnxlog tnxlog;
-        public bool gpsServerLoad;
-
+        private TnxlogConfig tnxlogConfig { get { return (TnxlogConfig)config.parent; } }
 
         public HttpService(HttpServiceConfig _config, Tnxlog _rdaLog)
         {
             config = _config;
             tnxlog = _rdaLog;
-            //for backwards compatibility
-            List<QSO> unsentQSOs = ProtoBufSerialization.Read<List<QSO>>(unsentFilePath);
-            if (unsentQSOs != null && unsentQSOs.Count > 0)
-                Task.Run(async () =>
-               {
-                   foreach (QSO qso in unsentQSOs)
-                       await postQso(qso);
-               });
-            unsentQSOs = ProtoBufSerialization.Read<List<QSO>>(unsentFilePath + ".qso");
+            unsentFilePath = Path.Combine(tnxlog.dataPath, "unsent");
+            List<QSO> unsentQSOs = ProtoBufSerialization.Read<List<QSO>>(unsentFilePath + ".qso");
             if (unsentQSOs != null && unsentQSOs.Count > 0)
                 Task.Run(async () =>
                 {
@@ -131,7 +123,7 @@ namespace tnxlog
 
         private async Task<HttpResponseMessage> post(string _URI, object data, bool warnings)
         {
-            string sContent = data.GetType() == typeof(string) ? (string)data : JsonConvert.SerializeObject(data);
+            string sContent = JsonConvert.SerializeObject(data);
 #if !DISABLE_HTTP_LOGGING
             System.Diagnostics.Debug.WriteLine(sContent);
 #endif
@@ -262,18 +254,20 @@ namespace tnxlog
         {
             if (config.token == null)
                 return;
-            HttpResponseMessage response = await post("location", tnxlog.statusJson());
+            HttpResponseMessage response = await post("location", new StatusData(config));
             if (stationCallsign == null)
                 await getUserData();
             if (stationCallsign != null && response.IsSuccessStatusCode)
             {
                 LocationResponse location = JsonConvert.DeserializeObject<LocationResponse>(await response.Content.ReadAsStringAsync());
-                for (int co = 0; co < TnxlogConfig.QthFieldCount; co++)
+                for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
                 {
-                    tnxlog.setQthField(co, location.qth.fields.values[co]);
-                    tnxlog.setQthFieldTitle(co, location.qth.fields.titles[co]);
-                    tnxlog.loc = location.qth.loc;
+                    if (tnxlogConfig.qthFieldsAuto[field])
+                        tnxlog.setQthField(field, location.qth.fields.values[field]);
+                    tnxlog.setQthFieldTitle(field, location.qth.fields.titles[field]);
                 }
+                if (tnxlogConfig.locAuto)
+                    tnxlog.loc = location.qth.loc;
             }
             pingTimer.Change(response != null && response.IsSuccessStatusCode ? config.updateIterval : pingIntervalNoConnection, Timeout.Infinite);
         }
@@ -438,6 +432,50 @@ namespace tnxlog
             freq = _freq;
         }
         public string freq;
+    }
+
+    public class StatusDataQth
+    {
+        [IgnoreDataMember]
+        TnxlogConfig config;
+
+        public Dictionary<string, string> fields
+        {
+            get
+            {
+                Dictionary<string, string> r = new Dictionary<string, string>();
+                for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+                    if (!config.qthFieldsAuto[field])
+                        r[field.ToString()] = config.qthFields[field];
+                return r;
+            }
+            set { }
+        }
+
+        public string loc
+        {
+            get { return config.loc; } set { }
+        }
+
+        public bool ShouldSerializeloc()
+        {
+            return !config.locAuto;
+        }
+
+        internal StatusDataQth(TnxlogConfig _config)
+        {
+            config = _config;
+        }
+
+    }
+
+    public class StatusData : JSONToken
+    {
+        public StatusDataQth qth;
+        public StatusData(HttpServiceConfig _config) : base(_config)
+        {
+            qth = new StatusDataQth((TnxlogConfig)_config.parent);
+        }
     }
 
 

@@ -29,7 +29,7 @@ namespace tnxlog
         internal string _freqRx;
         internal string _comments;
         internal int _no;
-        internal string[] _qth = new string[TnxlogConfig.QthFieldCount];
+        internal string[] _qth;
         internal decimal _serverTs = 0;
         internal bool _deleted = false;
 
@@ -58,20 +58,30 @@ namespace tnxlog
         public string rcv { get { return _rcv; } set { _rcv = value; } }
 
 
-        [DataMember, ProtoMember(11)]
+        [DataMember, ProtoMember(9)]
         public int no { get { return _no; } set { _no = value; } }
 
-        [DataMember, ProtoMember(13)]
+        [DataMember, ProtoMember(10)]
         public string loc { get { return _loc; } set { _loc = value; } }
 
-        [DataMember, ProtoMember(14)]
-        public string[] qth { get { return _qth; } set { _qth = value; } }
 
-        [DataMember, ProtoMember(15)]
+        [DataMember, ProtoMember(11)]
         public string comments { get { return _comments; } set { _comments = value; } }
-        [DataMember, ProtoMember(16)]
+        [DataMember, ProtoMember(12)]
         public decimal serverTs { get { return _serverTs; } set { _serverTs = value; } }
 
+        [DataMember, ProtoMember(13)]
+        public string[] qth
+        {
+            get
+            {
+                return _qth;
+            }
+            set
+            {
+                _qth = value;
+            }
+        }
 
         [IgnoreDataMember]
         public string qthField0
@@ -85,7 +95,7 @@ namespace tnxlog
             }
             set {
                 if (qth == null || qth.Length == 0)
-                    qth = new string[] {value };
+                    qth = new string[] {value, null, null};
                 else 
                     qth[0] = value;
             }
@@ -104,7 +114,7 @@ namespace tnxlog
             set
             {
                 if (qth == null || qth.Length == 1)
-                    qth = new string[] { value };
+                    qth = new string[] {null, value, null};
                 else
                     qth[1] = value;
             }
@@ -122,7 +132,7 @@ namespace tnxlog
             set
             {
                 if (qth == null || qth.Length < 3)
-                    qth = new string[] { value };
+                    qth = new string[] {null, null, value};
                 else
                     qth[2] = value;
             }
@@ -134,40 +144,12 @@ namespace tnxlog
             return freq.ToString("0.0", System.Globalization.NumberFormatInfo.InvariantInfo);
         }
 
-        public static string adifField( string name, string value )
-        {
-            return "<" + name + ":" +  
-                ( value == null ? "0>" : value.Length.ToString() + ">" + value ) + 
-                " ";
-        }
 
-        public static string adifFormatFreq( string freq )
-        {
-            return ( Convert.ToDouble(freq, System.Globalization.NumberFormatInfo.InvariantInfo) / 1000 
-                ).ToString( "0.000000", System.Globalization.NumberFormatInfo.InvariantInfo);
-        }
-
-        public string adif(Dictionary<string, string> adifParams)
-        {
-            string[] dt = ts.Split(' ');
-            return
-                adifField("CALL", cs) +
-                adifField("QSO_DATE", dt[0].Replace("-", "")) +
-                adifField("TIME_ON", dt[1].Replace(":", "")) +
-                adifField("BAND", Band.waveLength(band)) +
-                adifField("STATION_CALLSIGN", myCS) +
-                adifField("FREQ", adifFormatFreq(freq)) +
-                adifField("MODE", mode) +
-                adifField("RST_RCVD", rcv) +
-                adifField("RST_SENT", snt) +
-                adifField("MY_GRIDSQUARE", loc) +
-                " <EOR>";
-        }
     }
 
     public class QSOFactory
     {
-        private Tnxlog rdaLog;
+        private Tnxlog tnxlog;
         public int no = 1;
 
         public static string getAdifField(string line, string fieldName)
@@ -181,17 +163,52 @@ namespace tnxlog
                 result += line[idx++];
             return result;
         }
+        public static string adifField(string name, string value)
+        {
+            return "<" + name + ":" +
+                (value == null ? "0>" : value.Length.ToString() + ">" + value) +
+                " ";
+        }
+
+        public static string adifFormatFreq(string freq)
+        {
+            return (Convert.ToDouble(freq, System.Globalization.NumberFormatInfo.InvariantInfo) / 1000
+                ).ToString("0.000000", System.Globalization.NumberFormatInfo.InvariantInfo);
+        }
+
+        public string adif(QSO qso, Dictionary<string, string> adifParams)
+        {
+            string[] dt = qso.ts.Split(' ');
+            string r = adifField("CALL", qso.cs) +
+                adifField("QSO_DATE", dt[0].Replace("-", "")) +
+                adifField("TIME_ON", dt[1].Replace(":", "")) +
+                adifField("BAND", Band.waveLength(qso.band)) +
+                adifField("STATION_CALLSIGN", qso.myCS) +
+                adifField("FREQ", adifFormatFreq(qso.freq)) +
+                adifField("MODE", qso.mode) +
+                adifField("RST_RCVD", qso.rcv) +
+                adifField("RST_SENT", qso.snt) +
+                adifField("MY_GRIDSQUARE", qso.loc);
+            for (int field = 0; field < TnxlogConfig.QthFieldCount; field++) {
+                string fieldName = tnxlog.config.qthAdifFields[field];
+                if (!string.IsNullOrEmpty(fieldName))
+                    r += adifField(fieldName, adifParams.ContainsKey(fieldName) ? adifParams[fieldName] : qso.qth[field]);
+            }
+            r += " <EOR>";
+            return r;
+        }
+
 
 
         public QSOFactory(Tnxlog _qsoClient)
         {
-            rdaLog = _qsoClient;
+            tnxlog = _qsoClient;
         }
 
 
         public QSO fromADIF(string adif)
         {
-            return new QSO
+            QSO qso = new QSO
             {
                 _ts = getAdifField(adif, "QSO_DATE") + " " + getAdifField(adif, "TIME_ON"),
                 _myCS = getAdifField(adif, "STATION_CALLSIGN"),
@@ -203,9 +220,12 @@ namespace tnxlog
                 _rcv = getAdifField(adif, "RST_RCVD"),
                 _freqRx = getAdifField(adif, "FREQ"),
                 _no = no++,
-                _loc = rdaLog.loc,
+                _loc = tnxlog.loc,
+                _qth = new string[TnxlogConfig.QthFieldCount]
             };
-
+            for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+                qso._qth[field] = tnxlog.getQthFieldValue(field);
+            return qso;
         }
         public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, string comments, DateTime? timestamp = null)
         {           
@@ -220,11 +240,12 @@ namespace tnxlog
                 _rcv = rstRcvd,
                 _freqRx = freq.ToString(),
                 _no = no++,
-                _loc = rdaLog.loc,
-                _comments = comments
+                _loc = tnxlog.loc,
+                _comments = comments,
+                _qth = new string[TnxlogConfig.QthFieldCount]
             };
             for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
-                qso._qth[field] = rdaLog.getQthFieldValue(field);
+                qso._qth[field] = tnxlog.getQthFieldValue(field);
             return qso;
         }
     }

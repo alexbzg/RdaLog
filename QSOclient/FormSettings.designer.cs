@@ -90,6 +90,8 @@
             this.buttonAdifLogBrowse = new System.Windows.Forms.Button();
             this.textBoxWatchAdifLogPath = new System.Windows.Forms.TextBox();
             this.labelAdifLog = new System.Windows.Forms.Label();
+            this.tabPageExport = new System.Windows.Forms.TabPage();
+            this.groupBoxAdifFields = new System.Windows.Forms.GroupBox();
             this.tabPageDebug = new System.Windows.Forms.TabPage();
             this.textBoxDebugLog = new System.Windows.Forms.TextBox();
             this.labelDebug = new System.Windows.Forms.Label();
@@ -101,6 +103,7 @@
             this.tabPageCwMacros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoCqPause)).BeginInit();
             this.tabPageDigi.SuspendLayout();
+            this.tabPageExport.SuspendLayout();
             this.tabPageDebug.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -515,6 +518,7 @@
             this.tabControl.Controls.Add(this.tabPageView);
             this.tabControl.Controls.Add(this.tabPageCwMacros);
             this.tabControl.Controls.Add(this.tabPageDigi);
+            this.tabControl.Controls.Add(this.tabPageExport);
             this.tabControl.Controls.Add(this.tabPageDebug);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
@@ -794,7 +798,6 @@
             this.textBoxWatchAdifLogPath.Name = "textBoxWatchAdifLogPath";
             this.textBoxWatchAdifLogPath.Size = new System.Drawing.Size(209, 20);
             this.textBoxWatchAdifLogPath.TabIndex = 1;
-            this.textBoxWatchAdifLogPath.TextChanged += new System.EventHandler(this.TextBoxWatchAdifLogPath_TextChanged);
             // 
             // labelAdifLog
             // 
@@ -805,6 +808,26 @@
             this.labelAdifLog.TabIndex = 0;
             this.labelAdifLog.Text = "ADIF log file";
             this.labelAdifLog.Click += new System.EventHandler(this.Label1_Click);
+            // 
+            // tabPageExport
+            // 
+            this.tabPageExport.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageExport.Controls.Add(this.groupBoxAdifFields);
+            this.tabPageExport.Location = new System.Drawing.Point(4, 22);
+            this.tabPageExport.Name = "tabPageExport";
+            this.tabPageExport.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageExport.Size = new System.Drawing.Size(356, 430);
+            this.tabPageExport.TabIndex = 5;
+            this.tabPageExport.Text = "Export";
+            // 
+            // groupBoxAdifFields
+            // 
+            this.groupBoxAdifFields.Location = new System.Drawing.Point(6, 6);
+            this.groupBoxAdifFields.Name = "groupBoxAdifFields";
+            this.groupBoxAdifFields.Size = new System.Drawing.Size(344, 113);
+            this.groupBoxAdifFields.TabIndex = 0;
+            this.groupBoxAdifFields.TabStop = false;
+            this.groupBoxAdifFields.Text = "ADIF fields";
             // 
             // tabPageDebug
             // 
@@ -865,6 +888,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoCqPause)).EndInit();
             this.tabPageDigi.ResumeLayout(false);
             this.tabPageDigi.PerformLayout();
+            this.tabPageExport.ResumeLayout(false);
             this.tabPageDebug.ResumeLayout(false);
             this.tabPageDebug.PerformLayout();
             this.ResumeLayout(false);
@@ -939,5 +963,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialogAdifLog;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxEsmMacro;
+        private System.Windows.Forms.TabPage tabPageExport;
+        private System.Windows.Forms.GroupBox groupBoxAdifFields;
     }
 }

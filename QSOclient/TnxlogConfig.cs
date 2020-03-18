@@ -96,7 +96,7 @@ namespace tnxlog
         public string loc
         {
             get { return _loc; }
-            set { _loc = loc; write(); }
+            set { _loc = value; write(); }
         }
 
         private bool _locAuto;
@@ -105,6 +105,8 @@ namespace tnxlog
             get { return _locAuto; }
             set { _locAuto = value; write(); }
         }
+
+        public string[] qthAdifFields = new string[QthFieldCount];
 
         public string esmMacro = "{CALL} TU DE {MY_CALL}";
 

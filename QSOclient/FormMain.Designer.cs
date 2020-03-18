@@ -61,7 +61,7 @@ namespace tnxlog
             this.labelStatQso = new System.Windows.Forms.Label();
             this.labelStatCallsigns = new System.Windows.Forms.Label();
             this.comboBoxStatFilterBand = new System.Windows.Forms.ComboBox();
-            this.comboBoxStatFilterRda = new System.Windows.Forms.ComboBox();
+            this.comboBoxStatFilterQth = new System.Windows.Forms.ComboBox();
             this.comboBoxStatFilterMode = new System.Windows.Forms.ComboBox();
             this.checkBoxAutoStatFilter = new System.Windows.Forms.CheckBox();
             this.labelStatFilter = new System.Windows.Forms.Label();
@@ -109,8 +109,7 @@ namespace tnxlog
             this.dropDownButtonFile = new System.Windows.Forms.ToolStripDropDownButton();
             this.menuItemFileClear = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExport = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemAdifExportRda = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemAdifExportRafa = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemAdifExportQth = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExportLoc = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExportAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
@@ -382,7 +381,7 @@ namespace tnxlog
             this.panelStatFilter.Controls.Add(this.labelStatQso);
             this.panelStatFilter.Controls.Add(this.labelStatCallsigns);
             this.panelStatFilter.Controls.Add(this.comboBoxStatFilterBand);
-            this.panelStatFilter.Controls.Add(this.comboBoxStatFilterRda);
+            this.panelStatFilter.Controls.Add(this.comboBoxStatFilterQth);
             this.panelStatFilter.Controls.Add(this.comboBoxStatFilterMode);
             this.panelStatFilter.Controls.Add(this.checkBoxAutoStatFilter);
             this.panelStatFilter.Controls.Add(this.labelStatFilter);
@@ -477,20 +476,20 @@ namespace tnxlog
             this.comboBoxStatFilterBand.Text = "All";
             this.comboBoxStatFilterBand.SelectedIndexChanged += new System.EventHandler(this.StatFilter_SelectedIndexChanged);
             // 
-            // comboBoxStatFilterRda
+            // comboBoxStatFilterQth
             // 
-            this.comboBoxStatFilterRda.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBoxStatFilterRda.ForeColor = System.Drawing.Color.DarkGreen;
-            this.comboBoxStatFilterRda.FormattingEnabled = true;
-            this.comboBoxStatFilterRda.Items.AddRange(new object[] {
+            this.comboBoxStatFilterQth.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBoxStatFilterQth.ForeColor = System.Drawing.Color.DarkGreen;
+            this.comboBoxStatFilterQth.FormattingEnabled = true;
+            this.comboBoxStatFilterQth.Items.AddRange(new object[] {
             "All"});
-            this.comboBoxStatFilterRda.Location = new System.Drawing.Point(12, 17);
-            this.comboBoxStatFilterRda.Name = "comboBoxStatFilterRda";
-            this.comboBoxStatFilterRda.Size = new System.Drawing.Size(67, 24);
-            this.comboBoxStatFilterRda.TabIndex = 35;
-            this.comboBoxStatFilterRda.TabStop = false;
-            this.comboBoxStatFilterRda.Text = "All";
-            this.comboBoxStatFilterRda.SelectedIndexChanged += new System.EventHandler(this.StatFilter_SelectedIndexChanged);
+            this.comboBoxStatFilterQth.Location = new System.Drawing.Point(12, 17);
+            this.comboBoxStatFilterQth.Name = "comboBoxStatFilterQth";
+            this.comboBoxStatFilterQth.Size = new System.Drawing.Size(67, 24);
+            this.comboBoxStatFilterQth.TabIndex = 35;
+            this.comboBoxStatFilterQth.TabStop = false;
+            this.comboBoxStatFilterQth.Text = "All";
+            this.comboBoxStatFilterQth.SelectedIndexChanged += new System.EventHandler(this.StatFilter_SelectedIndexChanged);
             // 
             // comboBoxStatFilterMode
             // 
@@ -1034,46 +1033,37 @@ namespace tnxlog
             // menuItemFileClear
             // 
             this.menuItemFileClear.Name = "menuItemFileClear";
-            this.menuItemFileClear.Size = new System.Drawing.Size(107, 22);
+            this.menuItemFileClear.Size = new System.Drawing.Size(180, 22);
             this.menuItemFileClear.Text = "New";
             this.menuItemFileClear.Click += new System.EventHandler(this.MenuItemFileClear_Click);
             // 
             // menuItemAdifExport
             // 
             this.menuItemAdifExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemAdifExportRda,
-            this.menuItemAdifExportRafa,
+            this.menuItemAdifExportQth,
             this.menuItemAdifExportLoc,
             this.menuItemAdifExportAll});
             this.menuItemAdifExport.Name = "menuItemAdifExport";
-            this.menuItemAdifExport.Size = new System.Drawing.Size(107, 22);
+            this.menuItemAdifExport.Size = new System.Drawing.Size(180, 22);
             this.menuItemAdifExport.Text = "Export";
             // 
-            // menuItemAdifExportRda
+            // menuItemAdifExportQth
             // 
-            this.menuItemAdifExportRda.Name = "menuItemAdifExportRda";
-            this.menuItemAdifExportRda.Size = new System.Drawing.Size(127, 22);
-            this.menuItemAdifExportRda.Text = "By RDA";
-            this.menuItemAdifExportRda.Click += new System.EventHandler(this.MenuItemAdifExportRda_Click);
-            // 
-            // menuItemAdifExportRafa
-            // 
-            this.menuItemAdifExportRafa.Name = "menuItemAdifExportRafa";
-            this.menuItemAdifExportRafa.Size = new System.Drawing.Size(127, 22);
-            this.menuItemAdifExportRafa.Text = "By RAFA";
-            this.menuItemAdifExportRafa.Click += new System.EventHandler(this.MenuItemAdifExportRafa_Click);
+            this.menuItemAdifExportQth.Name = "menuItemAdifExportQth";
+            this.menuItemAdifExportQth.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportQth.Text = "By QTH field";
             // 
             // menuItemAdifExportLoc
             // 
             this.menuItemAdifExportLoc.Name = "menuItemAdifExportLoc";
-            this.menuItemAdifExportLoc.Size = new System.Drawing.Size(127, 22);
+            this.menuItemAdifExportLoc.Size = new System.Drawing.Size(180, 22);
             this.menuItemAdifExportLoc.Text = "By locator";
             this.menuItemAdifExportLoc.Click += new System.EventHandler(this.MenuItemAdifExportLoc_Click);
             // 
             // menuItemAdifExportAll
             // 
             this.menuItemAdifExportAll.Name = "menuItemAdifExportAll";
-            this.menuItemAdifExportAll.Size = new System.Drawing.Size(127, 22);
+            this.menuItemAdifExportAll.Size = new System.Drawing.Size(180, 22);
             this.menuItemAdifExportAll.Text = "All QSO";
             this.menuItemAdifExportAll.Click += new System.EventHandler(this.MenuItemAdifExportAll_Click);
             // 
@@ -1193,7 +1183,7 @@ namespace tnxlog
         private System.Windows.Forms.CheckBox checkBoxAutoLocator;
         private System.Windows.Forms.CheckBox checkBoxAutoStatFilter;
         private System.Windows.Forms.ComboBox comboBoxStatFilterMode;
-        private System.Windows.Forms.ComboBox comboBoxStatFilterRda;
+        private System.Windows.Forms.ComboBox comboBoxStatFilterQth;
         private System.Windows.Forms.Label labelStatFilter;
         private System.Windows.Forms.ComboBox comboBoxStatFilterBand;
         private System.Windows.Forms.Label labelStatCallsigns;
@@ -1226,8 +1216,7 @@ namespace tnxlog
         private System.Windows.Forms.Panel panelCallsignId;
         private System.Windows.Forms.ToolStripDropDownButton dropDownButtonFile;
         private System.Windows.Forms.ToolStripMenuItem menuItemAdifExport;
-        private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportRda;
-        private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportRafa;
+        private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportQth;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.ListBox listBoxCallsignsDb;
         private System.Windows.Forms.ListBox listBoxCallsignsQso;

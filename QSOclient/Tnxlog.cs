@@ -28,7 +28,7 @@ namespace tnxlog
         private FormMain _formMain;
         public FormMain formMain { get { return _formMain; } }
         private FormLog formLog;
-        private TnxlogConfig config;
+        internal TnxlogConfig config;
         public HttpService httpService;
         public TransceiverController transceiverController;
         public AdifLogWatcher adifLogWatcher = new AdifLogWatcher();
@@ -36,7 +36,7 @@ namespace tnxlog
         private NLog.Targets.FileTarget logfile;
         private string qsoFilePath;
         internal BindingList<QSO> qsoList;
-        private QSOFactory qsoFactory;
+        internal QSOFactory qsoFactory;
         public EventHandler<QthFieldChangeEventArgs> qthFieldChange;
         public EventHandler locChange;
         public EventHandler<QthFieldChangeEventArgs> qthFieldTitleChange;
@@ -121,6 +121,7 @@ namespace tnxlog
             config = XmlConfig.create<TnxlogConfig>(Path.Combine(dataPath, "config.xml"));
             for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
                 qthFields[field] = config.getQthFieldValue(field);
+            _loc = config.loc;
             httpService = new HttpService(config.httpService, this);
             transceiverController = new TransceiverController(config.transceiverController);
             adifLogWatcher.OnNewAdifEntry += newAdifLogEntry;   
@@ -139,20 +140,6 @@ namespace tnxlog
                 Task.Run(async () => await httpService.login(true));
             qsoList.Where(qso => qso.serverTs == 0).Select(async qso => await httpService.postQso(qso));
             initServices();
-        }
-
-        public string statusJson()
-        {
-            string r = "{\"qth\": {\"fields\": {";
-            List<string> fields = new List<string>();
-            for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
-                if (!config.getQthFieldAuto(field))
-                    fields.Add($"\"{field}\": \"{config.getQthFieldValue(field)}\"");
-            r += String.Join(", ", fields) + "}";
-            if (!config.locAuto)
-                r += $", \"loc\": \"{config.loc}\"";
-            r += $"}}, \"token\": \"{config.httpService.token}\"}}";
-            return r;
         }
 
         private async void newAdifLogEntry(object sender, NewAdifEntryEventArgs e)
@@ -206,7 +193,6 @@ namespace tnxlog
         {
             QSO qso = qsoFactory.create(callsign, myCallsign, freq, mode, rstRcvd, rstSnt, comments);
             qsoList.Insert(0, qso);
-            writeQsoList();
             await httpService.postQso(qso);
         }
 
@@ -269,6 +255,12 @@ namespace tnxlog
             formSettings.watchAdifLog = config.watchAdifLog;
             formSettings.watchAdifLogPath = config.watchAdifLogPath;
 
+            for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+            {
+                formSettings.qthFieldAdifContols[field].labelText = config.qthFieldTitles[field];
+                formSettings.qthFieldAdifContols[field].editText = config.qthAdifFields[field];
+            }
+
             if (formSettings.ShowDialog(this.formMain) == System.Windows.Forms.DialogResult.OK)
             {
                 config.httpService.callsign = formSettings.textBoxLogin.Text;
@@ -295,6 +287,10 @@ namespace tnxlog
 
                 config.watchAdifLog = formSettings.watchAdifLog;
                 config.watchAdifLogPath = formSettings.watchAdifLogPath;
+
+                for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+                    config.qthAdifFields[field] = formSettings.qthFieldAdifContols[field].editText.Trim().ToUpper();
+                formMain.adifQthMenu();
 
                 config.write();
             }

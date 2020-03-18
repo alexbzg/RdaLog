@@ -18,6 +18,7 @@ namespace tnxlog
 {
     public partial class FormSettings : Form
     {
+
         private List<SerialDeviceInfo> serialDevices = SerialDevice.SerialDevice.listSerialDevices();
         internal List<Tuple<TextBox, TextBox>> CwMacros
         {
@@ -45,6 +46,8 @@ namespace tnxlog
         internal List<TransceiverPinSettings> transceiverPinSettings = new List<TransceiverPinSettings>();
 
         private TransceiverController transceiverController = new TransceiverController(new TransceiverControllerConfig());
+
+        internal List<LabelTexBox> qthFieldAdifContols = new List<LabelTexBox>();
 
         internal string serialDeviceId {
             get { return comboBoxPort.SelectedIndex == -1 ? null : serialDevices[comboBoxPort.SelectedIndex].deviceID; }
@@ -124,6 +127,14 @@ namespace tnxlog
                 tpsControl.invertChanged += transceiverPinInvertChanged;
                 tpsControl.testMouseDown += testPinMouseDown;
                 tpsControl.testMouseUp += testPinMouseUp;
+            }
+
+            for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+            {
+                LabelTexBox ltb = new LabelTexBox();
+                qthFieldAdifContols.Add(ltb);
+                groupBoxAdifFields.Controls.Add(ltb);
+                ltb.Location = new Point(1, 14 + field * (ltb.Height + 2));
             }
 #if !DEBUG
             tabControl.TabPages.Remove(tabPageDigi);
@@ -241,9 +252,5 @@ namespace tnxlog
                 textBoxWatchAdifLogPath.Text = openFileDialogAdifLog.FileName;
         }
 
-        private void TextBoxWatchAdifLogPath_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

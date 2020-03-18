@@ -76,6 +76,12 @@
     <Compile Include="FormCwSend.Designer.cs">
       <DependentUpon>FormCwSend.cs</DependentUpon>
     </Compile>
+    <Compile Include="LabelTexBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LabelTexBox.Designer.cs">
+      <DependentUpon>LabelTexBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="MorseCode.cs" />
     <Compile Include="SerialDevice.cs" />
     <Compile Include="StringIndex.cs" />
@@ -137,6 +143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LabelTexBox.resx">
+      <DependentUpon>LabelTexBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

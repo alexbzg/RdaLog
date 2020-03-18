@@ -102,7 +102,6 @@ namespace tnxlog
         private bool autoCq;
         private ConcurrentQueue<string> cwQueue = new ConcurrentQueue<string>();
         private string clearedCS = "";
-        private bool isClosing;
 
         private QsoValues currentQsoValues()
         {
@@ -214,8 +213,8 @@ namespace tnxlog
                 comboBoxStatFilterMode.Items[0] : config.statFilterMode;
             comboBoxStatFilterBand.SelectedItem = string.IsNullOrEmpty(config.statFilterBand) || !comboBoxStatFilterBand.Items.Contains(config.statFilterBand) ? 
                 comboBoxStatFilterBand.Items[0] : config.statFilterBand;
-            comboBoxStatFilterRda.SelectedItem = string.IsNullOrEmpty(config.statFilterRda) || !comboBoxStatFilterRda.Items.Contains(config.statFilterRda) ? 
-                comboBoxStatFilterRda.Items[0] : config.statFilterRda;
+            comboBoxStatFilterQth.SelectedItem = string.IsNullOrEmpty(config.statFilterQth) || !comboBoxStatFilterQth.Items.Contains(config.statFilterQth) ? 
+                comboBoxStatFilterQth.Items[0] : config.statFilterQth;
 
             checkBoxTop.Checked = config.topmost;
             comboBoxMode.SelectedItem = string.IsNullOrEmpty(config.mode) || !comboBoxMode.Items.Contains(config.mode) ? comboBoxMode.Items[0] : config.mode;
@@ -246,7 +245,7 @@ namespace tnxlog
                 {
                     if (this.ActiveControl.Equals(sender))
                         return;
-                    if (!isClosing)
+                    if (QthRegexes.ContainsKey(label.Text))
                     {
                         string txt = textBoxValue.Text;
                         try
@@ -270,8 +269,7 @@ namespace tnxlog
                 {
                     if (this.ActiveControl.Equals(sender))
                         return;
-                    if (!isClosing)
-                        tnxlog.setQthField(field, textBoxValue.Text);
+                    tnxlog.setQthField(field, textBoxValue.Text);
                 };
 
                 textBoxValue.TextChanged += delegate (object sender, EventArgs e)
@@ -301,6 +299,8 @@ namespace tnxlog
             }
 
             tnxlog.locChange += locChange;
+            textBoxLocator.Text = tnxlogConfig.loc;
+            checkBoxAutoLocator.Checked = tnxlogConfig.locAuto;
 
             textBoxCallsign.Text = config.callsign;
 
@@ -318,6 +318,8 @@ namespace tnxlog
             autoCqTimer = new System.Threading.Timer(async obj => await processCwMacro(tnxlogConfig.cwMacros[0][1]), null, Timeout.Infinite, Timeout.Infinite);
             Application.AddMessageFilter(this);
             updateLabelEsm();
+
+            adifQthMenu();
         }
 
         private void locChange(object sender, EventArgs e)
@@ -365,16 +367,18 @@ namespace tnxlog
             if (!string.IsNullOrEmpty(qso.qth[0]))
             {
                 bool flag = false;
-                string[] rdas = qso.qth[0].Split(' ');
-                foreach (string rda in rdas)
-                    if (!comboBoxStatFilterRda.Items.Contains(rda))
+                Logger.Debug($"QTH field 1 values: {qso.qth[0]}");
+                string[] values = qso.qth[0].Split(' ');
+                foreach (string value in values)
+                    if (!comboBoxStatFilterQth.Items.Contains(value))
                         DoInvoke(() =>
                         {
-                            comboBoxStatFilterRda.Items.Add(rda);
+                            comboBoxStatFilterQth.Items.Add(value);
+                            Logger.Debug($"New QTH field 1 value: {value}");
                             if (!flag)
                             {
                                 flag = true;
-                                comboBoxStatFilterRda.SelectedItem = rda;
+                                comboBoxStatFilterQth.SelectedItem = value;
                             }
                         });
                 if (!flag && updateStatsFlag)
@@ -386,9 +390,9 @@ namespace tnxlog
         {
             DoInvoke(() =>
             {
-                if (comboBoxStatFilterRda.Items.Count > 1)
-                    for (int co = 1; co < comboBoxStatFilterRda.Items.Count; co++)
-                        comboBoxStatFilterRda.Items.RemoveAt(co);
+                if (comboBoxStatFilterQth.Items.Count > 1)
+                    for (int co = 1; co < comboBoxStatFilterQth.Items.Count; co++)
+                        comboBoxStatFilterQth.Items.RemoveAt(co);
                 callsignsQso.clear();
                 foreach (QSO qso in tnxlog.qsoList)
                     indexQso(qso);
@@ -502,6 +506,8 @@ namespace tnxlog
 
         private void TextBoxLocator_Validating(object sender, CancelEventArgs e)
         {
+            if (this.ActiveControl.Equals(sender))
+                return;
             string txt = textBoxLocator.Text;
             bool ok = false;
             try
@@ -530,47 +536,15 @@ namespace tnxlog
             tnxlog.showFormLog();
         }
 
-        private void MenuItemAdifExportRda_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(config.exportPathRda))
-                folderBrowserDialog.SelectedPath = config.exportPathRda;
-            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
-            {
-                config.exportPathRda = folderBrowserDialog.SelectedPath;
-                config.write();
-                Dictionary<string, List<QSO>> data = qsoByField("rda");
-                data.Keys.ToList().ForEach(val =>
-                {
-                    writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>() { { "RDA", val } }, true);
-                });
-            }
-        }
 
-        private void MenuItemAdifExportRafa_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(config.exportPathRafa))
-                folderBrowserDialog.SelectedPath = config.exportPathRafa;
-            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
-            {
-                config.exportPathRafa = folderBrowserDialog.SelectedPath;
-                config.write();
-                Dictionary<string, List<QSO>> data = qsoByField("rafa");
-                data.Keys.ToList().ForEach(val =>
-                {
-                    writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>() { { "RAFA", val } }, true);
-                });
-            }
-        }
-
-        private Dictionary<string, List<QSO>> qsoByField (string field)
+        private Dictionary<string, List<QSO>> qsoByLambda (Func<QSO,string> lambda)
         {
             Dictionary<string, List<QSO>> r = new Dictionary<string, List<QSO>>();
             foreach (QSO qso in tnxlog.qsoList)
             {
-                var varVal = qso.GetType().GetProperty(field).GetValue(qso, null);
-                if (varVal != null)
+                string fieldValFull = lambda(qso);
+                if (!string.IsNullOrEmpty(fieldValFull))
                 {
-                    string fieldValFull = varVal.ToString();
                     if (!string.IsNullOrEmpty(fieldValFull))
                     {
                         string[] fieldValItems = fieldValFull.Split(new string[] { " " }, StringSplitOptions.None);
@@ -627,7 +601,7 @@ namespace tnxlog
                         sw.WriteLine("Logs generated @ {0:yyyy-MM-dd HH:mm:ssZ}", ts);
                         sw.WriteLine("<EOH>");
                         foreach (QSO qso in entry.qso)
-                            sw.WriteLine(qso.adif(adifParams));
+                            sw.WriteLine(tnxlog.qsoFactory.adif(qso, adifParams));
                     }
                 }
                 catch (Exception e)
@@ -638,6 +612,39 @@ namespace tnxlog
             }
         }
 
+        internal void adifQthMenu()
+        {
+            menuItemAdifExportQth.DropDownItems.Clear();
+            for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+            {
+                string adifField = tnxlogConfig.qthAdifFields[field];
+                if (!string.IsNullOrEmpty(adifField))
+                {
+                    int fieldNo = field;
+                    ToolStripMenuItem mi = new ToolStripMenuItem();
+                    mi.Text = $"By {tnxlogConfig.qthFieldTitles[fieldNo]}";
+                    mi.Click += delegate (object sender, EventArgs e)
+                    {
+                        if (!string.IsNullOrEmpty(config.exportPathQth[fieldNo]))
+                            folderBrowserDialog.SelectedPath = config.exportPathQth[fieldNo];
+                        if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            config.exportPathQth[fieldNo] = folderBrowserDialog.SelectedPath;
+                            config.write();
+                            Dictionary<string, List<QSO>> data = qsoByLambda(qso => qso.qth[fieldNo]);
+                            data.Keys.ToList().ForEach(val =>
+                            {
+                                writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>() { { adifField, val } }, true);
+                            });
+                        }
+
+                    };
+                    menuItemAdifExportQth.DropDownItems.Add(mi);
+                }
+            }
+                
+        }
+        
         private void CheckBoxAutoStatFilter_CheckedChanged(object sender, EventArgs e)
         {
             setStatFilter();
@@ -790,21 +797,21 @@ namespace tnxlog
         {
             if (checkBoxAutoStatFilter.Checked)
             {
-                object selection = comboBoxStatFilterRda.SelectedItem;
+                object selection = comboBoxStatFilterQth.SelectedItem;
                 if (!string.IsNullOrEmpty(textBoxQth1.Text) && (selection == null || string.IsNullOrEmpty(selection.ToString()) ||
                     !textBoxQth1.Text.Contains(selection.ToString())))
                 {
                     string[] rdas = textBoxQth1.Text.Split(' ');
                     bool flag = false;
                     foreach (string rda in rdas)
-                        if (comboBoxStatFilterRda.Items.Contains(rda))
+                        if (comboBoxStatFilterQth.Items.Contains(rda))
                         {
-                            comboBoxStatFilterRda.SelectedItem = rda;
+                            comboBoxStatFilterQth.SelectedItem = rda;
                             flag = true;
                             break;
                         }
                     if (!flag)
-                        comboBoxStatFilterRda.SelectedIndex = 0;
+                        comboBoxStatFilterQth.SelectedIndex = 0;
                 }
                 comboBoxStatFilterMode.SelectedItem = comboBoxMode.Text;
                 comboBoxStatFilterBand.SelectedItem = Band.fromFreq(numericUpDownFreq.Value);
@@ -818,8 +825,8 @@ namespace tnxlog
                 HashSet<string> callsigns = new HashSet<string>();
                 int qsoCount = 0;
                 foreach (QSO qso in tnxlog.qsoList)
-                    if ((comboBoxStatFilterRda.SelectedIndex == 0 || comboBoxStatFilterRda.SelectedItem == null ||
-                        (!string.IsNullOrEmpty(qso.qth[0]) && qso.qth[0].Contains(comboBoxStatFilterRda.SelectedItem.ToString()))) &&
+                    if ((comboBoxStatFilterQth.SelectedIndex == 0 || comboBoxStatFilterQth.SelectedItem == null ||
+                        (!string.IsNullOrEmpty(qso.qth[0]) && qso.qth[0].Contains(comboBoxStatFilterQth.SelectedItem.ToString()))) &&
                         (comboBoxStatFilterMode.SelectedIndex == 0 || comboBoxStatFilterMode.SelectedItem == null || comboBoxStatFilterMode.SelectedItem.ToString() == qso.mode) &&
                         (comboBoxStatFilterBand.SelectedIndex == 0 || comboBoxStatFilterBand.SelectedItem == null || comboBoxStatFilterBand.SelectedItem.ToString() == qso.band))
                     {
@@ -835,7 +842,7 @@ namespace tnxlog
         {
             config.statFilterBand = comboBoxStatFilterBand.SelectedItem.ToString(); 
             config.statFilterMode = comboBoxStatFilterMode.SelectedItem.ToString();
-            config.statFilterRda = comboBoxStatFilterRda.SelectedItem.ToString();
+            config.statFilterQth = comboBoxStatFilterQth.SelectedItem.ToString();
             config.write();
             updateStats();
             
@@ -1064,7 +1071,6 @@ namespace tnxlog
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             Logger.Info("------------------- Closed by user -------------------------------------");
-            isClosing = true;
         }
 
         private void MenuItemAdifExportLoc_Click(object sender, EventArgs e)
@@ -1075,7 +1081,7 @@ namespace tnxlog
             {
                 config.exportPathLoc = folderBrowserDialog.SelectedPath;
                 config.write();
-                Dictionary<string, List<QSO>> data = qsoByField("loc");
+                Dictionary<string, List<QSO>> data = qsoByLambda(qso => qso.loc);
                 data.Keys.ToList().ForEach(val =>
                 {
                     writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>(), true);
@@ -1098,14 +1104,16 @@ namespace tnxlog
 
         private void TextBoxLocator_TextChanged(object sender, EventArgs e)
         {
-            tnxlog.loc = textBoxLocator.Text;
+            int selStart = textBoxLocator.SelectionStart;
+            textBoxLocator.Text = textBoxLocator.Text.ToUpper();
+            textBoxLocator.SelectionStart = selStart;
         }
 
         private void TextBoxLocator_Validated(object sender, EventArgs e)
         {
-            int selStart = textBoxLocator.SelectionStart;
-            textBoxLocator.Text = textBoxLocator.Text.ToUpper();
-            textBoxLocator.SelectionStart = selStart;
+            if (this.ActiveControl.Equals(sender))
+                return;
+            tnxlog.loc = textBoxLocator.Text;
         }
 
         private void CheckBoxAutoLocator_CheckedChanged(object sender, EventArgs e)
@@ -1121,11 +1129,10 @@ namespace tnxlog
         public bool topmost = false;
         public bool statFilterAuto = true;
         public decimal freq = 14000;
-        public string exportPathRda;
-        public string exportPathRafa;
+        public string[] exportPathQth = new string[TnxlogConfig.QthFieldCount];
         public string exportPathLoc;
         public string exportPath;
-        public string statFilterRda;
+        public string statFilterQth;
         public string statFilterBand;
         public string statFilterMode;
         public string mode;
