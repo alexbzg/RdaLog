@@ -259,15 +259,22 @@ namespace tnxlog
                 await getUserData();
             if (stationCallsign != null && response.IsSuccessStatusCode)
             {
-                LocationResponse location = JsonConvert.DeserializeObject<LocationResponse>(await response.Content.ReadAsStringAsync());
-                for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+                try
                 {
-                    if (tnxlogConfig.qthFieldsAuto[field])
-                        tnxlog.setQthField(field, location.qth.fields.values[field]);
-                    tnxlog.setQthFieldTitle(field, location.qth.fields.titles[field]);
+                    LocationResponse location = JsonConvert.DeserializeObject<LocationResponse>(await response.Content.ReadAsStringAsync());
+                    for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+                    {
+                        if (tnxlogConfig.qthFieldsAuto[field])
+                            tnxlog.setQthField(field, location.qth.fields.values[field]);
+                        tnxlog.setQthFieldTitle(field, location.qth.fields.titles[field]);
+                    }
+                    if (tnxlogConfig.locAuto)
+                        tnxlog.loc = location.qth.loc;
                 }
-                if (tnxlogConfig.locAuto)
-                    tnxlog.loc = location.qth.loc;
+                catch (Exception e)
+                {
+                    logger.Error(e, "Invalid location response");
+                }
             }
             pingTimer.Change(response != null && response.IsSuccessStatusCode ? config.updateIterval : pingIntervalNoConnection, Timeout.Infinite);
         }
