@@ -47,6 +47,11 @@ namespace tnxlog
 
         public static readonly List<string> MainFormPanels = new List<string> { "qsoComments", "qth1_2", "qth3Loc", "statFilter", "callsignId", "cwMacros" };
         public static readonly int QthFieldCount = 3;
+        public static readonly string qthFieldDefTitle = "QTH field";
+        public static string QthFieldTitle(int field, string value)
+        {
+            return value == qthFieldDefTitle ? $"{qthFieldDefTitle} {field + 1}" : value;
+        }
 
         public FormMainConfig formMain;
         public HttpServiceConfig httpService;
@@ -63,7 +68,7 @@ namespace tnxlog
             }
         }
 
-        public string[] qthFieldTitles = new string[] { "QTH Field", "QTH Field", "QTH Field" };
+        public string[] qthFieldTitles = new string[] { qthFieldDefTitle, qthFieldDefTitle, qthFieldDefTitle };
 
         public void setQthFieldTitle(int field, string value)
         {
@@ -106,7 +111,7 @@ namespace tnxlog
             set { _locAuto = value; write(); }
         }
 
-        public string[] qthAdifFields = new string[QthFieldCount];
+        public string[] qthAdifFields = new string[] { "QTH_FIELD_1", "QTH_FIELD_2", "QTH_FIELD_3" };
 
         public string esmMacro = "{CALL} TU DE {MY_CALL}";
 

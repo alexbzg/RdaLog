@@ -47,7 +47,22 @@ namespace tnxlog
 
         private TransceiverController transceiverController = new TransceiverController(new TransceiverControllerConfig());
 
-        internal List<LabelTexBox> qthFieldAdifContols = new List<LabelTexBox>();
+        private List<LabelTexBox> qthFieldAdifContols = new List<LabelTexBox>();
+
+        public string getQthFieldAdif(int field)
+        {
+            return qthFieldAdifContols[field].editText;
+        }
+
+        public void setQthFieldAdif(int field, string value)
+        {
+            qthFieldAdifContols[field].editText = value;
+        }
+
+        public void setQthFieldAdifLabel(int field, string value)
+        {
+            qthFieldAdifContols[field].labelText = TnxlogConfig.QthFieldTitle(field, value);
+        }
 
         internal string serialDeviceId {
             get { return comboBoxPort.SelectedIndex == -1 ? null : serialDevices[comboBoxPort.SelectedIndex].deviceID; }

@@ -389,15 +389,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TNXLOG"
-        "ProductCode" = "8:{F42A6996-7CF4-476B-9988-DDCE49CC9485}"
-        "PackageCode" = "8:{20D3EB81-436F-42C6-BADD-A086A908DC75}"
+        "ProductCode" = "8:{406E0889-3F93-4A86-806D-73307DCDFF7E}"
+        "PackageCode" = "8:{A39D0203-3C06-43E2-84D8-5CD603C0E266}"
         "UpgradeCode" = "8:{B0CA3AEB-7084-42FE-9464-94546D3CD25A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.2.19"
+        "ProductVersion" = "8:0.3.0"
         "Manufacturer" = "8:TNXqso"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -939,7 +939,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2F6D37946092437D8276264EEC1878A3"
             {
-            "SourcePath" = "8:..\\QSOclient\\obj\\Debug\\TNXLOG.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_07A611DB238C4376884334BC497653C3"

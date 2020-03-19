@@ -85,8 +85,11 @@ namespace tnxlog
         };
 
         static readonly Keys[] CwMacrosKeys = new Keys[] { Keys.F1, Keys.F2, Keys.F3, Keys.F4, Keys.F5, Keys.F6, Keys.F7, Keys.F8, Keys.F9 };
-
+#if DEBUG
+        static readonly string AutoUpdaterURI = "https://tnxqso.com/static/files/tnxlog_debug.xml";
+#else
         static readonly string AutoUpdaterURI = "https://tnxqso.com/static/files/tnxlog.xml";
+#endif
         private Tnxlog tnxlog;
         private QthFieldControls[] qthFieldsControls;
         private Dictionary<string, Panel> panels;
@@ -622,7 +625,7 @@ namespace tnxlog
                 {
                     int fieldNo = field;
                     ToolStripMenuItem mi = new ToolStripMenuItem();
-                    mi.Text = $"By {tnxlogConfig.qthFieldTitles[fieldNo]}";
+                    mi.Text = $"By {TnxlogConfig.QthFieldTitle(fieldNo, tnxlogConfig.qthFieldTitles[fieldNo])}";
                     mi.Click += delegate (object sender, EventArgs e)
                     {
                         if (!string.IsNullOrEmpty(config.exportPathQth[fieldNo]))

@@ -34,7 +34,7 @@
             // 
             // textBox
             // 
-            this.textBox.Location = new System.Drawing.Point(63, 5);
+            this.textBox.Location = new System.Drawing.Point(72, 5);
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(121, 20);
             this.textBox.TabIndex = 0;

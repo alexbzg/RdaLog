@@ -257,8 +257,8 @@ namespace tnxlog
 
             for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
             {
-                formSettings.qthFieldAdifContols[field].labelText = config.qthFieldTitles[field];
-                formSettings.qthFieldAdifContols[field].editText = config.qthAdifFields[field];
+                formSettings.setQthFieldAdifLabel(field, config.qthFieldTitles[field]);
+                formSettings.setQthFieldAdif(field, config.qthAdifFields[field]);
             }
 
             if (formSettings.ShowDialog(this.formMain) == System.Windows.Forms.DialogResult.OK)
@@ -289,7 +289,7 @@ namespace tnxlog
                 config.watchAdifLogPath = formSettings.watchAdifLogPath;
 
                 for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
-                    config.qthAdifFields[field] = formSettings.qthFieldAdifContols[field].editText.Trim().ToUpper();
+                    config.qthAdifFields[field] = formSettings.getQthFieldAdif(field).Trim().ToUpper();
                 formMain.adifQthMenu();
 
                 config.write();
