@@ -145,7 +145,7 @@ namespace tnxlog
         private async void newAdifLogEntry(object sender, NewAdifEntryEventArgs e)
         {
             QSO qso = qsoFactory.fromADIF(e.adif);
-            qsoList.Insert(0, qso);
+            _formMain.DoInvoke(() => { qsoList.Insert(0, qso); });
             writeQsoList();
             await httpService.postQso(qso);
         }

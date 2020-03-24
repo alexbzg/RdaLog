@@ -208,12 +208,14 @@ namespace tnxlog
 
         public QSO fromADIF(string adif)
         {
+            string date = getAdifField(adif, "QSO_DATE");
+            string time = getAdifField(adif, "TIME_ON");
             QSO qso = new QSO
             {
-                _ts = getAdifField(adif, "QSO_DATE") + " " + getAdifField(adif, "TIME_ON"),
+                _ts = $"{date.Substring(0,4)}-{date.Substring(4,2)}-{date.Substring(6,2)} {time.Substring(0,2)}:{time.Substring(2,2)}:00",
                 _myCS = getAdifField(adif, "STATION_CALLSIGN"),
                 _band = getAdifField(adif, "BAND"),
-                _freq = getAdifField(adif, "FREQ"),
+                _freq = QSO.formatFreq(Convert.ToDecimal(getAdifField(adif, "FREQ"), System.Globalization.NumberFormatInfo.InvariantInfo) * 1000),
                 _mode = getAdifField(adif, "MODE"),
                 _cs = getAdifField(adif, "CALL"),
                 _snt = getAdifField(adif, "RST_SENT"),

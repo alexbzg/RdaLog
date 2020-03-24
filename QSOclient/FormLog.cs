@@ -57,19 +57,22 @@ namespace tnxlog
         {
             if (e.ListChangedType == ListChangedType.ItemAdded)
             {
-                DataGridViewRow r = dataGridView.Rows[e.NewIndex];
-                setRowColors(r, Color.White, Color.SteelBlue);
-                Task.Run(async () =>
+                DoInvoke(() =>
                 {
-                    await Task.Delay(5000);
-                    DoInvoke(() =>
+                    DataGridViewRow r = dataGridView.Rows[e.NewIndex];
+                    setRowColors(r, Color.White, Color.SteelBlue);
+                    Task.Run(async () =>
                     {
-                        setRowColors(r, dataGridView.DefaultCellStyle.ForeColor, dataGridView.DefaultCellStyle.BackColor);
-                        dataGridView.Refresh();
+                        await Task.Delay(5000);
+                        DoInvoke(() =>
+                        {
+                            setRowColors(r, dataGridView.DefaultCellStyle.ForeColor, dataGridView.DefaultCellStyle.BackColor);
+                            dataGridView.Refresh();
+                        });
                     });
+                    dataGridView.FirstDisplayedScrollingRowIndex = e.NewIndex;
+                    dataGridView.Refresh();
                 });
-                dataGridView.FirstDisplayedScrollingRowIndex = e.NewIndex;
-                dataGridView.Refresh();
             }
         }
 
@@ -194,8 +197,11 @@ namespace tnxlog
 
         private void editCell()
         {
-            dataGridView.SelectedCells[0].Style.BackColor = SystemColors.Info;
-            dataGridView.BeginEdit(true);
+            if (dataGridView.SelectedCells.Count > 0)
+            {
+                dataGridView.SelectedCells[0].Style.BackColor = SystemColors.Info;
+                dataGridView.BeginEdit(true);
+            }
         }
 
         private void DataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
