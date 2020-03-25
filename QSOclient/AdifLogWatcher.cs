@@ -13,6 +13,8 @@ namespace tnxlog
     }
     public class AdifLogWatcher
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         private FileSystemWatcher fsWatcher;
         private string filePath;
 
@@ -49,9 +51,15 @@ namespace tnxlog
             {
                 using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-                    if (lastLength != 0 && lastLength < stream.Length)
+                    if (stream.Length == 0)
+                        return new string[] { }; 
+                    if (lastLength != 0 && lastLength <= stream.Length)
                         stream.Position = lastLength;
+                    else
+                        Logger.Debug($"File length: {stream.Length}, prev read: {lastLength}. Skip was not executed.");
                     lastLength = stream.Length;
+                    Logger.Debug($"Prev read was set to: {lastLength}");
+
                     if (discardEntries)
                         return new string[] { };
                     else
@@ -62,6 +70,9 @@ namespace tnxlog
                             if (data.Contains("<EOH>"))
                                 data = data.Split(new string[] { "<EOH>" }, StringSplitOptions.RemoveEmptyEntries)[1];
                             string[] entries = data.Split(new string[] { "<EOR>" }, StringSplitOptions.RemoveEmptyEntries);
+                            Logger.Debug("New entries:");
+                            foreach (string entry in entries)
+                                Logger.Debug(entry);
                             return entries;
                         }
                 }

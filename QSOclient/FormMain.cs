@@ -370,20 +370,34 @@ namespace tnxlog
             if (!string.IsNullOrEmpty(qso.qth[0]))
             {
                 bool flag = false;
-                Logger.Debug($"QTH field 1 values: {qso.qth[0]}");
                 string[] values = qso.qth[0].Split(' ');
                 foreach (string value in values)
                     if (!comboBoxStatFilterQth.Items.Contains(value))
                         DoInvoke(() =>
                         {
                             comboBoxStatFilterQth.Items.Add(value);
-                            Logger.Debug($"New QTH field 1 value: {value}");
-                            if (!flag)
+                            if (!flag && checkBoxAutoStatFilter.Checked)
                             {
                                 flag = true;
                                 comboBoxStatFilterQth.SelectedItem = value;
                             }
                         });
+                DoInvoke(() =>
+                {
+                    if (updateStatsFlag && checkBoxAutoStatFilter.Checked)
+                    {
+                        if (comboBoxStatFilterBand.SelectedItem.ToString() != qso.band)
+                        {
+                            comboBoxStatFilterBand.SelectedItem = qso.band;
+                            flag = true;
+                        }
+                        if (comboBoxStatFilterMode.SelectedItem.ToString() != qso.mode)
+                        {
+                            comboBoxStatFilterMode.SelectedItem = qso.mode;
+                            flag = true;
+                        }
+                    }
+                });
                 if (!flag && updateStatsFlag)
                     updateStats();
             }
