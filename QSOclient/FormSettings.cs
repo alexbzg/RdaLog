@@ -151,9 +151,6 @@ namespace tnxlog
                 groupBoxAdifFields.Controls.Add(ltb);
                 ltb.Location = new Point(1, 14 + field * (ltb.Height + 2));
             }
-#if !DEBUG
-            tabControl.TabPages.Remove(tabPageDigi);
-#endif
         }
 
         private void testPinMouseUp(object sender, EventArgs e)

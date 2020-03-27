@@ -359,7 +359,16 @@ namespace tnxlog
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
         {
             if (e.ListChangedType == ListChangedType.ItemAdded)
-                indexQso(tnxlog.qsoList[e.NewIndex], true);
+            {
+                QSO qso = tnxlog.qsoList[e.NewIndex];
+                indexQso(qso, true);
+                DoInvoke(() => {
+                    if (QSO.formatFreq(numericUpDownFreq.Value) != qso.freq)
+                        numericUpDownFreq.Text = qso.freq;
+                    if (qso.mode != comboBoxMode.SelectedItem.ToString())
+                        comboBoxMode.SelectedItem = qso.mode;
+                });
+            }
             else if (e.ListChangedType == ListChangedType.Reset)
                 buildQsoIndices();
         }
@@ -588,6 +597,7 @@ namespace tnxlog
                                     _freqRx = qso.freq,
                                     _no = qso.no,
                                     _loc = qso.loc,
+                                    _qth = new string[TnxlogConfig.QthFieldCount]
                                 };
                                 for (int qthField = 0; qthField < TnxlogConfig.QthFieldCount; qthField++)
                                     qsoAdd.qth[qthField] = qso.qth[qthField];
@@ -962,7 +972,7 @@ namespace tnxlog
         private async Task _sendCwMsg(string msg)
         {
             tokenSource = new CancellationTokenSource();
-            await Task.Run(() => tnxlog.transceiverController.morseString(msg, Convert.ToInt32(1200 / tnxlogConfig.morseSpeed), tokenSource.Token));
+            await Task.Run(() => tnxlog.transceiverController.morseString(msg.ToUpper(), Convert.ToInt32(1200 / tnxlogConfig.morseSpeed), tokenSource.Token));
         }
 
         private void updateLabelEsm()

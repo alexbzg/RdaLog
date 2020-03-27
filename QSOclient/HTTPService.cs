@@ -92,7 +92,7 @@ namespace tnxlog
             config = _config;
             tnxlog = _rdaLog;
             unsentFilePath = Path.Combine(tnxlog.dataPath, "unsent");
-            List<QSO> unsentQSOs = ProtoBufSerialization.Read<List<QSO>>(unsentFilePath + ".qso");
+            List<QSO> unsentQSOs = QSOFactory.ReadList<List<QSO>>(unsentFilePath + ".qso");
             if (unsentQSOs != null && unsentQSOs.Count > 0)
                 Task.Run(async () =>
                 {

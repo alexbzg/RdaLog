@@ -126,7 +126,7 @@ namespace tnxlog
             transceiverController = new TransceiverController(config.transceiverController);
             adifLogWatcher.OnNewAdifEntry += newAdifLogEntry;   
             qsoFactory = new QSOFactory(this);
-            qsoList = ProtoBufSerialization.Read<BindingList<QSO>>(qsoFilePath);
+            qsoList = QSOFactory.ReadList<BindingList<QSO>>(qsoFilePath);
             if (qsoList == null)
             {
                 qsoList = new BindingList<QSO>();
@@ -281,8 +281,8 @@ namespace tnxlog
 
                 for (int co = 0; co < formSettings.CwMacros.Count; co++)
                 {
-                    config.cwMacros[co][0] = formSettings.CwMacros[co].Item1.Text;
-                    config.cwMacros[co][1] = formSettings.CwMacros[co].Item2.Text;
+                    config.cwMacros[co][0] = formSettings.CwMacros[co].Item1.Text.ToUpper();
+                    config.cwMacros[co][1] = formSettings.CwMacros[co].Item2.Text.ToUpper();
                 }
 
                 config.watchAdifLog = formSettings.watchAdifLog;

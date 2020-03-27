@@ -75,7 +75,12 @@ namespace tnxlog
         {
             get
             {
-                return _qth;
+                if (_qth == null)
+                    return null;
+                string[] r = new string[TnxlogConfig.QthFieldCount];
+                for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+                    r[field] = _qth.Length <= field || _qth[field] == null ? "" : _qth[field];
+                return r;
             }
             set
             {
@@ -152,6 +157,23 @@ namespace tnxlog
         private Tnxlog tnxlog;
         public int no = 1;
 
+        public static T ReadList<T>(string filePath) where T : IList<QSO>
+        {
+            T r = ProtoBufSerialization.Read<T>(filePath);
+            if (r != null)
+                foreach (QSO qso in r)
+                {
+                    if (qso.qth == null || qso.qth.Length < TnxlogConfig.QthFieldCount)
+                    {
+                        string[] src = qso.qth == null ? new string[] { } : qso.qth;
+                        qso.qth = new string[TnxlogConfig.QthFieldCount];
+                        for (int field = 0; field < src.Length; field++)
+                            qso.qth[field] = src[field];
+                    }
+                }
+            return r;
+        }
+
         public static string getAdifField(string line, string fieldName)
         {
             int head = line.IndexOf($"<{fieldName}:");
@@ -214,13 +236,21 @@ namespace tnxlog
             if (string.IsNullOrEmpty(myCs))
                 myCs = getAdifField(adif, "OPERATOR");
             decimal freq = Convert.ToDecimal(getAdifField(adif, "FREQ"), System.Globalization.NumberFormatInfo.InvariantInfo) * 1000;
+            string band = Band.fromFreq(freq);
+            string mode = getAdifField(adif, "MODE");
+            if (Mode.DefFreq.ContainsKey(mode))
+            {
+                decimal defFreq = Mode.DefFreq[mode].FirstOrDefault(item => Band.fromFreq(item) == band);
+                if (defFreq != 0)
+                    freq = defFreq;
+            }
             QSO qso = new QSO
             {
                 _ts = $"{date.Substring(0,4)}-{date.Substring(4,2)}-{date.Substring(6,2)} {time.Substring(0,2)}:{time.Substring(2,2)}:00",
                 _myCS = myCs,
-                _band = Band.fromFreq(freq),
+                _band = band,
                 _freq = QSO.formatFreq(freq),
-                _mode = getAdifField(adif, "MODE"),
+                _mode = mode,
                 _cs = getAdifField(adif, "CALL"),
                 _snt = getAdifField(adif, "RST_SENT"),
                 _rcv = getAdifField(adif, "RST_RCVD"),

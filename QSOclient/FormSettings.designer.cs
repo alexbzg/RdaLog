@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.textBoxLogin = new System.Windows.Forms.TextBox();
             this.labelLogin = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
@@ -86,6 +87,7 @@
             this.labelPort = new System.Windows.Forms.Label();
             this.comboBoxPort = new System.Windows.Forms.ComboBox();
             this.tabPageDigi = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
             this.checkBoxWatchAdifLog = new System.Windows.Forms.CheckBox();
             this.buttonAdifLogBrowse = new System.Windows.Forms.Button();
             this.textBoxWatchAdifLogPath = new System.Windows.Forms.TextBox();
@@ -758,6 +760,7 @@
             // tabPageDigi
             // 
             this.tabPageDigi.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageDigi.Controls.Add(this.label2);
             this.tabPageDigi.Controls.Add(this.checkBoxWatchAdifLog);
             this.tabPageDigi.Controls.Add(this.buttonAdifLogBrowse);
             this.tabPageDigi.Controls.Add(this.textBoxWatchAdifLogPath);
@@ -769,14 +772,23 @@
             this.tabPageDigi.TabIndex = 4;
             this.tabPageDigi.Text = "DIGI";
             // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(8, 78);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(340, 336);
+            this.label2.TabIndex = 4;
+            this.label2.Text = resources.GetString("label2.Text");
+            // 
             // checkBoxWatchAdifLog
             // 
             this.checkBoxWatchAdifLog.AutoSize = true;
             this.checkBoxWatchAdifLog.Location = new System.Drawing.Point(8, 9);
             this.checkBoxWatchAdifLog.Name = "checkBoxWatchAdifLog";
-            this.checkBoxWatchAdifLog.Size = new System.Drawing.Size(102, 17);
+            this.checkBoxWatchAdifLog.Size = new System.Drawing.Size(150, 17);
             this.checkBoxWatchAdifLog.TabIndex = 3;
-            this.checkBoxWatchAdifLog.Text = "Watch ADIF log";
+            this.checkBoxWatchAdifLog.Text = "Connect to WSJTX/JTDX";
             this.checkBoxWatchAdifLog.UseVisualStyleBackColor = true;
             this.checkBoxWatchAdifLog.CheckedChanged += new System.EventHandler(this.CheckBoxWatchAdifLog_CheckedChanged);
             // 
@@ -965,5 +977,6 @@
         private System.Windows.Forms.TextBox textBoxEsmMacro;
         private System.Windows.Forms.TabPage tabPageExport;
         private System.Windows.Forms.GroupBox groupBoxAdifFields;
+        private System.Windows.Forms.Label label2;
     }
 }
