@@ -96,9 +96,7 @@ namespace tnxlog
             if (unsentQSOs != null && unsentQSOs.Count > 0)
                 Task.Run(async () =>
                 {
-                    foreach (QSO qso in unsentQSOs)
-                        if (qso.serverTs != 0)
-                            await postQso(qso);
+                    await postQso(unsentQSOs.ToArray());
                 });
             List<QsoDeleteRequest>unsentDels = ProtoBufSerialization.Read<List<QsoDeleteRequest>>(unsentFilePath + ".del");
             if (unsentDels != null && unsentDels.Count > 0)
@@ -155,18 +153,20 @@ namespace tnxlog
             return response;
         }
 
-        private async Task<bool> _postQso(QSO qso)
+        private async Task<bool> _postQso(QSO[] qso)
         {
-            if (qso._deleted)
+            QSO[] _qso = qso.Where(item => !item._deleted).ToArray();
+            if (_qso.Length == 0)
                 return true;
-            HttpResponseMessage response = await post("log", qsoToken(qso));
+            HttpResponseMessage response = await post("log", qsoToken(_qso));
             if (response == null || !response.IsSuccessStatusCode)
                 return false;
-            else if (qso.serverTs == 0)
+            else 
             {
                 string strRsp = await response.Content.ReadAsStringAsync();
-                NewQsoResponse newQsoResponse = JsonConvert.DeserializeObject<NewQsoResponse>(strRsp);
-                qso.serverTs = newQsoResponse.ts;
+                NewQsoResponse[] qsoResponse = JsonConvert.DeserializeObject<NewQsoResponse[]>(strRsp);
+                for (int qsoCnt=0; qsoCnt < qsoResponse.Length; qsoCnt++)
+                    _qso[qsoCnt].serverTs = qsoResponse[qsoCnt].ts;
             }
             return true;
         }
@@ -181,6 +181,11 @@ namespace tnxlog
 
         public async Task postQso(QSO qso)
         {
+            await postQso(new QSO[] { qso });
+        }
+
+        public async Task postQso(QSO[] qso)
+        {
             if (logQueue.IsEmpty && config.token != null)
             {
                 if (!await _postQso(qso))
@@ -190,13 +195,10 @@ namespace tnxlog
                 addToQueue(qso);
         }
 
-        private void addToQueue(QSO qso)
+        private void addToQueue(QSO[] qso)
         {
-            if (!qsoInQueue(qso))
-            {
-                logQueue.Enqueue(new LogRequest() { qso = qso });
-                saveUnsent();
-            }
+            logQueue.Enqueue(new LogRequest() { qso = qso });
+            saveUnsent();
         }
 
         private void addToQueue(QsoDeleteRequest req)
@@ -207,9 +209,7 @@ namespace tnxlog
 
         public async Task deleteQso(QSO qso)
         {
-            if (qsoInQueue(qso))
-                qso._deleted = true;
-            else if (qso.serverTs != 0)
+            if (qso.serverTs != 0)
             {
                 QsoDeleteRequest req = new QsoDeleteRequest(config, qso);
                 if (logQueue.IsEmpty && config.token != null)
@@ -222,14 +222,10 @@ namespace tnxlog
             }
         }
 
-        private bool qsoInQueue(QSO qso)
-        {
-            return logQueue.Where(item => item.qso != null).Select(item => item.qso).Contains(qso);
-        }
 
         private void saveUnsent()
         {
-            ProtoBufSerialization.Write<List<QSO>>(unsentFilePath + ".qso", logQueue.Where(item => item.qso != null).Select(item => item.qso).ToList());
+            ProtoBufSerialization.Write<List<QSO[]>>(unsentFilePath + ".qso", logQueue.Where(item => item.qso != null).Select(item => item.qso).ToList());
             ProtoBufSerialization.Write<List<QsoDeleteRequest>>(unsentFilePath + ".del", logQueue.Where(item => item.delete != null).Select(item => item.delete).ToList());
         }
 
@@ -339,7 +335,7 @@ namespace tnxlog
         }
 
 
-        private QSOtoken qsoToken(QSO qso)
+        private QSOtoken qsoToken(QSO[] qso)
         {
             return new QSOtoken(config, qso);
         }
@@ -410,14 +406,14 @@ namespace tnxlog
     public class LogRequest
     {
         public QsoDeleteRequest delete;
-        public QSO qso;
+        public QSO[] qso;
     }
 
     class QSOtoken : JSONToken
     {
-        public QSO qso;
+        public QSO[] qso;
 
-        internal QSOtoken(HttpServiceConfig _config, QSO _qso) : base(_config)
+        internal QSOtoken(HttpServiceConfig _config, QSO[] _qso) : base(_config)
         {
             qso = _qso;
         }
