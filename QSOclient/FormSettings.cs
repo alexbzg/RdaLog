@@ -109,8 +109,8 @@ namespace tnxlog
 
             mainFormPanelCheckboxes = new Dictionary<string, CheckBox>()
             {
-                {"statusFields", checkBoxViewQth1_2 },
-                {"statusFieldsLocUsr", checkBoxViewQth3Loc },
+                {"qth1_2", checkBoxViewQth1_2 },
+                {"qth3Loc", checkBoxViewQth3Loc },
                 {"qsoComments", checkBoxViewQsoComments },
                 {"statFilter", checkBoxViewStatFilter },
                 {"cwMacros", checkBoxViewCwMacro },

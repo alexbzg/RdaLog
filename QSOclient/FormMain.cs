@@ -151,8 +151,8 @@ namespace tnxlog
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Error loading RDA data");
-                MessageBox.Show("RDA data could not be loaded: " + e.ToString(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(e, "Error loading QTH fields data");
+                MessageBox.Show("QTH fields data could not be loaded: " + e.ToString(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             try
@@ -773,7 +773,8 @@ namespace tnxlog
 
         private void searchDefFreq()
         {
-            string searchVal = numericUpDownFreq.Text.Split(',')[0];
+            string sep = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            string searchVal = numericUpDownFreq.Text.Split(sep.ToCharArray())[0];
             TextBox freqTextBox = numericUpDownFreq.Controls.OfType<TextBox>().FirstOrDefault() as TextBox;
             int selStart = freqTextBox.SelectionStart;
             char[] charSrc = searchVal.ToCharArray();
@@ -788,13 +789,13 @@ namespace tnxlog
             searchVal = searchVal.TrimStart('0');
             if (searchVal.Length > 1 && comboBoxMode.SelectedIndex != -1 && HamRadio.Mode.DefFreq.ContainsKey(comboBoxMode.SelectedItem.ToString()))
             {
-                int[] defFreqs = HamRadio.Mode.DefFreq[comboBoxMode.SelectedItem.ToString()].Where(item => item.ToString().StartsWith(searchVal.Substring(0,2))).ToArray();
+                decimal[] defFreqs = HamRadio.Mode.DefFreq[comboBoxMode.SelectedItem.ToString()].Where(item => item.ToString().StartsWith(searchVal.Substring(0,2))).ToArray();
                 if (defFreqs.Length > 0)
                 {
-                    int defFreq = defFreqs.FirstOrDefault(item => item.ToString().Length == searchVal.Length);
+                    decimal defFreq = defFreqs.FirstOrDefault(item => Convert.ToInt32(item).ToString().Length == searchVal.Length);
                     if (defFreq == 0)
                         defFreq = defFreqs[0];
-                    if (defFreq.ToString() != searchVal)
+                    if (Convert.ToInt32(defFreq).ToString() != searchVal)
                     {
                         numericUpDownFreq.TextChanged -= NumericUpDownFreq_TextChanged;
                         numericUpDownFreq.Text = defFreq.ToString();
@@ -1148,6 +1149,23 @@ namespace tnxlog
             tnxlogConfig.locAuto = checkBoxAutoLocator.Checked;
             textBoxLocator.Enabled = !checkBoxAutoLocator.Checked;
         }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(config.exportPath))
+                openFileDialog.FileName = config.importPath;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                config.importPath = openFileDialog.FileName;
+                config.write();
+                using (FileStream stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    foreach (string entry in AdifLogWatcher.adifEntries(stream))
+                    {
+                        QSO qso = tnxlog.qsoFactory.fromADIF(entry);
+                        tnxlog.qsoList.Insert(0, qso);
+                    }
+            }
+        }
     }
 
     [DataContract]
@@ -1159,6 +1177,7 @@ namespace tnxlog
         public string[] exportPathQth = new string[TnxlogConfig.QthFieldCount];
         public string exportPathLoc;
         public string exportPath;
+        public string importPath;
         public string statFilterQth;
         public string statFilterBand;
         public string statFilterMode;
@@ -1168,5 +1187,6 @@ namespace tnxlog
         public FormMainConfig(XmlConfig _parent) : base(_parent) { }
 
         public FormMainConfig() : base() { }
+
     }
 }

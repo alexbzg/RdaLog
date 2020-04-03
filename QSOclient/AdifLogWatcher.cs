@@ -43,6 +43,18 @@ namespace tnxlog
                 OnNewAdifEntry?.Invoke(this, new NewAdifEntryEventArgs { adif = entry });
         }
 
+        public static string[] adifEntries(FileStream stream)
+        {
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string data = reader.ReadToEnd();
+                data = data.ToUpper().Replace("\r", "").Replace("\n", "");
+                if (data.Contains("<EOH>"))
+                    data = data.Split(new string[] { "<EOH>" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                return data.Split(new string[] { "<EOR>" }, StringSplitOptions.RemoveEmptyEntries);
+            }
+        }
+
         private async Task<string[]> readFile(bool discardEntries = false)
         {
             int retryCount = 0;
@@ -63,18 +75,7 @@ namespace tnxlog
                     if (discardEntries)
                         return new string[] { };
                     else
-                        using (StreamReader reader = new StreamReader(stream))
-                        {
-                            string data = reader.ReadToEnd();
-                            data = data.ToUpper().Replace("\r", "").Replace("\n", "");
-                            if (data.Contains("<EOH>"))
-                                data = data.Split(new string[] { "<EOH>" }, StringSplitOptions.RemoveEmptyEntries)[1];
-                            string[] entries = data.Split(new string[] { "<EOR>" }, StringSplitOptions.RemoveEmptyEntries);
-                            Logger.Debug("New entries:");
-                            foreach (string entry in entries)
-                                Logger.Debug(entry);
-                            return entries;
-                        }
+                        return adifEntries(stream);
                 }
             }
             catch (IOException) {

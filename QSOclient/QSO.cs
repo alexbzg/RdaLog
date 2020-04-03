@@ -26,6 +26,7 @@ namespace tnxlog
         internal string _snt;
         internal string _rcv;
         internal string _loc;
+        internal string _loc_rcv;
         internal string _freqRx;
         internal string _comments;
         internal int _no;
@@ -87,6 +88,10 @@ namespace tnxlog
                 _qth = value;
             }
         }
+
+        [DataMember, ProtoMember(14)]
+        public string loc_rcv { get { return _loc_rcv; } set { _loc_rcv = value; } }
+
 
         [IgnoreDataMember]
         public string qthField0
@@ -210,7 +215,8 @@ namespace tnxlog
                 adifField("MODE", qso.mode) +
                 adifField("RST_RCVD", qso.rcv) +
                 adifField("RST_SENT", qso.snt) +
-                adifField("MY_GRIDSQUARE", qso.loc);
+                adifField("MY_GRIDSQUARE", qso.loc) +
+                adifField("GRIDSQUARE", qso.loc_rcv);
             for (int field = 0; field < TnxlogConfig.QthFieldCount; field++) {
                 string fieldName = tnxlog.config.qthAdifFields[field];
                 if (!string.IsNullOrEmpty(fieldName))
@@ -238,6 +244,9 @@ namespace tnxlog
             decimal freq = Convert.ToDecimal(getAdifField(adif, "FREQ"), System.Globalization.NumberFormatInfo.InvariantInfo) * 1000;
             string band = Band.fromFreq(freq);
             string mode = getAdifField(adif, "MODE");
+            string submode = getAdifField(adif, "SUBMODE");
+            if (!string.IsNullOrEmpty(submode) && Mode.Names.Contains(submode))
+                mode = submode;
             if (Mode.DefFreq.ContainsKey(mode))
             {
                 decimal defFreq = Mode.DefFreq[mode].FirstOrDefault(item => Band.fromFreq(item) == band);
@@ -246,7 +255,7 @@ namespace tnxlog
             }
             QSO qso = new QSO
             {
-                _ts = $"{date.Substring(0,4)}-{date.Substring(4,2)}-{date.Substring(6,2)} {time.Substring(0,2)}:{time.Substring(2,2)}:00",
+                _ts = $"{date.Substring(0, 4)}-{date.Substring(4, 2)}-{date.Substring(6, 2)} {time.Substring(0, 2)}:{time.Substring(2, 2)}:00",
                 _myCS = myCs,
                 _band = band,
                 _freq = QSO.formatFreq(freq),
@@ -257,6 +266,7 @@ namespace tnxlog
                 _freqRx = getAdifField(adif, "FREQ"),
                 _no = no++,
                 _loc = tnxlog.loc,
+                _loc_rcv = getAdifField(adif, "GRIDSQUARE"),
                 _qth = new string[TnxlogConfig.QthFieldCount]
             };
             for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)

@@ -112,9 +112,11 @@ namespace tnxlog
             this.menuItemAdifExportQth = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExportLoc = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExportAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
             this.labelEsm = new System.Windows.Forms.Label();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.flowLayoutPanel.SuspendLayout();
             this.panelQsoComments.SuspendLayout();
             this.panelQth1_2.SuspendLayout();
@@ -842,7 +844,7 @@ namespace tnxlog
             this.connectionStatusLabel.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.connectionStatusLabel.ForeColor = System.Drawing.Color.White;
             this.connectionStatusLabel.Name = "connectionStatusLabel";
-            this.connectionStatusLabel.Size = new System.Drawing.Size(79, 17);
+            this.connectionStatusLabel.Size = new System.Drawing.Size(80, 17);
             this.connectionStatusLabel.Text = " TNXQSO.com ";
             // 
             // labelMode
@@ -1022,7 +1024,8 @@ namespace tnxlog
             this.dropDownButtonFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.dropDownButtonFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemFileClear,
-            this.menuItemAdifExport});
+            this.menuItemAdifExport,
+            this.importToolStripMenuItem});
             this.dropDownButtonFile.Image = ((System.Drawing.Image)(resources.GetObject("dropDownButtonFile.Image")));
             this.dropDownButtonFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.dropDownButtonFile.Name = "dropDownButtonFile";
@@ -1050,22 +1053,29 @@ namespace tnxlog
             // menuItemAdifExportQth
             // 
             this.menuItemAdifExportQth.Name = "menuItemAdifExportQth";
-            this.menuItemAdifExportQth.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportQth.Size = new System.Drawing.Size(139, 22);
             this.menuItemAdifExportQth.Text = "By QTH field";
             // 
             // menuItemAdifExportLoc
             // 
             this.menuItemAdifExportLoc.Name = "menuItemAdifExportLoc";
-            this.menuItemAdifExportLoc.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportLoc.Size = new System.Drawing.Size(139, 22);
             this.menuItemAdifExportLoc.Text = "By locator";
             this.menuItemAdifExportLoc.Click += new System.EventHandler(this.MenuItemAdifExportLoc_Click);
             // 
             // menuItemAdifExportAll
             // 
             this.menuItemAdifExportAll.Name = "menuItemAdifExportAll";
-            this.menuItemAdifExportAll.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportAll.Size = new System.Drawing.Size(139, 22);
             this.menuItemAdifExportAll.Text = "All QSO";
             this.menuItemAdifExportAll.Click += new System.EventHandler(this.MenuItemAdifExportAll_Click);
+            // 
+            // importToolStripMenuItem
+            // 
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importToolStripMenuItem.Text = "Import";
+            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // toolStripLabelSettings
             // 
@@ -1237,6 +1247,8 @@ namespace tnxlog
         private System.Windows.Forms.Panel panelQsoComments;
         private System.Windows.Forms.Label labelEsm;
         private System.Windows.Forms.CheckBox checkBoxAutoQth3;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
 
