@@ -113,6 +113,7 @@ namespace tnxlog
             this.menuItemAdifExportLoc = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAdifExportAll = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uploadAllQSOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLabelSettings = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
             this.labelEsm = new System.Windows.Forms.Label();
@@ -1025,7 +1026,8 @@ namespace tnxlog
             this.dropDownButtonFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemFileClear,
             this.menuItemAdifExport,
-            this.importToolStripMenuItem});
+            this.importToolStripMenuItem,
+            this.uploadAllQSOToolStripMenuItem});
             this.dropDownButtonFile.Image = ((System.Drawing.Image)(resources.GetObject("dropDownButtonFile.Image")));
             this.dropDownButtonFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.dropDownButtonFile.Name = "dropDownButtonFile";
@@ -1036,7 +1038,7 @@ namespace tnxlog
             // menuItemFileClear
             // 
             this.menuItemFileClear.Name = "menuItemFileClear";
-            this.menuItemFileClear.Size = new System.Drawing.Size(180, 22);
+            this.menuItemFileClear.Size = new System.Drawing.Size(222, 22);
             this.menuItemFileClear.Text = "New";
             this.menuItemFileClear.Click += new System.EventHandler(this.MenuItemFileClear_Click);
             // 
@@ -1047,35 +1049,42 @@ namespace tnxlog
             this.menuItemAdifExportLoc,
             this.menuItemAdifExportAll});
             this.menuItemAdifExport.Name = "menuItemAdifExport";
-            this.menuItemAdifExport.Size = new System.Drawing.Size(180, 22);
-            this.menuItemAdifExport.Text = "Export";
+            this.menuItemAdifExport.Size = new System.Drawing.Size(222, 22);
+            this.menuItemAdifExport.Text = "Export ADIF";
             // 
             // menuItemAdifExportQth
             // 
             this.menuItemAdifExportQth.Name = "menuItemAdifExportQth";
-            this.menuItemAdifExportQth.Size = new System.Drawing.Size(139, 22);
+            this.menuItemAdifExportQth.Size = new System.Drawing.Size(180, 22);
             this.menuItemAdifExportQth.Text = "By QTH field";
             // 
             // menuItemAdifExportLoc
             // 
             this.menuItemAdifExportLoc.Name = "menuItemAdifExportLoc";
-            this.menuItemAdifExportLoc.Size = new System.Drawing.Size(139, 22);
+            this.menuItemAdifExportLoc.Size = new System.Drawing.Size(180, 22);
             this.menuItemAdifExportLoc.Text = "By locator";
             this.menuItemAdifExportLoc.Click += new System.EventHandler(this.MenuItemAdifExportLoc_Click);
             // 
             // menuItemAdifExportAll
             // 
             this.menuItemAdifExportAll.Name = "menuItemAdifExportAll";
-            this.menuItemAdifExportAll.Size = new System.Drawing.Size(139, 22);
+            this.menuItemAdifExportAll.Size = new System.Drawing.Size(180, 22);
             this.menuItemAdifExportAll.Text = "All QSO";
             this.menuItemAdifExportAll.Click += new System.EventHandler(this.MenuItemAdifExportAll_Click);
             // 
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.importToolStripMenuItem.Text = "Import";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.importToolStripMenuItem.Text = "Import ADIF";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            // 
+            // uploadAllQSOToolStripMenuItem
+            // 
+            this.uploadAllQSOToolStripMenuItem.Name = "uploadAllQSOToolStripMenuItem";
+            this.uploadAllQSOToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.uploadAllQSOToolStripMenuItem.Text = "Upload log to TNXQSO.com";
+            this.uploadAllQSOToolStripMenuItem.Click += new System.EventHandler(this.uploadAllQSOToolStripMenuItem_Click);
             // 
             // toolStripLabelSettings
             // 
@@ -1249,6 +1258,7 @@ namespace tnxlog
         private System.Windows.Forms.CheckBox checkBoxAutoQth3;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.ToolStripMenuItem uploadAllQSOToolStripMenuItem;
     }
 }
 

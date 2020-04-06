@@ -1,6 +1,6 @@
 ﻿//#define DISABLE_HTTP
 #define TEST_SRV
-#define DISABLE_HTTP_LOGGING
+//#define DISABLE_HTTP_LOGGING
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -225,7 +225,10 @@ namespace tnxlog
 
         private void saveUnsent()
         {
-            ProtoBufSerialization.Write<List<QSO[]>>(unsentFilePath + ".qso", logQueue.Where(item => item.qso != null).Select(item => item.qso).ToList());
+            List<QSO> qsoList = new List<QSO>();
+            foreach (QSO[] qsoBatch in logQueue.Where(item => item.qso != null).Select(item => item.qso).ToList())
+                qsoList.AddRange(qsoBatch);
+            ProtoBufSerialization.Write<List<QSO>>(unsentFilePath + ".qso", qsoList);
             ProtoBufSerialization.Write<List<QsoDeleteRequest>>(unsentFilePath + ".del", logQueue.Where(item => item.delete != null).Select(item => item.delete).ToList());
         }
 
@@ -253,7 +256,7 @@ namespace tnxlog
             HttpResponseMessage response = await post("location", new StatusData(config));
             if (stationCallsign == null)
                 await getUserData();
-            if (stationCallsign != null && response.IsSuccessStatusCode)
+            if (stationCallsign != null && response != null && response.IsSuccessStatusCode)
             {
                 try
                 {

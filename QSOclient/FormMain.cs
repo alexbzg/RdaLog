@@ -1152,19 +1152,39 @@ namespace tnxlog
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            FormAdifImportDialog formAdifImportDialog = new FormAdifImportDialog();
             if (!string.IsNullOrEmpty(config.exportPath))
-                openFileDialog.FileName = config.importPath;
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+                formAdifImportDialog.fileName = config.importPath;
+            for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
             {
-                config.importPath = openFileDialog.FileName;
-                config.write();
-                using (FileStream stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                    foreach (string entry in AdifLogWatcher.adifEntries(stream))
-                    {
-                        QSO qso = tnxlog.qsoFactory.fromADIF(entry);
-                        tnxlog.qsoList.Insert(0, qso);
-                    }
+                formAdifImportDialog.setQthFieldAdifLabel(field, tnxlogConfig.qthFieldTitles[field]);
+                formAdifImportDialog.setQthFieldAdif(field, config.importQthFields[field]);
             }
+            try
+            {
+                if (formAdifImportDialog.ShowDialog() == DialogResult.OK)
+                {
+                    config.importPath = formAdifImportDialog.fileName;
+                    for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+                        config.importQthFields[field] = formAdifImportDialog.getQthFieldAdif(field);
+                    config.write();
+                    using (FileStream stream = File.Open(config.importPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                        foreach (string entry in AdifLogWatcher.adifEntries(stream))
+                        {
+                            QSO qso = tnxlog.qsoFactory.fromADIF(entry, config.importQthFields);
+                            tnxlog.qsoList.Insert(0, qso);
+                        }
+                }
+            }
+            finally
+            {
+                formAdifImportDialog.Dispose();
+            }
+        }
+
+        private async void uploadAllQSOToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            await tnxlog.httpService.postQso(tnxlog.qsoList.ToArray());
         }
     }
 
@@ -1175,6 +1195,7 @@ namespace tnxlog
         public bool statFilterAuto = true;
         public decimal freq = 14000;
         public string[] exportPathQth = new string[TnxlogConfig.QthFieldCount];
+        public string[] importQthFields = new string[TnxlogConfig.QthFieldCount];
         public string exportPathLoc;
         public string exportPath;
         public string importPath;

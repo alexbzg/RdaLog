@@ -104,10 +104,10 @@ namespace tnxlog
                     return null;
             }
             set {
-                if (qth == null || qth.Length == 0)
-                    qth = new string[] {value, null, null};
+                if (_qth == null || _qth.Length == 0)
+                    _qth = new string[] {value, null, null};
                 else 
-                    qth[0] = value;
+                    _qth[0] = value;
             }
         }
 
@@ -123,10 +123,10 @@ namespace tnxlog
             }
             set
             {
-                if (qth == null || qth.Length == 1)
-                    qth = new string[] {null, value, null};
+                if (_qth == null || _qth.Length == 1)
+                    _qth = new string[] {null, value, null};
                 else
-                    qth[1] = value;
+                    _qth[1] = value;
             }
         }
         [IgnoreDataMember]
@@ -141,10 +141,10 @@ namespace tnxlog
             }
             set
             {
-                if (qth == null || qth.Length < 3)
-                    qth = new string[] {null, null, value};
+                if (_qth == null || _qth.Length < 3)
+                    _qth = new string[] {null, null, value};
                 else
-                    qth[2] = value;
+                    _qth[2] = value;
             }
         }
 
@@ -208,7 +208,7 @@ namespace tnxlog
             string[] dt = qso.ts.Split(' ');
             string r = adifField("CALL", qso.cs) +
                 adifField("QSO_DATE", dt[0].Replace("-", "")) +
-                adifField("TIME_ON", dt[1].Replace(":", "")) +
+                adifField("TIME_OFF", dt[1].Replace(":", "")) +
                 adifField("BAND", Band.waveLength(qso.band)) +
                 adifField("STATION_CALLSIGN", qso.myCS) +
                 adifField("FREQ", adifFormatFreq(qso.freq)) +
@@ -234,10 +234,10 @@ namespace tnxlog
         }
 
 
-        public QSO fromADIF(string adif)
+        public QSO fromADIF(string adif, string[] qthFields = null)
         {
             string date = getAdifField(adif, "QSO_DATE");
-            string time = getAdifField(adif, "TIME_ON");
+            string time = getAdifField(adif, "TIME_OFF");
             string myCs = getAdifField(adif, "STATION_CALLSIGN");
             if (string.IsNullOrEmpty(myCs))
                 myCs = getAdifField(adif, "OPERATOR");
@@ -270,7 +270,13 @@ namespace tnxlog
                 _qth = new string[TnxlogConfig.QthFieldCount]
             };
             for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
-                qso._qth[field] = tnxlog.getQthFieldValue(field);
+                if (qthFields != null)
+                {
+                    if (!string.IsNullOrEmpty(qthFields[field]))
+                        qso._qth[field] = getAdifField(adif, qthFields[field]);
+                }
+                else
+                    qso._qth[field] = tnxlog.getQthFieldValue(field);
             return qso;
         }
         public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, string comments, DateTime? timestamp = null)
