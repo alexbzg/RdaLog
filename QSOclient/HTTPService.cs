@@ -163,10 +163,16 @@ namespace tnxlog
                 return false;
             else 
             {
-                string strRsp = await response.Content.ReadAsStringAsync();
-                NewQsoResponse[] qsoResponse = JsonConvert.DeserializeObject<NewQsoResponse[]>(strRsp);
-                for (int qsoCnt=0; qsoCnt < qsoResponse.Length; qsoCnt++)
-                    _qso[qsoCnt].serverTs = qsoResponse[qsoCnt].ts;
+                try
+                {
+                    string strRsp = await response.Content.ReadAsStringAsync();
+                    NewQsoResponse[] qsoResponse = JsonConvert.DeserializeObject<NewQsoResponse[]>(strRsp);
+                    for (int qsoCnt = 0; qsoCnt < qsoResponse.Length; qsoCnt++)
+                        _qso[qsoCnt].serverTs = qsoResponse[qsoCnt].ts;
+                }
+                catch (Exception e) {
+                    logger.Error(e, "Invalid log response");
+                }
             }
             return true;
         }
@@ -283,29 +289,38 @@ namespace tnxlog
             if (string.IsNullOrEmpty(config.callsign) || string.IsNullOrEmpty(config.password))
                 return null;
             HttpResponseMessage response = await post("login", new LoginRequest() { login = config.callsign, password = config.password }, false);
+            bool retryFlag = false;
             if (response != null)
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    LoginResponse userData = JsonConvert.DeserializeObject<LoginResponse>(await response.Content.ReadAsStringAsync());
-                    config.token = userData.token;
-                    schedulePingTimer();
-                    if (loginRetryTimer != null)
+                    try
                     {
-                        loginRetryTimer.Change(Timeout.Infinite, Timeout.Infinite);
-                        loginRetryTimer = null;
+                        LoginResponse userData = JsonConvert.DeserializeObject<LoginResponse>(await response.Content.ReadAsStringAsync());
+                        config.token = userData.token;
+                        schedulePingTimer();
+                        if (loginRetryTimer != null)
+                        {
+                            loginRetryTimer.Change(Timeout.Infinite, Timeout.Infinite);
+                            loginRetryTimer = null;
+                        }
+                        await Task.Run(async () => await processQueue());
                     }
-                    await Task.Run(async () => await processQueue());
+                    catch (Exception e)
+                    {
+                        logger.Error(e, "Invalid login response");
+                        retryFlag = true;
+                    }
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     config.token = null;
                     MessageBox.Show(await response.Content.ReadAsStringAsync(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                else if (retry)
-                    scheduleLoginRetryTimer();
+                else
+                    retryFlag = true;
             }
-            else if (retry)
+            if (retry && retryFlag)
                 scheduleLoginRetryTimer();
             return response?.StatusCode;
         }
@@ -326,13 +341,20 @@ namespace tnxlog
         private async Task<System.Net.HttpStatusCode?> getUserData()
         {
             HttpResponseMessage response = await post("userData", new JSONToken(config), false);
-            if (response != null)
+            try
             {
-                if (response.IsSuccessStatusCode)
+                if (response != null)
                 {
-                    UserDataResponse userData = JsonConvert.DeserializeObject<UserDataResponse>(await response.Content.ReadAsStringAsync());
-                    stationCallsign = userData.settings.station.callsign.ToLower().Replace( '/', '-' );
+                    if (response.IsSuccessStatusCode)
+                    {
+                        UserDataResponse userData = JsonConvert.DeserializeObject<UserDataResponse>(await response.Content.ReadAsStringAsync());
+                        stationCallsign = userData.settings.station.callsign.ToLower().Replace('/', '-');
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, "Invalid userData response");
             }
             return response?.StatusCode;
         }
