@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -247,11 +248,6 @@ namespace tnxlog
             transceiverController.disconnect();
         }
 
-        private void Label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void CheckBoxWatchAdifLog_CheckedChanged(object sender, EventArgs e)
         {
             textBoxWatchAdifLogPath.Enabled = watchAdifLog;
@@ -264,5 +260,10 @@ namespace tnxlog
                 textBoxWatchAdifLogPath.Text = openFileDialogAdifLog.FileName;
         }
 
+        private void buttonClip_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(textBoxDebugLog.Text);
+            MessageBox.Show("Текст скопирован в буфер обмена.\nThe text was copied to clipboard.", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

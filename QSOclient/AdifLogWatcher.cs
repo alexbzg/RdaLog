@@ -50,7 +50,13 @@ namespace tnxlog
                 string data = reader.ReadToEnd();
                 data = data.ToUpper().Replace("\r", "").Replace("\n", "");
                 if (data.Contains("<EOH>"))
-                    data = data.Split(new string[] { "<EOH>" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                {
+                    string[] dataParts = data.Split(new string[] { "<EOH>" }, StringSplitOptions.RemoveEmptyEntries);
+                    if (dataParts.Length > 1)
+                        data = dataParts[1];
+                    else
+                        data = "";
+                }
                 return data.Split(new string[] { "<EOR>" }, StringSplitOptions.RemoveEmptyEntries);
             }
         }
@@ -68,9 +74,7 @@ namespace tnxlog
                     if (lastLength != 0 && lastLength <= stream.Length)
                         stream.Position = lastLength;
                     else
-                        Logger.Debug($"File length: {stream.Length}, prev read: {lastLength}. Skip was not executed.");
                     lastLength = stream.Length;
-                    Logger.Debug($"Prev read was set to: {lastLength}");
 
                     if (discardEntries)
                         return new string[] { };

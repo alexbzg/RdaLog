@@ -238,6 +238,8 @@ namespace tnxlog
         {
             string date = getAdifField(adif, "QSO_DATE");
             string time = getAdifField(adif, "TIME_OFF");
+            if (string.IsNullOrEmpty(time))
+                time = getAdifField(adif, "TIME_ON");
             string myCs = getAdifField(adif, "STATION_CALLSIGN");
             if (string.IsNullOrEmpty(myCs))
                 myCs = getAdifField(adif, "OPERATOR");

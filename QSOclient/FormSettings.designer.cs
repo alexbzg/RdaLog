@@ -98,6 +98,7 @@
             this.textBoxDebugLog = new System.Windows.Forms.TextBox();
             this.labelDebug = new System.Windows.Forms.Label();
             this.openFileDialogAdifLog = new System.Windows.Forms.OpenFileDialog();
+            this.buttonClip = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabPageServer.SuspendLayout();
             this.groupBoxUpdInterval.SuspendLayout();
@@ -545,7 +546,7 @@
             this.tabPageServer.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageServer.Size = new System.Drawing.Size(356, 430);
             this.tabPageServer.TabIndex = 0;
-            this.tabPageServer.Text = "TNXQSO.com";
+            this.tabPageServer.Text = "Tnxqso.com";
             // 
             // groupBoxUpdInterval
             // 
@@ -770,7 +771,7 @@
             this.tabPageDigi.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageDigi.Size = new System.Drawing.Size(356, 430);
             this.tabPageDigi.TabIndex = 4;
-            this.tabPageDigi.Text = "DIGI";
+            this.tabPageDigi.Text = "Digi";
             // 
             // label2
             // 
@@ -819,7 +820,6 @@
             this.labelAdifLog.Size = new System.Drawing.Size(64, 13);
             this.labelAdifLog.TabIndex = 0;
             this.labelAdifLog.Text = "ADIF log file";
-            this.labelAdifLog.Click += new System.EventHandler(this.Label1_Click);
             // 
             // tabPageExport
             // 
@@ -844,6 +844,7 @@
             // tabPageDebug
             // 
             this.tabPageDebug.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageDebug.Controls.Add(this.buttonClip);
             this.tabPageDebug.Controls.Add(this.textBoxDebugLog);
             this.tabPageDebug.Controls.Add(this.labelDebug);
             this.tabPageDebug.Location = new System.Drawing.Point(4, 22);
@@ -856,10 +857,11 @@
             // textBoxDebugLog
             // 
             this.textBoxDebugLog.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBoxDebugLog.Location = new System.Drawing.Point(3, 219);
+            this.textBoxDebugLog.Location = new System.Drawing.Point(3, 96);
             this.textBoxDebugLog.Multiline = true;
             this.textBoxDebugLog.Name = "textBoxDebugLog";
-            this.textBoxDebugLog.Size = new System.Drawing.Size(350, 208);
+            this.textBoxDebugLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxDebugLog.Size = new System.Drawing.Size(350, 331);
             this.textBoxDebugLog.TabIndex = 1;
             // 
             // labelDebug
@@ -870,6 +872,17 @@
             this.labelDebug.Size = new System.Drawing.Size(340, 34);
             this.labelDebug.TabIndex = 0;
             this.labelDebug.Text = "Скопируйте весь текст в окне ниже и отправьте по адресу 18@73.ru";
+            // 
+            // buttonClip
+            // 
+            this.buttonClip.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonClip.Location = new System.Drawing.Point(3, 50);
+            this.buttonClip.Name = "buttonClip";
+            this.buttonClip.Size = new System.Drawing.Size(353, 40);
+            this.buttonClip.TabIndex = 2;
+            this.buttonClip.Text = "Скопировать текст в буфер обмена \r\nCopy text to clipboard";
+            this.buttonClip.UseVisualStyleBackColor = true;
+            this.buttonClip.Click += new System.EventHandler(this.buttonClip_Click);
             // 
             // FormSettings
             // 
@@ -978,5 +991,6 @@
         private System.Windows.Forms.TabPage tabPageExport;
         private System.Windows.Forms.GroupBox groupBoxAdifFields;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button buttonClip;
     }
 }
