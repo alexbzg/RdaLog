@@ -57,7 +57,8 @@ namespace tnxlog
                     else
                         data = "";
                 }
-                return data.Split(new string[] { "<EOR>" }, StringSplitOptions.RemoveEmptyEntries);
+                string[] r = data.Split(new string[] { "<EOR>" }, StringSplitOptions.RemoveEmptyEntries);
+                return r;
             }
         }
 
@@ -69,12 +70,12 @@ namespace tnxlog
             {
                 using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-                    if (stream.Length == 0)
+                    long curLength = stream.Length;
+                    if (curLength == 0)
                         return new string[] { }; 
-                    if (lastLength != 0 && lastLength <= stream.Length)
+                    if (lastLength != 0 && lastLength <= curLength)
                         stream.Position = lastLength;
-                    else
-                    lastLength = stream.Length;
+                    lastLength = curLength;
 
                     if (discardEntries)
                         return new string[] { };
