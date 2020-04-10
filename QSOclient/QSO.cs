@@ -15,7 +15,7 @@ using HamRadio;
 namespace tnxlog
 {
     [DataContract, ProtoContract]
-    public class QSO
+    public class QSO: IEquatable<QSO>
     {
         internal string _ts;
         internal string _myCS;
@@ -92,7 +92,6 @@ namespace tnxlog
         [DataMember, ProtoMember(14)]
         public string loc_rcv { get { return _loc_rcv; } set { _loc_rcv = value; } }
 
-
         [IgnoreDataMember]
         public string qthField0
         {
@@ -152,6 +151,11 @@ namespace tnxlog
         public static string formatFreq(decimal freq)
         {
             return freq.ToString("0.0", System.Globalization.NumberFormatInfo.InvariantInfo);
+        }
+
+        public bool Equals(QSO qso)
+        {
+            return qso._ts == _ts && qso._band == _band && qso._cs == _cs && qso._freq == _freq && qso._mode == _mode && qso._myCS == _myCS;
         }
 
 

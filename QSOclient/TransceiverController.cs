@@ -110,11 +110,9 @@ namespace tnxlog
 
         private void delay(int delayMs)
         {
-            Logger.Debug($"Delay {delayMs}ms");
             sw.Restart();
             while (delayMs > sw.ElapsedMilliseconds);
             sw.Stop();
-            Logger.Debug($"Actual delay: {sw.ElapsedMilliseconds} ms");
         }
 
         public void morseString(string line, int speed, CancellationToken ct)
@@ -136,7 +134,6 @@ namespace tnxlog
                         {
                             if (!MorseCode.Alphabet.ContainsKey(c))
                                 continue;
-                            Logger.Debug(c);
                             char[] code = MorseCode.Alphabet[c];
                             foreach (char mc in code)
                             {

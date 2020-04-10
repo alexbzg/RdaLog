@@ -1161,40 +1161,50 @@ namespace tnxlog
                 formAdifImportDialog.setQthFieldAdif(field, config.importQthFields[field]);
             }
             bool successFlag = false;
-            try
+            if (formAdifImportDialog.ShowDialog() == DialogResult.OK)
             {
-                if (formAdifImportDialog.ShowDialog() == DialogResult.OK)
+                try
                 {
                     config.importPath = formAdifImportDialog.fileName;
                     for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
                         config.importQthFields[field] = formAdifImportDialog.getQthFieldAdif(field);
                     config.write();
-                    using (FileStream stream = File.Open(config.importPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
-                        QSO[] qsos = AdifLogWatcher.adifEntries(stream).Select(entry => {
-                            QSO qso = tnxlog.qsoFactory.fromADIF(entry, config.importQthFields);
-                            tnxlog.qsoList.Insert(0, qso);
-                            return qso;
-                        }).ToArray();
+                    using (FileStream stream = File.Open(config.importPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    {
+                        QSO[] qsos = AdifLogWatcher.adifEntries(stream)
+                            .Select(entry => tnxlog.qsoFactory.fromADIF(entry, config.importQthFields))
+                            .Where(qso =>
+                            {
+                                if (tnxlog.qsoList.Contains(qso))
+                                    return false;
+                                else
+                                {
+                                    int idx = tnxlog.qsoList.ToList().FindIndex(item => string.Compare(qso.ts, item.ts) == -1) + 1;
+                                    tnxlog.qsoList.Insert(idx, qso);
+                                    return true;
+                                }
+                            })
+                            .ToArray();
                         if (qsos.Length > 0)
                         {
-                            if (MessageBox.Show($"Found qsos: {qsos.Length}.\nDo you want to upload imported qsos to Tnxqso.com?\nЗагрузить импортированные qso на Tnxqso.com?",
+                            if (MessageBox.Show($"Found new qsos: {qsos.Length}.\nDo you want to upload imported qsos to Tnxqso.com?\nЗагрузить импортированные qso на Tnxqso.com?",
                                 Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                                 await tnxlog.httpService.postQso(qsos);
                             successFlag = true;
                         }
                     }
                 }
-            }
-            catch (Exception er)
-            {
-                Logger.Error(er, "ADIF import error");
-            }
-            finally
-            {
-                formAdifImportDialog.Dispose();
-                if (!successFlag)
-                    MessageBox.Show("No qsos were found.\nQso не найдены.",
-                                Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                catch (Exception er)
+                {
+                    Logger.Error(er, "ADIF import error");
+                }
+                finally
+                {
+                    formAdifImportDialog.Dispose();
+                    if (!successFlag)
+                        MessageBox.Show("No qsos were found.\nQso не найдены.",
+                                    Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
