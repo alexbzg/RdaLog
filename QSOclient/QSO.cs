@@ -190,9 +190,9 @@ namespace tnxlog
                 return null;
             int idx = line.IndexOf('>', head) + 1;
             string result = "";
-            while (idx < line.Length && line[idx] != ' ' && line[idx] != '<')
+            while (idx < line.Length && line[idx] != '<')
                 result += line[idx++];
-            return result;
+            return result.Trim();
         }
         public static string adifField(string name, string value)
         {

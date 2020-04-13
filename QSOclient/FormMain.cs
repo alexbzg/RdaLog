@@ -1171,25 +1171,60 @@ namespace tnxlog
                     config.write();
                     using (FileStream stream = File.Open(config.importPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
+                        List<QSO> updatedQsos = new List<QSO>();
                         QSO[] qsos = AdifLogWatcher.adifEntries(stream)
                             .Select(entry => tnxlog.qsoFactory.fromADIF(entry, config.importQthFields))
                             .Where(qso =>
                             {
-                                if (tnxlog.qsoList.Contains(qso))
+                                int idx = tnxlog.qsoList.ToList().IndexOf(qso);
+                                if (idx != -1)
+                                {
+                                    QSO listQso = tnxlog.qsoList[idx];
+                                    for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+                                        if (!string.IsNullOrEmpty(qso.qth[field])) {
+                                            bool updFlag = false;
+                                            if (string.IsNullOrEmpty(listQso.qth[field]))
+                                            {
+                                                listQso._qth[field] = qso.qth[field];
+                                                updFlag = true;
+                                            }
+                                            else
+                                            {
+                                                string[] items = qso.qth[field].Split(' ');
+                                                foreach (string item in items)
+                                                {
+                                                    string _item = item.Trim();
+                                                    if (!string.IsNullOrEmpty(_item) && !listQso.qth[field].Contains(item))
+                                                    {
+                                                        listQso._qth[field] += ' ' + item;
+                                                        updFlag = true;
+                                                    }
+                                                }
+                                            }
+                                            if (updFlag)
+                                            {
+                                                updatedQsos.Add(listQso);
+                                                tnxlog.qsoList.ResetItem(idx);
+                                            }
+                                        }
                                     return false;
+                                }
                                 else
                                 {
-                                    int idx = tnxlog.qsoList.ToList().FindIndex(item => string.Compare(qso.ts, item.ts) == -1) + 1;
+                                    idx = tnxlog.qsoList.ToList().FindIndex(item => string.Compare(qso.ts, item.ts) == -1) + 1;
                                     tnxlog.qsoList.Insert(idx, qso);
                                     return true;
                                 }
                             })
                             .ToArray();
-                        if (qsos.Length > 0)
+                        if (qsos.Length > 0 || updatedQsos.Count > 0)
                         {
-                            if (MessageBox.Show($"Found new qsos: {qsos.Length}.\nDo you want to upload imported qsos to Tnxqso.com?\nЗагрузить импортированные qso на Tnxqso.com?",
+                            if (MessageBox.Show($"Found new qsos: {qsos.Length}. Updated QTH fields: {updatedQsos.Count}.\nDo you want to upload imported qsos to Tnxqso.com?\nЗагрузить импортированные qso на Tnxqso.com?",
                                 Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
                                 await tnxlog.httpService.postQso(qsos);
+                                await tnxlog.httpService.postQso(updatedQsos.ToArray());
+                            }
                             successFlag = true;
                         }
                     }
@@ -1202,7 +1237,7 @@ namespace tnxlog
                 {
                     formAdifImportDialog.Dispose();
                     if (!successFlag)
-                        MessageBox.Show("No qsos were found.\nQso не найдены.",
+                        MessageBox.Show("No new qsos were found.\nНовые qso не найдены.",
                                     Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
