@@ -13,12 +13,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using XmlConfigNS;
+using ExpertElectronics.Tci.Interfaces;
+using ExpertElectronics.Tci;
 
 namespace tnxlog
 {
     [DataContract]
     public class TransceiverControllerConfig : ConfigSection
     {
+        [DataMember]
+        public int transceiverType = 0;
+        [DataMember]
+        public string tciHost = "localhost";
+        [DataMember]
+        public uint tciPort = 40001;
+        [DataMember]
+        public uint tciTrnsNo = 0;
         [DataMember]
         public string serialDeviceId;
         [DataMember]
@@ -49,7 +59,9 @@ namespace tnxlog
         public static readonly List<string> PIN_FUNCTIONS = new List<string>() { "PTT", "CW" };
 
         internal readonly TransceiverControllerConfig config;
-        private SerialPort serialPort; 
+        private SerialPort serialPort;
+        private ITciClient tciClient;
+        private ITransceiverController tciTranceiverController;
 
         public bool connected { get { return serialPort != null; } }
         private volatile bool _busy;
@@ -57,6 +69,7 @@ namespace tnxlog
         public bool busy { get { return _busy; } }
 
         private Stopwatch sw = new Stopwatch();
+        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         public TransceiverController(TransceiverControllerConfig _config)
         {
@@ -66,8 +79,6 @@ namespace tnxlog
 
         public static async Task AccurateAsyncDelay(int delay, CancellationToken ct)
         {
-            //await Task.Delay(delay);
-
             Action a = () => { new System.Threading.ManualResetEventSlim(false).Wait(delay); };
             await Task.Factory.StartNew(a, ct);
         }
@@ -75,31 +86,50 @@ namespace tnxlog
 
         public void Dispose()
         {
-            serialPort.Close();
+            serialPort?.Close();
+            tciClient?.DisConnectAsync();
         }
 
-        public void connect()
+        public async void connect()
         {
-            List<SerialDeviceInfo> devices = SerialDevice.SerialDevice.listSerialDevices();
-            SerialDeviceInfo device = devices.FirstOrDefault(item => item.deviceID == config.serialDeviceId);
-            if (device != null)
+            if (config.transceiverType == 1)
             {
-                string portName = device.portName;
-                serialPort = new SerialPort(portName);
+                tciClient?.DisConnectAsync();
+                tciClient = null;
+                List<SerialDeviceInfo> devices = SerialDevice.SerialDevice.listSerialDevices();
+                SerialDeviceInfo device = devices.FirstOrDefault(item => item.deviceID == config.serialDeviceId);
+                if (device != null)
+                {
+                    string portName = device.portName;
+                    serialPort = new SerialPort(portName);
+                    try
+                    {
+                        SerialPortFixer.Execute(portName);
+                        serialPort.Open();
+                        initializePort();
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Trace.TraceInformation("Error opening port " + portName + " " + ex.ToString());
+                    }
+                }
+                else
+                    serialPort = null;
+            } else if (config.transceiverType == 2)
+            {
+                serialPort?.Close();
                 try
                 {
-                    SerialPortFixer.Execute(portName);
-                    serialPort.Open();
-                    Logger.Debug("Port Init");
-                    initializePort();
+                    tciClient = TciClient.Create(config.tciHost, config.tciPort, _cancellationTokenSource.Token);
+                    await tciClient.ConnectAsync();
+                    tciTranceiverController = tciClient.TransceiverController;
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Trace.TraceInformation("Error opening port " + portName + " " + ex.ToString());
+                    System.Diagnostics.Trace.TraceInformation($"Error opening TCI connection to {config.tciHost}:{config.tciPort} {ex.ToString()}");
                 }
+
             }
-            else
-                serialPort = null;
         }
 
         public void initializePort()
@@ -108,57 +138,72 @@ namespace tnxlog
                 setPin(pinFunction, true);
         }
 
-        private void delay(int delayMs)
+        private void delay(uint delayMs)
         {
             sw.Restart();
             while (delayMs > sw.ElapsedMilliseconds);
             sw.Stop();
         }
 
-        public void morseString(string line, int speed, CancellationToken ct)
+        public void morseString(string line, uint speed, CancellationToken ct)
         {
-            if (!_busy)
-            {
-                try {
-                    _busy = true;
-                    int cwPinNo = getPinNumber("CW");
-                    PropertyInfo cwProp = getPortProp(cwPinNo);
-                    bool cwOn = getInvert(cwPinNo) ? true : false;
-                    setPin("PTT", false);
-                    delay(speed);
-                    foreach (char c in line)
+            if (config.transceiverType == 1) {
+                if (!_busy)
+                {
+                    try
                     {
-                        if (ct.IsCancellationRequested)
-                            throw new TaskCanceledException();
-                        if (c != ' ')
+                        _busy = true;
+                        int cwPinNo = getPinNumber("CW");
+                        PropertyInfo cwProp = getPortProp(cwPinNo);
+                        bool cwOn = getInvert(cwPinNo) ? true : false;
+                        setPin("PTT", false);
+                        delay(speed);
+                        foreach (char c in line)
                         {
-                            if (!MorseCode.Alphabet.ContainsKey(c))
-                                continue;
-                            char[] code = MorseCode.Alphabet[c];
-                            foreach (char mc in code)
+                            if (ct.IsCancellationRequested)
+                                throw new TaskCanceledException();
+                            if (c != ' ')
                             {
-                                cwProp.SetValue(serialPort, cwOn);
-                                delay(mc == MorseCode.Dot ? speed : 4 * speed);
-                                cwProp.SetValue(serialPort, !cwOn);
-                                delay(speed);
+                                if (!MorseCode.Alphabet.ContainsKey(c))
+                                    continue;
+                                char[] code = MorseCode.Alphabet[c];
+                                foreach (char mc in code)
+                                {
+                                    cwProp.SetValue(serialPort, cwOn);
+                                    delay(mc == MorseCode.Dot ? speed : 4 * speed);
+                                    cwProp.SetValue(serialPort, !cwOn);
+                                    delay(speed);
+                                }
+                                delay(2 * speed);
                             }
-                            delay(2 * speed);
+                            else
+                                delay(4 * speed);
                         }
-                        else
-                            delay(4 * speed);
                     }
-                }
-                catch (TaskCanceledException) {}
-                catch (Exception ex)
+                    catch (TaskCanceledException) { }
+                    catch (Exception ex)
+                    {
+                        Logger.Error(ex, "Morse string output error!");
+                    }
+                    finally
+                    {
+                        _busy = false;
+                        initializePort();
+                    }
+                } else if (config.transceiverType == 2)
                 {
-                    Logger.Error(ex, "Morse string output error!");
-                }
-                finally
-                {
-                    _busy = false;
-                    initializePort();
+                    tciTranceiverController.CwMacroSpeed = speed;
+                    tciTranceiverController.SetMacros(config.tciTrnsNo, line);
                 }
 
+            }
+        }
+
+        public void stop()
+        {
+            if (config.transceiverType == 2)
+            {
+                tciTranceiverController.SetCwMacrosStop();
             }
         }
 

@@ -77,15 +77,24 @@
             this.checkBoxViewQsoComments = new System.Windows.Forms.CheckBox();
             this.checkBoxViewQth3Loc = new System.Windows.Forms.CheckBox();
             this.tabPageCwMacros = new System.Windows.Forms.TabPage();
+            this.panelTransceiverSerial = new System.Windows.Forms.Panel();
+            this.comboBoxPort = new System.Windows.Forms.ComboBox();
+            this.labelPort = new System.Windows.Forms.Label();
+            this.labelTransceiverType = new System.Windows.Forms.Label();
+            this.comboBoxTransceiverType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxEsmMacro = new System.Windows.Forms.TextBox();
             this.labelAutoCqRxPause = new System.Windows.Forms.Label();
             this.labelAutoCqPauseSec = new System.Windows.Forms.Label();
             this.numericUpDownAutoCqPause = new System.Windows.Forms.NumericUpDown();
             this.labelAutoCq = new System.Windows.Forms.Label();
-            this.checkBoxEnableCwMacros = new System.Windows.Forms.CheckBox();
-            this.labelPort = new System.Windows.Forms.Label();
-            this.comboBoxPort = new System.Windows.Forms.ComboBox();
+            this.panelTransceiverTCI = new System.Windows.Forms.Panel();
+            this.labelTransceiverTciTrsNo = new System.Windows.Forms.Label();
+            this.textBoxTransceiverTciTrnsNo = new System.Windows.Forms.TextBox();
+            this.labelTransceiverTciPort = new System.Windows.Forms.Label();
+            this.textBoxTransceiverTciPort = new System.Windows.Forms.TextBox();
+            this.labelHost = new System.Windows.Forms.Label();
+            this.textBoxTransceiverTciHost = new System.Windows.Forms.TextBox();
             this.tabPageDigi = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.checkBoxWatchAdifLog = new System.Windows.Forms.CheckBox();
@@ -95,16 +104,18 @@
             this.tabPageExport = new System.Windows.Forms.TabPage();
             this.groupBoxAdifFields = new System.Windows.Forms.GroupBox();
             this.tabPageDebug = new System.Windows.Forms.TabPage();
+            this.buttonClip = new System.Windows.Forms.Button();
             this.textBoxDebugLog = new System.Windows.Forms.TextBox();
             this.labelDebug = new System.Windows.Forms.Label();
             this.openFileDialogAdifLog = new System.Windows.Forms.OpenFileDialog();
-            this.buttonClip = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabPageServer.SuspendLayout();
             this.groupBoxUpdInterval.SuspendLayout();
             this.tabPageView.SuspendLayout();
             this.tabPageCwMacros.SuspendLayout();
+            this.panelTransceiverSerial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoCqPause)).BeginInit();
+            this.panelTransceiverTCI.SuspendLayout();
             this.tabPageDigi.SuspendLayout();
             this.tabPageExport.SuspendLayout();
             this.tabPageDebug.SuspendLayout();
@@ -626,18 +637,17 @@
             // tabPageCwMacros
             // 
             this.tabPageCwMacros.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageCwMacros.Controls.Add(this.labelTransceiverType);
+            this.tabPageCwMacros.Controls.Add(this.comboBoxTransceiverType);
             this.tabPageCwMacros.Controls.Add(this.label1);
             this.tabPageCwMacros.Controls.Add(this.textBoxEsmMacro);
             this.tabPageCwMacros.Controls.Add(this.labelAutoCqRxPause);
             this.tabPageCwMacros.Controls.Add(this.labelAutoCqPauseSec);
             this.tabPageCwMacros.Controls.Add(this.numericUpDownAutoCqPause);
             this.tabPageCwMacros.Controls.Add(this.labelAutoCq);
-            this.tabPageCwMacros.Controls.Add(this.checkBoxEnableCwMacros);
             this.tabPageCwMacros.Controls.Add(this.textBoxCwMacroF3Bindings);
             this.tabPageCwMacros.Controls.Add(this.labelCwMacroF1);
             this.tabPageCwMacros.Controls.Add(this.textBoxCwMacroF1Bindings);
-            this.tabPageCwMacros.Controls.Add(this.labelPort);
-            this.tabPageCwMacros.Controls.Add(this.comboBoxPort);
             this.tabPageCwMacros.Controls.Add(this.labelCwMacroF2);
             this.tabPageCwMacros.Controls.Add(this.textBoxCwMacroF9Title);
             this.tabPageCwMacros.Controls.Add(this.textBoxCwMacroF2Bindings);
@@ -662,12 +672,64 @@
             this.tabPageCwMacros.Controls.Add(this.labelCwMacroF9);
             this.tabPageCwMacros.Controls.Add(this.labelCwMacroF8);
             this.tabPageCwMacros.Controls.Add(this.textBoxCwMacroF8Bindings);
+            this.tabPageCwMacros.Controls.Add(this.panelTransceiverTCI);
+            this.tabPageCwMacros.Controls.Add(this.panelTransceiverSerial);
             this.tabPageCwMacros.Location = new System.Drawing.Point(4, 22);
             this.tabPageCwMacros.Name = "tabPageCwMacros";
             this.tabPageCwMacros.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageCwMacros.Size = new System.Drawing.Size(356, 430);
             this.tabPageCwMacros.TabIndex = 2;
             this.tabPageCwMacros.Text = "CW macros";
+            // 
+            // panelTransceiverSerial
+            // 
+            this.panelTransceiverSerial.Controls.Add(this.comboBoxPort);
+            this.panelTransceiverSerial.Controls.Add(this.labelPort);
+            this.panelTransceiverSerial.Location = new System.Drawing.Point(0, 25);
+            this.panelTransceiverSerial.Name = "panelTransceiverSerial";
+            this.panelTransceiverSerial.Size = new System.Drawing.Size(356, 81);
+            this.panelTransceiverSerial.TabIndex = 82;
+            // 
+            // comboBoxPort
+            // 
+            this.comboBoxPort.FormattingEnabled = true;
+            this.comboBoxPort.Location = new System.Drawing.Point(40, 1);
+            this.comboBoxPort.Name = "comboBoxPort";
+            this.comboBoxPort.Size = new System.Drawing.Size(308, 21);
+            this.comboBoxPort.TabIndex = 68;
+            this.comboBoxPort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxPort_SelectedIndexChanged);
+            this.comboBoxPort.SelectedValueChanged += new System.EventHandler(this.ComboBoxPort_SelectedValueChanged);
+            // 
+            // labelPort
+            // 
+            this.labelPort.AutoSize = true;
+            this.labelPort.Location = new System.Drawing.Point(6, 4);
+            this.labelPort.Name = "labelPort";
+            this.labelPort.Size = new System.Drawing.Size(26, 13);
+            this.labelPort.TabIndex = 69;
+            this.labelPort.Text = "Port";
+            // 
+            // labelTransceiverType
+            // 
+            this.labelTransceiverType.AutoSize = true;
+            this.labelTransceiverType.Location = new System.Drawing.Point(3, 6);
+            this.labelTransceiverType.Name = "labelTransceiverType";
+            this.labelTransceiverType.Size = new System.Drawing.Size(119, 13);
+            this.labelTransceiverType.TabIndex = 81;
+            this.labelTransceiverType.Text = "Transceiver connection";
+            // 
+            // comboBoxTransceiverType
+            // 
+            this.comboBoxTransceiverType.FormattingEnabled = true;
+            this.comboBoxTransceiverType.Items.AddRange(new object[] {
+            "Disabled",
+            "Serial port",
+            "TCI"});
+            this.comboBoxTransceiverType.Location = new System.Drawing.Point(125, 3);
+            this.comboBoxTransceiverType.Name = "comboBoxTransceiverType";
+            this.comboBoxTransceiverType.Size = new System.Drawing.Size(223, 21);
+            this.comboBoxTransceiverType.TabIndex = 80;
+            this.comboBoxTransceiverType.SelectedIndexChanged += new System.EventHandler(this.comboBoxTransceiverType_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -728,35 +790,71 @@
             this.labelAutoCq.TabIndex = 72;
             this.labelAutoCq.Text = "Auto CQ";
             // 
-            // checkBoxEnableCwMacros
+            // panelTransceiverTCI
             // 
-            this.checkBoxEnableCwMacros.AutoSize = true;
-            this.checkBoxEnableCwMacros.Location = new System.Drawing.Point(8, 6);
-            this.checkBoxEnableCwMacros.Name = "checkBoxEnableCwMacros";
-            this.checkBoxEnableCwMacros.Size = new System.Drawing.Size(117, 17);
-            this.checkBoxEnableCwMacros.TabIndex = 70;
-            this.checkBoxEnableCwMacros.Text = "Enable CW macros";
-            this.checkBoxEnableCwMacros.UseVisualStyleBackColor = true;
-            this.checkBoxEnableCwMacros.CheckedChanged += new System.EventHandler(this.checkBoxEnableCwMacros_CheckedChanged);
+            this.panelTransceiverTCI.Controls.Add(this.labelTransceiverTciTrsNo);
+            this.panelTransceiverTCI.Controls.Add(this.textBoxTransceiverTciTrnsNo);
+            this.panelTransceiverTCI.Controls.Add(this.labelTransceiverTciPort);
+            this.panelTransceiverTCI.Controls.Add(this.textBoxTransceiverTciPort);
+            this.panelTransceiverTCI.Controls.Add(this.labelHost);
+            this.panelTransceiverTCI.Controls.Add(this.textBoxTransceiverTciHost);
+            this.panelTransceiverTCI.Location = new System.Drawing.Point(0, 25);
+            this.panelTransceiverTCI.Name = "panelTransceiverTCI";
+            this.panelTransceiverTCI.Size = new System.Drawing.Size(356, 81);
+            this.panelTransceiverTCI.TabIndex = 70;
             // 
-            // labelPort
+            // labelTransceiverTciTrsNo
             // 
-            this.labelPort.AutoSize = true;
-            this.labelPort.Location = new System.Drawing.Point(5, 30);
-            this.labelPort.Name = "labelPort";
-            this.labelPort.Size = new System.Drawing.Size(26, 13);
-            this.labelPort.TabIndex = 69;
-            this.labelPort.Text = "Port";
+            this.labelTransceiverTciTrsNo.AutoSize = true;
+            this.labelTransceiverTciTrsNo.Location = new System.Drawing.Point(8, 56);
+            this.labelTransceiverTciTrsNo.Name = "labelTransceiverTciTrsNo";
+            this.labelTransceiverTciTrsNo.Size = new System.Drawing.Size(73, 13);
+            this.labelTransceiverTciTrsNo.TabIndex = 6;
+            this.labelTransceiverTciTrsNo.Text = "Transceiver #";
             // 
-            // comboBoxPort
+            // textBoxTransceiverTciTrnsNo
             // 
-            this.comboBoxPort.FormattingEnabled = true;
-            this.comboBoxPort.Location = new System.Drawing.Point(39, 27);
-            this.comboBoxPort.Name = "comboBoxPort";
-            this.comboBoxPort.Size = new System.Drawing.Size(308, 21);
-            this.comboBoxPort.TabIndex = 68;
-            this.comboBoxPort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxPort_SelectedIndexChanged);
-            this.comboBoxPort.SelectedValueChanged += new System.EventHandler(this.ComboBoxPort_SelectedValueChanged);
+            this.textBoxTransceiverTciTrnsNo.Location = new System.Drawing.Point(85, 53);
+            this.textBoxTransceiverTciTrnsNo.Name = "textBoxTransceiverTciTrnsNo";
+            this.textBoxTransceiverTciTrnsNo.Size = new System.Drawing.Size(101, 20);
+            this.textBoxTransceiverTciTrnsNo.TabIndex = 5;
+            this.textBoxTransceiverTciTrnsNo.Text = "0";
+            // 
+            // labelTransceiverTciPort
+            // 
+            this.labelTransceiverTciPort.AutoSize = true;
+            this.labelTransceiverTciPort.Location = new System.Drawing.Point(8, 31);
+            this.labelTransceiverTciPort.Name = "labelTransceiverTciPort";
+            this.labelTransceiverTciPort.Size = new System.Drawing.Size(26, 13);
+            this.labelTransceiverTciPort.TabIndex = 4;
+            this.labelTransceiverTciPort.Text = "Port";
+            // 
+            // textBoxTransceiverTciPort
+            // 
+            this.textBoxTransceiverTciPort.Location = new System.Drawing.Point(43, 28);
+            this.textBoxTransceiverTciPort.Name = "textBoxTransceiverTciPort";
+            this.textBoxTransceiverTciPort.Size = new System.Drawing.Size(143, 20);
+            this.textBoxTransceiverTciPort.TabIndex = 3;
+            this.textBoxTransceiverTciPort.Text = "40001";
+            this.textBoxTransceiverTciPort.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxTransceiverTciPort_Validating);
+            // 
+            // labelHost
+            // 
+            this.labelHost.AutoSize = true;
+            this.labelHost.Location = new System.Drawing.Point(8, 7);
+            this.labelHost.Name = "labelHost";
+            this.labelHost.Size = new System.Drawing.Size(29, 13);
+            this.labelHost.TabIndex = 2;
+            this.labelHost.Text = "Host";
+            // 
+            // textBoxTransceiverTciHost
+            // 
+            this.textBoxTransceiverTciHost.Location = new System.Drawing.Point(43, 4);
+            this.textBoxTransceiverTciHost.Name = "textBoxTransceiverTciHost";
+            this.textBoxTransceiverTciHost.Size = new System.Drawing.Size(143, 20);
+            this.textBoxTransceiverTciHost.TabIndex = 0;
+            this.textBoxTransceiverTciHost.Text = "localhost";
+            this.textBoxTransceiverTciHost.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxTransceiverTciHost_Validating);
             // 
             // tabPageDigi
             // 
@@ -854,6 +952,17 @@
             this.tabPageDebug.TabIndex = 3;
             this.tabPageDebug.Text = "Отладка";
             // 
+            // buttonClip
+            // 
+            this.buttonClip.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonClip.Location = new System.Drawing.Point(3, 50);
+            this.buttonClip.Name = "buttonClip";
+            this.buttonClip.Size = new System.Drawing.Size(353, 40);
+            this.buttonClip.TabIndex = 2;
+            this.buttonClip.Text = "Скопировать текст в буфер обмена \r\nCopy text to clipboard";
+            this.buttonClip.UseVisualStyleBackColor = true;
+            this.buttonClip.Click += new System.EventHandler(this.buttonClip_Click);
+            // 
             // textBoxDebugLog
             // 
             this.textBoxDebugLog.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -873,17 +982,6 @@
             this.labelDebug.TabIndex = 0;
             this.labelDebug.Text = "Скопируйте весь текст в окне ниже и отправьте по адресу 18@73.ru";
             // 
-            // buttonClip
-            // 
-            this.buttonClip.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonClip.Location = new System.Drawing.Point(3, 50);
-            this.buttonClip.Name = "buttonClip";
-            this.buttonClip.Size = new System.Drawing.Size(353, 40);
-            this.buttonClip.TabIndex = 2;
-            this.buttonClip.Text = "Скопировать текст в буфер обмена \r\nCopy text to clipboard";
-            this.buttonClip.UseVisualStyleBackColor = true;
-            this.buttonClip.Click += new System.EventHandler(this.buttonClip_Click);
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -900,6 +998,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "TNXLOG - Settings";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSettings_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormSettings_FormClosed);
             this.tabControl.ResumeLayout(false);
             this.tabPageServer.ResumeLayout(false);
@@ -910,7 +1009,11 @@
             this.tabPageView.PerformLayout();
             this.tabPageCwMacros.ResumeLayout(false);
             this.tabPageCwMacros.PerformLayout();
+            this.panelTransceiverSerial.ResumeLayout(false);
+            this.panelTransceiverSerial.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoCqPause)).EndInit();
+            this.panelTransceiverTCI.ResumeLayout(false);
+            this.panelTransceiverTCI.PerformLayout();
             this.tabPageDigi.ResumeLayout(false);
             this.tabPageDigi.PerformLayout();
             this.tabPageExport.ResumeLayout(false);
@@ -973,7 +1076,6 @@
         private System.Windows.Forms.Label labelDebug;
         internal System.Windows.Forms.ComboBox comboBoxPort;
         private System.Windows.Forms.Label labelPort;
-        private System.Windows.Forms.CheckBox checkBoxEnableCwMacros;
         private System.Windows.Forms.Label labelAutoCqPauseSec;
         private System.Windows.Forms.NumericUpDown numericUpDownAutoCqPause;
         private System.Windows.Forms.Label labelAutoCq;
@@ -992,5 +1094,15 @@
         private System.Windows.Forms.GroupBox groupBoxAdifFields;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonClip;
+        private System.Windows.Forms.Panel panelTransceiverSerial;
+        private System.Windows.Forms.Label labelTransceiverType;
+        private System.Windows.Forms.ComboBox comboBoxTransceiverType;
+        private System.Windows.Forms.Panel panelTransceiverTCI;
+        private System.Windows.Forms.Label labelTransceiverTciTrsNo;
+        private System.Windows.Forms.TextBox textBoxTransceiverTciTrnsNo;
+        private System.Windows.Forms.Label labelTransceiverTciPort;
+        private System.Windows.Forms.TextBox textBoxTransceiverTciPort;
+        private System.Windows.Forms.Label labelHost;
+        private System.Windows.Forms.TextBox textBoxTransceiverTciHost;
     }
 }

@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,7 +49,7 @@ namespace tnxlog
 
         private TransceiverController transceiverController = new TransceiverController(new TransceiverControllerConfig());
 
-        private List<LabelTexBox> qthFieldAdifContols = new List<LabelTexBox>();
+        private List<LabelTextBox> qthFieldAdifContols = new List<LabelTextBox>();
 
         public string getQthFieldAdif(int field)
         {
@@ -76,6 +77,24 @@ namespace tnxlog
             }
         }
 
+        internal string tciHost
+        {
+            get { return textBoxTransceiverTciHost.Text.Trim(); }
+            set { textBoxTransceiverTciHost.Text = value; }
+        }
+
+        internal uint tciPort
+        {
+            get { return Convert.ToUInt32(textBoxTransceiverTciPort.Text); }
+            set { textBoxTransceiverTciPort.Text = value.ToString(); }
+        }
+
+        internal uint tciTrnsNo
+        {
+            get { return Convert.ToUInt16(textBoxTransceiverTciTrnsNo.Text); }
+            set { textBoxTransceiverTciTrnsNo.Text = value.ToString(); }
+        }
+
         internal bool watchAdifLog
         {
             get { return checkBoxWatchAdifLog.Checked; }
@@ -100,7 +119,7 @@ namespace tnxlog
             set { numericUpDownAutoCqPause.Value = value; }
         }
 
-        internal bool enableCwMacros { get { return checkBoxEnableCwMacros.Checked; } set { checkBoxEnableCwMacros.Checked = value; } }
+        internal int cwTransceiverType { get { return comboBoxTransceiverType.SelectedIndex; } set { comboBoxTransceiverType.SelectedIndex = value; } }
 
         private string dataPath;
         public FormSettings(string _dataPath)
@@ -137,8 +156,8 @@ namespace tnxlog
             {
                 TransceiverPinSettings tpsControl = new TransceiverPinSettings(pinFunction);
                 transceiverPinSettings.Add(tpsControl);
-                tabPageCwMacros.Controls.Add(tpsControl);
-                tpsControl.Location = new Point(1, 48 + (pinCount++) * (tpsControl.Height + 2));
+                panelTransceiverSerial.Controls.Add(tpsControl);
+                tpsControl.Location = new Point(1, 25 + (pinCount++) * (tpsControl.Height + 2));
                 tpsControl.pinChanged += transceiverPinChanged;
                 tpsControl.invertChanged += transceiverPinInvertChanged;
                 tpsControl.testMouseDown += testPinMouseDown;
@@ -147,7 +166,7 @@ namespace tnxlog
 
             for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
             {
-                LabelTexBox ltb = new LabelTexBox();
+                LabelTextBox ltb = new LabelTextBox();
                 qthFieldAdifContols.Add(ltb);
                 groupBoxAdifFields.Controls.Add(ltb);
                 ltb.Location = new Point(1, 14 + field * (ltb.Height + 2));
@@ -220,13 +239,6 @@ namespace tnxlog
         }
 
 
-        private void checkBoxEnableCwMacros_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxPort.Enabled = checkBoxEnableCwMacros.Checked;
-            foreach (TransceiverPinSettings tps in transceiverPinSettings)
-                tps.Enabled = checkBoxEnableCwMacros.Checked;
-        }
-
         private void ComboBoxPort_SelectedIndexChanged(object sender, EventArgs e)
         {
             transceiverController.disconnect();
@@ -264,6 +276,44 @@ namespace tnxlog
         {
             Clipboard.SetText(textBoxDebugLog.Text);
             MessageBox.Show("Текст скопирован в буфер обмена.\nThe text was copied to clipboard.", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void comboBoxTransceiverType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            panelTransceiverSerial.Visible = comboBoxTransceiverType.SelectedIndex == 1;
+            panelTransceiverTCI.Visible = comboBoxTransceiverType.SelectedIndex == 2;
+        }
+
+        private void textBoxTransceiverTciHost_Validating(object sender, CancelEventArgs e)
+        {
+        }
+
+        private void textBoxTransceiverTciPort_Validating(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void FormSettings_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (DialogResult == DialogResult.OK)
+            {
+                if (cwTransceiverType == 2)
+                {
+                    if ((tciHost != "localhost") && (!IPAddress.TryParse(tciHost, out _)))
+                    {
+                        MessageBox.Show("Enter a valid IP address (Refer EESDR -> Options -> TCI Tab).\nВведите корректный IP-адрес (см. EESDR -> Options -> TCI Tab).");
+                        e.Cancel = true;
+                        return;
+                    }
+                    if (tciPort == 0)
+                    {
+                        MessageBox.Show("Enter a valid port number (Refer EESDR -> Options -> TCI Tab).\nВведите корректный номер порта (см. EESDR -> Options -> TCI Tab).");
+                        e.Cancel = true;
+                        return;
+                    }
+
+                }
+            }
         }
     }
 }

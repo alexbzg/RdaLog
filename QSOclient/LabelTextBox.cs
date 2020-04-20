@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace tnxlog
 {
-    public partial class LabelTexBox : UserControl
+    public partial class LabelTextBox : UserControl
     {
         public string labelText
         {
@@ -22,7 +22,7 @@ namespace tnxlog
             get { return textBox.Text; }
             set { textBox.Text = value; }
         }
-        public LabelTexBox()
+        public LabelTextBox()
         {
             InitializeComponent();
         }

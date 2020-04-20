@@ -1,6 +1,6 @@
 ﻿namespace tnxlog
 {
-    partial class LabelTexBox
+    partial class LabelTextBox
     {
         /// <summary> 
         /// Обязательная переменная конструктора.

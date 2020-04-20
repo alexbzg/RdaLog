@@ -67,6 +67,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TciClientLibrary">
+      <HintPath>..\..\TCILibrary\TciClient\bin\Debug\netstandard2.0\TciClientLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdifLogWatcher.cs" />
@@ -82,11 +85,11 @@
     <Compile Include="FormCwSend.Designer.cs">
       <DependentUpon>FormCwSend.cs</DependentUpon>
     </Compile>
-    <Compile Include="LabelTexBox.cs">
+    <Compile Include="LabelTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LabelTexBox.Designer.cs">
-      <DependentUpon>LabelTexBox.cs</DependentUpon>
+    <Compile Include="LabelTextBox.Designer.cs">
+      <DependentUpon>LabelTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="MorseCode.cs" />
     <Compile Include="SerialDevice.cs" />
@@ -153,8 +156,8 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LabelTexBox.resx">
-      <DependentUpon>LabelTexBox.cs</DependentUpon>
+    <EmbeddedResource Include="LabelTextBox.resx">
+      <DependentUpon>LabelTextBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

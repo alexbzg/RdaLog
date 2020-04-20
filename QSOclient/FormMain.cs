@@ -915,7 +915,7 @@ namespace tnxlog
 
         private async Task processCwMacro(string _macro)
         {
-            if (tnxlogConfig.enableCwMacros && tnxlog.transceiverController.connected)
+            if (tnxlogConfig.transceiverController.transceiverType != 0 && tnxlog.transceiverController.connected)
             {
                 string macro = _macro;
                 if (macro.Contains('}'))
@@ -973,7 +973,7 @@ namespace tnxlog
         private async Task _sendCwMsg(string msg)
         {
             tokenSource = new CancellationTokenSource();
-            await Task.Run(() => tnxlog.transceiverController.morseString(msg.ToUpper(), Convert.ToInt32(1200 / tnxlogConfig.morseSpeed), tokenSource.Token));
+            await Task.Run(() => tnxlog.transceiverController.morseString(msg.ToUpper(), Convert.ToUInt32(1200 / tnxlogConfig.morseSpeed), tokenSource.Token));
         }
 
         private void updateLabelEsm()
@@ -1075,11 +1075,15 @@ namespace tnxlog
                 int cwMacroIdx = Array.IndexOf(CwMacrosKeys, e.KeyData);
                 if (cwMacroIdx != -1) //CW macro
                     await processCwMacro(tnxlogConfig.cwMacros[cwMacroIdx][1]);
-                else if (e.KeyData == Keys.Escape && tnxlog.transceiverController.busy) //cancel CW transmission
+                else if (e.KeyData == Keys.Escape) //cancel CW transmission
                 {
-                    while (!cwQueue.IsEmpty)
-                        cwQueue.TryDequeue(out string discard);
-                    tokenSource.Cancel();
+                    tnxlog.transceiverController.stop();
+                    if (tnxlog.transceiverController.busy)
+                    {
+                        while (!cwQueue.IsEmpty)
+                            cwQueue.TryDequeue(out string discard);
+                        tokenSource.Cancel();
+                    }
                 }
             }
         }

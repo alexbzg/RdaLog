@@ -140,7 +140,6 @@ namespace tnxlog
             return _mainFormPanels[panel];
         }
 
-        public bool enableCwMacros = true;
         private int _morseSpeed = 12;
         public int morseSpeed {
             get { return _morseSpeed; }

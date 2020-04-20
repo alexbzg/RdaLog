@@ -12,7 +12,7 @@ namespace tnxlog
 {
     public partial class FormAdifImportDialog : Form
     {
-        private List<LabelTexBox> qthFieldAdifContols = new List<LabelTexBox>();
+        private List<LabelTextBox> qthFieldAdifContols = new List<LabelTextBox>();
         public string getQthFieldAdif(int field)
         {
             return qthFieldAdifContols[field].editText;
@@ -43,7 +43,7 @@ namespace tnxlog
             InitializeComponent();
             for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
             {
-                LabelTexBox ltb = new LabelTexBox();
+                LabelTextBox ltb = new LabelTextBox();
                 qthFieldAdifContols.Add(ltb);
                 groupBoxAdifFields.Controls.Add(ltb);
                 ltb.Location = new Point(1, 14 + field * (ltb.Height + 2));

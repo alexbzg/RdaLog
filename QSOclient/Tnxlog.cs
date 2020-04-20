@@ -151,7 +151,7 @@ namespace tnxlog
 
         private void initServices()
         {
-            if (config.enableCwMacros)
+            if (config.transceiverController.transceiverType != 0)
                 transceiverController.connect();
             if (config.watchAdifLog)
                 adifLogWatcher.start(config.watchAdifLogPath);
@@ -235,13 +235,16 @@ namespace tnxlog
             foreach (KeyValuePair<string,CheckBox> item in formSettings.mainFormPanelCheckboxes)
                 item.Value.Checked = config.getMainFormPanelVisible(item.Key);
 
-            formSettings.enableCwMacros = config.enableCwMacros;
+            formSettings.cwTransceiverType = config.transceiverController.transceiverType;
             formSettings.serialDeviceId = config.transceiverController.serialDeviceId;
             for (int co = 0; co < TransceiverController.PIN_FUNCTIONS.Count; co++)
             {
                 formSettings.transceiverPinSettings[co].pin = SerialDevice.SerialDevice.PINS[config.transceiverController.pinout[co]];
                 formSettings.transceiverPinSettings[co].invert = config.transceiverController.invertPins[co];
             }
+            formSettings.tciHost = config.transceiverController.tciHost;
+            formSettings.tciPort = config.transceiverController.tciPort;
+            formSettings.tciTrnsNo = config.transceiverController.tciTrnsNo;
             formSettings.autoCqRxPause = config.autoCqRxPause;
             formSettings.esmMacro = config.esmMacro;
 
@@ -273,7 +276,6 @@ namespace tnxlog
                 foreach (KeyValuePair<string, CheckBox> item in formSettings.mainFormPanelCheckboxes)
                      config.setMainFormPanelVisible(item.Key, item.Value.Checked);
 
-                config.enableCwMacros = formSettings.enableCwMacros;
                 updateTransceiverControllerConfig(config.transceiverController, formSettings);
                 config.autoCqRxPause = formSettings.autoCqRxPause;
                 config.esmMacro = formSettings.esmMacro;
@@ -300,12 +302,16 @@ namespace tnxlog
 
         private void updateTransceiverControllerConfig(TransceiverControllerConfig tcConfig, FormSettings formSettings)
         {
+            tcConfig.transceiverType = formSettings.cwTransceiverType;
             tcConfig.serialDeviceId = formSettings.serialDeviceId;
             for (int co = 0; co < TransceiverController.PIN_FUNCTIONS.Count; co++)
             {
                 tcConfig.pinout[co] = SerialDevice.SerialDevice.PINS.IndexOf(formSettings.transceiverPinSettings[co].pin);
                 tcConfig.invertPins[co] = formSettings.transceiverPinSettings[co].invert;
             }
+            tcConfig.tciHost = formSettings.tciHost;
+            tcConfig.tciPort = formSettings.tciPort;
+            tcConfig.tciTrnsNo = formSettings.tciTrnsNo;
         }
 
     }
