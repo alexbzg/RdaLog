@@ -38,7 +38,7 @@ namespace tnxlog
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.panelQsoComments = new System.Windows.Forms.Panel();
             this.labelComments = new System.Windows.Forms.Label();
-            this.textBoxComments = new System.Windows.Forms.TextBoxCallsign();
+            this.textBoxComments = new System.Windows.Forms.TextBox();
             this.panelQth1_2 = new System.Windows.Forms.Panel();
             this.checkBoxAutoQth2 = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoQth1 = new System.Windows.Forms.CheckBox();
@@ -1248,7 +1248,7 @@ namespace tnxlog
         private System.Windows.Forms.ToolStripStatusLabel loginLabel;
         private System.Windows.Forms.Label labelDupe;
         private System.Windows.Forms.Label labelComments;
-        private System.Windows.Forms.TextBoxCallsign textBoxComments;
+        private System.Windows.Forms.TextBox textBoxComments;
         private System.Windows.Forms.ToolStripStatusLabel connectionStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem menuItemAdifExportLoc;
         private System.Windows.Forms.Label labelMorseSpeed;

@@ -110,7 +110,7 @@ namespace tnxlog
                     }
                     catch (Exception ex)
                     {
-                        System.Diagnostics.Trace.TraceInformation("Error opening port " + portName + " " + ex.ToString());
+                        Logger.Error(ex, "Error opening port " + portName + " " + ex.ToString());
                     }
                 }
                 else
@@ -126,7 +126,7 @@ namespace tnxlog
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Trace.TraceInformation($"Error opening TCI connection to {config.tciHost}:{config.tciPort} {ex.ToString()}");
+                    Logger.Error(ex, $"Error opening TCI connection to {config.tciHost}:{config.tciPort} {ex.ToString()}");
                 }
 
             }
