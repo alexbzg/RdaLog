@@ -213,6 +213,7 @@ namespace tnxlog
             string r = adifField("CALL", qso.cs) +
                 adifField("QSO_DATE", dt[0].Replace("-", "")) +
                 adifField("TIME_OFF", dt[1].Replace(":", "")) +
+                adifField("TIME_ON", dt[1].Replace(":", "")) +
                 adifField("BAND", Band.waveLength(qso.band)) +
                 adifField("STATION_CALLSIGN", qso.myCS) +
                 adifField("FREQ", adifFormatFreq(qso.freq)) +
