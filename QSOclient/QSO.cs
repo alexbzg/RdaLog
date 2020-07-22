@@ -17,6 +17,9 @@ namespace tnxlog
     [DataContract, ProtoContract]
     public class QSO: IEquatable<QSO>
     {
+        static readonly string[] Separators = new string[] { ".", "," };
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         internal string _ts;
         internal string _myCS;
         internal string _band;
@@ -41,10 +44,34 @@ namespace tnxlog
         public string myCS { get { return _myCS; } set { _myCS = value; } }
 
         [DataMember, ProtoMember(3)]
-        public string band { get { return _band; } set { _band = value; } }
+        public string band { get { return _band; } set {} }
 
         [DataMember, ProtoMember(4)]
-        public string freq { get { return _freq; } set { _freq = value; } }
+        public string freq {
+            get { return _freq; }
+            set {
+                if (_freq != value)
+                {
+                    string _value = FixSeparator(value);
+                    _value = new string(_value.Where(c => char.IsDigit(c) || System.Globalization.NumberFormatInfo.InvariantInfo.NumberDecimalSeparator.Contains(c)).ToArray());
+                    try
+                    {
+                        decimal decFreq = Convert.ToDecimal(_value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        _band = Band.fromFreq(decFreq);
+                        if (string.IsNullOrEmpty(_band))
+                        {
+                            decFreq = Band.closest(decFreq);
+                            _band = Band.fromFreq(decFreq);
+                        }
+                        _freq = QSO.formatFreq(decFreq);
+                    }
+                    catch (System.FormatException ex)
+                    {
+                        Logger.Error(ex, $"Frequency value error: {value}");
+                    }
+                }
+            }
+        }
 
         [DataMember, ProtoMember(5)]
         public string mode { get { return _mode; } set { _mode = value; } }
@@ -158,11 +185,21 @@ namespace tnxlog
             return qso._ts == _ts && qso._band == _band && qso._cs == _cs && qso._freq == _freq && qso._mode == _mode && qso._myCS == _myCS;
         }
 
-
+        public static string FixSeparator(string value)
+        {
+            string _value = value;
+            foreach (string sep in Separators)
+            {
+                if (sep != System.Globalization.NumberFormatInfo.InvariantInfo.NumberDecimalSeparator && _value.Contains(sep))
+                    _value = _value.Replace(sep, System.Globalization.NumberFormatInfo.InvariantInfo.NumberDecimalSeparator);
+            }
+            return _value;
+        }
     }
 
     public class QSOFactory
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private Tnxlog tnxlog;
         public int no = 1;
 
@@ -209,6 +246,9 @@ namespace tnxlog
 
         public string adif(QSO qso, Dictionary<string, string> adifParams)
         {
+            if (String.IsNullOrEmpty(qso.band)) {
+                Logger.Error($"No band data. Freq: {qso.freq}");
+            }
             string[] dt = qso.ts.Split(' ');
             string r = adifField("CALL", qso.cs) +
                 adifField("QSO_DATE", dt[0].Replace("-", "")) +
@@ -248,7 +288,8 @@ namespace tnxlog
             string myCs = getAdifField(adif, "STATION_CALLSIGN");
             if (string.IsNullOrEmpty(myCs))
                 myCs = getAdifField(adif, "OPERATOR");
-            decimal freq = Convert.ToDecimal(getAdifField(adif, "FREQ"), System.Globalization.NumberFormatInfo.InvariantInfo) * 1000;
+            string adifFreq = QSO.FixSeparator(getAdifField(adif, "FREQ"));
+            decimal freq = Convert.ToDecimal(adifFreq, System.Globalization.NumberFormatInfo.InvariantInfo) * 1000;
             string band = Band.fromFreq(freq);
             string mode = getAdifField(adif, "MODE");
             string submode = getAdifField(adif, "SUBMODE");
@@ -264,8 +305,7 @@ namespace tnxlog
             {
                 _ts = $"{date.Substring(0, 4)}-{date.Substring(4, 2)}-{date.Substring(6, 2)} {time.Substring(0, 2)}:{time.Substring(2, 2)}:00",
                 _myCS = myCs,
-                _band = band,
-                _freq = QSO.formatFreq(freq),
+                freq = QSO.formatFreq(freq),
                 _mode = mode,
                 _cs = getAdifField(adif, "CALL"),
                 _snt = getAdifField(adif, "RST_SENT"),

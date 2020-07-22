@@ -64,9 +64,17 @@ namespace HamRadio
             return string.Empty;
         }
 
+        public static decimal closest(decimal freq)
+        {
+            decimal d = 0;
+            int co;
+            for (co = 0; Bands[co].limits[1] < freq; co++);
+            return (freq - Bands[co - 1].limits[1] < Bands[co].limits[0] - freq) ? Bands[co - 1].limits[1] : Bands[co].limits[0];
+        }
+
         public static string waveLength(string name)
         {
-            return Bands.First(item => item.name == name).waveLength;
+            return Bands.FirstOrDefault(item => item.name == name)?.waveLength;
         }
     }
 

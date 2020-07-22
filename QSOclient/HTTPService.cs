@@ -98,11 +98,11 @@ namespace tnxlog
                 {
                     await postQso(unsentQSOs.ToArray());
                 });
-            List<QsoDeleteRequest>unsentDels = ProtoBufSerialization.Read<List<QsoDeleteRequest>>(unsentFilePath + ".del");
+            List<QsoDeleteData>unsentDels = ProtoBufSerialization.Read<List<QsoDeleteData>>(unsentFilePath + ".del");
             if (unsentDels != null && unsentDels.Count > 0)
                 Task.Run(async () =>
                 {
-                    foreach (QsoDeleteRequest del in unsentDels) 
+                    foreach (QsoDeleteData del in unsentDels) 
                         if (!await _postDeleteQso(del))
                             addToQueue(del);
                 });
@@ -177,9 +177,9 @@ namespace tnxlog
             return true;
         }
 
-        private async Task<bool> _postDeleteQso(QsoDeleteRequest req)
+        private async Task<bool> _postDeleteQso(QsoDeleteData qdd)
         {
-            HttpResponseMessage response = await post("log", req);
+            HttpResponseMessage response = await post("log", new QsoDeleteRequest(config, qdd));
             if (response == null || !response.IsSuccessStatusCode)
                 return false;
             return true;
@@ -207,9 +207,9 @@ namespace tnxlog
             saveUnsent();
         }
 
-        private void addToQueue(QsoDeleteRequest req)
+        private void addToQueue(QsoDeleteData qdd)
         {
-            logQueue.Enqueue(new LogRequest() { delete = req });
+            logQueue.Enqueue(new LogRequest() { delete = qdd });
             saveUnsent();
         }
 
@@ -217,14 +217,14 @@ namespace tnxlog
         {
             if (qso.serverTs != 0)
             {
-                QsoDeleteRequest req = new QsoDeleteRequest(config, qso);
+                QsoDeleteData qdd = new QsoDeleteData { delete = qso.serverTs };
                 if (logQueue.IsEmpty && config.token != null)
                 {
-                    if (!await _postDeleteQso(req))
-                        addToQueue(req);
+                    if (!await _postDeleteQso(qdd))
+                        addToQueue(qdd);
                 }
                 else
-                    addToQueue(req);
+                    addToQueue(qdd);
             }
         }
 
@@ -235,7 +235,7 @@ namespace tnxlog
             foreach (QSO[] qsoBatch in logQueue.Where(item => item.qso != null).Select(item => item.qso).ToList())
                 qsoList.AddRange(qsoBatch);
             ProtoBufSerialization.Write<List<QSO>>(unsentFilePath + ".qso", qsoList);
-            ProtoBufSerialization.Write<List<QsoDeleteRequest>>(unsentFilePath + ".del", logQueue.Where(item => item.delete != null).Select(item => item.delete).ToList());
+            ProtoBufSerialization.Write<List<QsoDeleteData>>(unsentFilePath + ".del", logQueue.Where(item => item.delete != null).Select(item => item.delete).ToList());
         }
 
         private async Task processQueue()
@@ -430,7 +430,7 @@ namespace tnxlog
 
     public class LogRequest
     {
-        public QsoDeleteRequest delete;
+        public QsoDeleteData delete;
         public QSO[] qso;
     }
 
@@ -443,7 +443,14 @@ namespace tnxlog
             qso = _qso;
         }
     }
+
     [ProtoContract]
+    public class QsoDeleteData
+    {
+        [ProtoMember(1)]
+        public decimal delete;
+    }
+
     public class QsoDeleteRequest : JSONToken
     {
         [ProtoMember(1)]
@@ -452,7 +459,15 @@ namespace tnxlog
         {
             delete = qso.serverTs;
         }
+
+        internal QsoDeleteRequest(HttpServiceConfig _config, QsoDeleteData qdd) : base(_config)
+        {
+            delete = qdd.delete;
+        }
+
     }
+
+
 
     class FreqData : JSONToken
     {
