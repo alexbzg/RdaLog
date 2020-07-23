@@ -761,7 +761,7 @@ namespace tnxlog
             if (args != null && args.IsUpdateAvailable)
             {
                 TopMost = false;
-                AutoUpdater.ShowUpdateForm(null);
+                AutoUpdater.ShowUpdateForm(args);
                 TopMost = config.topmost;
             }
         }

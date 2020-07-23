@@ -66,10 +66,17 @@ namespace HamRadio
 
         public static decimal closest(decimal freq)
         {
-            decimal d = 0;
-            int co;
-            for (co = 0; Bands[co].limits[1] < freq; co++);
-            return (freq - Bands[co - 1].limits[1] < Bands[co].limits[0] - freq) ? Bands[co - 1].limits[1] : Bands[co].limits[0];
+            if (freq < Bands[0].limits[0])
+                return Bands[0].limits[0];
+            else if (freq > Bands[Bands.Length - 1].limits[1])
+                return Bands[Bands.Length - 1].limits[1];
+            else
+            {
+                decimal d = 0;
+                int co;
+                for (co = 0; Bands[co].limits[1] < freq; co++) ;
+                return (freq - Bands[co - 1].limits[1] < Bands[co].limits[0] - freq) ? Bands[co - 1].limits[1] : Bands[co].limits[0];
+            }
         }
 
         public static string waveLength(string name)
