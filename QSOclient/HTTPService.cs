@@ -1,5 +1,5 @@
 ﻿//#define DISABLE_HTTP
-//#define TEST_SRV
+#define TEST_SRV
 //#define DISABLE_HTTP_LOGGING
 #define DISABLE_HTTP_LOGGING_CONTENT
 using System;
@@ -128,7 +128,7 @@ namespace tnxlog
             HttpClient client = new HttpClient();
             HttpContent content = new StringContent(sContent);
             HttpResponseMessage response = null;
-            client.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
+            client.Timeout = TimeSpan.FromSeconds(timeoutSeconds < 100 ? 100 : timeoutSeconds);
             bool result = false;
             try
             {
