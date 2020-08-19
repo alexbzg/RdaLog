@@ -1,6 +1,7 @@
 ﻿//#define DISABLE_HTTP
-#define TEST_SRV
+//#define TEST_SRV
 //#define DISABLE_HTTP_LOGGING
+#define DISABLE_HTTP_LOGGING_CONTENT
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ using System.Reflection;
 using ProtoBuf;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
+using System.Net;
 
 namespace tnxlog
 {
@@ -61,7 +63,6 @@ namespace tnxlog
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private static int pingIntervalNoConnection = 5 * 1000;
-        HttpClient client = new HttpClient();
 #if DEBUG && TEST_SRV
         private static readonly Uri srvURI = new Uri("https://test.tnxqso.com/aiohttp/");
 #else
@@ -114,26 +115,25 @@ namespace tnxlog
             pingTimer = new System.Threading.Timer(async obj => await ping(), null, 5000, Timeout.Infinite);
         }
 
-        private async Task<HttpResponseMessage> post(string _URI, object data)
-        {
-            return await post(_URI, data, true);
-        }
-
-        private async Task<HttpResponseMessage> post(string _URI, object data, bool warnings)
+        private async Task<HttpResponseMessage> post(string _URI, object data, bool warnings = true, int timeoutSeconds = 100)
         {
             string sContent = JsonConvert.SerializeObject(data);
-#if !DISABLE_HTTP_LOGGING
+#if !DISABLE_HTTP_LOGGING_CONTENT
             System.Diagnostics.Debug.WriteLine(sContent);
 #endif
             string URI = srvURI + _URI;
 #if DEBUG && DISABLE_HTTP
             return true;
 #endif
+            HttpClient client = new HttpClient();
             HttpContent content = new StringContent(sContent);
             HttpResponseMessage response = null;
+            client.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
             bool result = false;
             try
             {
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 response = await client.PostAsync(URI, content);
                 result = response.IsSuccessStatusCode;
 #if !DISABLE_HTTP_LOGGING
@@ -143,6 +143,8 @@ namespace tnxlog
             catch (Exception e)
             {
                 logger.Error(e, "HTTP post error");
+                logger.Error($"Server URI {URI}");
+                logger.Error(e.ToString());
             }
             if (connected != result)
             {
@@ -158,7 +160,7 @@ namespace tnxlog
             QSO[] _qso = qso.Where(item => !item._deleted).ToArray();
             if (_qso.Length == 0)
                 return true;
-            HttpResponseMessage response = await post("log", qsoToken(_qso));
+            HttpResponseMessage response = await post("log", qsoToken(_qso), true, _qso.Length / 10);
             if (response == null || !response.IsSuccessStatusCode)
                 return false;
             else 
@@ -289,9 +291,10 @@ namespace tnxlog
             if (string.IsNullOrEmpty(config.callsign) || string.IsNullOrEmpty(config.password))
                 return null;
             HttpResponseMessage response = await post("login", new LoginRequest() { login = config.callsign, password = config.password }, false);
-            bool retryFlag = false;
+            bool retryFlag = true;
             if (response != null)
             {
+                retryFlag = false;
                 if (response.IsSuccessStatusCode)
                 {
                     try

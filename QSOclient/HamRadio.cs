@@ -72,7 +72,6 @@ namespace HamRadio
                 return Bands[Bands.Length - 1].limits[1];
             else
             {
-                decimal d = 0;
                 int co;
                 for (co = 0; Bands[co].limits[1] < freq; co++) ;
                 return (freq - Bands[co - 1].limits[1] < Bands[co].limits[0] - freq) ? Bands[co - 1].limits[1] : Bands[co].limits[0];
