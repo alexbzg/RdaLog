@@ -1005,6 +1005,8 @@ namespace tnxlog
                     return;
                 }
             }
+            if (labelEsm.Visible)
+                await Task.Run(async () => await processCwMacro(tnxlogConfig.esmMacro));
             qsoValues = currentQsoValues();
             string correspondent = textBoxCorrespondent.Text;
             string comments = textBoxComments.Text;
@@ -1012,8 +1014,6 @@ namespace tnxlog
             textBoxComments.Text = "";
             textBoxCorrespondent.Focus();
             setDefRst();
-            if (labelEsm.Visible)
-                await Task.Run(async () => await processCwMacro(tnxlogConfig.esmMacro));
             await tnxlog.newQso(correspondent, qsoValues.callsign, qsoValues.freq, qsoValues.mode, qsoValues.rstRcvd, qsoValues.rstSnt, comments);
         }
 
@@ -1027,7 +1027,11 @@ namespace tnxlog
                 updateLabelEsm();
             }
             else if (e.KeyData == Keys.Enter) //store QSO
+            {
                 storeQso();
+                e.Handled = true; //disable stupid ding
+                e.SuppressKeyPress = true; //disable stupid ding
+            }
             else if (e.KeyData == (Keys.Control | Keys.Q)) //recall last QSO
             {
                 QSO qso = tnxlog.qsoList[0];
@@ -1058,19 +1062,20 @@ namespace tnxlog
                 {
                     clearedCS = textBoxCorrespondent.Text;
                     textBoxCorrespondent.Text = "";
-                } else if (clearedCS != "")
+                }
+                else if (clearedCS != "")
                 {
                     textBoxCorrespondent.Text = clearedCS;
                     textBoxCorrespondent.SelectionStart = clearedCS.Length;
                     clearedCS = "";
                 }
-            }           
+            }
             else if (e.KeyData == (CwMacrosKeys[0] | Keys.Control))//auto cq toggle
             {
                 autoCq = true;
                 await processCwMacro(tnxlogConfig.cwMacros[0][1]);
             }
-            else 
+            else
             {
                 int cwMacroIdx = Array.IndexOf(CwMacrosKeys, e.KeyData);
                 if (cwMacroIdx != -1) //CW macro

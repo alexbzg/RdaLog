@@ -1,7 +1,7 @@
 ﻿//#define DISABLE_HTTP
 #define TEST_SRV
 //#define DISABLE_HTTP_LOGGING
-#define DISABLE_HTTP_LOGGING_CONTENT
+//#define DISABLE_HTTP_LOGGING_CONTENT
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
