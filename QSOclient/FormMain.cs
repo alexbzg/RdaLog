@@ -1075,6 +1075,10 @@ namespace tnxlog
                 autoCq = true;
                 await processCwMacro(tnxlogConfig.cwMacros[0][1]);
             }
+            else if (e.KeyData == Keys.PageDown || e.KeyData == Keys.PageUp)
+            {
+                numericUpDownMorseSpeed.Value += (e.KeyData == Keys.PageDown ? -2 : 2);
+            }
             else
             {
                 int cwMacroIdx = Array.IndexOf(CwMacrosKeys, e.KeyData);
