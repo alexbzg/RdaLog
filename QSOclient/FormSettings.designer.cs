@@ -70,11 +70,12 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageServer = new System.Windows.Forms.TabPage();
+            this.groupBoxView = new System.Windows.Forms.GroupBox();
+            this.checkBoxViewQsoComments = new System.Windows.Forms.CheckBox();
+            this.checkBoxViewQth3Loc = new System.Windows.Forms.CheckBox();
             this.groupBoxUpdInterval = new System.Windows.Forms.GroupBox();
             this.radioButtonUpdInterval1m = new System.Windows.Forms.RadioButton();
             this.radioButtonUpdInterval10s = new System.Windows.Forms.RadioButton();
-            this.checkBoxViewQsoComments = new System.Windows.Forms.CheckBox();
-            this.checkBoxViewQth3Loc = new System.Windows.Forms.CheckBox();
             this.tabPageCwMacros = new System.Windows.Forms.TabPage();
             this.labelTransceiverType = new System.Windows.Forms.Label();
             this.comboBoxTransceiverType = new System.Windows.Forms.ComboBox();
@@ -107,9 +108,9 @@
             this.textBoxDebugLog = new System.Windows.Forms.TextBox();
             this.labelDebug = new System.Windows.Forms.Label();
             this.openFileDialogAdifLog = new System.Windows.Forms.OpenFileDialog();
-            this.groupBoxView = new System.Windows.Forms.GroupBox();
             this.tabControl.SuspendLayout();
             this.tabPageServer.SuspendLayout();
+            this.groupBoxView.SuspendLayout();
             this.groupBoxUpdInterval.SuspendLayout();
             this.tabPageCwMacros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoCqPause)).BeginInit();
@@ -118,7 +119,6 @@
             this.tabPageDigi.SuspendLayout();
             this.tabPageExport.SuspendLayout();
             this.tabPageDebug.SuspendLayout();
-            this.groupBoxView.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxLogin
@@ -559,6 +559,47 @@
             this.tabPageServer.TabIndex = 0;
             this.tabPageServer.Text = "Main";
             // 
+            // groupBoxView
+            // 
+            this.groupBoxView.Controls.Add(this.checkBoxViewQsoComments);
+            this.groupBoxView.Controls.Add(this.checkBoxViewCallsignId);
+            this.groupBoxView.Controls.Add(this.checkBoxViewQth3Loc);
+            this.groupBoxView.Controls.Add(this.checkBoxViewQth1_2);
+            this.groupBoxView.Controls.Add(this.checkBoxViewStatFilter);
+            this.groupBoxView.Controls.Add(this.checkBoxViewCwMacro);
+            this.groupBoxView.Location = new System.Drawing.Point(9, 122);
+            this.groupBoxView.Name = "groupBoxView";
+            this.groupBoxView.Size = new System.Drawing.Size(339, 159);
+            this.groupBoxView.TabIndex = 66;
+            this.groupBoxView.TabStop = false;
+            this.groupBoxView.Text = "View";
+            // 
+            // checkBoxViewQsoComments
+            // 
+            this.checkBoxViewQsoComments.AutoSize = true;
+            this.checkBoxViewQsoComments.Checked = true;
+            this.checkBoxViewQsoComments.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxViewQsoComments.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBoxViewQsoComments.Location = new System.Drawing.Point(6, 64);
+            this.checkBoxViewQsoComments.Name = "checkBoxViewQsoComments";
+            this.checkBoxViewQsoComments.Size = new System.Drawing.Size(100, 17);
+            this.checkBoxViewQsoComments.TabIndex = 65;
+            this.checkBoxViewQsoComments.Text = "QSO comments";
+            this.checkBoxViewQsoComments.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxViewQth3Loc
+            // 
+            this.checkBoxViewQth3Loc.AutoSize = true;
+            this.checkBoxViewQth3Loc.Checked = true;
+            this.checkBoxViewQth3Loc.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxViewQth3Loc.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBoxViewQth3Loc.Location = new System.Drawing.Point(6, 41);
+            this.checkBoxViewQth3Loc.Name = "checkBoxViewQth3Loc";
+            this.checkBoxViewQth3Loc.Size = new System.Drawing.Size(125, 17);
+            this.checkBoxViewQth3Loc.TabIndex = 64;
+            this.checkBoxViewQth3Loc.Text = "QTH Field 3, Locator";
+            this.checkBoxViewQth3Loc.UseVisualStyleBackColor = true;
+            // 
             // groupBoxUpdInterval
             // 
             this.groupBoxUpdInterval.Controls.Add(this.radioButtonUpdInterval1m);
@@ -591,32 +632,6 @@
             this.radioButtonUpdInterval10s.TabStop = true;
             this.radioButtonUpdInterval10s.Text = "10 seconds";
             this.radioButtonUpdInterval10s.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxViewQsoComments
-            // 
-            this.checkBoxViewQsoComments.AutoSize = true;
-            this.checkBoxViewQsoComments.Checked = true;
-            this.checkBoxViewQsoComments.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxViewQsoComments.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewQsoComments.Location = new System.Drawing.Point(6, 64);
-            this.checkBoxViewQsoComments.Name = "checkBoxViewQsoComments";
-            this.checkBoxViewQsoComments.Size = new System.Drawing.Size(100, 17);
-            this.checkBoxViewQsoComments.TabIndex = 65;
-            this.checkBoxViewQsoComments.Text = "QSO comments";
-            this.checkBoxViewQsoComments.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxViewQth3Loc
-            // 
-            this.checkBoxViewQth3Loc.AutoSize = true;
-            this.checkBoxViewQth3Loc.Checked = true;
-            this.checkBoxViewQth3Loc.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxViewQth3Loc.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxViewQth3Loc.Location = new System.Drawing.Point(6, 41);
-            this.checkBoxViewQth3Loc.Name = "checkBoxViewQth3Loc";
-            this.checkBoxViewQth3Loc.Size = new System.Drawing.Size(125, 17);
-            this.checkBoxViewQth3Loc.TabIndex = 64;
-            this.checkBoxViewQth3Loc.Text = "QTH Field 3, Locator";
-            this.checkBoxViewQth3Loc.UseVisualStyleBackColor = true;
             // 
             // tabPageCwMacros
             // 
@@ -851,7 +866,7 @@
             this.tabPageDigi.Location = new System.Drawing.Point(4, 22);
             this.tabPageDigi.Name = "tabPageDigi";
             this.tabPageDigi.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDigi.Size = new System.Drawing.Size(352, 322);
+            this.tabPageDigi.Size = new System.Drawing.Size(352, 435);
             this.tabPageDigi.TabIndex = 4;
             this.tabPageDigi.Text = "Digi";
             // 
@@ -910,7 +925,7 @@
             this.tabPageExport.Location = new System.Drawing.Point(4, 22);
             this.tabPageExport.Name = "tabPageExport";
             this.tabPageExport.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageExport.Size = new System.Drawing.Size(352, 322);
+            this.tabPageExport.Size = new System.Drawing.Size(352, 435);
             this.tabPageExport.TabIndex = 5;
             this.tabPageExport.Text = "Export";
             // 
@@ -918,7 +933,7 @@
             // 
             this.groupBoxAdifFields.Location = new System.Drawing.Point(6, 6);
             this.groupBoxAdifFields.Name = "groupBoxAdifFields";
-            this.groupBoxAdifFields.Size = new System.Drawing.Size(344, 113);
+            this.groupBoxAdifFields.Size = new System.Drawing.Size(344, 151);
             this.groupBoxAdifFields.TabIndex = 0;
             this.groupBoxAdifFields.TabStop = false;
             this.groupBoxAdifFields.Text = "ADIF fields";
@@ -932,7 +947,7 @@
             this.tabPageDebug.Location = new System.Drawing.Point(4, 22);
             this.tabPageDebug.Name = "tabPageDebug";
             this.tabPageDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDebug.Size = new System.Drawing.Size(356, 430);
+            this.tabPageDebug.Size = new System.Drawing.Size(352, 435);
             this.tabPageDebug.TabIndex = 3;
             this.tabPageDebug.Text = "Отладка";
             // 
@@ -950,11 +965,11 @@
             // textBoxDebugLog
             // 
             this.textBoxDebugLog.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBoxDebugLog.Location = new System.Drawing.Point(3, 96);
+            this.textBoxDebugLog.Location = new System.Drawing.Point(3, 101);
             this.textBoxDebugLog.Multiline = true;
             this.textBoxDebugLog.Name = "textBoxDebugLog";
             this.textBoxDebugLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxDebugLog.Size = new System.Drawing.Size(350, 331);
+            this.textBoxDebugLog.Size = new System.Drawing.Size(346, 331);
             this.textBoxDebugLog.TabIndex = 1;
             // 
             // labelDebug
@@ -965,21 +980,6 @@
             this.labelDebug.Size = new System.Drawing.Size(340, 34);
             this.labelDebug.TabIndex = 0;
             this.labelDebug.Text = "Скопируйте весь текст в окне ниже и отправьте по адресу 18@73.ru";
-            // 
-            // groupBoxView
-            // 
-            this.groupBoxView.Controls.Add(this.checkBoxViewQsoComments);
-            this.groupBoxView.Controls.Add(this.checkBoxViewCallsignId);
-            this.groupBoxView.Controls.Add(this.checkBoxViewQth3Loc);
-            this.groupBoxView.Controls.Add(this.checkBoxViewQth1_2);
-            this.groupBoxView.Controls.Add(this.checkBoxViewStatFilter);
-            this.groupBoxView.Controls.Add(this.checkBoxViewCwMacro);
-            this.groupBoxView.Location = new System.Drawing.Point(9, 122);
-            this.groupBoxView.Name = "groupBoxView";
-            this.groupBoxView.Size = new System.Drawing.Size(339, 159);
-            this.groupBoxView.TabIndex = 66;
-            this.groupBoxView.TabStop = false;
-            this.groupBoxView.Text = "View";
             // 
             // FormSettings
             // 
@@ -1002,6 +1002,8 @@
             this.tabControl.ResumeLayout(false);
             this.tabPageServer.ResumeLayout(false);
             this.tabPageServer.PerformLayout();
+            this.groupBoxView.ResumeLayout(false);
+            this.groupBoxView.PerformLayout();
             this.groupBoxUpdInterval.ResumeLayout(false);
             this.groupBoxUpdInterval.PerformLayout();
             this.tabPageCwMacros.ResumeLayout(false);
@@ -1016,8 +1018,6 @@
             this.tabPageExport.ResumeLayout(false);
             this.tabPageDebug.ResumeLayout(false);
             this.tabPageDebug.PerformLayout();
-            this.groupBoxView.ResumeLayout(false);
-            this.groupBoxView.PerformLayout();
             this.ResumeLayout(false);
 
         }

@@ -262,6 +262,7 @@ namespace tnxlog
                 formSettings.setQthFieldAdifLabel(field, config.qthFieldTitles[field]);
                 formSettings.setQthFieldAdif(field, config.qthAdifFields[field]);
             }
+            formSettings.setCommentFieldAdif(config.commentAdifField);
 
             if (formSettings.ShowDialog(this.formMain) == System.Windows.Forms.DialogResult.OK)
             {
@@ -291,6 +292,7 @@ namespace tnxlog
 
                 for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
                     config.qthAdifFields[field] = formSettings.getQthFieldAdif(field).Trim().ToUpper();
+                config.commentAdifField = formSettings.getCommentFieldAdif().Trim().ToUpper();
                 formMain.adifQthMenu();
 
                 config.write();

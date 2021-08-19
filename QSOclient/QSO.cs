@@ -267,6 +267,8 @@ namespace tnxlog
                 if (!string.IsNullOrEmpty(fieldName))
                     r += adifField(fieldName, adifParams.ContainsKey(fieldName) ? adifParams[fieldName] : qso.qth[field]);
             }
+            if (!string.IsNullOrEmpty(tnxlog.config.commentAdifField))
+                r += adifField(tnxlog.config.commentAdifField, qso.comments);
             r += " <EOR>";
             return r;
         }
@@ -279,7 +281,7 @@ namespace tnxlog
         }
 
 
-        public QSO fromADIF(string adif, string[] qthFields = null)
+        public QSO fromADIF(string adif, string[] qthFields = null, string commentField = "COMMENT")
         {
             string date = getAdifField(adif, "QSO_DATE");
             string time = getAdifField(adif, "TIME_OFF");
@@ -324,6 +326,8 @@ namespace tnxlog
                 }
                 else
                     qso._qth[field] = tnxlog.getQthFieldValue(field);
+            if (!string.IsNullOrEmpty(commentField))
+                qso._comments = getAdifField(adif, commentField);
             return qso;
         }
         public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, string comments, DateTime? timestamp = null)

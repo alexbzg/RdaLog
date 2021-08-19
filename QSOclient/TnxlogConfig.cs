@@ -42,7 +42,7 @@ namespace tnxlog
             Tuple.Create("USR", "{USER_FIELD}"),
             Tuple.Create("RDA", "RDA {RDA}"),
             Tuple.Create("RAF", "RAFA {RAFA}"),
-            Tuple.Create("LOC", "{LOCATOR}")
+            Tuple.Create("LOC", "{LOCATOR} {COMMENT}")
         };
 
         public static readonly List<string> MainFormPanels = new List<string> { "qsoComments", "qth1_2", "qth3Loc", "statFilter", "callsignId", "cwMacros" };
@@ -112,6 +112,7 @@ namespace tnxlog
         }
 
         public string[] qthAdifFields = new string[] { "QTH_FIELD_1", "QTH_FIELD_2", "QTH_FIELD_3" };
+        public string commentAdifField = "COMMENT";
 
         public string esmMacro = "{CALL} TU DE {MY_CALL}";
 

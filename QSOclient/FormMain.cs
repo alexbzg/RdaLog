@@ -927,7 +927,8 @@ namespace tnxlog
                                     { "RDA", new string[] { textBoxQth1.Text } },
                                     { "RAFA", new string[] { textBoxQth2.Text } },
                                     { "LOCATOR", new string[] { textBoxLocator.Text } },
-                                    { "USER_FIELD", new string[] { textBoxQth3.Text } }
+                                    { "USER_FIELD", new string[] { textBoxQth3.Text } },
+                                    { "COMMENT", new string[] { textBoxComments.Text } },
                                 };
                     foreach (string subst in substs.Keys)
                     {
@@ -1182,6 +1183,7 @@ namespace tnxlog
             {
                 formAdifImportDialog.setQthFieldAdifLabel(field, tnxlogConfig.qthFieldTitles[field]);
                 formAdifImportDialog.setQthFieldAdif(field, config.importQthFields[field]);
+                formAdifImportDialog.setCommentFieldAdif(config.importCommentField);
             }
             bool successFlag = false;
             if (formAdifImportDialog.ShowDialog() == DialogResult.OK)
@@ -1190,13 +1192,14 @@ namespace tnxlog
                 {
                     config.importPath = formAdifImportDialog.fileName;
                     for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
-                        config.importQthFields[field] = formAdifImportDialog.getQthFieldAdif(field);
+                        config.importQthFields[field] = formAdifImportDialog.getQthFieldAdif(field).Trim().ToUpper();
+                    config.importCommentField = formAdifImportDialog.getCommentFieldAdif().Trim().ToUpper();
                     config.write();
                     using (FileStream stream = File.Open(config.importPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
                         List<QSO> updatedQsos = new List<QSO>();
                         QSO[] qsos = AdifLogWatcher.adifEntries(stream)
-                            .Select(entry => tnxlog.qsoFactory.fromADIF(entry, config.importQthFields))
+                            .Select(entry => tnxlog.qsoFactory.fromADIF(entry, config.importQthFields, config.importCommentField))
                             .Where(qso =>
                             {
                                 int idx = tnxlog.qsoList.ToList().IndexOf(qso);
@@ -1288,6 +1291,7 @@ namespace tnxlog
         public string statFilterMode;
         public string mode;
         public string callsign;
+        public string importCommentField = "COMMENT";
 
         public FormMainConfig(XmlConfig _parent) : base(_parent) { }
 

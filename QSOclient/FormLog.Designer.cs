@@ -221,7 +221,7 @@
             // Comments
             // 
             this.Comments.DataPropertyName = "comments";
-            this.Comments.HeaderText = "Comments";
+            this.Comments.HeaderText = "Comment";
             this.Comments.Name = "Comments";
             // 
             // FormLog

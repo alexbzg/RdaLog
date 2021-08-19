@@ -50,6 +50,8 @@ namespace tnxlog
         private TransceiverController transceiverController = new TransceiverController(new TransceiverControllerConfig());
 
         private List<LabelTextBox> qthFieldAdifContols = new List<LabelTextBox>();
+        private LabelTextBox ltbComment;
+
 
         public string getQthFieldAdif(int field)
         {
@@ -60,6 +62,17 @@ namespace tnxlog
         {
             qthFieldAdifContols[field].editText = value;
         }
+
+        public string getCommentFieldAdif()
+        {
+            return ltbComment.editText;
+        }
+
+        public void setCommentFieldAdif(string value)
+        {
+            ltbComment.editText = value;
+        }
+
 
         public void setQthFieldAdifLabel(int field, string value)
         {
@@ -171,6 +184,12 @@ namespace tnxlog
                 groupBoxAdifFields.Controls.Add(ltb);
                 ltb.Location = new Point(1, 14 + field * (ltb.Height + 2));
             }
+            ltbComment = new LabelTextBox();
+            qthFieldAdifContols.Add(ltbComment);
+            groupBoxAdifFields.Controls.Add(ltbComment);
+            ltbComment.Location = new Point(1, 14 + TnxlogConfig.QthFieldCount * (ltbComment.Height + 2));
+            ltbComment.labelText = "Comment";
+
         }
 
         private void testPinMouseUp(object sender, EventArgs e)
