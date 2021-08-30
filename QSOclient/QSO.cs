@@ -38,7 +38,18 @@ namespace tnxlog
         internal bool _deleted = false;
 
         [DataMember, ProtoMember(1)]
-        public string ts { get { return _ts; } set { _ts = value; } }
+        public string ts {
+            get { return _ts; }
+            set {
+                try
+                {
+                    DateTime dt = DateTime.ParseExact(value, "yyyy-MM-dd hh:mm:ss", null);
+                    _ts = value;
+                }
+                catch (FormatException)
+                {}                
+            }
+        }
 
         [DataMember, ProtoMember(2)]
         public string myCS { get { return _myCS; } set { _myCS = value; } }
