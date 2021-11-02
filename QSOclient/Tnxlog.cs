@@ -239,7 +239,7 @@ namespace tnxlog
             formSettings.serialDeviceId = config.transceiverController.serialDeviceId;
             for (int co = 0; co < TransceiverController.PIN_FUNCTIONS.Count; co++)
             {
-                formSettings.transceiverPinSettings[co].pin = SerialDevice.SerialDevice.PINS[config.transceiverController.pinout[co]];
+                formSettings.transceiverPinSettings[co].pin = config.transceiverController.pinout[co] == -1 ? "" : SerialDevice.SerialDevice.PINS[config.transceiverController.pinout[co]];
                 formSettings.transceiverPinSettings[co].invert = config.transceiverController.invertPins[co];
             }
             formSettings.tciHost = config.transceiverController.tciHost;
