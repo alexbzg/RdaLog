@@ -43,11 +43,13 @@ namespace tnxlog
             set {
                 try
                 {
-                    DateTime dt = DateTime.ParseExact(value, "yyyy-MM-dd hh:mm:ss", null);
+                    DateTime dt = DateTime.ParseExact(value, "yyyy-MM-dd HH:mm:ss", null);
                     _ts = value;
                 }
-                catch (FormatException)
-                {}                
+                catch (FormatException ex)
+                {
+                    Logger.Error(ex, $"Wrong timestamp format: {value}");
+                }                
             }
         }
 
