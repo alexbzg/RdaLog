@@ -610,15 +610,33 @@ namespace tnxlog
             return r;
         }
 
-        private void writeADIF(string folder, string fileName, List<QSO> _data, Dictionary<string, string> adifParams, bool byCallsigns=false)
+        private void writeADIF(string folder, string fileName, List<QSO> _data, Dictionary<string, string> adifParams)
         {
-            var data = byCallsigns ? _data.GroupBy(item => item.myCS, item => item, (cs, items) => new { callsign = cs, qso = items.ToList() }) :
+            bool toFolder = !string.IsNullOrEmpty(folder);
+            var data = toFolder ? _data.GroupBy(item => item.myCS, item => item, (cs, items) => new { callsign = cs, qso = items.ToList() }) :
                 _data.GroupBy(item => "", item => item, (cs, items) => new { callsign = cs, qso = items.ToList() });
             DateTime ts = DateTime.UtcNow;
             foreach (var entry in data)
             {
                 string entryFileName = string.IsNullOrEmpty(entry.callsign) ? fileName : entry.callsign.Replace('/', '_') + " " + fileName;
                 string entryPath = Path.Combine(folder, entryFileName);
+                if (toFolder && File.Exists(entryPath)) //if file already exists augment filename like 'name (n).ext'
+                {
+                    string[] entryFileNameParts = entryFileName.Split('.');
+                    string entryFileNameMain = entryFileName;
+                    string entryFileNameExt = "";
+                    int entryFileNameIdx = 0;
+                    if (entryFileNameParts.Length > 1)
+                    {
+                        entryFileNameExt = "." + entryFileNameParts.Last();
+                        entryFileNameMain = string.Join(".", entryFileNameParts.Take(entryFileNameParts.Length - 1));
+                    }
+                    do
+                    {
+                        entryPath = Path.Combine(folder, $"{entryFileNameMain} ({entryFileNameIdx.ToString()}){entryFileNameExt}");
+                        entryFileNameIdx++;
+                    } while (File.Exists(entryPath));
+                }
                 entry.qso.Reverse();
                 try
                 {
@@ -661,7 +679,7 @@ namespace tnxlog
                             Dictionary<string, List<QSO>> data = qsoByLambda(qso => qso.qth[fieldNo]);
                             data.Keys.ToList().ForEach(val =>
                             {
-                                writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>() { { adifField, val } }, true);
+                                writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>() { { adifField, val } });
                             });
                         }
 
@@ -1136,7 +1154,7 @@ namespace tnxlog
                 Dictionary<string, List<QSO>> data = qsoByLambda(qso => qso.loc);
                 data.Keys.ToList().ForEach(val =>
                 {
-                    writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>(), true);
+                    writeADIF(folderBrowserDialog.SelectedPath, val + ".adi", data[val], new Dictionary<string, string>());
                 });
             }
         }
