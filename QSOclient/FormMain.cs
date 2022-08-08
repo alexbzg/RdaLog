@@ -1115,13 +1115,11 @@ namespace tnxlog
                     await processCwMacro(tnxlogConfig.cwMacros[cwMacroIdx][1]);
                 else if (e.KeyData == Keys.Escape) //cancel CW transmission
                 {
+                    while (!cwQueue.IsEmpty)
+                        cwQueue.TryDequeue(out string discard);
                     tnxlog.transceiverController.stop();
                     if (tnxlog.transceiverController.busy)
-                    {
-                        while (!cwQueue.IsEmpty)
-                            cwQueue.TryDequeue(out string discard);
                         tokenSource.Cancel();
-                    }
                 }
             }
         }
