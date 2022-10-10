@@ -45,7 +45,7 @@ namespace tnxlog
             Tuple.Create("LOC", "{LOCATOR} {COMMENT}")
         };
 
-        public static readonly List<string> MainFormPanels = new List<string> { "qsoComments", "qth1_2", "qth3Loc", "statFilter", "callsignId", "cwMacros" };
+        public static readonly List<string> MainFormPanels = new List<string> { "qsoComments", "qth1_2", "qth3Loc", "statFilter", "callsignId", "cwMacros", "soundRecord" };
         public static readonly int QthFieldCount = 3;
         public static readonly string qthFieldDefTitle = "QTH field";
         public static string QthFieldTitle(int field, string value)
@@ -149,6 +149,9 @@ namespace tnxlog
                 write();
             }
         }
+
+        public string soundRecordDevice = "";
+        public string soundRecordFolder = "";
 
         public bool watchAdifLog = false;
         public string watchAdifLogPath = "";

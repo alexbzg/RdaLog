@@ -1,5 +1,6 @@
 ﻿using HamRadio;
 using NLog;
+using ProtoBuf;
 using SerializationNS;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +22,27 @@ namespace tnxlog
     {
         public int field;
         public string value;
+    }
+
+    [ProtoContract]
+    public class SoundRecordFile
+    {
+        public static readonly double size = 0.232;
+        [ProtoMember(1)]
+        public string path;
+        [ProtoMember(2)]
+        public string[] period = new string[2];
+
+        public static T ReadList<T>(string filePath) where T : IList<SoundRecordFile>
+        {
+            T r = ProtoBufSerialization.Read<T>(filePath);
+            return r;
+        }
+
+        public void delete()
+        {
+            File.Delete(path);
+        }
     }
 
     public class Tnxlog
@@ -89,6 +112,9 @@ namespace tnxlog
             }
         }
 
+        internal List<SoundRecordFile> soundRecords;
+        private string soundRecordsFilePath;
+
         public Tnxlog()
         {
 #if DEBUG || LOG
@@ -135,6 +161,14 @@ namespace tnxlog
             else if (qsoList.Count > 0)
                 qsoFactory.no = qsoList.First().no + 1;
             qsoList.ListChanged += QsoList_ListChanged;
+
+            soundRecordsFilePath = Path.Combine(dataPath, "soundRecords.dat");
+            soundRecords = SoundRecordFile.ReadList<List<SoundRecordFile>>(soundRecordsFilePath);
+            if (soundRecords == null)
+            {
+                soundRecords = new List<SoundRecordFile>();
+            }
+
             _formMain = new FormMain(config.formMain, this);
             if (config.autoLogin)
                 Task.Run(async () => await httpService.login(true));
@@ -264,6 +298,9 @@ namespace tnxlog
             }
             formSettings.setCommentFieldAdif(config.commentAdifField);
 
+            formSettings.soundRecordDevice = config.soundRecordDevice;
+            formSettings.soundRecordFolder = config.soundRecordFolder;
+
             if (formSettings.ShowDialog(this.formMain) == System.Windows.Forms.DialogResult.OK)
             {
                 config.httpService.callsign = formSettings.textBoxLogin.Text;
@@ -294,6 +331,9 @@ namespace tnxlog
                     config.qthAdifFields[field] = formSettings.getQthFieldAdif(field).Trim().ToUpper();
                 config.commentAdifField = formSettings.getCommentFieldAdif().Trim().ToUpper();
                 formMain.adifQthMenu();
+
+                config.soundRecordDevice = formSettings.soundRecordDevice;
+                config.soundRecordFolder = formSettings.soundRecordFolder;
 
                 config.write();
             }

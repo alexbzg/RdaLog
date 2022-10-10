@@ -71,6 +71,7 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageServer = new System.Windows.Forms.TabPage();
             this.groupBoxView = new System.Windows.Forms.GroupBox();
+            this.checkBoxViewSoundRecord = new System.Windows.Forms.CheckBox();
             this.checkBoxViewQsoComments = new System.Windows.Forms.CheckBox();
             this.checkBoxViewQth3Loc = new System.Windows.Forms.CheckBox();
             this.groupBoxUpdInterval = new System.Windows.Forms.GroupBox();
@@ -107,7 +108,15 @@
             this.buttonClip = new System.Windows.Forms.Button();
             this.textBoxDebugLog = new System.Windows.Forms.TextBox();
             this.labelDebug = new System.Windows.Forms.Label();
+            this.tabPageSoundRecord = new System.Windows.Forms.TabPage();
+            this.buttonSoundRecordFolderBrowse = new System.Windows.Forms.Button();
+            this.textBoxSoundRecordFolder = new System.Windows.Forms.TextBox();
+            this.labelSoundRecordFolder = new System.Windows.Forms.Label();
+            this.buttonSoundInputRefresh = new System.Windows.Forms.Button();
+            this.comboBoxSoundRecordDevice = new System.Windows.Forms.ComboBox();
+            this.labelSoundInput = new System.Windows.Forms.Label();
             this.openFileDialogAdifLog = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialogSoundRecord = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControl.SuspendLayout();
             this.tabPageServer.SuspendLayout();
             this.groupBoxView.SuspendLayout();
@@ -119,6 +128,7 @@
             this.tabPageDigi.SuspendLayout();
             this.tabPageExport.SuspendLayout();
             this.tabPageDebug.SuspendLayout();
+            this.tabPageSoundRecord.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxLogin
@@ -533,6 +543,7 @@
             this.tabControl.Controls.Add(this.tabPageDigi);
             this.tabControl.Controls.Add(this.tabPageExport);
             this.tabControl.Controls.Add(this.tabPageDebug);
+            this.tabControl.Controls.Add(this.tabPageSoundRecord);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -561,6 +572,7 @@
             // 
             // groupBoxView
             // 
+            this.groupBoxView.Controls.Add(this.checkBoxViewSoundRecord);
             this.groupBoxView.Controls.Add(this.checkBoxViewQsoComments);
             this.groupBoxView.Controls.Add(this.checkBoxViewCallsignId);
             this.groupBoxView.Controls.Add(this.checkBoxViewQth3Loc);
@@ -569,10 +581,23 @@
             this.groupBoxView.Controls.Add(this.checkBoxViewCwMacro);
             this.groupBoxView.Location = new System.Drawing.Point(9, 122);
             this.groupBoxView.Name = "groupBoxView";
-            this.groupBoxView.Size = new System.Drawing.Size(339, 159);
+            this.groupBoxView.Size = new System.Drawing.Size(339, 178);
             this.groupBoxView.TabIndex = 66;
             this.groupBoxView.TabStop = false;
             this.groupBoxView.Text = "View";
+            // 
+            // checkBoxViewSoundRecord
+            // 
+            this.checkBoxViewSoundRecord.AutoSize = true;
+            this.checkBoxViewSoundRecord.Checked = true;
+            this.checkBoxViewSoundRecord.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxViewSoundRecord.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBoxViewSoundRecord.Location = new System.Drawing.Point(6, 155);
+            this.checkBoxViewSoundRecord.Name = "checkBoxViewSoundRecord";
+            this.checkBoxViewSoundRecord.Size = new System.Drawing.Size(90, 17);
+            this.checkBoxViewSoundRecord.TabIndex = 66;
+            this.checkBoxViewSoundRecord.Text = "Sound record";
+            this.checkBoxViewSoundRecord.UseVisualStyleBackColor = true;
             // 
             // checkBoxViewQsoComments
             // 
@@ -895,7 +920,7 @@
             this.buttonAdifLogBrowse.Enabled = false;
             this.buttonAdifLogBrowse.Location = new System.Drawing.Point(285, 31);
             this.buttonAdifLogBrowse.Name = "buttonAdifLogBrowse";
-            this.buttonAdifLogBrowse.Size = new System.Drawing.Size(68, 23);
+            this.buttonAdifLogBrowse.Size = new System.Drawing.Size(65, 23);
             this.buttonAdifLogBrowse.TabIndex = 2;
             this.buttonAdifLogBrowse.Text = "Browse";
             this.buttonAdifLogBrowse.UseVisualStyleBackColor = true;
@@ -981,6 +1006,76 @@
             this.labelDebug.TabIndex = 0;
             this.labelDebug.Text = "Скопируйте весь текст в окне ниже и отправьте по адресу 18@73.ru";
             // 
+            // tabPageSoundRecord
+            // 
+            this.tabPageSoundRecord.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageSoundRecord.Controls.Add(this.buttonSoundRecordFolderBrowse);
+            this.tabPageSoundRecord.Controls.Add(this.textBoxSoundRecordFolder);
+            this.tabPageSoundRecord.Controls.Add(this.labelSoundRecordFolder);
+            this.tabPageSoundRecord.Controls.Add(this.buttonSoundInputRefresh);
+            this.tabPageSoundRecord.Controls.Add(this.comboBoxSoundRecordDevice);
+            this.tabPageSoundRecord.Controls.Add(this.labelSoundInput);
+            this.tabPageSoundRecord.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSoundRecord.Name = "tabPageSoundRecord";
+            this.tabPageSoundRecord.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSoundRecord.Size = new System.Drawing.Size(352, 435);
+            this.tabPageSoundRecord.TabIndex = 6;
+            this.tabPageSoundRecord.Text = "Record";
+            // 
+            // buttonSoundRecordFolderBrowse
+            // 
+            this.buttonSoundRecordFolderBrowse.Location = new System.Drawing.Point(269, 60);
+            this.buttonSoundRecordFolderBrowse.Name = "buttonSoundRecordFolderBrowse";
+            this.buttonSoundRecordFolderBrowse.Size = new System.Drawing.Size(75, 23);
+            this.buttonSoundRecordFolderBrowse.TabIndex = 5;
+            this.buttonSoundRecordFolderBrowse.Text = "Browse";
+            this.buttonSoundRecordFolderBrowse.UseVisualStyleBackColor = true;
+            this.buttonSoundRecordFolderBrowse.Click += new System.EventHandler(this.ButtonSoundRecordFolderBrowse_Click);
+            // 
+            // textBoxSoundRecordFolder
+            // 
+            this.textBoxSoundRecordFolder.Location = new System.Drawing.Point(85, 61);
+            this.textBoxSoundRecordFolder.Name = "textBoxSoundRecordFolder";
+            this.textBoxSoundRecordFolder.Size = new System.Drawing.Size(178, 20);
+            this.textBoxSoundRecordFolder.TabIndex = 4;
+            // 
+            // labelSoundRecordFolder
+            // 
+            this.labelSoundRecordFolder.AutoSize = true;
+            this.labelSoundRecordFolder.Location = new System.Drawing.Point(8, 64);
+            this.labelSoundRecordFolder.Name = "labelSoundRecordFolder";
+            this.labelSoundRecordFolder.Size = new System.Drawing.Size(71, 13);
+            this.labelSoundRecordFolder.TabIndex = 3;
+            this.labelSoundRecordFolder.Text = "Record folder";
+            // 
+            // buttonSoundInputRefresh
+            // 
+            this.buttonSoundInputRefresh.Location = new System.Drawing.Point(269, 6);
+            this.buttonSoundInputRefresh.Name = "buttonSoundInputRefresh";
+            this.buttonSoundInputRefresh.Size = new System.Drawing.Size(75, 23);
+            this.buttonSoundInputRefresh.TabIndex = 2;
+            this.buttonSoundInputRefresh.Text = "Refresh";
+            this.buttonSoundInputRefresh.UseVisualStyleBackColor = true;
+            this.buttonSoundInputRefresh.Click += new System.EventHandler(this.ButtonSoundInputRefresh_Click);
+            // 
+            // comboBoxSoundRecordDevice
+            // 
+            this.comboBoxSoundRecordDevice.FormattingEnabled = true;
+            this.comboBoxSoundRecordDevice.Location = new System.Drawing.Point(11, 31);
+            this.comboBoxSoundRecordDevice.Name = "comboBoxSoundRecordDevice";
+            this.comboBoxSoundRecordDevice.Size = new System.Drawing.Size(335, 21);
+            this.comboBoxSoundRecordDevice.TabIndex = 1;
+            this.comboBoxSoundRecordDevice.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSoundRecordDevice_SelectedIndexChanged);
+            // 
+            // labelSoundInput
+            // 
+            this.labelSoundInput.AutoSize = true;
+            this.labelSoundInput.Location = new System.Drawing.Point(8, 11);
+            this.labelSoundInput.Name = "labelSoundInput";
+            this.labelSoundInput.Size = new System.Drawing.Size(99, 13);
+            this.labelSoundInput.TabIndex = 0;
+            this.labelSoundInput.Text = "Sound input device";
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1018,6 +1113,8 @@
             this.tabPageExport.ResumeLayout(false);
             this.tabPageDebug.ResumeLayout(false);
             this.tabPageDebug.PerformLayout();
+            this.tabPageSoundRecord.ResumeLayout(false);
+            this.tabPageSoundRecord.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1103,5 +1200,14 @@
         private System.Windows.Forms.Label labelHost;
         private System.Windows.Forms.TextBox textBoxTransceiverTciHost;
         private System.Windows.Forms.GroupBox groupBoxView;
+        internal System.Windows.Forms.CheckBox checkBoxViewSoundRecord;
+        private System.Windows.Forms.TabPage tabPageSoundRecord;
+        private System.Windows.Forms.Button buttonSoundRecordFolderBrowse;
+        private System.Windows.Forms.TextBox textBoxSoundRecordFolder;
+        private System.Windows.Forms.Label labelSoundRecordFolder;
+        private System.Windows.Forms.Button buttonSoundInputRefresh;
+        private System.Windows.Forms.ComboBox comboBoxSoundRecordDevice;
+        private System.Windows.Forms.Label labelSoundInput;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogSoundRecord;
     }
 }

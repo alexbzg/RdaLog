@@ -118,6 +118,13 @@ namespace tnxlog
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
             this.labelEsm = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.panelSoundRecord = new System.Windows.Forms.Panel();
+            this.buttonRecordsClear = new System.Windows.Forms.Button();
+            this.labelRecordedSize = new System.Windows.Forms.Label();
+            this.labelRecordedCaption = new System.Windows.Forms.Label();
+            this.labelSoundRecordingOn = new System.Windows.Forms.Label();
+            this.labelSoundRecording = new System.Windows.Forms.Label();
+            this.checkBoxRecord = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel.SuspendLayout();
             this.panelQsoComments.SuspendLayout();
             this.panelQth1_2.SuspendLayout();
@@ -129,6 +136,7 @@ namespace tnxlog
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).BeginInit();
             this.toolStrip.SuspendLayout();
+            this.panelSoundRecord.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelDupe
@@ -165,12 +173,10 @@ namespace tnxlog
             this.flowLayoutPanel.Controls.Add(this.panelQth3Loc);
             this.flowLayoutPanel.Controls.Add(this.panelStatFilter);
             this.flowLayoutPanel.Controls.Add(this.panelCallsignId);
-            this.flowLayoutPanel.Controls.Add(this.panelCwMacro);
-            this.flowLayoutPanel.Controls.Add(this.statusStrip);
             this.flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel.Location = new System.Drawing.Point(0, 123);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 351);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 289);
             this.flowLayoutPanel.TabIndex = 63;
             // 
             // panelQsoComments
@@ -188,7 +194,7 @@ namespace tnxlog
             this.labelComments.AutoSize = true;
             this.labelComments.BackColor = System.Drawing.Color.Transparent;
             this.labelComments.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelComments.Location = new System.Drawing.Point(12, 5);
+            this.labelComments.Location = new System.Drawing.Point(11, 5);
             this.labelComments.Name = "labelComments";
             this.labelComments.Size = new System.Drawing.Size(56, 13);
             this.labelComments.TabIndex = 67;
@@ -198,7 +204,7 @@ namespace tnxlog
             // 
             this.textBoxComments.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxComments.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxComments.Location = new System.Drawing.Point(13, 21);
+            this.textBoxComments.Location = new System.Drawing.Point(12, 21);
             this.textBoxComments.Name = "textBoxComments";
             this.textBoxComments.Size = new System.Drawing.Size(344, 22);
             this.textBoxComments.TabIndex = 6;
@@ -358,7 +364,7 @@ namespace tnxlog
             // 
             this.textBoxQth3.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.textBoxQth3.ForeColor = System.Drawing.Color.Navy;
-            this.textBoxQth3.Location = new System.Drawing.Point(15, 23);
+            this.textBoxQth3.Location = new System.Drawing.Point(12, 23);
             this.textBoxQth3.Name = "textBoxQth3";
             this.textBoxQth3.Size = new System.Drawing.Size(168, 23);
             this.textBoxQth3.TabIndex = 9;
@@ -399,7 +405,7 @@ namespace tnxlog
             this.labelStatMode.AutoSize = true;
             this.labelStatMode.BackColor = System.Drawing.Color.Transparent;
             this.labelStatMode.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatMode.Location = new System.Drawing.Point(84, 2);
+            this.labelStatMode.Location = new System.Drawing.Point(84, 5);
             this.labelStatMode.Name = "labelStatMode";
             this.labelStatMode.Size = new System.Drawing.Size(34, 13);
             this.labelStatMode.TabIndex = 63;
@@ -410,7 +416,7 @@ namespace tnxlog
             this.labelStatBand.AutoSize = true;
             this.labelStatBand.BackColor = System.Drawing.Color.Transparent;
             this.labelStatBand.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatBand.Location = new System.Drawing.Point(153, 2);
+            this.labelStatBand.Location = new System.Drawing.Point(153, 5);
             this.labelStatBand.Name = "labelStatBand";
             this.labelStatBand.Size = new System.Drawing.Size(29, 13);
             this.labelStatBand.TabIndex = 62;
@@ -421,7 +427,7 @@ namespace tnxlog
             this.labelStatCallsignsCaption.AutoSize = true;
             this.labelStatCallsignsCaption.BackColor = System.Drawing.Color.Transparent;
             this.labelStatCallsignsCaption.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatCallsignsCaption.Location = new System.Drawing.Point(309, 4);
+            this.labelStatCallsignsCaption.Location = new System.Drawing.Point(309, 7);
             this.labelStatCallsignsCaption.Name = "labelStatCallsignsCaption";
             this.labelStatCallsignsCaption.Size = new System.Drawing.Size(29, 13);
             this.labelStatCallsignsCaption.TabIndex = 41;
@@ -432,7 +438,7 @@ namespace tnxlog
             this.labelStatQsoCaption.AutoSize = true;
             this.labelStatQsoCaption.BackColor = System.Drawing.Color.Transparent;
             this.labelStatQsoCaption.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatQsoCaption.Location = new System.Drawing.Point(247, 5);
+            this.labelStatQsoCaption.Location = new System.Drawing.Point(247, 8);
             this.labelStatQsoCaption.Name = "labelStatQsoCaption";
             this.labelStatQsoCaption.Size = new System.Drawing.Size(30, 13);
             this.labelStatQsoCaption.TabIndex = 40;
@@ -444,7 +450,7 @@ namespace tnxlog
             this.labelStatQso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labelStatQso.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.labelStatQso.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatQso.Location = new System.Drawing.Point(232, 18);
+            this.labelStatQso.Location = new System.Drawing.Point(232, 23);
             this.labelStatQso.Name = "labelStatQso";
             this.labelStatQso.Size = new System.Drawing.Size(60, 23);
             this.labelStatQso.TabIndex = 61;
@@ -457,7 +463,7 @@ namespace tnxlog
             this.labelStatCallsigns.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labelStatCallsigns.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.labelStatCallsigns.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatCallsigns.Location = new System.Drawing.Point(296, 18);
+            this.labelStatCallsigns.Location = new System.Drawing.Point(296, 23);
             this.labelStatCallsigns.Name = "labelStatCallsigns";
             this.labelStatCallsigns.Size = new System.Drawing.Size(60, 23);
             this.labelStatCallsigns.TabIndex = 61;
@@ -471,7 +477,7 @@ namespace tnxlog
             this.comboBoxStatFilterBand.FormattingEnabled = true;
             this.comboBoxStatFilterBand.Items.AddRange(new object[] {
             "All"});
-            this.comboBoxStatFilterBand.Location = new System.Drawing.Point(156, 17);
+            this.comboBoxStatFilterBand.Location = new System.Drawing.Point(156, 22);
             this.comboBoxStatFilterBand.Name = "comboBoxStatFilterBand";
             this.comboBoxStatFilterBand.Size = new System.Drawing.Size(70, 24);
             this.comboBoxStatFilterBand.TabIndex = 36;
@@ -486,7 +492,7 @@ namespace tnxlog
             this.comboBoxStatFilterQth.FormattingEnabled = true;
             this.comboBoxStatFilterQth.Items.AddRange(new object[] {
             "All"});
-            this.comboBoxStatFilterQth.Location = new System.Drawing.Point(12, 17);
+            this.comboBoxStatFilterQth.Location = new System.Drawing.Point(12, 22);
             this.comboBoxStatFilterQth.Name = "comboBoxStatFilterQth";
             this.comboBoxStatFilterQth.Size = new System.Drawing.Size(67, 24);
             this.comboBoxStatFilterQth.TabIndex = 35;
@@ -501,7 +507,7 @@ namespace tnxlog
             this.comboBoxStatFilterMode.FormattingEnabled = true;
             this.comboBoxStatFilterMode.Items.AddRange(new object[] {
             "All"});
-            this.comboBoxStatFilterMode.Location = new System.Drawing.Point(83, 17);
+            this.comboBoxStatFilterMode.Location = new System.Drawing.Point(83, 22);
             this.comboBoxStatFilterMode.Name = "comboBoxStatFilterMode";
             this.comboBoxStatFilterMode.Size = new System.Drawing.Size(67, 24);
             this.comboBoxStatFilterMode.TabIndex = 34;
@@ -515,7 +521,7 @@ namespace tnxlog
             this.checkBoxAutoStatFilter.Checked = true;
             this.checkBoxAutoStatFilter.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxAutoStatFilter.ForeColor = System.Drawing.Color.DarkGreen;
-            this.checkBoxAutoStatFilter.Location = new System.Drawing.Point(43, 1);
+            this.checkBoxAutoStatFilter.Location = new System.Drawing.Point(43, 4);
             this.checkBoxAutoStatFilter.Name = "checkBoxAutoStatFilter";
             this.checkBoxAutoStatFilter.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoStatFilter.TabIndex = 30;
@@ -529,7 +535,7 @@ namespace tnxlog
             this.labelStatFilter.AutoSize = true;
             this.labelStatFilter.BackColor = System.Drawing.Color.Transparent;
             this.labelStatFilter.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelStatFilter.Location = new System.Drawing.Point(11, 2);
+            this.labelStatFilter.Location = new System.Drawing.Point(11, 5);
             this.labelStatFilter.Name = "labelStatFilter";
             this.labelStatFilter.Size = new System.Drawing.Size(31, 13);
             this.labelStatFilter.TabIndex = 29;
@@ -563,14 +569,15 @@ namespace tnxlog
             this.listBoxCallsignsQso.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxCallsignsQso.FormattingEnabled = true;
             this.listBoxCallsignsQso.ItemHeight = 16;
-            this.listBoxCallsignsQso.Location = new System.Drawing.Point(9, 7);
+            this.listBoxCallsignsQso.Location = new System.Drawing.Point(12, 7);
             this.listBoxCallsignsQso.Name = "listBoxCallsignsQso";
-            this.listBoxCallsignsQso.Size = new System.Drawing.Size(174, 84);
+            this.listBoxCallsignsQso.Size = new System.Drawing.Size(170, 84);
             this.listBoxCallsignsQso.TabIndex = 0;
             this.listBoxCallsignsQso.SelectedIndexChanged += new System.EventHandler(this.ListBoxCallsigns_SelectedIndexChanged);
             // 
             // panelCwMacro
             // 
+            this.panelCwMacro.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panelCwMacro.Controls.Add(this.labelMorseSpeed);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF5);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF1);
@@ -591,7 +598,7 @@ namespace tnxlog
             this.panelCwMacro.Controls.Add(this.labelCwMacroF1Title);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF3Title);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF2Title);
-            this.panelCwMacro.Location = new System.Drawing.Point(0, 289);
+            this.panelCwMacro.Location = new System.Drawing.Point(0, 459);
             this.panelCwMacro.Margin = new System.Windows.Forms.Padding(0);
             this.panelCwMacro.Name = "panelCwMacro";
             this.panelCwMacro.Size = new System.Drawing.Size(364, 40);
@@ -688,7 +695,7 @@ namespace tnxlog
             // 
             this.labelCwMacroF8Title.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF8Title.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF8Title.Location = new System.Drawing.Point(239, 19);
+            this.labelCwMacroF8Title.Location = new System.Drawing.Point(239, 21);
             this.labelCwMacroF8Title.Name = "labelCwMacroF8Title";
             this.labelCwMacroF8Title.Size = new System.Drawing.Size(30, 16);
             this.labelCwMacroF8Title.TabIndex = 59;
@@ -826,7 +833,7 @@ namespace tnxlog
             this.loginLabel,
             this.connectionStatusLabel});
             this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.statusStrip.Location = new System.Drawing.Point(0, 329);
+            this.statusStrip.Location = new System.Drawing.Point(2, 499);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(364, 22);
             this.statusStrip.SizingGrip = false;
@@ -1055,20 +1062,20 @@ namespace tnxlog
             // menuItemAdifExportQth
             // 
             this.menuItemAdifExportQth.Name = "menuItemAdifExportQth";
-            this.menuItemAdifExportQth.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportQth.Size = new System.Drawing.Size(139, 22);
             this.menuItemAdifExportQth.Text = "By QTH field";
             // 
             // menuItemAdifExportLoc
             // 
             this.menuItemAdifExportLoc.Name = "menuItemAdifExportLoc";
-            this.menuItemAdifExportLoc.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportLoc.Size = new System.Drawing.Size(139, 22);
             this.menuItemAdifExportLoc.Text = "By locator";
             this.menuItemAdifExportLoc.Click += new System.EventHandler(this.MenuItemAdifExportLoc_Click);
             // 
             // menuItemAdifExportAll
             // 
             this.menuItemAdifExportAll.Name = "menuItemAdifExportAll";
-            this.menuItemAdifExportAll.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAdifExportAll.Size = new System.Drawing.Size(139, 22);
             this.menuItemAdifExportAll.Text = "All QSO";
             this.menuItemAdifExportAll.Click += new System.EventHandler(this.MenuItemAdifExportAll_Click);
             // 
@@ -1112,19 +1119,96 @@ namespace tnxlog
             this.labelEsm.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.labelEsm.Visible = false;
             // 
+            // panelSoundRecord
+            // 
+            this.panelSoundRecord.Controls.Add(this.buttonRecordsClear);
+            this.panelSoundRecord.Controls.Add(this.labelRecordedSize);
+            this.panelSoundRecord.Controls.Add(this.labelRecordedCaption);
+            this.panelSoundRecord.Controls.Add(this.labelSoundRecordingOn);
+            this.panelSoundRecord.Controls.Add(this.labelSoundRecording);
+            this.panelSoundRecord.Controls.Add(this.checkBoxRecord);
+            this.panelSoundRecord.Location = new System.Drawing.Point(0, 412);
+            this.panelSoundRecord.Name = "panelSoundRecord";
+            this.panelSoundRecord.Size = new System.Drawing.Size(364, 48);
+            this.panelSoundRecord.TabIndex = 67;
+            // 
+            // buttonRecordsClear
+            // 
+            this.buttonRecordsClear.Location = new System.Drawing.Point(291, 15);
+            this.buttonRecordsClear.Name = "buttonRecordsClear";
+            this.buttonRecordsClear.Size = new System.Drawing.Size(66, 23);
+            this.buttonRecordsClear.TabIndex = 5;
+            this.buttonRecordsClear.Text = "CLEAR";
+            this.buttonRecordsClear.UseVisualStyleBackColor = true;
+            this.buttonRecordsClear.Click += new System.EventHandler(this.ButtonRecordsClear_Click);
+            // 
+            // labelRecordedSize
+            // 
+            this.labelRecordedSize.Location = new System.Drawing.Point(188, 24);
+            this.labelRecordedSize.Name = "labelRecordedSize";
+            this.labelRecordedSize.Size = new System.Drawing.Size(53, 18);
+            this.labelRecordedSize.TabIndex = 4;
+            this.labelRecordedSize.Text = "0Mb";
+            this.labelRecordedSize.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // labelRecordedCaption
+            // 
+            this.labelRecordedCaption.AutoSize = true;
+            this.labelRecordedCaption.Location = new System.Drawing.Point(188, 5);
+            this.labelRecordedCaption.Name = "labelRecordedCaption";
+            this.labelRecordedCaption.Size = new System.Drawing.Size(54, 13);
+            this.labelRecordedCaption.TabIndex = 3;
+            this.labelRecordedCaption.Text = "Recorded";
+            // 
+            // labelSoundRecordingOn
+            // 
+            this.labelSoundRecordingOn.AutoSize = true;
+            this.labelSoundRecordingOn.BackColor = System.Drawing.Color.Red;
+            this.labelSoundRecordingOn.ForeColor = System.Drawing.Color.White;
+            this.labelSoundRecordingOn.Location = new System.Drawing.Point(85, 27);
+            this.labelSoundRecordingOn.Name = "labelSoundRecordingOn";
+            this.labelSoundRecordingOn.Size = new System.Drawing.Size(81, 13);
+            this.labelSoundRecordingOn.TabIndex = 2;
+            this.labelSoundRecordingOn.Text = "RECORDING...";
+            this.labelSoundRecordingOn.Visible = false;
+            // 
+            // labelSoundRecording
+            // 
+            this.labelSoundRecording.AutoSize = true;
+            this.labelSoundRecording.Location = new System.Drawing.Point(11, 5);
+            this.labelSoundRecording.Name = "labelSoundRecording";
+            this.labelSoundRecording.Size = new System.Drawing.Size(85, 13);
+            this.labelSoundRecording.TabIndex = 1;
+            this.labelSoundRecording.Text = "Sound recording";
+            // 
+            // checkBoxRecord
+            // 
+            this.checkBoxRecord.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxRecord.Location = new System.Drawing.Point(12, 21);
+            this.checkBoxRecord.Name = "checkBoxRecord";
+            this.checkBoxRecord.Size = new System.Drawing.Size(70, 24);
+            this.checkBoxRecord.TabIndex = 0;
+            this.checkBoxRecord.Text = "START";
+            this.checkBoxRecord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxRecord.UseVisualStyleBackColor = true;
+            this.checkBoxRecord.CheckedChanged += new System.EventHandler(this.CheckBoxRecord_CheckedChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(364, 474);
+            this.ClientSize = new System.Drawing.Size(364, 520);
+            this.Controls.Add(this.panelSoundRecord);
             this.Controls.Add(this.labelEsm);
             this.Controls.Add(this.labelDupe);
             this.Controls.Add(this.checkBoxTop);
             this.Controls.Add(this.flowLayoutPanel);
             this.Controls.Add(this.labelMode);
+            this.Controls.Add(this.panelCwMacro);
             this.Controls.Add(this.comboBoxMode);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.labelFreq);
             this.Controls.Add(this.numericUpDownFreq);
             this.Controls.Add(this.labelCallsign);
@@ -1164,6 +1248,8 @@ namespace tnxlog
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).EndInit();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
+            this.panelSoundRecord.ResumeLayout(false);
+            this.panelSoundRecord.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1259,6 +1345,13 @@ namespace tnxlog
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ToolStripMenuItem uploadAllQSOToolStripMenuItem;
+        private System.Windows.Forms.Panel panelSoundRecord;
+        private System.Windows.Forms.Label labelSoundRecordingOn;
+        private System.Windows.Forms.Label labelSoundRecording;
+        private System.Windows.Forms.CheckBox checkBoxRecord;
+        private System.Windows.Forms.Button buttonRecordsClear;
+        private System.Windows.Forms.Label labelRecordedSize;
+        private System.Windows.Forms.Label labelRecordedCaption;
     }
 }
 

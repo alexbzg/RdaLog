@@ -23,6 +23,7 @@ using ProtoBuf;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 
 namespace tnxlog
 {
@@ -70,8 +71,17 @@ namespace tnxlog
 #endif
         System.Threading.Timer pingTimer;
         System.Threading.Timer loginRetryTimer;
+
         ConcurrentQueue<LogRequest> logQueue = new ConcurrentQueue<LogRequest>();
+        ConcurrentQueue<SoundRecordFile> soundRecordsQueue = new ConcurrentQueue<SoundRecordFile>();
+        public int soundRecordsQueueLength
+        {
+            get { return soundRecordsQueue.Count; }
+        }
+
         private string unsentFilePath;
+        private string unsentSoundRecordsFilePath;
+
         private string stationCallsign = null;
         private volatile bool _connected;
         public bool connected { get { return _connected; }
@@ -108,7 +118,18 @@ namespace tnxlog
                             addToQueue(del);
                 });
 
+            unsentSoundRecordsFilePath = Path.Combine(tnxlog.dataPath, "unsentSoundRecords");
+            List<SoundRecordFile> unsentSoundRecords = ProtoBufSerialization.Read<List<SoundRecordFile>>(unsentSoundRecordsFilePath);
+            if (unsentSoundRecords != null && unsentSoundRecords.Count > 0)
+                Task.Run(async () =>
+                {
+                    foreach (SoundRecordFile record in unsentSoundRecords)
+                        await postSoundRecord(record);
+                });
+
         }
+
+
 
         private void schedulePingTimer()
         {
@@ -121,12 +142,36 @@ namespace tnxlog
 #if !DISABLE_HTTP_LOGGING_CONTENT
             System.Diagnostics.Debug.WriteLine(sContent);
 #endif
+            HttpContent content = new StringContent(sContent);
+            return await post(_URI, content, warnings, timeoutSeconds);
+        }
+
+        private async Task<bool> _postSoundRecord(SoundRecordFile record)
+        {
+            MultipartFormDataContent multipartFormContent = new MultipartFormDataContent();
+
+            StreamContent fileStreamContent = new StreamContent(File.OpenRead(record.path));
+            fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("audio/mp3");
+            multipartFormContent.Add(fileStreamContent, name: "file", fileName: Path.GetFileName(record.path));
+
+            StringContent period = new StringContent(JsonConvert.SerializeObject(record.period));
+            multipartFormContent.Add(period, name: "period");
+
+            StringContent token = new StringContent(config.token);
+            multipartFormContent.Add(token, name: "token");
+
+            HttpResponseMessage response = await post("soundRecord", multipartFormContent);
+            return response != null && response.IsSuccessStatusCode;
+        }
+
+        private async Task<HttpResponseMessage> post(string _URI, HttpContent content, bool warnings = true, int timeoutSeconds = 100)
+        {
+
             string URI = srvURI + _URI;
 #if DEBUG && DISABLE_HTTP
             return true;
 #endif
             HttpClient client = new HttpClient();
-            HttpContent content = new StringContent(sContent);
             HttpResponseMessage response = null;
             client.Timeout = TimeSpan.FromSeconds(timeoutSeconds < 100 ? 100 : timeoutSeconds);
             bool result = false;
@@ -203,6 +248,25 @@ namespace tnxlog
                 addToQueue(qso);
         }
 
+        public async Task postSoundRecord(SoundRecordFile record)
+        {
+            if (logQueue.IsEmpty && soundRecordsQueue.IsEmpty && config.token != null)
+            {
+                if (!await _postSoundRecord(record))
+                    addToQueue(record);
+                else
+                    record.delete();
+            }
+            else
+                addToQueue(record);
+        }
+
+        private void addToQueue(SoundRecordFile record)
+        {
+            soundRecordsQueue.Enqueue(record);
+            saveSoundRecords();
+        }
+
         private void addToQueue(QSO[] qso)
         {
             logQueue.Enqueue(new LogRequest() { qso = qso });
@@ -240,6 +304,22 @@ namespace tnxlog
             ProtoBufSerialization.Write<List<QsoDeleteData>>(unsentFilePath + ".del", logQueue.Where(item => item.delete != null).Select(item => item.delete).ToList());
         }
 
+        private void saveSoundRecords()
+        {
+            ProtoBufSerialization.Write<List<SoundRecordFile>>(unsentSoundRecordsFilePath, soundRecordsQueue.ToList());
+        }
+
+        public void clearSoundRecords()
+        {
+            while (!soundRecordsQueue.IsEmpty)
+            {
+                soundRecordsQueue.TryDequeue(out SoundRecordFile record);
+                if (record != null)
+                    record.delete();
+            }
+            saveSoundRecords();
+        }
+
         private async Task processQueue()
         {
             while (!logQueue.IsEmpty && config.token != null)
@@ -254,8 +334,24 @@ namespace tnxlog
                 else
                     break;
             }
+            await processSoundRecordsQueue(); 
         }
 
+        private async Task processSoundRecordsQueue()
+        {
+            while (logQueue.IsEmpty && !soundRecordsQueue.IsEmpty && config.token != null)
+            {
+                soundRecordsQueue.TryPeek(out SoundRecordFile record);
+                if (record != null && await _postSoundRecord(record))
+                {
+                    soundRecordsQueue.TryDequeue(out record);
+                    record.delete();
+                    saveUnsent();
+                }
+                else
+                    break;
+            }
+        }
 
         public async Task ping()
         {

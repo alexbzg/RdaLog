@@ -343,10 +343,15 @@ namespace tnxlog
                 qso._comments = getAdifField(adif, commentField);
             return qso;
         }
+
+        public static string QSOTimestamp(DateTime? timestamp = null)
+        {
+            return (timestamp == null ? DateTime.UtcNow : (DateTime)timestamp).ToString("yyyy-MM-dd HH:mm:ss");
+        }
         public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, string comments, DateTime? timestamp = null)
         {           
             QSO qso = new QSO {
-                _ts = (timestamp == null ? DateTime.UtcNow : (DateTime)timestamp).ToString("yyyy-MM-dd HH:mm:ss"),
+                _ts = QSOTimestamp(timestamp),
                 _myCS = myCallsign,
                 _band = Band.fromFreq(freq),
                 _freq = QSO.formatFreq(freq),

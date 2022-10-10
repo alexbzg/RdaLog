@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
@@ -134,6 +135,19 @@ namespace tnxlog
 
         internal int cwTransceiverType { get { return comboBoxTransceiverType.SelectedIndex; } set { comboBoxTransceiverType.SelectedIndex = value; } }
 
+        internal string soundRecordFolder { get { return textBoxSoundRecordFolder.Text; } set { textBoxSoundRecordFolder.Text = value; } }
+        private string _soundRecordDevice = "";
+        public string soundRecordDevice {
+            get { return _soundRecordDevice; }
+            set {
+                _soundRecordDevice = value;
+                if (comboBoxSoundRecordDevice.Items.Contains(value))
+                {
+                    comboBoxSoundRecordDevice.SelectedItem = value;
+                }
+            }
+        }
+
         private string dataPath;
         public FormSettings(string _dataPath)
         {
@@ -147,7 +161,8 @@ namespace tnxlog
                 {"qsoComments", checkBoxViewQsoComments },
                 {"statFilter", checkBoxViewStatFilter },
                 {"cwMacros", checkBoxViewCwMacro },
-                {"callsignId", checkBoxViewCallsignId }
+                {"callsignId", checkBoxViewCallsignId },
+                {"soundRecord", checkBoxViewSoundRecord }
             };
 
             updateIntervalRadioButtons = new Dictionary<int, RadioButton>()
@@ -190,6 +205,47 @@ namespace tnxlog
             ltbComment.Location = new Point(1, 14 + TnxlogConfig.QthFieldCount * (ltbComment.Height + 2));
             ltbComment.labelText = "Comment";
 
+            enumerateSoundRecordDevices();
+
+        }
+
+        private void enumerateSoundRecordDevices()
+        {
+            Process ffmpeg = new Process();
+            ffmpeg.StartInfo = new ProcessStartInfo("ffmpeg.exe")
+            {
+                Arguments = "-list_devices true -f dshow -i dummy",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            List<string> devices = new List<string>();
+            DataReceivedEventHandler recHandler = new DataReceivedEventHandler((sender, e) =>
+            {
+                if (e.Data != null && e.Data.EndsWith("(audio)"))
+                {
+                    string devName = e.Data.Split(new char[] { '"' }, 3)[1];
+                    byte[] bytes = Encoding.Default.GetBytes(devName);
+                    devices.Add(Encoding.UTF8.GetString(bytes));
+                }
+            });
+            ffmpeg.OutputDataReceived += recHandler;
+            ffmpeg.ErrorDataReceived += recHandler;
+            ffmpeg.Start();
+            ffmpeg.BeginOutputReadLine();
+            ffmpeg.BeginErrorReadLine();
+
+            ffmpeg.WaitForExit();
+            comboBoxSoundRecordDevice.Items.AddRange(devices.ToArray());
+            if (comboBoxSoundRecordDevice.Items.Contains(_soundRecordDevice))
+            {
+                comboBoxSoundRecordDevice.SelectedItem = _soundRecordDevice;
+            }
+            else if (comboBoxSoundRecordDevice.Items.Count > 0)
+            {
+                comboBoxSoundRecordDevice.SelectedIndex = 0;
+            }
         }
 
         private void testPinMouseUp(object sender, EventArgs e)
@@ -333,6 +389,25 @@ namespace tnxlog
 
                 }
             }
+        }
+
+        private void ButtonSoundInputRefresh_Click(object sender, EventArgs e)
+        {
+            comboBoxSoundRecordDevice.Items.Clear();
+            enumerateSoundRecordDevices();
+        }
+
+        private void ComboBoxSoundRecordDevice_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _soundRecordDevice = (string)comboBoxSoundRecordDevice.SelectedItem;
+        }
+
+        private void ButtonSoundRecordFolderBrowse_Click(object sender, EventArgs e)
+        {
+            if (textBoxSoundRecordFolder.Text.Length > 0)
+                folderBrowserDialogSoundRecord.SelectedPath = textBoxSoundRecordFolder.Text;
+            if (folderBrowserDialogSoundRecord.ShowDialog() == DialogResult.OK)
+                textBoxSoundRecordFolder.Text = folderBrowserDialogSoundRecord.SelectedPath;
         }
     }
 }
