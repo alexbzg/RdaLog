@@ -36,6 +36,7 @@ namespace tnxlog
         internal string[] _qth;
         internal decimal _serverTs = 0;
         internal bool _deleted = false;
+        internal string _sound;
 
         [DataMember, ProtoMember(1)]
         public string ts {
@@ -131,6 +132,10 @@ namespace tnxlog
 
         [DataMember, ProtoMember(14)]
         public string loc_rcv { get { return _loc_rcv; } set { _loc_rcv = value; } }
+
+        [DataMember, ProtoMember(15)]
+        public string sound { get { return _sound; } set { _sound = value; } }
+
 
         [IgnoreDataMember]
         public string qthField0
@@ -348,7 +353,7 @@ namespace tnxlog
         {
             return (timestamp == null ? DateTime.UtcNow : (DateTime)timestamp).ToString("yyyy-MM-dd HH:mm:ss");
         }
-        public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, string comments, DateTime? timestamp = null)
+        public QSO create(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, string comments, DateTime? timestamp = null, string sound = null)
         {           
             QSO qso = new QSO {
                 _ts = QSOTimestamp(timestamp),
@@ -363,7 +368,8 @@ namespace tnxlog
                 _no = no++,
                 _loc = tnxlog.loc,
                 _comments = comments,
-                _qth = new string[TnxlogConfig.QthFieldCount]
+                _qth = new string[TnxlogConfig.QthFieldCount],
+                _sound = sound
             };
             for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
                 qso._qth[field] = tnxlog.getQthFieldValue(field);

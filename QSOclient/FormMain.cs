@@ -26,6 +26,7 @@ namespace tnxlog
     public partial class FormMain : StorableForm.StorableForm<FormMainConfig>, IMessageFilter
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        public static readonly double SoundRecordFileSize = 0.232;
         class QthFieldControls
         {
             internal CheckBox auto;
@@ -107,7 +108,7 @@ namespace tnxlog
         private string clearedCS = "";
         private Process soundRecordProcess;
         private bool soundRecordQso;
-        private SoundRecordFile soundRecordCurrentFile;
+        private string soundRecordCurrentFile;
         private System.Threading.Timer soundRecordTimer;
 
         private QsoValues currentQsoValues()
@@ -363,7 +364,7 @@ namespace tnxlog
             {
                 labelSoundRecordingOn.Visible = !labelSoundRecordingOn.Visible;
             }
-            labelRecordedSize.Text = string.Format("{0:0.0}Mb", tnxlog.httpService.soundRecordsQueueLength * SoundRecordFile.size);
+            labelRecordedSize.Text = string.Format("{0:0.0}Mb", tnxlog.httpService.soundRecordsQueueLength * SoundRecordFileSize);
         }
 
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
@@ -1043,9 +1044,13 @@ namespace tnxlog
             textBoxComments.Text = "";
             textBoxCorrespondent.Focus();
             setDefRst();
+            string qsoSound = null;
             if (checkBoxRecord.Checked)
+            {
                 soundRecordQso = true;
-            await tnxlog.newQso(correspondent, qsoValues.callsign, qsoValues.freq, qsoValues.mode, qsoValues.rstRcvd, qsoValues.rstSnt, comments);
+                qsoSound = Path.GetFileName(soundRecordCurrentFile);
+            }
+            await tnxlog.newQso(correspondent, qsoValues.callsign, qsoValues.freq, qsoValues.mode, qsoValues.rstRcvd, qsoValues.rstSnt, comments, qsoSound);
         }
 
         private async void FormMain_KeyDown(object sender, KeyEventArgs e)
@@ -1305,11 +1310,9 @@ namespace tnxlog
         private void startSoundRecord()
         {
             soundRecordProcess = new Process();
-            soundRecordCurrentFile = new SoundRecordFile();
             DateTime utcNow = DateTime.UtcNow;
-            soundRecordCurrentFile.path = Path.Combine(tnxlogConfig.soundRecordFolder, $"{utcNow.ToString("yyyy-MM-dd-HH-mm-ss")}.mp3");
-            soundRecordCurrentFile.period[0] = QSOFactory.QSOTimestamp(utcNow);
-            string args = $" -f dshow -i audio=\"{tnxlogConfig.soundRecordDevice}\" -c:a libmp3lame -ar 44100 -b:a 36k -ac 1 {soundRecordCurrentFile.path}";
+            soundRecordCurrentFile = Path.Combine(tnxlogConfig.soundRecordFolder, $"{utcNow.ToString("yyyy-MM-dd-HH-mm-ss")}.mp3");
+            string args = $" -f dshow -i audio=\"{tnxlogConfig.soundRecordDevice}\" -c:a libmp3lame -ar 44100 -b:a 36k -ac 1 {soundRecordCurrentFile}";
             Logger.Info(args);
             soundRecordProcess.StartInfo = new ProcessStartInfo("ffmpeg.exe")
             {
@@ -1345,12 +1348,11 @@ namespace tnxlog
                 soundRecordProcess = null;
                 if (soundRecordQso)
                 {
-                    soundRecordCurrentFile.period[1] = QSOFactory.QSOTimestamp();
                     await tnxlog.httpService.postSoundRecord(soundRecordCurrentFile);
                     soundRecordQso = false;
                 } else
                 {
-                    soundRecordCurrentFile.delete();
+                    File.Delete(soundRecordCurrentFile);
                 }
             }
             if (checkBoxRecord.Checked)

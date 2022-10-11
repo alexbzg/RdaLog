@@ -73,7 +73,7 @@ namespace tnxlog
         System.Threading.Timer loginRetryTimer;
 
         ConcurrentQueue<LogRequest> logQueue = new ConcurrentQueue<LogRequest>();
-        ConcurrentQueue<SoundRecordFile> soundRecordsQueue = new ConcurrentQueue<SoundRecordFile>();
+        ConcurrentQueue<string> soundRecordsQueue = new ConcurrentQueue<string>();
         public int soundRecordsQueueLength
         {
             get { return soundRecordsQueue.Count; }
@@ -119,13 +119,14 @@ namespace tnxlog
                 });
 
             unsentSoundRecordsFilePath = Path.Combine(tnxlog.dataPath, "unsentSoundRecords");
-            List<SoundRecordFile> unsentSoundRecords = ProtoBufSerialization.Read<List<SoundRecordFile>>(unsentSoundRecordsFilePath);
+            List<string> unsentSoundRecords = ProtoBufSerialization.Read<List<string>>(unsentSoundRecordsFilePath);
             if (unsentSoundRecords != null && unsentSoundRecords.Count > 0)
                 Task.Run(async () =>
                 {
-                    foreach (SoundRecordFile record in unsentSoundRecords)
+                    foreach (string record in unsentSoundRecords)
                         await postSoundRecord(record);
                 });
+            saveSoundRecords();
 
         }
 
@@ -146,16 +147,13 @@ namespace tnxlog
             return await post(_URI, content, warnings, timeoutSeconds);
         }
 
-        private async Task<bool> _postSoundRecord(SoundRecordFile record)
+        private async Task<bool> _postSoundRecord(string record)
         {
             MultipartFormDataContent multipartFormContent = new MultipartFormDataContent();
 
-            StreamContent fileStreamContent = new StreamContent(File.OpenRead(record.path));
+            StreamContent fileStreamContent = new StreamContent(File.OpenRead(record));
             fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("audio/mp3");
-            multipartFormContent.Add(fileStreamContent, name: "file", fileName: Path.GetFileName(record.path));
-
-            StringContent period = new StringContent(JsonConvert.SerializeObject(record.period));
-            multipartFormContent.Add(period, name: "period");
+            multipartFormContent.Add(fileStreamContent, name: "file", fileName: Path.GetFileName(record));
 
             StringContent token = new StringContent(config.token);
             multipartFormContent.Add(token, name: "token");
@@ -248,20 +246,20 @@ namespace tnxlog
                 addToQueue(qso);
         }
 
-        public async Task postSoundRecord(SoundRecordFile record)
+        public async Task postSoundRecord(string record)
         {
             if (logQueue.IsEmpty && soundRecordsQueue.IsEmpty && config.token != null)
             {
                 if (!await _postSoundRecord(record))
-                    addToQueue(record);
+                    addToSoundRecordQueue(record);
                 else
-                    record.delete();
+                    File.Delete(record);
             }
             else
-                addToQueue(record);
+                addToSoundRecordQueue(record);
         }
 
-        private void addToQueue(SoundRecordFile record)
+        private void addToSoundRecordQueue(string record)
         {
             soundRecordsQueue.Enqueue(record);
             saveSoundRecords();
@@ -306,16 +304,16 @@ namespace tnxlog
 
         private void saveSoundRecords()
         {
-            ProtoBufSerialization.Write<List<SoundRecordFile>>(unsentSoundRecordsFilePath, soundRecordsQueue.ToList());
+            ProtoBufSerialization.Write<List<string>>(unsentSoundRecordsFilePath, soundRecordsQueue.ToList());
         }
 
         public void clearSoundRecords()
         {
             while (!soundRecordsQueue.IsEmpty)
             {
-                soundRecordsQueue.TryDequeue(out SoundRecordFile record);
+                soundRecordsQueue.TryDequeue(out string record);
                 if (record != null)
-                    record.delete();
+                    File.Delete(record);
             }
             saveSoundRecords();
         }
@@ -341,11 +339,11 @@ namespace tnxlog
         {
             while (logQueue.IsEmpty && !soundRecordsQueue.IsEmpty && config.token != null)
             {
-                soundRecordsQueue.TryPeek(out SoundRecordFile record);
+                soundRecordsQueue.TryPeek(out string record);
                 if (record != null && await _postSoundRecord(record))
                 {
                     soundRecordsQueue.TryDequeue(out record);
-                    record.delete();
+                    File.Delete(record);
                     saveUnsent();
                 }
                 else

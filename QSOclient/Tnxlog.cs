@@ -24,27 +24,6 @@ namespace tnxlog
         public string value;
     }
 
-    [ProtoContract]
-    public class SoundRecordFile
-    {
-        public static readonly double size = 0.232;
-        [ProtoMember(1)]
-        public string path;
-        [ProtoMember(2)]
-        public string[] period = new string[2];
-
-        public static T ReadList<T>(string filePath) where T : IList<SoundRecordFile>
-        {
-            T r = ProtoBufSerialization.Read<T>(filePath);
-            return r;
-        }
-
-        public void delete()
-        {
-            File.Delete(path);
-        }
-    }
-
     public class Tnxlog
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
@@ -112,7 +91,6 @@ namespace tnxlog
             }
         }
 
-        internal List<SoundRecordFile> soundRecords;
         private string soundRecordsFilePath;
 
         public Tnxlog()
@@ -161,13 +139,6 @@ namespace tnxlog
             else if (qsoList.Count > 0)
                 qsoFactory.no = qsoList.First().no + 1;
             qsoList.ListChanged += QsoList_ListChanged;
-
-            soundRecordsFilePath = Path.Combine(dataPath, "soundRecords.dat");
-            soundRecords = SoundRecordFile.ReadList<List<SoundRecordFile>>(soundRecordsFilePath);
-            if (soundRecords == null)
-            {
-                soundRecords = new List<SoundRecordFile>();
-            }
 
             _formMain = new FormMain(config.formMain, this);
             if (config.autoLogin)
@@ -222,9 +193,9 @@ namespace tnxlog
             formLog = null;
         }
 
-        public async Task newQso(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, string comments)
+        public async Task newQso(string callsign, string myCallsign, decimal freq, string mode, string rstRcvd, string rstSnt, string comments, string sound)
         {
-            QSO qso = qsoFactory.create(callsign, myCallsign, freq, mode, rstRcvd, rstSnt, comments);
+            QSO qso = qsoFactory.create(callsign, myCallsign, freq, mode, rstRcvd, rstSnt, comments, null, sound);
             qsoList.Insert(0, qso);
             await httpService.postQso(qso);
         }
