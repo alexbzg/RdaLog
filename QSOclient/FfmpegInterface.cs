@@ -11,7 +11,12 @@ namespace FfmpegIinterfaceNS
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public EventHandler Exited;
+        public class ExitEventArgs: EventArgs
+        {
+            public int code = 0;
+        }
+
+        public EventHandler<ExitEventArgs> Exited;
         public DataReceivedEventHandler DataReceived;
         private Process Process;
         private System.Threading.Timer timer;
@@ -24,6 +29,7 @@ namespace FfmpegIinterfaceNS
         public FfmpegInterface(string ffmpegPath, string args)
         {
             Process = new Process();
+            Logger.Debug($"{ffmpegPath} {args}");
             Process.StartInfo = new ProcessStartInfo(ffmpegPath)
             {
                 Arguments = args,
@@ -46,8 +52,8 @@ namespace FfmpegIinterfaceNS
 
         private void _Exited(object sender, EventArgs e)
         {
+            Exited?.Invoke(this, new ExitEventArgs() { code = Process.ExitCode });
             Process = null;
-            Exited?.Invoke(this, e);
         }
 
         public void Start()

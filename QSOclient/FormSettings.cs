@@ -226,16 +226,26 @@ namespace tnxlog
                     devices.Add(Encoding.UTF8.GetString(bytes));
                 }
             });
-            ffmpeg.Exited += new EventHandler((sender, e) => {
+            ffmpeg.Exited += new EventHandler<FfmpegInterface.ExitEventArgs>((sender, e) => {
                 DoInvoke(() => {
                     comboBoxSoundRecordDevice.Items.AddRange(devices.ToArray());
-                    if (comboBoxSoundRecordDevice.Items.Contains(_soundRecordDevice))
+                    if (comboBoxSoundRecordDevice.Items.Contains(soundRecordDevice))
                     {
-                        comboBoxSoundRecordDevice.SelectedItem = _soundRecordDevice;
+                        comboBoxSoundRecordDevice.SelectedItem = soundRecordDevice;
                     }
                     else if (comboBoxSoundRecordDevice.Items.Count > 0)
                     {
                         comboBoxSoundRecordDevice.SelectedIndex = 0;
+                        soundRecordDevice = comboBoxSoundRecordDevice.SelectedItem.ToString();
+                    }
+                    if (string.IsNullOrEmpty(soundRecordDevice))
+                    {
+                        checkBoxTestSoundRecord.Enabled = false;
+                        checkBoxTestSoundRecord.Text = "No audio input";
+                    } else
+                    {
+                        checkBoxTestSoundRecord.Enabled = true;
+                        checkBoxTestSoundRecord.Text = "Test record (30 seconds)";
                     }
                 });
             });
@@ -423,18 +433,21 @@ namespace tnxlog
             }
         }
 
-        private void soundRecordTestExited(object sender, EventArgs e)
+        private void soundRecordTestExited(object sender, FfmpegInterface.ExitEventArgs e)
         {
             DoInvoke(() =>
             {
                 checkBoxTestSoundRecord.Checked = false;
             });
-            var process = new Process();
-            process.StartInfo = new ProcessStartInfo(soundRecordTestFile())
+            if (e.code == 0)
             {
-                UseShellExecute = true
-            };
-            process.Start();
+                var process = new Process();
+                process.StartInfo = new ProcessStartInfo(soundRecordTestFile())
+                {
+                    UseShellExecute = true
+                };
+                process.Start();
+            }
         }
     }
 }

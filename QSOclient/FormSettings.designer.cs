@@ -896,7 +896,7 @@
             this.tabPageSoundRecord.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageSoundRecord.Size = new System.Drawing.Size(352, 435);
             this.tabPageSoundRecord.TabIndex = 6;
-            this.tabPageSoundRecord.Text = "Sound";
+            this.tabPageSoundRecord.Text = "Audio";
             // 
             // checkBoxTestSoundRecord
             // 

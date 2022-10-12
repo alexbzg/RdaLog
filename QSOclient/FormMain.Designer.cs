@@ -125,6 +125,7 @@ namespace tnxlog
             this.labelSoundRecordingOn = new System.Windows.Forms.Label();
             this.labelSoundRecording = new System.Windows.Forms.Label();
             this.checkBoxRecord = new System.Windows.Forms.CheckBox();
+            this.labelSoundInputNA = new System.Windows.Forms.Label();
             this.flowLayoutPanel.SuspendLayout();
             this.panelQsoComments.SuspendLayout();
             this.panelQth1_2.SuspendLayout();
@@ -265,9 +266,9 @@ namespace tnxlog
             // 
             this.textBoxQth2.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.textBoxQth2.ForeColor = System.Drawing.Color.Navy;
-            this.textBoxQth2.Location = new System.Drawing.Point(189, 21);
+            this.textBoxQth2.Location = new System.Drawing.Point(186, 21);
             this.textBoxQth2.Name = "textBoxQth2";
-            this.textBoxQth2.Size = new System.Drawing.Size(168, 23);
+            this.textBoxQth2.Size = new System.Drawing.Size(170, 23);
             this.textBoxQth2.TabIndex = 7;
             this.textBoxQth2.Text = "H4RT";
             this.textBoxQth2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -289,7 +290,7 @@ namespace tnxlog
             this.textBoxQth1.ForeColor = System.Drawing.Color.Navy;
             this.textBoxQth1.Location = new System.Drawing.Point(12, 21);
             this.textBoxQth1.Name = "textBoxQth1";
-            this.textBoxQth1.Size = new System.Drawing.Size(171, 23);
+            this.textBoxQth1.Size = new System.Drawing.Size(170, 23);
             this.textBoxQth1.TabIndex = 7;
             this.textBoxQth1.Text = "RA-25 RA-37 RA-27";
             this.textBoxQth1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -341,7 +342,7 @@ namespace tnxlog
             this.textBoxLocator.ForeColor = System.Drawing.Color.Navy;
             this.textBoxLocator.Location = new System.Drawing.Point(186, 23);
             this.textBoxLocator.Name = "textBoxLocator";
-            this.textBoxLocator.Size = new System.Drawing.Size(171, 22);
+            this.textBoxLocator.Size = new System.Drawing.Size(170, 22);
             this.textBoxLocator.TabIndex = 8;
             this.textBoxLocator.Text = "KN96on";
             this.textBoxLocator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -366,7 +367,7 @@ namespace tnxlog
             this.textBoxQth3.ForeColor = System.Drawing.Color.Navy;
             this.textBoxQth3.Location = new System.Drawing.Point(12, 23);
             this.textBoxQth3.Name = "textBoxQth3";
-            this.textBoxQth3.Size = new System.Drawing.Size(168, 23);
+            this.textBoxQth3.Size = new System.Drawing.Size(170, 23);
             this.textBoxQth3.TabIndex = 9;
             this.textBoxQth3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -558,7 +559,7 @@ namespace tnxlog
             this.listBoxCallsignsDb.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxCallsignsDb.FormattingEnabled = true;
             this.listBoxCallsignsDb.ItemHeight = 16;
-            this.listBoxCallsignsDb.Location = new System.Drawing.Point(184, 7);
+            this.listBoxCallsignsDb.Location = new System.Drawing.Point(186, 7);
             this.listBoxCallsignsDb.Name = "listBoxCallsignsDb";
             this.listBoxCallsignsDb.Size = new System.Drawing.Size(170, 84);
             this.listBoxCallsignsDb.TabIndex = 1;
@@ -673,7 +674,7 @@ namespace tnxlog
             // 
             this.labelCwMacroF9Title.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF9Title.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF9Title.Location = new System.Drawing.Point(273, 20);
+            this.labelCwMacroF9Title.Location = new System.Drawing.Point(276, 19);
             this.labelCwMacroF9Title.Name = "labelCwMacroF9Title";
             this.labelCwMacroF9Title.Size = new System.Drawing.Size(30, 16);
             this.labelCwMacroF9Title.TabIndex = 60;
@@ -695,9 +696,9 @@ namespace tnxlog
             // 
             this.labelCwMacroF8Title.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF8Title.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF8Title.Location = new System.Drawing.Point(239, 21);
+            this.labelCwMacroF8Title.Location = new System.Drawing.Point(239, 19);
             this.labelCwMacroF8Title.Name = "labelCwMacroF8Title";
-            this.labelCwMacroF8Title.Size = new System.Drawing.Size(30, 16);
+            this.labelCwMacroF8Title.Size = new System.Drawing.Size(40, 16);
             this.labelCwMacroF8Title.TabIndex = 59;
             this.labelCwMacroF8Title.Text = "RAFA";
             this.labelCwMacroF8Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -794,9 +795,9 @@ namespace tnxlog
             // 
             this.labelCwMacroF1Title.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF1Title.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF1Title.Location = new System.Drawing.Point(-1, 19);
+            this.labelCwMacroF1Title.Location = new System.Drawing.Point(6, 19);
             this.labelCwMacroF1Title.Name = "labelCwMacroF1Title";
-            this.labelCwMacroF1Title.Size = new System.Drawing.Size(30, 16);
+            this.labelCwMacroF1Title.Size = new System.Drawing.Size(25, 16);
             this.labelCwMacroF1Title.TabIndex = 52;
             this.labelCwMacroF1Title.Text = "CQ";
             this.labelCwMacroF1Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -998,7 +999,7 @@ namespace tnxlog
             this.buttonPostFreq.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonPostFreq.Location = new System.Drawing.Point(330, 93);
             this.buttonPostFreq.Name = "buttonPostFreq";
-            this.buttonPostFreq.Size = new System.Drawing.Size(24, 24);
+            this.buttonPostFreq.Size = new System.Drawing.Size(26, 24);
             this.buttonPostFreq.TabIndex = 5;
             this.buttonPostFreq.TabStop = false;
             this.buttonPostFreq.Text = "➤";
@@ -1121,6 +1122,7 @@ namespace tnxlog
             // 
             // panelSoundRecord
             // 
+            this.panelSoundRecord.Controls.Add(this.labelSoundInputNA);
             this.panelSoundRecord.Controls.Add(this.buttonRecordsClear);
             this.panelSoundRecord.Controls.Add(this.labelRecordedSize);
             this.panelSoundRecord.Controls.Add(this.labelRecordedCaption);
@@ -1134,7 +1136,7 @@ namespace tnxlog
             // 
             // buttonRecordsClear
             // 
-            this.buttonRecordsClear.Location = new System.Drawing.Point(291, 15);
+            this.buttonRecordsClear.Location = new System.Drawing.Point(290, 21);
             this.buttonRecordsClear.Name = "buttonRecordsClear";
             this.buttonRecordsClear.Size = new System.Drawing.Size(66, 23);
             this.buttonRecordsClear.TabIndex = 5;
@@ -1162,14 +1164,14 @@ namespace tnxlog
             // 
             // labelSoundRecordingOn
             // 
-            this.labelSoundRecordingOn.AutoSize = true;
             this.labelSoundRecordingOn.BackColor = System.Drawing.Color.Red;
             this.labelSoundRecordingOn.ForeColor = System.Drawing.Color.White;
-            this.labelSoundRecordingOn.Location = new System.Drawing.Point(85, 27);
+            this.labelSoundRecordingOn.Location = new System.Drawing.Point(85, 21);
             this.labelSoundRecordingOn.Name = "labelSoundRecordingOn";
-            this.labelSoundRecordingOn.Size = new System.Drawing.Size(81, 13);
+            this.labelSoundRecordingOn.Size = new System.Drawing.Size(81, 24);
             this.labelSoundRecordingOn.TabIndex = 2;
             this.labelSoundRecordingOn.Text = "RECORDING...";
+            this.labelSoundRecordingOn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.labelSoundRecordingOn.Visible = false;
             // 
             // labelSoundRecording
@@ -1192,6 +1194,18 @@ namespace tnxlog
             this.checkBoxRecord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBoxRecord.UseVisualStyleBackColor = true;
             this.checkBoxRecord.CheckedChanged += new System.EventHandler(this.CheckBoxRecord_CheckedChanged);
+            // 
+            // labelSoundInputNA
+            // 
+            this.labelSoundInputNA.BackColor = System.Drawing.SystemColors.Control;
+            this.labelSoundInputNA.ForeColor = System.Drawing.Color.Red;
+            this.labelSoundInputNA.Location = new System.Drawing.Point(85, 21);
+            this.labelSoundInputNA.Name = "labelSoundInputNA";
+            this.labelSoundInputNA.Size = new System.Drawing.Size(81, 24);
+            this.labelSoundInputNA.TabIndex = 6;
+            this.labelSoundInputNA.Text = "NO INPUT";
+            this.labelSoundInputNA.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelSoundInputNA.Visible = false;
             // 
             // FormMain
             // 
@@ -1352,6 +1366,7 @@ namespace tnxlog
         private System.Windows.Forms.Button buttonRecordsClear;
         private System.Windows.Forms.Label labelRecordedSize;
         private System.Windows.Forms.Label labelRecordedCaption;
+        private System.Windows.Forms.Label labelSoundInputNA;
     }
 }
 

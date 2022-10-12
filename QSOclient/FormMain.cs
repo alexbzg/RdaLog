@@ -1308,7 +1308,7 @@ namespace tnxlog
         }
 
         private void startSoundRecord()
-        {            
+        {
             DateTime utcNow = DateTime.UtcNow;
             soundRecordCurrentFile = Path.Combine(tnxlogConfig.soundRecordFolder, $"{utcNow.ToString("yyyy-MM-dd-HH-mm-ss")}.mp3");
             soundRecordInterface = FfmpegInterface.AudioRecorder(Tnxlog.FfmpegPath, tnxlogConfig.soundRecordDevice, Tnxlog.FfmpegRecordArgs, soundRecordCurrentFile);
@@ -1317,20 +1317,29 @@ namespace tnxlog
             soundRecordInterface.Start();
         }
 
-        private async void soundRecordExited(object sender, EventArgs e)
+        private async void soundRecordExited(object sender, FfmpegInterface.ExitEventArgs e)
         {
             soundRecordInterface = null;
-            if (soundRecordQso)
+            if (e.code != 0)
             {
-                await tnxlog.httpService.postSoundRecord(soundRecordCurrentFile);
-                soundRecordQso = false;
-            } else
-            {
-                File.Delete(soundRecordCurrentFile);
+                checkBoxRecord.Checked = false;
+                labelSoundInputNA.Visible = true;
             }
-            if (checkBoxRecord.Checked)
+            else
             {
-                startSoundRecord();
+                if (soundRecordQso)
+                {
+                    await tnxlog.httpService.postSoundRecord(soundRecordCurrentFile);
+                    soundRecordQso = false;
+                }
+                else
+                {
+                    File.Delete(soundRecordCurrentFile);
+                }
+                if (checkBoxRecord.Checked)
+                {
+                    startSoundRecord();
+                }
             }
         }
 
@@ -1340,7 +1349,16 @@ namespace tnxlog
             checkBoxRecord.Text = checkBoxRecord.Checked ? "STOP" : "START";
             if (checkBoxRecord.Checked)
             {
-                startSoundRecord();
+                if (string.IsNullOrEmpty(tnxlogConfig.soundRecordDevice))
+                {
+                    labelSoundInputNA.Visible = true;
+                    checkBoxRecord.Checked = false;
+                }
+                else
+                {
+                    startSoundRecord();
+                    labelSoundInputNA.Visible = false;
+                }
             } else
             {
                 soundRecordInterface?.Stop(); 

@@ -95,8 +95,6 @@ namespace tnxlog
             }
         }
 
-        private string soundRecordsFilePath;
-
         public Tnxlog()
         {
 #if DEBUG || LOG
