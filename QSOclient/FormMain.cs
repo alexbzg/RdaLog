@@ -20,6 +20,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Threading;
 using System.Collections.Concurrent;
+using FfmpegIinterfaceNS;
 
 namespace tnxlog
 {
@@ -106,10 +107,9 @@ namespace tnxlog
         private bool autoCq;
         private ConcurrentQueue<string> cwQueue = new ConcurrentQueue<string>();
         private string clearedCS = "";
-        private Process soundRecordProcess;
+        private FfmpegInterface soundRecordInterface;
         private bool soundRecordQso;
         private string soundRecordCurrentFile;
-        private System.Threading.Timer soundRecordTimer;
 
         private QsoValues currentQsoValues()
         {
@@ -202,9 +202,9 @@ namespace tnxlog
                 {"qth1_2", panelQth1_2 },
                 {"statFilter", panelStatFilter },
                 {"callsignId", panelCallsignId },
-                {"cwMacros", panelCwMacro },
                 {"qth3Loc", panelQth3Loc },
-                {"soundRecord", panelSoundRecord }
+                {"soundRecord", panelSoundRecord },
+                {"cwMacros", panelCwMacro }
             };
             arrangePanels();
             tnxlogConfig.mainFormPanelVisibleChange += delegate (object sender, EventArgs e)
@@ -1308,52 +1308,25 @@ namespace tnxlog
         }
 
         private void startSoundRecord()
-        {
-            soundRecordProcess = new Process();
+        {            
             DateTime utcNow = DateTime.UtcNow;
             soundRecordCurrentFile = Path.Combine(tnxlogConfig.soundRecordFolder, $"{utcNow.ToString("yyyy-MM-dd-HH-mm-ss")}.mp3");
-            string args = $" -f dshow -i audio=\"{tnxlogConfig.soundRecordDevice}\" -c:a libmp3lame -ar 44100 -b:a 36k -ac 1 {soundRecordCurrentFile}";
-            Logger.Info(args);
-            soundRecordProcess.StartInfo = new ProcessStartInfo("ffmpeg.exe")
-            {
-                Arguments = args,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                RedirectStandardInput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-#if DEBUG
-            DataReceivedEventHandler recHandler = new DataReceivedEventHandler((sender, e) =>
-            {
-                Logger.Info(e.Data);
-            });
-#endif
-            soundRecordProcess.OutputDataReceived += recHandler;
-            soundRecordProcess.ErrorDataReceived += recHandler;
-            soundRecordTimer = new System.Threading.Timer(async delegate { await stopSoundRecord(); }, null, 60000 , 0);
-            soundRecordProcess.Start();
-#if DEBUG
-            soundRecordProcess.BeginOutputReadLine();
-            soundRecordProcess.BeginErrorReadLine();
-#endif
+            soundRecordInterface = FfmpegInterface.AudioRecorder(Tnxlog.FfmpegPath, tnxlogConfig.soundRecordDevice, Tnxlog.FfmpegRecordArgs, soundRecordCurrentFile);
+            soundRecordInterface.Exited += soundRecordExited;
+            soundRecordInterface.setTimer(60000);
+            soundRecordInterface.Start();
         }
 
-        private async Task stopSoundRecord()
+        private async void soundRecordExited(object sender, EventArgs e)
         {
-            if (soundRecordProcess != null)
+            soundRecordInterface = null;
+            if (soundRecordQso)
             {
-                soundRecordProcess.StandardInput.Write('q');
-                soundRecordProcess.WaitForExit();
-                soundRecordProcess = null;
-                if (soundRecordQso)
-                {
-                    await tnxlog.httpService.postSoundRecord(soundRecordCurrentFile);
-                    soundRecordQso = false;
-                } else
-                {
-                    File.Delete(soundRecordCurrentFile);
-                }
+                await tnxlog.httpService.postSoundRecord(soundRecordCurrentFile);
+                soundRecordQso = false;
+            } else
+            {
+                File.Delete(soundRecordCurrentFile);
             }
             if (checkBoxRecord.Checked)
             {
@@ -1361,7 +1334,7 @@ namespace tnxlog
             }
         }
 
-        private async void CheckBoxRecord_CheckedChanged(object sender, EventArgs e)
+        private void CheckBoxRecord_CheckedChanged(object sender, EventArgs e)
         {
             labelSoundRecordingOn.Visible = checkBoxRecord.Checked;
             checkBoxRecord.Text = checkBoxRecord.Checked ? "STOP" : "START";
@@ -1370,7 +1343,7 @@ namespace tnxlog
                 startSoundRecord();
             } else
             {
-                await stopSoundRecord(); 
+                soundRecordInterface?.Stop(); 
             }
         }
 

@@ -26,7 +26,11 @@ namespace tnxlog
 
     public class Tnxlog
     {
+        public static readonly string FfmpegPath = "ffmpeg.exe";
+        public static readonly string FfmpegRecordArgs = "-y -c:a libmp3lame -ar 44100 -b:a 36k -ac 1";
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+
         private FormMain _formMain;
         public FormMain formMain { get { return _formMain; } }
         private FormLog formLog;

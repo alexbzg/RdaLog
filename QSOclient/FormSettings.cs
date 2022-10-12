@@ -1,4 +1,6 @@
-﻿using SerialDevice;
+﻿using FfmpegIinterfaceNS;
+using InvokeFormNS;
+using SerialDevice;
 using SerialPortTester;
 using System;
 using System.Collections;
@@ -19,7 +21,7 @@ using System.Windows.Forms;
 
 namespace tnxlog
 {
-    public partial class FormSettings : Form
+    public partial class FormSettings : InvokeForm
     {
 
         private List<SerialDeviceInfo> serialDevices = SerialDevice.SerialDevice.listSerialDevices();
@@ -147,8 +149,10 @@ namespace tnxlog
                 }
             }
         }
+        private FfmpegInterface soundRecordTestInterface;
 
         private string dataPath;
+
         public FormSettings(string _dataPath)
         {
             dataPath = _dataPath;
@@ -211,17 +215,9 @@ namespace tnxlog
 
         private void enumerateSoundRecordDevices()
         {
-            Process ffmpeg = new Process();
-            ffmpeg.StartInfo = new ProcessStartInfo("ffmpeg.exe")
-            {
-                Arguments = "-list_devices true -f dshow -i dummy",
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
+            FfmpegInterface ffmpeg = new FfmpegInterface(Tnxlog.FfmpegPath, "-list_devices true -f dshow -i dummy");
             List<string> devices = new List<string>();
-            DataReceivedEventHandler recHandler = new DataReceivedEventHandler((sender, e) =>
+            ffmpeg.DataReceived += new DataReceivedEventHandler((sender, e) =>
             {
                 if (e.Data != null && e.Data.EndsWith("(audio)"))
                 {
@@ -230,22 +226,20 @@ namespace tnxlog
                     devices.Add(Encoding.UTF8.GetString(bytes));
                 }
             });
-            ffmpeg.OutputDataReceived += recHandler;
-            ffmpeg.ErrorDataReceived += recHandler;
+            ffmpeg.Exited += new EventHandler((sender, e) => {
+                DoInvoke(() => {
+                    comboBoxSoundRecordDevice.Items.AddRange(devices.ToArray());
+                    if (comboBoxSoundRecordDevice.Items.Contains(_soundRecordDevice))
+                    {
+                        comboBoxSoundRecordDevice.SelectedItem = _soundRecordDevice;
+                    }
+                    else if (comboBoxSoundRecordDevice.Items.Count > 0)
+                    {
+                        comboBoxSoundRecordDevice.SelectedIndex = 0;
+                    }
+                });
+            });
             ffmpeg.Start();
-            ffmpeg.BeginOutputReadLine();
-            ffmpeg.BeginErrorReadLine();
-
-            ffmpeg.WaitForExit();
-            comboBoxSoundRecordDevice.Items.AddRange(devices.ToArray());
-            if (comboBoxSoundRecordDevice.Items.Contains(_soundRecordDevice))
-            {
-                comboBoxSoundRecordDevice.SelectedItem = _soundRecordDevice;
-            }
-            else if (comboBoxSoundRecordDevice.Items.Count > 0)
-            {
-                comboBoxSoundRecordDevice.SelectedIndex = 0;
-            }
         }
 
         private void testPinMouseUp(object sender, EventArgs e)
@@ -408,6 +402,39 @@ namespace tnxlog
                 folderBrowserDialogSoundRecord.SelectedPath = textBoxSoundRecordFolder.Text;
             if (folderBrowserDialogSoundRecord.ShowDialog() == DialogResult.OK)
                 textBoxSoundRecordFolder.Text = folderBrowserDialogSoundRecord.SelectedPath;
+        }
+
+        private string soundRecordTestFile()
+        {
+            return Path.Combine(soundRecordFolder, "test.mp3");
+        }
+
+        private void CheckBoxTestSoundRecord_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxTestSoundRecord.Checked)
+            {
+                soundRecordTestInterface = FfmpegInterface.AudioRecorder(Tnxlog.FfmpegPath, soundRecordDevice, Tnxlog.FfmpegRecordArgs, soundRecordTestFile());
+                soundRecordTestInterface.setTimer(30000);
+                soundRecordTestInterface.Exited += soundRecordTestExited;
+                soundRecordTestInterface.Start();
+            } else
+            {
+                soundRecordTestInterface?.Stop();
+            }
+        }
+
+        private void soundRecordTestExited(object sender, EventArgs e)
+        {
+            DoInvoke(() =>
+            {
+                checkBoxTestSoundRecord.Checked = false;
+            });
+            var process = new Process();
+            process.StartInfo = new ProcessStartInfo(soundRecordTestFile())
+            {
+                UseShellExecute = true
+            };
+            process.Start();
         }
     }
 }
