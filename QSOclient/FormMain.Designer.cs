@@ -89,6 +89,14 @@ namespace tnxlog
             this.labelCwMacroF1Title = new System.Windows.Forms.Label();
             this.labelCwMacroF3Title = new System.Windows.Forms.Label();
             this.labelCwMacroF2Title = new System.Windows.Forms.Label();
+            this.panelSoundRecord = new System.Windows.Forms.Panel();
+            this.labelSoundInputNA = new System.Windows.Forms.Label();
+            this.buttonRecordsClear = new System.Windows.Forms.Button();
+            this.labelRecordedSize = new System.Windows.Forms.Label();
+            this.labelRecordedCaption = new System.Windows.Forms.Label();
+            this.labelSoundRecordingOn = new System.Windows.Forms.Label();
+            this.labelSoundRecording = new System.Windows.Forms.Label();
+            this.checkBoxRecord = new System.Windows.Forms.CheckBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.loginLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.connectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -118,14 +126,6 @@ namespace tnxlog
             this.toolStripLabelLog = new System.Windows.Forms.ToolStripLabel();
             this.labelEsm = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.panelSoundRecord = new System.Windows.Forms.Panel();
-            this.buttonRecordsClear = new System.Windows.Forms.Button();
-            this.labelRecordedSize = new System.Windows.Forms.Label();
-            this.labelRecordedCaption = new System.Windows.Forms.Label();
-            this.labelSoundRecordingOn = new System.Windows.Forms.Label();
-            this.labelSoundRecording = new System.Windows.Forms.Label();
-            this.checkBoxRecord = new System.Windows.Forms.CheckBox();
-            this.labelSoundInputNA = new System.Windows.Forms.Label();
             this.flowLayoutPanel.SuspendLayout();
             this.panelQsoComments.SuspendLayout();
             this.panelQth1_2.SuspendLayout();
@@ -134,10 +134,10 @@ namespace tnxlog
             this.panelCallsignId.SuspendLayout();
             this.panelCwMacro.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMorseSpeed)).BeginInit();
+            this.panelSoundRecord.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).BeginInit();
             this.toolStrip.SuspendLayout();
-            this.panelSoundRecord.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelDupe
@@ -174,10 +174,13 @@ namespace tnxlog
             this.flowLayoutPanel.Controls.Add(this.panelQth3Loc);
             this.flowLayoutPanel.Controls.Add(this.panelStatFilter);
             this.flowLayoutPanel.Controls.Add(this.panelCallsignId);
+            this.flowLayoutPanel.Controls.Add(this.panelCwMacro);
+            this.flowLayoutPanel.Controls.Add(this.panelSoundRecord);
+            this.flowLayoutPanel.Controls.Add(this.statusStrip);
             this.flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel.Location = new System.Drawing.Point(0, 123);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(364, 289);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(370, 383);
             this.flowLayoutPanel.TabIndex = 63;
             // 
             // panelQsoComments
@@ -599,7 +602,7 @@ namespace tnxlog
             this.panelCwMacro.Controls.Add(this.labelCwMacroF1Title);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF3Title);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF2Title);
-            this.panelCwMacro.Location = new System.Drawing.Point(0, 459);
+            this.panelCwMacro.Location = new System.Drawing.Point(3, 289);
             this.panelCwMacro.Margin = new System.Windows.Forms.Padding(0);
             this.panelCwMacro.Name = "panelCwMacro";
             this.panelCwMacro.Size = new System.Drawing.Size(364, 40);
@@ -632,7 +635,7 @@ namespace tnxlog
             this.labelCwMacroF1.AutoSize = true;
             this.labelCwMacroF1.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelCwMacroF1.Location = new System.Drawing.Point(6, 4);
+            this.labelCwMacroF1.Location = new System.Drawing.Point(12, 4);
             this.labelCwMacroF1.Name = "labelCwMacroF1";
             this.labelCwMacroF1.Size = new System.Drawing.Size(19, 13);
             this.labelCwMacroF1.TabIndex = 43;
@@ -643,7 +646,7 @@ namespace tnxlog
             this.labelCwMacroF2.AutoSize = true;
             this.labelCwMacroF2.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelCwMacroF2.Location = new System.Drawing.Point(38, 4);
+            this.labelCwMacroF2.Location = new System.Drawing.Point(43, 4);
             this.labelCwMacroF2.Name = "labelCwMacroF2";
             this.labelCwMacroF2.Size = new System.Drawing.Size(19, 13);
             this.labelCwMacroF2.TabIndex = 44;
@@ -664,7 +667,7 @@ namespace tnxlog
             this.labelCwMacroF3.AutoSize = true;
             this.labelCwMacroF3.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelCwMacroF3.Location = new System.Drawing.Point(73, 4);
+            this.labelCwMacroF3.Location = new System.Drawing.Point(76, 4);
             this.labelCwMacroF3.Name = "labelCwMacroF3";
             this.labelCwMacroF3.Size = new System.Drawing.Size(19, 13);
             this.labelCwMacroF3.TabIndex = 45;
@@ -686,7 +689,7 @@ namespace tnxlog
             this.labelCwMacroF4.AutoSize = true;
             this.labelCwMacroF4.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelCwMacroF4.Location = new System.Drawing.Point(107, 4);
+            this.labelCwMacroF4.Location = new System.Drawing.Point(109, 4);
             this.labelCwMacroF4.Name = "labelCwMacroF4";
             this.labelCwMacroF4.Size = new System.Drawing.Size(19, 13);
             this.labelCwMacroF4.TabIndex = 46;
@@ -784,7 +787,7 @@ namespace tnxlog
             // 
             this.labelCwMacroF4Title.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF4Title.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF4Title.Location = new System.Drawing.Point(101, 19);
+            this.labelCwMacroF4Title.Location = new System.Drawing.Point(103, 19);
             this.labelCwMacroF4Title.Name = "labelCwMacroF4Title";
             this.labelCwMacroF4Title.Size = new System.Drawing.Size(30, 16);
             this.labelCwMacroF4Title.TabIndex = 55;
@@ -795,7 +798,7 @@ namespace tnxlog
             // 
             this.labelCwMacroF1Title.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF1Title.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF1Title.Location = new System.Drawing.Point(6, 19);
+            this.labelCwMacroF1Title.Location = new System.Drawing.Point(9, 19);
             this.labelCwMacroF1Title.Name = "labelCwMacroF1Title";
             this.labelCwMacroF1Title.Size = new System.Drawing.Size(25, 16);
             this.labelCwMacroF1Title.TabIndex = 52;
@@ -806,7 +809,7 @@ namespace tnxlog
             // 
             this.labelCwMacroF3Title.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF3Title.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF3Title.Location = new System.Drawing.Point(66, 19);
+            this.labelCwMacroF3Title.Location = new System.Drawing.Point(69, 19);
             this.labelCwMacroF3Title.Name = "labelCwMacroF3Title";
             this.labelCwMacroF3Title.Size = new System.Drawing.Size(30, 16);
             this.labelCwMacroF3Title.TabIndex = 54;
@@ -817,17 +820,105 @@ namespace tnxlog
             // 
             this.labelCwMacroF2Title.BackColor = System.Drawing.Color.Transparent;
             this.labelCwMacroF2Title.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCwMacroF2Title.Location = new System.Drawing.Point(32, 19);
+            this.labelCwMacroF2Title.Location = new System.Drawing.Point(37, 19);
             this.labelCwMacroF2Title.Name = "labelCwMacroF2Title";
             this.labelCwMacroF2Title.Size = new System.Drawing.Size(30, 16);
             this.labelCwMacroF2Title.TabIndex = 53;
             this.labelCwMacroF2Title.Text = "599";
             this.labelCwMacroF2Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // panelSoundRecord
+            // 
+            this.panelSoundRecord.Controls.Add(this.labelSoundInputNA);
+            this.panelSoundRecord.Controls.Add(this.buttonRecordsClear);
+            this.panelSoundRecord.Controls.Add(this.labelRecordedSize);
+            this.panelSoundRecord.Controls.Add(this.labelRecordedCaption);
+            this.panelSoundRecord.Controls.Add(this.labelSoundRecordingOn);
+            this.panelSoundRecord.Controls.Add(this.labelSoundRecording);
+            this.panelSoundRecord.Controls.Add(this.checkBoxRecord);
+            this.panelSoundRecord.Location = new System.Drawing.Point(3, 332);
+            this.panelSoundRecord.Name = "panelSoundRecord";
+            this.panelSoundRecord.Size = new System.Drawing.Size(364, 48);
+            this.panelSoundRecord.TabIndex = 67;
+            // 
+            // labelSoundInputNA
+            // 
+            this.labelSoundInputNA.BackColor = System.Drawing.SystemColors.Control;
+            this.labelSoundInputNA.ForeColor = System.Drawing.Color.Red;
+            this.labelSoundInputNA.Location = new System.Drawing.Point(85, 21);
+            this.labelSoundInputNA.Name = "labelSoundInputNA";
+            this.labelSoundInputNA.Size = new System.Drawing.Size(81, 24);
+            this.labelSoundInputNA.TabIndex = 6;
+            this.labelSoundInputNA.Text = "NO INPUT";
+            this.labelSoundInputNA.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelSoundInputNA.Visible = false;
+            // 
+            // buttonRecordsClear
+            // 
+            this.buttonRecordsClear.Location = new System.Drawing.Point(290, 21);
+            this.buttonRecordsClear.Name = "buttonRecordsClear";
+            this.buttonRecordsClear.Size = new System.Drawing.Size(66, 23);
+            this.buttonRecordsClear.TabIndex = 5;
+            this.buttonRecordsClear.Text = "CLEAR";
+            this.buttonRecordsClear.UseVisualStyleBackColor = true;
+            this.buttonRecordsClear.Click += new System.EventHandler(this.ButtonRecordsClear_Click);
+            // 
+            // labelRecordedSize
+            // 
+            this.labelRecordedSize.Location = new System.Drawing.Point(188, 24);
+            this.labelRecordedSize.Name = "labelRecordedSize";
+            this.labelRecordedSize.Size = new System.Drawing.Size(53, 18);
+            this.labelRecordedSize.TabIndex = 4;
+            this.labelRecordedSize.Text = "0Mb";
+            this.labelRecordedSize.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // labelRecordedCaption
+            // 
+            this.labelRecordedCaption.AutoSize = true;
+            this.labelRecordedCaption.Location = new System.Drawing.Point(188, 5);
+            this.labelRecordedCaption.Name = "labelRecordedCaption";
+            this.labelRecordedCaption.Size = new System.Drawing.Size(54, 13);
+            this.labelRecordedCaption.TabIndex = 3;
+            this.labelRecordedCaption.Text = "Recorded";
+            // 
+            // labelSoundRecordingOn
+            // 
+            this.labelSoundRecordingOn.BackColor = System.Drawing.Color.Red;
+            this.labelSoundRecordingOn.ForeColor = System.Drawing.Color.White;
+            this.labelSoundRecordingOn.Location = new System.Drawing.Point(85, 21);
+            this.labelSoundRecordingOn.Name = "labelSoundRecordingOn";
+            this.labelSoundRecordingOn.Size = new System.Drawing.Size(81, 24);
+            this.labelSoundRecordingOn.TabIndex = 2;
+            this.labelSoundRecordingOn.Text = "RECORDING...";
+            this.labelSoundRecordingOn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelSoundRecordingOn.Visible = false;
+            // 
+            // labelSoundRecording
+            // 
+            this.labelSoundRecording.AutoSize = true;
+            this.labelSoundRecording.Location = new System.Drawing.Point(11, 5);
+            this.labelSoundRecording.Name = "labelSoundRecording";
+            this.labelSoundRecording.Size = new System.Drawing.Size(85, 13);
+            this.labelSoundRecording.TabIndex = 1;
+            this.labelSoundRecording.Text = "Sound recording";
+            // 
+            // checkBoxRecord
+            // 
+            this.checkBoxRecord.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxRecord.Location = new System.Drawing.Point(12, 21);
+            this.checkBoxRecord.Name = "checkBoxRecord";
+            this.checkBoxRecord.Size = new System.Drawing.Size(70, 24);
+            this.checkBoxRecord.TabIndex = 0;
+            this.checkBoxRecord.Text = "START";
+            this.checkBoxRecord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxRecord.UseVisualStyleBackColor = true;
+            this.checkBoxRecord.CheckedChanged += new System.EventHandler(this.CheckBoxRecord_CheckedChanged);
+            // 
             // statusStrip
             // 
             this.statusStrip.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.statusStrip.AutoSize = false;
+            //this.statusStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip.GripMargin = new System.Windows.Forms.Padding(0);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1120,93 +1211,6 @@ namespace tnxlog
             this.labelEsm.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.labelEsm.Visible = false;
             // 
-            // panelSoundRecord
-            // 
-            this.panelSoundRecord.Controls.Add(this.labelSoundInputNA);
-            this.panelSoundRecord.Controls.Add(this.buttonRecordsClear);
-            this.panelSoundRecord.Controls.Add(this.labelRecordedSize);
-            this.panelSoundRecord.Controls.Add(this.labelRecordedCaption);
-            this.panelSoundRecord.Controls.Add(this.labelSoundRecordingOn);
-            this.panelSoundRecord.Controls.Add(this.labelSoundRecording);
-            this.panelSoundRecord.Controls.Add(this.checkBoxRecord);
-            this.panelSoundRecord.Location = new System.Drawing.Point(0, 412);
-            this.panelSoundRecord.Name = "panelSoundRecord";
-            this.panelSoundRecord.Size = new System.Drawing.Size(364, 48);
-            this.panelSoundRecord.TabIndex = 67;
-            // 
-            // buttonRecordsClear
-            // 
-            this.buttonRecordsClear.Location = new System.Drawing.Point(290, 21);
-            this.buttonRecordsClear.Name = "buttonRecordsClear";
-            this.buttonRecordsClear.Size = new System.Drawing.Size(66, 23);
-            this.buttonRecordsClear.TabIndex = 5;
-            this.buttonRecordsClear.Text = "CLEAR";
-            this.buttonRecordsClear.UseVisualStyleBackColor = true;
-            this.buttonRecordsClear.Click += new System.EventHandler(this.ButtonRecordsClear_Click);
-            // 
-            // labelRecordedSize
-            // 
-            this.labelRecordedSize.Location = new System.Drawing.Point(188, 24);
-            this.labelRecordedSize.Name = "labelRecordedSize";
-            this.labelRecordedSize.Size = new System.Drawing.Size(53, 18);
-            this.labelRecordedSize.TabIndex = 4;
-            this.labelRecordedSize.Text = "0Mb";
-            this.labelRecordedSize.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // labelRecordedCaption
-            // 
-            this.labelRecordedCaption.AutoSize = true;
-            this.labelRecordedCaption.Location = new System.Drawing.Point(188, 5);
-            this.labelRecordedCaption.Name = "labelRecordedCaption";
-            this.labelRecordedCaption.Size = new System.Drawing.Size(54, 13);
-            this.labelRecordedCaption.TabIndex = 3;
-            this.labelRecordedCaption.Text = "Recorded";
-            // 
-            // labelSoundRecordingOn
-            // 
-            this.labelSoundRecordingOn.BackColor = System.Drawing.Color.Red;
-            this.labelSoundRecordingOn.ForeColor = System.Drawing.Color.White;
-            this.labelSoundRecordingOn.Location = new System.Drawing.Point(85, 21);
-            this.labelSoundRecordingOn.Name = "labelSoundRecordingOn";
-            this.labelSoundRecordingOn.Size = new System.Drawing.Size(81, 24);
-            this.labelSoundRecordingOn.TabIndex = 2;
-            this.labelSoundRecordingOn.Text = "RECORDING...";
-            this.labelSoundRecordingOn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelSoundRecordingOn.Visible = false;
-            // 
-            // labelSoundRecording
-            // 
-            this.labelSoundRecording.AutoSize = true;
-            this.labelSoundRecording.Location = new System.Drawing.Point(11, 5);
-            this.labelSoundRecording.Name = "labelSoundRecording";
-            this.labelSoundRecording.Size = new System.Drawing.Size(85, 13);
-            this.labelSoundRecording.TabIndex = 1;
-            this.labelSoundRecording.Text = "Sound recording";
-            // 
-            // checkBoxRecord
-            // 
-            this.checkBoxRecord.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxRecord.Location = new System.Drawing.Point(12, 21);
-            this.checkBoxRecord.Name = "checkBoxRecord";
-            this.checkBoxRecord.Size = new System.Drawing.Size(70, 24);
-            this.checkBoxRecord.TabIndex = 0;
-            this.checkBoxRecord.Text = "START";
-            this.checkBoxRecord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBoxRecord.UseVisualStyleBackColor = true;
-            this.checkBoxRecord.CheckedChanged += new System.EventHandler(this.CheckBoxRecord_CheckedChanged);
-            // 
-            // labelSoundInputNA
-            // 
-            this.labelSoundInputNA.BackColor = System.Drawing.SystemColors.Control;
-            this.labelSoundInputNA.ForeColor = System.Drawing.Color.Red;
-            this.labelSoundInputNA.Location = new System.Drawing.Point(85, 21);
-            this.labelSoundInputNA.Name = "labelSoundInputNA";
-            this.labelSoundInputNA.Size = new System.Drawing.Size(81, 24);
-            this.labelSoundInputNA.TabIndex = 6;
-            this.labelSoundInputNA.Text = "NO INPUT";
-            this.labelSoundInputNA.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelSoundInputNA.Visible = false;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1214,15 +1218,13 @@ namespace tnxlog
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(364, 520);
-            this.Controls.Add(this.panelSoundRecord);
             this.Controls.Add(this.labelEsm);
             this.Controls.Add(this.labelDupe);
             this.Controls.Add(this.checkBoxTop);
             this.Controls.Add(this.flowLayoutPanel);
             this.Controls.Add(this.labelMode);
-            this.Controls.Add(this.panelCwMacro);
             this.Controls.Add(this.comboBoxMode);
-            this.Controls.Add(this.statusStrip);
+           // this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.labelFreq);
             this.Controls.Add(this.numericUpDownFreq);
             this.Controls.Add(this.labelCallsign);
@@ -1257,13 +1259,13 @@ namespace tnxlog
             this.panelCwMacro.ResumeLayout(false);
             this.panelCwMacro.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMorseSpeed)).EndInit();
+            this.panelSoundRecord.ResumeLayout(false);
+            this.panelSoundRecord.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFreq)).EndInit();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
-            this.panelSoundRecord.ResumeLayout(false);
-            this.panelSoundRecord.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

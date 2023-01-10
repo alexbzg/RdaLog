@@ -228,6 +228,7 @@ namespace tnxlog
             });
             ffmpeg.Exited += new EventHandler<FfmpegInterface.ExitEventArgs>((sender, e) => {
                 DoInvoke(() => {
+                    comboBoxSoundRecordDevice.Items.Clear();
                     comboBoxSoundRecordDevice.Items.AddRange(devices.ToArray());
                     if (comboBoxSoundRecordDevice.Items.Contains(soundRecordDevice))
                     {
@@ -238,7 +239,7 @@ namespace tnxlog
                         comboBoxSoundRecordDevice.SelectedIndex = 0;
                         soundRecordDevice = comboBoxSoundRecordDevice.SelectedItem.ToString();
                     }
-                    if (string.IsNullOrEmpty(soundRecordDevice))
+                    if (comboBoxSoundRecordDevice.Items.Count == 0)
                     {
                         checkBoxTestSoundRecord.Enabled = false;
                         checkBoxTestSoundRecord.Text = "No audio input";
@@ -447,6 +448,9 @@ namespace tnxlog
                     UseShellExecute = true
                 };
                 process.Start();
+            } else
+            {
+                enumerateSoundRecordDevices();
             }
         }
     }

@@ -901,7 +901,6 @@
             // checkBoxTestSoundRecord
             // 
             this.checkBoxTestSoundRecord.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxTestSoundRecord.AutoSize = true;
             this.checkBoxTestSoundRecord.Location = new System.Drawing.Point(98, 102);
             this.checkBoxTestSoundRecord.Name = "checkBoxTestSoundRecord";
             this.checkBoxTestSoundRecord.Size = new System.Drawing.Size(135, 23);

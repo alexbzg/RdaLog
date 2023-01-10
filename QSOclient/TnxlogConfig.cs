@@ -127,11 +127,19 @@ namespace tnxlog
         public List<SerPropEnable> serMainFormPanels;
         [XmlIgnore]
         public EventHandler mainFormPanelVisibleChange;
-        public void setMainFormPanelVisible(string panel, bool value)
+        public void setMainFormPanelsVisible(IEnumerable<KeyValuePair<string, bool>> values)
         {
-            if (_mainFormPanels[panel] != value)
+            bool changed = false;
+            foreach (KeyValuePair<string, bool> item in values)
             {
-                _mainFormPanels[panel] = value;
+                if (_mainFormPanels[item.Key] != item.Value)
+                {
+                    _mainFormPanels[item.Key] = item.Value;
+                    changed = true;
+                }
+            }
+            if (changed)
+            {
                 write();
                 mainFormPanelVisibleChange?.Invoke(this, new EventArgs());
             }

@@ -211,6 +211,7 @@ namespace tnxlog
             {
                 arrangePanels();
             };
+            Debug.WriteLine($"form {Height}");
 
             comboBoxStatFilterBand.Items.AddRange(Band.Names);
             comboBoxStatFilterMode.Items.AddRange(HamRadio.Mode.Names);
@@ -444,12 +445,15 @@ namespace tnxlog
                 if (panel.Parent == flowLayoutPanel)
                     flowLayoutPanel.Controls.Remove(panel);
             }
+            flowLayoutPanel.Controls.Remove(statusStrip);
             foreach (string panel in TnxlogConfig.MainFormPanels)
             {
                 if (panels.ContainsKey(panel) && tnxlogConfig.getMainFormPanelVisible(panel))
                     flowLayoutPanel.Controls.Add(panels[panel]);
             }
-            statusStrip.SendToBack();
+            flowLayoutPanel.Controls.Add(statusStrip);
+            storeFormState();
+            writeConfig();
         }
 
         private void ToolStripLabelSettings_Click(object sender, EventArgs e)
@@ -1317,30 +1321,33 @@ namespace tnxlog
             soundRecordInterface.Start();
         }
 
-        private async void soundRecordExited(object sender, FfmpegInterface.ExitEventArgs e)
+        private void soundRecordExited(object sender, FfmpegInterface.ExitEventArgs e)
         {
             soundRecordInterface = null;
-            if (e.code != 0)
+            DoInvoke(async () =>
             {
-                checkBoxRecord.Checked = false;
-                labelSoundInputNA.Visible = true;
-            }
-            else
-            {
-                if (soundRecordQso)
+                if (e.code != 0)
                 {
-                    await tnxlog.httpService.postSoundRecord(soundRecordCurrentFile);
-                    soundRecordQso = false;
+                    checkBoxRecord.Checked = false;
+                    labelSoundInputNA.Visible = true;
                 }
                 else
                 {
-                    File.Delete(soundRecordCurrentFile);
+                    if (soundRecordQso)
+                    {
+                        await tnxlog.httpService.postSoundRecord(soundRecordCurrentFile);
+                        soundRecordQso = false;
+                    }
+                    else
+                    {
+                        File.Delete(soundRecordCurrentFile);
+                    }
+                    if (checkBoxRecord.Checked)
+                    {
+                        startSoundRecord();
+                    }
                 }
-                if (checkBoxRecord.Checked)
-                {
-                    startSoundRecord();
-                }
-            }
+            });
         }
 
         private void CheckBoxRecord_CheckedChanged(object sender, EventArgs e)

@@ -284,8 +284,7 @@ namespace tnxlog
                 if (config.autoLogin && !httpService.connected)
                     Task.Run(async () => await httpService.login(true));
 
-                foreach (KeyValuePair<string, CheckBox> item in formSettings.mainFormPanelCheckboxes)
-                     config.setMainFormPanelVisible(item.Key, item.Value.Checked);
+                config.setMainFormPanelsVisible(formSettings.mainFormPanelCheckboxes.Select(item => { return new KeyValuePair<string, bool>(item.Key, item.Value.Checked); }));
 
                 updateTransceiverControllerConfig(config.transceiverController, formSettings);
                 config.autoCqRxPause = formSettings.autoCqRxPause;
