@@ -35,6 +35,8 @@ namespace tnxlog
         public int[] pinout = new int[] { 0, 1 };
         [DataMember]
         public bool[] invertPins = new bool[] { false, false };
+        [DataMember]
+        public uint morseDelay = 100;
 
         public TransceiverControllerConfig() : base() { }
         public TransceiverControllerConfig(XmlConfig _parent) : base(_parent) { }
@@ -68,12 +70,29 @@ namespace tnxlog
 
         public bool busy { get { return _busy; } }
 
+        private readonly object _sync = new object();
+        private volatile uint _morseDelay;
+        public uint morseDelay
+        {
+            get
+            {
+                lock (_sync) return _morseDelay;
+            }
+            set
+            {
+                _morseDelay = value;
+                config.morseDelay = value;
+                config.write();
+            }
+        }
+
         private Stopwatch sw = new Stopwatch();
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         public TransceiverController(TransceiverControllerConfig _config)
         {
             config = _config;
+            morseDelay = config.morseDelay;
             Logger.Debug($"Stopwatch frequency: {Stopwatch.Frequency}");
         }
 
@@ -145,7 +164,7 @@ namespace tnxlog
             sw.Stop();
         }
 
-        public void morseString(string line, uint speed, CancellationToken ct)
+        public void morseString(string line, CancellationToken ct)
         {
             if (config.transceiverType == 1) {
                 if (!_busy)
@@ -157,7 +176,7 @@ namespace tnxlog
                         PropertyInfo cwProp = getPortProp(cwPinNo);
                         bool cwOn = getInvert(cwPinNo) ? true : false;
                         setPin("PTT", false);
-                        delay(speed);
+                        delay(morseDelay);
                         foreach (char c in line)
                         {
                             if (ct.IsCancellationRequested)
@@ -170,14 +189,14 @@ namespace tnxlog
                                 foreach (char mc in code)
                                 {
                                     cwProp.SetValue(serialPort, cwOn);
-                                    delay(mc == MorseCode.Dot ? speed : 4 * speed);
+                                    delay(mc == MorseCode.Dot ? morseDelay : 4 * morseDelay);
                                     cwProp.SetValue(serialPort, !cwOn);
-                                    delay(speed);
+                                    delay(morseDelay);
                                 }
-                                delay(2 * speed);
+                                delay(2 * morseDelay);
                             }
                             else
-                                delay(4 * speed);
+                                delay(4 * morseDelay);
                         }
                     }
                     catch (TaskCanceledException) { }
@@ -192,7 +211,7 @@ namespace tnxlog
                     }
                 } else if (config.transceiverType == 2)
                 {
-                    tciTranceiverController.CwMacroSpeed = speed;
+                    tciTranceiverController.CwMacroSpeed = morseDelay;
                     tciTranceiverController.SetMacros(config.tciTrnsNo, line);
                 }
 

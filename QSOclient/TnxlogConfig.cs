@@ -149,15 +149,6 @@ namespace tnxlog
             return _mainFormPanels[panel];
         }
 
-        private int _morseSpeed = 12;
-        public int morseSpeed {
-            get { return _morseSpeed; }
-            set {
-                _morseSpeed = value;
-                write();
-            }
-        }
-
         public string soundRecordDevice = "";
         public string soundRecordFolder = "";
 

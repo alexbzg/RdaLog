@@ -180,7 +180,7 @@ namespace tnxlog
             this.flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel.Location = new System.Drawing.Point(0, 123);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(370, 383);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(372, 399);
             this.flowLayoutPanel.TabIndex = 63;
             // 
             // panelQsoComments
@@ -190,7 +190,7 @@ namespace tnxlog
             this.panelQsoComments.Location = new System.Drawing.Point(0, 0);
             this.panelQsoComments.Margin = new System.Windows.Forms.Padding(0);
             this.panelQsoComments.Name = "panelQsoComments";
-            this.panelQsoComments.Size = new System.Drawing.Size(364, 50);
+            this.panelQsoComments.Size = new System.Drawing.Size(372, 50);
             this.panelQsoComments.TabIndex = 29;
             // 
             // labelComments
@@ -210,7 +210,7 @@ namespace tnxlog
             this.textBoxComments.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxComments.Location = new System.Drawing.Point(12, 21);
             this.textBoxComments.Name = "textBoxComments";
-            this.textBoxComments.Size = new System.Drawing.Size(344, 22);
+            this.textBoxComments.Size = new System.Drawing.Size(348, 22);
             this.textBoxComments.TabIndex = 6;
             this.textBoxComments.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -225,14 +225,14 @@ namespace tnxlog
             this.panelQth1_2.Location = new System.Drawing.Point(0, 50);
             this.panelQth1_2.Margin = new System.Windows.Forms.Padding(0);
             this.panelQth1_2.Name = "panelQth1_2";
-            this.panelQth1_2.Size = new System.Drawing.Size(364, 48);
+            this.panelQth1_2.Size = new System.Drawing.Size(372, 48);
             this.panelQth1_2.TabIndex = 63;
             // 
             // checkBoxAutoQth2
             // 
             this.checkBoxAutoQth2.AutoSize = true;
             this.checkBoxAutoQth2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.checkBoxAutoQth2.Location = new System.Drawing.Point(310, 4);
+            this.checkBoxAutoQth2.Location = new System.Drawing.Point(315, 4);
             this.checkBoxAutoQth2.Name = "checkBoxAutoQth2";
             this.checkBoxAutoQth2.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoQth2.TabIndex = 26;
@@ -246,7 +246,7 @@ namespace tnxlog
             this.checkBoxAutoQth1.Checked = true;
             this.checkBoxAutoQth1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxAutoQth1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.checkBoxAutoQth1.Location = new System.Drawing.Point(136, 4);
+            this.checkBoxAutoQth1.Location = new System.Drawing.Point(140, 4);
             this.checkBoxAutoQth1.Name = "checkBoxAutoQth1";
             this.checkBoxAutoQth1.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoQth1.TabIndex = 25;
@@ -271,7 +271,7 @@ namespace tnxlog
             this.textBoxQth2.ForeColor = System.Drawing.Color.Navy;
             this.textBoxQth2.Location = new System.Drawing.Point(186, 21);
             this.textBoxQth2.Name = "textBoxQth2";
-            this.textBoxQth2.Size = new System.Drawing.Size(170, 23);
+            this.textBoxQth2.Size = new System.Drawing.Size(174, 23);
             this.textBoxQth2.TabIndex = 7;
             this.textBoxQth2.Text = "H4RT";
             this.textBoxQth2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -309,7 +309,7 @@ namespace tnxlog
             this.panelQth3Loc.Location = new System.Drawing.Point(0, 98);
             this.panelQth3Loc.Margin = new System.Windows.Forms.Padding(0);
             this.panelQth3Loc.Name = "panelQth3Loc";
-            this.panelQth3Loc.Size = new System.Drawing.Size(364, 50);
+            this.panelQth3Loc.Size = new System.Drawing.Size(372, 50);
             this.panelQth3Loc.TabIndex = 28;
             // 
             // checkBoxAutoQth3
@@ -318,7 +318,7 @@ namespace tnxlog
             this.checkBoxAutoQth3.Checked = true;
             this.checkBoxAutoQth3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxAutoQth3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.checkBoxAutoQth3.Location = new System.Drawing.Point(136, 6);
+            this.checkBoxAutoQth3.Location = new System.Drawing.Point(140, 6);
             this.checkBoxAutoQth3.Name = "checkBoxAutoQth3";
             this.checkBoxAutoQth3.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoQth3.TabIndex = 27;
@@ -330,7 +330,7 @@ namespace tnxlog
             // 
             this.checkBoxAutoLocator.AutoSize = true;
             this.checkBoxAutoLocator.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.checkBoxAutoLocator.Location = new System.Drawing.Point(309, 6);
+            this.checkBoxAutoLocator.Location = new System.Drawing.Point(315, 3);
             this.checkBoxAutoLocator.Name = "checkBoxAutoLocator";
             this.checkBoxAutoLocator.Size = new System.Drawing.Size(47, 17);
             this.checkBoxAutoLocator.TabIndex = 27;
@@ -345,7 +345,7 @@ namespace tnxlog
             this.textBoxLocator.ForeColor = System.Drawing.Color.Navy;
             this.textBoxLocator.Location = new System.Drawing.Point(186, 23);
             this.textBoxLocator.Name = "textBoxLocator";
-            this.textBoxLocator.Size = new System.Drawing.Size(170, 22);
+            this.textBoxLocator.Size = new System.Drawing.Size(174, 22);
             this.textBoxLocator.TabIndex = 8;
             this.textBoxLocator.Text = "KN96on";
             this.textBoxLocator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -401,7 +401,7 @@ namespace tnxlog
             this.panelStatFilter.Location = new System.Drawing.Point(0, 148);
             this.panelStatFilter.Margin = new System.Windows.Forms.Padding(0);
             this.panelStatFilter.Name = "panelStatFilter";
-            this.panelStatFilter.Size = new System.Drawing.Size(363, 50);
+            this.panelStatFilter.Size = new System.Drawing.Size(372, 50);
             this.panelStatFilter.TabIndex = 28;
             // 
             // labelStatMode
@@ -469,7 +469,7 @@ namespace tnxlog
             this.labelStatCallsigns.ForeColor = System.Drawing.Color.DarkGreen;
             this.labelStatCallsigns.Location = new System.Drawing.Point(296, 23);
             this.labelStatCallsigns.Name = "labelStatCallsigns";
-            this.labelStatCallsigns.Size = new System.Drawing.Size(60, 23);
+            this.labelStatCallsigns.Size = new System.Drawing.Size(64, 23);
             this.labelStatCallsigns.TabIndex = 61;
             this.labelStatCallsigns.Text = "0";
             this.labelStatCallsigns.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -552,7 +552,7 @@ namespace tnxlog
             this.panelCallsignId.Location = new System.Drawing.Point(0, 198);
             this.panelCallsignId.Margin = new System.Windows.Forms.Padding(0);
             this.panelCallsignId.Name = "panelCallsignId";
-            this.panelCallsignId.Size = new System.Drawing.Size(363, 91);
+            this.panelCallsignId.Size = new System.Drawing.Size(372, 91);
             this.panelCallsignId.TabIndex = 63;
             // 
             // listBoxCallsignsDb
@@ -564,7 +564,7 @@ namespace tnxlog
             this.listBoxCallsignsDb.ItemHeight = 16;
             this.listBoxCallsignsDb.Location = new System.Drawing.Point(186, 7);
             this.listBoxCallsignsDb.Name = "listBoxCallsignsDb";
-            this.listBoxCallsignsDb.Size = new System.Drawing.Size(170, 84);
+            this.listBoxCallsignsDb.Size = new System.Drawing.Size(174, 84);
             this.listBoxCallsignsDb.TabIndex = 1;
             this.listBoxCallsignsDb.SelectedIndexChanged += new System.EventHandler(this.ListBoxCallsigns_SelectedIndexChanged);
             // 
@@ -581,7 +581,6 @@ namespace tnxlog
             // 
             // panelCwMacro
             // 
-            this.panelCwMacro.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panelCwMacro.Controls.Add(this.labelMorseSpeed);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF5);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF1);
@@ -602,10 +601,10 @@ namespace tnxlog
             this.panelCwMacro.Controls.Add(this.labelCwMacroF1Title);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF3Title);
             this.panelCwMacro.Controls.Add(this.labelCwMacroF2Title);
-            this.panelCwMacro.Location = new System.Drawing.Point(3, 289);
+            this.panelCwMacro.Location = new System.Drawing.Point(0, 289);
             this.panelCwMacro.Margin = new System.Windows.Forms.Padding(0);
             this.panelCwMacro.Name = "panelCwMacro";
-            this.panelCwMacro.Size = new System.Drawing.Size(364, 40);
+            this.panelCwMacro.Size = new System.Drawing.Size(370, 40);
             this.panelCwMacro.TabIndex = 62;
             // 
             // labelMorseSpeed
@@ -655,11 +654,21 @@ namespace tnxlog
             // numericUpDownMorseSpeed
             // 
             this.numericUpDownMorseSpeed.Location = new System.Drawing.Point(317, 18);
+            this.numericUpDownMorseSpeed.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownMorseSpeed.Name = "numericUpDownMorseSpeed";
             this.numericUpDownMorseSpeed.Size = new System.Drawing.Size(43, 20);
             this.numericUpDownMorseSpeed.TabIndex = 62;
             this.numericUpDownMorseSpeed.TabStop = false;
             this.numericUpDownMorseSpeed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDownMorseSpeed.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownMorseSpeed.ValueChanged += new System.EventHandler(this.NumericUpDownMorseSpeed_ValueChanged);
             // 
             // labelCwMacroF3
@@ -836,9 +845,10 @@ namespace tnxlog
             this.panelSoundRecord.Controls.Add(this.labelSoundRecordingOn);
             this.panelSoundRecord.Controls.Add(this.labelSoundRecording);
             this.panelSoundRecord.Controls.Add(this.checkBoxRecord);
-            this.panelSoundRecord.Location = new System.Drawing.Point(3, 332);
+            this.panelSoundRecord.Location = new System.Drawing.Point(0, 329);
+            this.panelSoundRecord.Margin = new System.Windows.Forms.Padding(0);
             this.panelSoundRecord.Name = "panelSoundRecord";
-            this.panelSoundRecord.Size = new System.Drawing.Size(364, 48);
+            this.panelSoundRecord.Size = new System.Drawing.Size(372, 48);
             this.panelSoundRecord.TabIndex = 67;
             // 
             // labelSoundInputNA
@@ -855,7 +865,7 @@ namespace tnxlog
             // 
             // buttonRecordsClear
             // 
-            this.buttonRecordsClear.Location = new System.Drawing.Point(290, 21);
+            this.buttonRecordsClear.Location = new System.Drawing.Point(296, 19);
             this.buttonRecordsClear.Name = "buttonRecordsClear";
             this.buttonRecordsClear.Size = new System.Drawing.Size(66, 23);
             this.buttonRecordsClear.TabIndex = 5;
@@ -896,7 +906,7 @@ namespace tnxlog
             // labelSoundRecording
             // 
             this.labelSoundRecording.AutoSize = true;
-            this.labelSoundRecording.Location = new System.Drawing.Point(11, 5);
+            this.labelSoundRecording.Location = new System.Drawing.Point(12, 5);
             this.labelSoundRecording.Name = "labelSoundRecording";
             this.labelSoundRecording.Size = new System.Drawing.Size(85, 13);
             this.labelSoundRecording.TabIndex = 1;
@@ -905,7 +915,7 @@ namespace tnxlog
             // checkBoxRecord
             // 
             this.checkBoxRecord.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxRecord.Location = new System.Drawing.Point(12, 21);
+            this.checkBoxRecord.Location = new System.Drawing.Point(12, 20);
             this.checkBoxRecord.Name = "checkBoxRecord";
             this.checkBoxRecord.Size = new System.Drawing.Size(70, 24);
             this.checkBoxRecord.TabIndex = 0;
@@ -918,23 +928,23 @@ namespace tnxlog
             // 
             this.statusStrip.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.statusStrip.AutoSize = false;
-            //this.statusStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip.GripMargin = new System.Windows.Forms.Padding(0);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loginLabel,
             this.connectionStatusLabel});
             this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.statusStrip.Location = new System.Drawing.Point(2, 499);
+            this.statusStrip.Location = new System.Drawing.Point(0, 377);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(364, 22);
+            this.statusStrip.Size = new System.Drawing.Size(372, 22);
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 0;
             // 
             // loginLabel
             // 
             this.loginLabel.Name = "loginLabel";
-            this.loginLabel.Size = new System.Drawing.Size(0, 17);
+            this.loginLabel.Size = new System.Drawing.Size(83, 17);
+            this.loginLabel.Text = "Not logged in.";
             // 
             // connectionStatusLabel
             // 
@@ -1116,7 +1126,7 @@ namespace tnxlog
             this.toolStripLabelLog});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(364, 25);
+            this.toolStrip.Size = new System.Drawing.Size(373, 25);
             this.toolStrip.TabIndex = 1;
             // 
             // dropDownButtonFile
@@ -1217,14 +1227,13 @@ namespace tnxlog
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(364, 520);
+            this.ClientSize = new System.Drawing.Size(373, 520);
             this.Controls.Add(this.labelEsm);
             this.Controls.Add(this.labelDupe);
             this.Controls.Add(this.checkBoxTop);
             this.Controls.Add(this.flowLayoutPanel);
             this.Controls.Add(this.labelMode);
             this.Controls.Add(this.comboBoxMode);
-           // this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.labelFreq);
             this.Controls.Add(this.numericUpDownFreq);
             this.Controls.Add(this.labelCallsign);

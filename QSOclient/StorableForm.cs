@@ -25,7 +25,7 @@ namespace StorableForm
             config.formSize = bounds.Size;
         }
 
-        public void restoreFormState()
+        public virtual void restoreFormState()
         {
               if (config != null && config.formLocation != null && !config.formLocation.IsEmpty)
                   this.DesktopBounds =

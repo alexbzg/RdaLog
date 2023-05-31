@@ -175,7 +175,7 @@ namespace tnxlog
             cwMacrosTitles = new List<Label>() { labelCwMacroF1Title, labelCwMacroF2Title, labelCwMacroF3Title, labelCwMacroF4Title, labelCwMacroF5Title, labelCwMacroF6Title,
                 labelCwMacroF7Title, labelCwMacroF8Title, labelCwMacroF9Title };
             updateCwMacrosTitles();
-            numericUpDownMorseSpeed.Value = tnxlogConfig.morseSpeed;
+            numericUpDownMorseSpeed.Value = Convert.ToInt32((decimal)1200 / tnxlog.transceiverController.morseDelay);
 
             qthFieldsControls = new QthFieldControls[]
                 {
@@ -211,7 +211,7 @@ namespace tnxlog
             {
                 arrangePanels();
             };
-            Debug.WriteLine($"form {Height}");
+            Debug.WriteLine($"form {Width}");
 
             comboBoxStatFilterBand.Items.AddRange(Band.Names);
             comboBoxStatFilterMode.Items.AddRange(HamRadio.Mode.Names);
@@ -452,9 +452,15 @@ namespace tnxlog
                     flowLayoutPanel.Controls.Add(panels[panel]);
             }
             flowLayoutPanel.Controls.Add(statusStrip);
-            storeFormState();
-            writeConfig();
+            Debug.WriteLine($"flowLayoutPanel width {flowLayoutPanel.Width}");
         }
+
+        public override void restoreFormState()
+        {
+            if (config?.formLocation != null)
+                this.Location = config.formLocation;
+        }
+
 
         private void ToolStripLabelSettings_Click(object sender, EventArgs e)
         {
@@ -1007,7 +1013,7 @@ namespace tnxlog
         private async Task _sendCwMsg(string msg)
         {
             tokenSource = new CancellationTokenSource();
-            await Task.Run(() => tnxlog.transceiverController.morseString(msg.ToUpper(), Convert.ToUInt32(1200 / tnxlogConfig.morseSpeed), tokenSource.Token));
+            await Task.Run(() => tnxlog.transceiverController.morseString(msg.ToUpper(), tokenSource.Token));
         }
 
         private void updateLabelEsm()
@@ -1181,7 +1187,7 @@ namespace tnxlog
 
         private void NumericUpDownMorseSpeed_ValueChanged(object sender, EventArgs e)
         {
-            tnxlogConfig.morseSpeed = Convert.ToInt32(numericUpDownMorseSpeed.Value);
+            tnxlog.transceiverController.morseDelay = Convert.ToUInt32(1200 / numericUpDownMorseSpeed.Value);
         }
 
         private void NumericUpDownFreq_ValueChanged(object sender, EventArgs e)
