@@ -36,8 +36,6 @@ namespace tnxlog
         public string password;
         [XmlIgnore]
         private string _token;
-        [XmlIgnore]
-        public EventHandler<EventArgs> logInOout;
 
         [DataMember]
         public int updateIterval = 60 * 1000;
@@ -51,7 +49,6 @@ namespace tnxlog
                 {
                     _token = value;
                     write();
-                    logInOout?.Invoke(this, new EventArgs());
                 }
             }
         }
@@ -60,6 +57,7 @@ namespace tnxlog
         public HttpServiceConfig() : base() { }
 
     }
+
     public class HttpService
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -94,21 +92,22 @@ namespace tnxlog
             }
         }
         public EventHandler<EventArgs> connectionStateChanged;
+        public EventHandler<EventArgs> loginStateChanged;
         private HttpServiceConfig config;
         private Tnxlog tnxlog;
         private TnxlogConfig tnxlogConfig { get { return (TnxlogConfig)config.parent; } }
+        public bool loggedIn
+        {
+            get {
+                return config.token != null;
+            }
+        }
 
-        public HttpService(HttpServiceConfig _config, Tnxlog _rdaLog)
+        public HttpService(HttpServiceConfig _config, Tnxlog _tnxLog)
         {
             config = _config;
-            tnxlog = _rdaLog;
-            unsentFilePath = Path.Combine(tnxlog.dataPath, "unsent");
-            List<QSO> unsentQSOs = QSOFactory.ReadList<List<QSO>>(unsentFilePath + ".qso");
-            if (unsentQSOs != null && unsentQSOs.Count > 0)
-                Task.Run(async () =>
-                {
-                    await postQso(unsentQSOs.ToArray());
-                });
+            tnxlog = _tnxLog;
+
             List<QsoDeleteData>unsentDels = ProtoBufSerialization.Read<List<QsoDeleteData>>(unsentFilePath + ".del");
             if (unsentDels != null && unsentDels.Count > 0)
                 Task.Run(async () =>
@@ -179,6 +178,14 @@ namespace tnxlog
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 response = await client.PostAsync(URI, content);
                 result = response.IsSuccessStatusCode;
+                if (!result)
+                {
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        connected = false;
+                        loginStateChanged?.Invoke(this, new EventArgs());
+                    }
+                }
 #if !DISABLE_HTTP_LOGGING
                 System.Diagnostics.Debug.WriteLine(response.ToString());
 #endif
@@ -188,22 +195,16 @@ namespace tnxlog
                 logger.Error(e, "HTTP post error");
                 logger.Error($"Server URI {URI}");
                 logger.Error(e.ToString());
+                connected = false;
             }
-            if (connected != result)
-            {
-                connected = result;
-                if (connected)
-                    await processQueue();
-            }
+            if (connected)
+                await processQueue();
             return response;
         }
 
         private async Task<bool> _postQso(QSO[] qso)
         {
-            QSO[] _qso = qso.Where(item => !item._deleted).ToArray();
-            if (_qso.Length == 0)
-                return true;
-            HttpResponseMessage response = await post("log", qsoToken(_qso), true, _qso.Length / 10);
+            HttpResponseMessage response = await post("log", qsoToken(qso), true, qso.Length / 10);
             if (response == null || !response.IsSuccessStatusCode)
                 return false;
             else 
@@ -213,7 +214,20 @@ namespace tnxlog
                     string strRsp = await response.Content.ReadAsStringAsync();
                     NewQsoResponse[] qsoResponse = JsonConvert.DeserializeObject<NewQsoResponse[]>(strRsp);
                     for (int qsoCnt = 0; qsoCnt < qsoResponse.Length; qsoCnt++)
-                        _qso[qsoCnt].serverTs = qsoResponse[qsoCnt].ts;
+                    {
+                        qso[qsoCnt].serverPending = false;
+                        if (qsoResponse[qsoCnt].ts == null) {
+                            qso[qsoCnt].serverTs = 0;
+                            qso[qsoCnt].serverRejected = true;
+                            qso[qsoCnt].serverAccepted = false;
+                        } else
+                        {
+                            qso[qsoCnt].serverTs = qsoResponse[qsoCnt].ts.Value;
+                            qso[qsoCnt].serverRejected = false;
+                            qso[qsoCnt].serverAccepted = true;
+                        }
+                    }
+                    tnxlog.writeQsoList();
                 }
                 catch (Exception e) {
                     logger.Error(e, "Invalid log response");
@@ -237,13 +251,17 @@ namespace tnxlog
 
         public async Task postQso(QSO[] qso)
         {
+            QSO[] qsosToSend = qso.Where(item => !item.serverAccepted && !item.serverRejected && !item.serverPending && !item._deleted).ToArray();
+            foreach (QSO item in qsosToSend)
+                item.serverPending = true;
+            tnxlog.writeQsoList();
             if (logQueue.IsEmpty && config.token != null)
             {
-                if (!await _postQso(qso))
-                    addToQueue(qso);
+                if (!await _postQso(qsosToSend))
+                    addToQueue(qsosToSend);
             }
             else
-                addToQueue(qso);
+                addToQueue(qsosToSend);
         }
 
         public async Task postSoundRecord(string record)
@@ -268,7 +286,6 @@ namespace tnxlog
         private void addToQueue(QSO[] qso)
         {
             logQueue.Enqueue(new LogRequest() { qso = qso });
-            saveUnsent();
         }
 
         private void addToQueue(QsoDeleteData qdd)
@@ -395,6 +412,7 @@ namespace tnxlog
                     {
                         LoginResponse userData = JsonConvert.DeserializeObject<LoginResponse>(await response.Content.ReadAsStringAsync());
                         config.token = userData.token;
+                        loginStateChanged?.Invoke(this, new EventArgs());
                         schedulePingTimer();
                         if (loginRetryTimer != null)
                         {
@@ -411,8 +429,11 @@ namespace tnxlog
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
+                    bool wasLoggedIn = config.token == null;
                     config.token = null;
-                    MessageBox.Show(await response.Content.ReadAsStringAsync(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (wasLoggedIn)
+                        loginStateChanged?.Invoke(this, new EventArgs());
+                    showErrorResponse(response);
                 }
                 else
                     retryFlag = true;
@@ -420,6 +441,11 @@ namespace tnxlog
             if (retry && retryFlag)
                 scheduleLoginRetryTimer();
             return response?.StatusCode;
+        }
+
+        private async void showErrorResponse(HttpResponseMessage response)
+        {
+            MessageBox.Show(await response.Content.ReadAsStringAsync(), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void scheduleLoginRetryTimer()
@@ -522,7 +548,7 @@ namespace tnxlog
 
     public class NewQsoResponse
     {
-        public decimal ts;
+        public decimal? ts;
     }
 
     public class LogRequest

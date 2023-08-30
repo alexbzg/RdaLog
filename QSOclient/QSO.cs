@@ -11,11 +11,13 @@ using ProtoBuf;
 using SerializationNS;
 using System.Globalization;
 using HamRadio;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace tnxlog
 {
     [DataContract, ProtoContract]
-    public class QSO: IEquatable<QSO>
+    public class QSO: IEquatable<QSO>, INotifyPropertyChanged
     {
         static readonly string[] Separators = new string[] { ".", "," };
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
@@ -37,6 +39,9 @@ namespace tnxlog
         internal decimal _serverTs = 0;
         internal bool _deleted = false;
         internal string _sound;
+        internal bool _serverAccepted = false;
+        internal bool _serverRejected = false;
+        internal bool _serverPending = false;
 
         [DataMember, ProtoMember(1)]
         public string ts {
@@ -136,6 +141,42 @@ namespace tnxlog
         [DataMember, ProtoMember(15)]
         public string sound { get { return _sound; } set { _sound = value; } }
 
+        [ProtoMember(16)]
+        public bool serverAccepted {
+            get { return _serverAccepted; }
+            set {
+                if (_serverAccepted != value)
+                {
+                    _serverAccepted = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        [ProtoMember(17)]
+        public bool serverRejected {
+            get { return _serverRejected; }
+            set {
+                if (_serverRejected != value)
+                {
+                    _serverRejected = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        [ProtoMember(18)]
+        public bool serverPending {
+            get { return _serverPending; }
+            set {
+                if (_serverPending != value)
+                {
+                    _serverPending = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
 
         [IgnoreDataMember]
         public string qthField0
@@ -192,6 +233,12 @@ namespace tnxlog
             }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public static string formatFreq(decimal freq)
         {

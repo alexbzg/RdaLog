@@ -137,8 +137,8 @@ namespace tnxlog
 
             InitializeComponent();
 
-            tnxlogConfig.httpService.logInOout += onLogInOut;
-            tnxlog.httpService.connectionStateChanged += onLogInOut;
+            tnxlog.httpService.loginStateChanged += onLoginStateChange;
+            tnxlog.httpService.connectionStateChanged += onConnectionStateChange;
 
             foreach (InputLanguage iLang in InputLanguage.InstalledInputLanguages)
                 if (iLang.Culture.EnglishName.StartsWith("English"))
@@ -346,12 +346,16 @@ namespace tnxlog
                 cwMacrosTitles[co].Text = tnxlogConfig.cwMacros[co][0].Length > 3 ? tnxlogConfig.cwMacros[co][0].Substring(0,3) : tnxlogConfig.cwMacros[co][0];
         }
 
-        private void onLogInOut(object sender, EventArgs e)
+        private void onLoginStateChange(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(((TnxlogConfig)config.parent).httpService.token))
+            if (tnxlog.httpService.loggedIn)
                 loginLabel.Text = "Not logged in.";
-            else 
+            else
                 loginLabel.Text = "Logged in as " + ((TnxlogConfig)config.parent).httpService.callsign.ToUpper() + ".";
+        }
+
+        private void onConnectionStateChange(object sender, EventArgs e)
+        {
             Color backColor = tnxlog.httpService.connected ? Color.Green : Color.Red;
             if (connectionStatusLabel.BackColor != backColor)
                 DoInvoke(() => { connectionStatusLabel.BackColor = backColor; });

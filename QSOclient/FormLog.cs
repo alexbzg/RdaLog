@@ -7,11 +7,13 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Resources;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using tnxlog.Properties;
 using XmlConfigNS;
 
 namespace tnxlog
@@ -73,8 +75,16 @@ namespace tnxlog
                     dataGridView.FirstDisplayedScrollingRowIndex = e.NewIndex;
                     dataGridView.Refresh();
                 });
+            } 
+            else if (e.ListChangedType == ListChangedType.ItemChanged)
+            {
+                DoInvoke(() =>
+                {
+                    dataGridView.InvalidateCell(dataGridView.Columns["ServerState"].Index, e.NewIndex);
+                });
             }
         }
+
 
         private bool qsoFilterPredicate(QSO qso)
         {
@@ -92,8 +102,13 @@ namespace tnxlog
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
         {
             if (e.ListChangedType == ListChangedType.ItemAdded)
+            {
                 if (bsQSO.DataSource == searchResults)
                     searchResults.Insert(0, tnxlog.qsoList[e.NewIndex]);
+            } else if (e.ListChangedType == ListChangedType.ItemChanged)
+            {
+
+            }
         }
 
         private void setRowColors(DataGridViewRow r, Color f, Color b)
@@ -190,6 +205,12 @@ namespace tnxlog
             return ((BindingList<QSO>)bsQSO.DataSource)[dataGridView.SelectedCells[0].RowIndex];
         }
 
+        private QSO getQsoByIndex(int row)
+        {
+            return ((BindingList<QSO>)bsQSO.DataSource)[row];
+        }
+
+
         private void MenuItemEditCell_Click(object sender, EventArgs e)
         {
             editCell();
@@ -234,6 +255,30 @@ namespace tnxlog
             if (e.ColumnIndex != -1)
                 dataGridView[e.ColumnIndex, e.RowIndex].Selected = true;
             editCell();
+        }
+
+        private void DataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void DataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+
+        }
+
+        private void DataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridView.Columns[e.ColumnIndex].Name == "ServerState" && e.RowIndex != -1)
+            {
+                QSO qso = getQsoByIndex(e.RowIndex);
+                if (qso.serverAccepted)
+                    e.Value = imageListServerStates.Images[0];
+                else if (qso.serverRejected)
+                    e.Value = imageListServerStates.Images[1];
+                if (qso.serverPending)
+                    e.Value = imageListServerStates.Images[2];
+            }
         }
     }
 

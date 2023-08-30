@@ -30,14 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLog));
-            this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.filterTextBox = new System.Windows.Forms.ToolStripTextBoxCallsign();
-            this.filterButton = new System.Windows.Forms.ToolStripButton();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cmsDataGridCell = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemDeleteQso = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemEditCell = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.filterTextBox = new System.Windows.Forms.ToolStripTextBoxCallsign();
+            this.filterButton = new System.Windows.Forms.ToolStripButton();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
             this.no = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ServerState = new System.Windows.Forms.DataGridViewImageColumn();
             this.ts = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.myCS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cs = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,48 +52,33 @@
             this.QthField2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Locator = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Comments = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
-            this.toolStrip1.SuspendLayout();
+            this.imageListServerStates = new System.Windows.Forms.ImageList(this.components);
             this.cmsDataGridCell.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView
+            // cmsDataGridCell
             // 
-            this.dataGridView.AllowUserToAddRows = false;
-            this.dataGridView.AllowUserToDeleteRows = false;
-            this.dataGridView.AllowUserToResizeRows = false;
-            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.no,
-            this.ts,
-            this.myCS,
-            this.cs,
-            this.snt,
-            this.myRST,
-            this.Freq,
-            this.Mode,
-            this.QthField0,
-            this.QthField1,
-            this.QthField2,
-            this.Locator,
-            this.Comments});
-            this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView.Location = new System.Drawing.Point(0, 28);
-            this.dataGridView.MultiSelect = false;
-            this.dataGridView.Name = "dataGridView";
-            this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView.Size = new System.Drawing.Size(800, 422);
-            this.dataGridView.TabIndex = 0;
-            this.dataGridView.CellContextMenuStripNeeded += new System.Windows.Forms.DataGridViewCellContextMenuStripNeededEventHandler(this.DataGridView_CellContextMenuStripNeeded);
-            this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellDoubleClick);
-            this.dataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellEndEdit);
-            this.dataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
-            this.dataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.DataGridView_CellValidating);
-            this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellValueChanged);
-            this.dataGridView.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.DataGridView_ColumnWidthChanged);
+            this.cmsDataGridCell.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemDeleteQso,
+            this.menuItemEditCell});
+            this.cmsDataGridCell.Name = "cmsDataGridCell";
+            this.cmsDataGridCell.Size = new System.Drawing.Size(135, 48);
+            // 
+            // menuItemDeleteQso
+            // 
+            this.menuItemDeleteQso.Name = "menuItemDeleteQso";
+            this.menuItemDeleteQso.Size = new System.Drawing.Size(134, 22);
+            this.menuItemDeleteQso.Text = "Delete QSO";
+            this.menuItemDeleteQso.Click += new System.EventHandler(this.MenuItemDeleteQso_Click);
+            // 
+            // menuItemEditCell
+            // 
+            this.menuItemEditCell.Name = "menuItemEditCell";
+            this.menuItemEditCell.Size = new System.Drawing.Size(134, 22);
+            this.menuItemEditCell.Text = "Edit data";
+            this.menuItemEditCell.Click += new System.EventHandler(this.MenuItemEditCell_Click);
             // 
             // toolStrip1
             // 
@@ -123,27 +110,46 @@
             this.filterButton.Text = "Filter";
             this.filterButton.CheckedChanged += new System.EventHandler(this.FilterButton_CheckedChanged);
             // 
-            // cmsDataGridCell
+            // dataGridView
             // 
-            this.cmsDataGridCell.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemDeleteQso,
-            this.menuItemEditCell});
-            this.cmsDataGridCell.Name = "cmsDataGridCell";
-            this.cmsDataGridCell.Size = new System.Drawing.Size(135, 48);
-            // 
-            // menuItemDeleteQso
-            // 
-            this.menuItemDeleteQso.Name = "menuItemDeleteQso";
-            this.menuItemDeleteQso.Size = new System.Drawing.Size(134, 22);
-            this.menuItemDeleteQso.Text = "Delete QSO";
-            this.menuItemDeleteQso.Click += new System.EventHandler(this.MenuItemDeleteQso_Click);
-            // 
-            // menuItemEditCell
-            // 
-            this.menuItemEditCell.Name = "menuItemEditCell";
-            this.menuItemEditCell.Size = new System.Drawing.Size(134, 22);
-            this.menuItemEditCell.Text = "Edit data";
-            this.menuItemEditCell.Click += new System.EventHandler(this.MenuItemEditCell_Click);
+            this.dataGridView.AllowUserToAddRows = false;
+            this.dataGridView.AllowUserToDeleteRows = false;
+            this.dataGridView.AllowUserToResizeRows = false;
+            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.no,
+            this.ServerState,
+            this.ts,
+            this.myCS,
+            this.cs,
+            this.snt,
+            this.myRST,
+            this.Freq,
+            this.Mode,
+            this.QthField0,
+            this.QthField1,
+            this.QthField2,
+            this.Locator,
+            this.Comments});
+            this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataGridView.Location = new System.Drawing.Point(0, 28);
+            this.dataGridView.MultiSelect = false;
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dataGridView.Size = new System.Drawing.Size(800, 422);
+            this.dataGridView.TabIndex = 0;
+            this.dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellContentClick);
+            this.dataGridView.CellContextMenuStripNeeded += new System.Windows.Forms.DataGridViewCellContextMenuStripNeededEventHandler(this.DataGridView_CellContextMenuStripNeeded);
+            this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellDoubleClick);
+            this.dataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellEndEdit);
+            this.dataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridView_CellFormatting);
+            this.dataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
+            this.dataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.DataGridView_CellValidating);
+            this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellValueChanged);
+            this.dataGridView.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.DataGridView_ColumnWidthChanged);
             // 
             // no
             // 
@@ -151,6 +157,15 @@
             this.no.Frozen = true;
             this.no.HeaderText = "Nr";
             this.no.Name = "no";
+            // 
+            // ServerState
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.NullValue = null;
+            this.ServerState.DefaultCellStyle = dataGridViewCellStyle1;
+            this.ServerState.HeaderText = "Server";
+            this.ServerState.Name = "ServerState";
+            this.ServerState.ReadOnly = true;
             // 
             // ts
             // 
@@ -224,6 +239,14 @@
             this.Comments.HeaderText = "Comment";
             this.Comments.Name = "Comments";
             // 
+            // imageListServerStates
+            // 
+            this.imageListServerStates.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListServerStates.ImageStream")));
+            this.imageListServerStates.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListServerStates.Images.SetKeyName(0, "icon_ok.png");
+            this.imageListServerStates.Images.SetKeyName(1, "icon_error.png");
+            this.imageListServerStates.Images.SetKeyName(2, "icon_wait.png");
+            // 
             // FormLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -235,10 +258,10 @@
             this.Name = "FormLog";
             this.Text = "TNXLOG - Log";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormLog_FormClosed);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.cmsDataGridCell.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.cmsDataGridCell.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -254,6 +277,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemEditCell;
         private System.Windows.Forms.ToolStripTextBoxCallsign filterTextBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn no;
+        private System.Windows.Forms.DataGridViewImageColumn ServerState;
         private System.Windows.Forms.DataGridViewTextBoxColumn ts;
         private System.Windows.Forms.DataGridViewTextBoxColumn myCS;
         private System.Windows.Forms.DataGridViewTextBoxColumn cs;
@@ -266,5 +290,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn QthField2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Locator;
         private System.Windows.Forms.DataGridViewTextBoxColumn Comments;
+        private System.Windows.Forms.ImageList imageListServerStates;
     }
 }

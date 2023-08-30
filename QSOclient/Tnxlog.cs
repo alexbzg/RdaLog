@@ -145,6 +145,15 @@ namespace tnxlog
             _formMain = new FormMain(config.formMain, this);
             if (config.autoLogin)
                 Task.Run(async () => await httpService.login(true));
+
+            QSO[] qsosPending = qsoList.Where(item => item.serverPending).ToArray();
+            if (qsosPending.Length > 0)
+            {
+                foreach (QSO qso in qsosPending)
+                    qso.serverPending = false;
+                Task.Run(async () => await httpService.postQso(qsosPending));
+            }
+
             initServices();
         }
 
