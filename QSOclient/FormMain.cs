@@ -349,9 +349,9 @@ namespace tnxlog
         private void onLoginStateChange(object sender, EventArgs e)
         {
             if (tnxlog.httpService.loggedIn)
-                loginLabel.Text = "Not logged in.";
-            else
                 loginLabel.Text = "Logged in as " + ((TnxlogConfig)config.parent).httpService.callsign.ToUpper() + ".";
+            else
+                loginLabel.Text = "Not logged in.";
         }
 
         private void onConnectionStateChange(object sender, EventArgs e)

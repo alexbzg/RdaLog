@@ -178,7 +178,9 @@ namespace tnxlog
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 response = await client.PostAsync(URI, content);
                 result = response.IsSuccessStatusCode;
-                if (!result)
+                if (result)
+                    connected = true;
+                else 
                 {
                     if (response.StatusCode == HttpStatusCode.Unauthorized)
                     {
