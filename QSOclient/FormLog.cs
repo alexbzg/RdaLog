@@ -81,6 +81,7 @@ namespace tnxlog
                 DoInvoke(() =>
                 {
                     dataGridView.InvalidateCell(dataGridView.Columns["ServerState"].Index, e.NewIndex);
+                    dataGridView.InvalidateCell(-1, e.NewIndex);
                 });
             }
         }

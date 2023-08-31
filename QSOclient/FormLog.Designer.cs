@@ -93,7 +93,9 @@
             // 
             // filterTextBox
             // 
+            this.filterTextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.filterTextBox.AllowWildcards = true;
+            this.filterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.filterTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.filterTextBox.Name = "filterTextBox";
             this.filterTextBox.Size = new System.Drawing.Size(100, 25);
@@ -101,13 +103,14 @@
             // 
             // filterButton
             // 
+            this.filterButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.filterButton.CheckOnClick = true;
             this.filterButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.filterButton.Image = ((System.Drawing.Image)(resources.GetObject("filterButton.Image")));
             this.filterButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.filterButton.Name = "filterButton";
-            this.filterButton.Size = new System.Drawing.Size(37, 22);
-            this.filterButton.Text = "Filter";
+            this.filterButton.Size = new System.Drawing.Size(46, 22);
+            this.filterButton.Text = "Search";
             this.filterButton.CheckedChanged += new System.EventHandler(this.FilterButton_CheckedChanged);
             // 
             // dataGridView
