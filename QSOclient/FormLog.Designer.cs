@@ -39,7 +39,7 @@
             this.filterButton = new System.Windows.Forms.ToolStripButton();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.no = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ServerState = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ServerStateColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.ts = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.myCS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cs = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -124,7 +124,7 @@
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.no,
-            this.ServerState,
+            this.ServerStateColumn,
             this.ts,
             this.myCS,
             this.cs,
@@ -165,10 +165,10 @@
             // 
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.NullValue = null;
-            this.ServerState.DefaultCellStyle = dataGridViewCellStyle1;
-            this.ServerState.HeaderText = "Server";
-            this.ServerState.Name = "ServerState";
-            this.ServerState.ReadOnly = true;
+            this.ServerStateColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            this.ServerStateColumn.HeaderText = "Server";
+            this.ServerStateColumn.Name = "ServerState";
+            this.ServerStateColumn.ReadOnly = true;
             // 
             // ts
             // 
@@ -280,7 +280,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemEditCell;
         private System.Windows.Forms.ToolStripTextBoxCallsign filterTextBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn no;
-        private System.Windows.Forms.DataGridViewImageColumn ServerState;
+        private System.Windows.Forms.DataGridViewImageColumn ServerStateColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ts;
         private System.Windows.Forms.DataGridViewTextBoxColumn myCS;
         private System.Windows.Forms.DataGridViewTextBoxColumn cs;

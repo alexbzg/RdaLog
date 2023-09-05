@@ -217,16 +217,13 @@ namespace tnxlog
                     NewQsoResponse[] qsoResponse = JsonConvert.DeserializeObject<NewQsoResponse[]>(strRsp);
                     for (int qsoCnt = 0; qsoCnt < qsoResponse.Length; qsoCnt++)
                     {
-                        qso[qsoCnt].serverPending = false;
                         if (qsoResponse[qsoCnt].ts == null) {
                             qso[qsoCnt].serverTs = 0;
-                            qso[qsoCnt].serverRejected = true;
-                            qso[qsoCnt].serverAccepted = false;
+                            qso[qsoCnt].serverState = ServerState.Rejected;
                         } else
                         {
                             qso[qsoCnt].serverTs = qsoResponse[qsoCnt].ts.Value;
-                            qso[qsoCnt].serverRejected = false;
-                            qso[qsoCnt].serverAccepted = true;
+                            qso[qsoCnt].serverState = ServerState.Accepted;
                         }
                     }
                     tnxlog.writeQsoList();
@@ -253,17 +250,16 @@ namespace tnxlog
 
         public async Task postQso(QSO[] qso)
         {
-            QSO[] qsosToSend = qso.Where(item => !item.serverAccepted && !item.serverRejected && !item.serverPending && !item._deleted).ToArray();
-            foreach (QSO item in qsosToSend)
-                item.serverPending = true;
+            foreach (QSO item in qso)
+                item.serverState = ServerState.Pending;
             tnxlog.writeQsoList();
             if (logQueue.IsEmpty && config.token != null)
             {
-                if (!await _postQso(qsosToSend))
-                    addToQueue(qsosToSend);
+                if (!await _postQso(qso))
+                    addToQueue(qso);
             }
             else
-                addToQueue(qsosToSend);
+                addToQueue(qso);
         }
 
         public async Task postSoundRecord(string record)
@@ -293,7 +289,6 @@ namespace tnxlog
         private void addToQueue(QsoDeleteData qdd)
         {
             logQueue.Enqueue(new LogRequest() { delete = qdd });
-            saveUnsent();
         }
 
         public async Task deleteQso(QSO qso)
@@ -314,10 +309,6 @@ namespace tnxlog
 
         private void saveUnsent()
         {
-            List<QSO> qsoList = new List<QSO>();
-            foreach (QSO[] qsoBatch in logQueue.Where(item => item.qso != null).Select(item => item.qso).ToList())
-                qsoList.AddRange(qsoBatch);
-            ProtoBufSerialization.Write<List<QSO>>(unsentFilePath + ".qso", qsoList);
             ProtoBufSerialization.Write<List<QsoDeleteData>>(unsentFilePath + ".del", logQueue.Where(item => item.delete != null).Select(item => item.delete).ToList());
         }
 

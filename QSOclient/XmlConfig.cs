@@ -28,16 +28,16 @@ namespace XmlConfigNS
             fname = Application.StartupPath + "\\config.xml";
         }
 
-        public static T create<T>() where T : XmlConfig, new()
+        public static T create<T>(bool forceCreate=false) where T : XmlConfig, new()
         {
-            return create<T>(Application.StartupPath + "\\config.xml");
+            return create<T>(Application.StartupPath + "\\config.xml", forceCreate);
         }
 
 
-        public static T create<T>(string fname) where T : XmlConfig, new()
+        public static T create<T>(string fname, bool forceCreate=false) where T : XmlConfig, new()
         {
             T result = null;
-            if (File.Exists(fname) )
+            if (!forceCreate && File.Exists(fname))
             {
                 XmlSerializer ser = new XmlSerializer(typeof(T));
                 using (FileStream fs = File.OpenRead(fname))

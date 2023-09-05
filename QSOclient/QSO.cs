@@ -16,6 +16,14 @@ using System.Runtime.CompilerServices;
 
 namespace tnxlog
 {
+    public enum ServerState: ushort {
+        None = 0,
+        Accepted = 1,
+        Rejected = 2,
+        Pending = 3
+    }
+
+
     [DataContract, ProtoContract]
     public class QSO: IEquatable<QSO>, INotifyPropertyChanged
     {
@@ -39,9 +47,7 @@ namespace tnxlog
         internal decimal _serverTs = 0;
         internal bool _deleted = false;
         internal string _sound;
-        internal bool _serverAccepted = false;
-        internal bool _serverRejected = false;
-        internal bool _serverPending = false;
+        internal ServerState _serverState = ServerState.None;
 
         [DataMember, ProtoMember(1)]
         public string ts {
@@ -142,36 +148,12 @@ namespace tnxlog
         public string sound { get { return _sound; } set { _sound = value; } }
 
         [ProtoMember(16)]
-        public bool serverAccepted {
-            get { return _serverAccepted; }
+        public ServerState serverState {
+            get { return _serverState; }
             set {
-                if (_serverAccepted != value)
+                if (_serverState != value)
                 {
-                    _serverAccepted = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        [ProtoMember(17)]
-        public bool serverRejected {
-            get { return _serverRejected; }
-            set {
-                if (_serverRejected != value)
-                {
-                    _serverRejected = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        [ProtoMember(18)]
-        public bool serverPending {
-            get { return _serverPending; }
-            set {
-                if (_serverPending != value)
-                {
-                    _serverPending = value;
+                    _serverState = value;
                     NotifyPropertyChanged();
                 }
             }

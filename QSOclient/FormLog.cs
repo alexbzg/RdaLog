@@ -246,6 +246,8 @@ namespace tnxlog
             if (dataGridView.IsCurrentCellInEditMode)
             {
                 tnxlog.writeQsoList();
+                QSO qso = getCurrentQso();
+                qso.serverState = ServerState.None;
                 await tnxlog.httpService.postQso(getCurrentQso());
             }
         }
@@ -273,11 +275,11 @@ namespace tnxlog
             if (dataGridView.Columns[e.ColumnIndex].Name == "ServerState" && e.RowIndex != -1)
             {
                 QSO qso = getQsoByIndex(e.RowIndex);
-                if (qso.serverAccepted)
+                if (qso.serverState == ServerState.Accepted)
                     e.Value = imageListServerStates.Images[0];
-                else if (qso.serverRejected)
+                else if (qso.serverState == ServerState.Rejected)
                     e.Value = imageListServerStates.Images[1];
-                if (qso.serverPending)
+                if (qso.serverState == ServerState.Pending)
                     e.Value = imageListServerStates.Images[2];
             }
         }

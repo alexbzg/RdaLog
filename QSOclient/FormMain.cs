@@ -462,7 +462,11 @@ namespace tnxlog
         public override void restoreFormState()
         {
             if (config?.formLocation != null)
-                this.Location = config.formLocation;
+            {
+                Rectangle screen = Screen.GetWorkingArea(this);
+                if (screen.Contains(config.formLocation) && screen.Contains(new Point(config.formLocation.X + Width, config.formLocation.Y + Height)))
+                    Location = config.formLocation;
+            }
         }
 
 

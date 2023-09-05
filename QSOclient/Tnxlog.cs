@@ -124,37 +124,49 @@ namespace tnxlog
             Logger.Info("Start");
 #endif
             qsoFilePath = Path.Combine(dataPath, "qso.dat");
-            config = XmlConfig.create<TnxlogConfig>(Path.Combine(dataPath, "config.xml"));
-            for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
-                qthFields[field] = config.getQthFieldValue(field);
-            _loc = config.loc;
-            httpService = new HttpService(config.httpService, this);
-            transceiverController = new TransceiverController(config.transceiverController);
-            adifLogWatcher.OnNewAdifEntry += newAdifLogEntry;   
-            qsoFactory = new QSOFactory(this);
-            qsoList = QSOFactory.ReadList<BindingList<QSO>>(qsoFilePath);
-            if (qsoList == null)
+            bool initSuccess = false;
+            bool initFail = false;
+            while (!initSuccess)
             {
-                qsoList = new BindingList<QSO>();
-                qsoFactory.no = 1;
+                try
+                {
+                    config = XmlConfig.create<TnxlogConfig>(Path.Combine(dataPath, "config.xml"), forceCreate: initFail);
+                    for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
+                        qthFields[field] = config.getQthFieldValue(field);
+                    _loc = config.loc;
+                    httpService = new HttpService(config.httpService, this);
+                    transceiverController = new TransceiverController(config.transceiverController);
+                    adifLogWatcher.OnNewAdifEntry += newAdifLogEntry;
+                    qsoFactory = new QSOFactory(this);
+                    qsoList = QSOFactory.ReadList<BindingList<QSO>>(qsoFilePath);
+                    if (qsoList == null)
+                    {
+                        qsoList = new BindingList<QSO>();
+                        qsoFactory.no = 1;
+                    }
+                    else if (qsoList.Count > 0)
+                        qsoFactory.no = qsoList.First().no + 1;
+                    qsoList.ListChanged += QsoList_ListChanged;
+
+                    _formMain = new FormMain(config.formMain, this);
+                    if (config.autoLogin)
+                        Task.Run(async () => await httpService.login(true));
+
+                    QSO[] qsosPending = qsoList.Where(item => item.serverState == ServerState.Pending).ToArray();
+                    if (qsosPending.Length > 0)
+                    {
+                        Task.Run(async () => await httpService.postQso(qsosPending));
+                    }
+
+                    initServices();
+                    initSuccess = true;
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e, "Protobuf serialization read exception");
+                    initFail = true;
+                }
             }
-            else if (qsoList.Count > 0)
-                qsoFactory.no = qsoList.First().no + 1;
-            qsoList.ListChanged += QsoList_ListChanged;
-
-            _formMain = new FormMain(config.formMain, this);
-            if (config.autoLogin)
-                Task.Run(async () => await httpService.login(true));
-
-            QSO[] qsosPending = qsoList.Where(item => item.serverPending).ToArray();
-            if (qsosPending.Length > 0)
-            {
-                foreach (QSO qso in qsosPending)
-                    qso.serverPending = false;
-                Task.Run(async () => await httpService.postQso(qsosPending));
-            }
-
-            initServices();
         }
 
         private async void newAdifLogEntry(object sender, NewAdifEntryEventArgs e)

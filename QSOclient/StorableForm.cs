@@ -27,9 +27,12 @@ namespace StorableForm
 
         public virtual void restoreFormState()
         {
-              if (config != null && config.formLocation != null && !config.formLocation.IsEmpty)
-                  this.DesktopBounds =
-                          new Rectangle(config.formLocation, config.formSize);
+            if (config != null && config.formLocation != null && !config.formLocation.IsEmpty)
+            {
+                Rectangle screen = Screen.GetWorkingArea(this);
+                if (screen.Contains(config.formLocation) && screen.Contains(new Point(config.formLocation.X + config.formSize.Width, config.formLocation.Y + config.formSize.Width)))
+                    DesktopBounds = new Rectangle(config.formLocation, config.formSize);
+            }
         }
 
         public StorableForm(ConfigType _config)

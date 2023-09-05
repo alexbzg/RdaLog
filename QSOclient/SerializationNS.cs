@@ -67,7 +67,7 @@ namespace SerializationNS
             }
             catch (Exception e)
             {
-                logger.Error(e, "Protobuf serializtion write exception");
+                logger.Error(e, "Protobuf serialization write exception");
             }
         }
 
@@ -84,7 +84,7 @@ namespace SerializationNS
             }
             catch (Exception e)
             {
-                logger.Error(e, "Protobuf serializtion write exception");
+                logger.Error(e, "Protobuf serialization write exception");
             }
         }
 
@@ -104,7 +104,7 @@ namespace SerializationNS
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.ToString());
+                logger.Error(e, "Protobuf serialization read exception");
             }
             return default(T);
         }
@@ -127,7 +127,7 @@ namespace SerializationNS
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.ToString());
+                logger.Error(e, "Protobuf serialization read exception");
             }
             return r;
         }
