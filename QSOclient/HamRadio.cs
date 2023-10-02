@@ -23,7 +23,7 @@ namespace HamRadio
         public static readonly Dictionary<string, decimal[]> DefFreq = new Dictionary<string, decimal[]>
         {
             { "FT8", new decimal[] {1840, 3573, 5357, 7074, 10136,	14074,	18100,	21074,	24915,	28074} },
-            { "FT4", new decimal[] {1800, 3575, 7047.5m, 10140,  14080,  18104,  21140,  24919,  28180} },
+            { "FT4", new decimal[] {1840, 3575, 7047.5m, 10140,  14080,  18104,  21140,  24919,  28180} },
             { "JT65", new decimal[] {1838, 3570, 7076, 10138, 14076,  18102,  21076,  24917,  28076} }
         };
 
