@@ -136,14 +136,14 @@ namespace tnxlog
             pingTimer = new System.Threading.Timer(async obj => await ping(), null, 5000, Timeout.Infinite);
         }
 
-        private async Task<HttpResponseMessage> post(string _URI, object data, bool warnings = true, int timeoutSeconds = 100)
+        private async Task<HttpResponseMessage> post(string _URI, object data, bool warnings = true, int timeoutSeconds = 100, bool fromQueue = false)
         {
             string sContent = JsonConvert.SerializeObject(data);
 #if !DISABLE_HTTP_LOGGING_CONTENT
             System.Diagnostics.Debug.WriteLine(sContent);
 #endif
             HttpContent content = new StringContent(sContent);
-            return await post(_URI, content, warnings, timeoutSeconds);
+            return await post(_URI, content, warnings, timeoutSeconds, fromQueue);
         }
 
         private async Task<bool> _postSoundRecord(string record)
@@ -161,7 +161,7 @@ namespace tnxlog
             return response != null && response.IsSuccessStatusCode;
         }
 
-        private async Task<HttpResponseMessage> post(string _URI, HttpContent content, bool warnings = true, int timeoutSeconds = 100)
+        private async Task<HttpResponseMessage> post(string _URI, HttpContent content, bool warnings = true, int timeoutSeconds = 100, bool fromQueue = false)
         {
 
             string URI = srvURI + _URI;
@@ -199,14 +199,14 @@ namespace tnxlog
                 logger.Error(e.ToString());
                 connected = false;
             }
-            if (connected)
+            if (connected && !fromQueue)
                 await processQueue();
             return response;
         }
 
-        private async Task<bool> _postQso(QSO[] qso)
+        private async Task<bool> _postQso(QSO[] qso, bool fromQueue = false)
         {
-            HttpResponseMessage response = await post("log", qsoToken(qso), true, qso.Length / 10);
+            HttpResponseMessage response = await post("log", qsoToken(qso), true, qso.Length / 10, fromQueue);
             if (response == null || !response.IsSuccessStatusCode)
                 return false;
             else 
@@ -235,9 +235,9 @@ namespace tnxlog
             return true;
         }
 
-        private async Task<bool> _postDeleteQso(QsoDeleteData qdd)
+        private async Task<bool> _postDeleteQso(QsoDeleteData qdd, bool fromQueue = false)
         {
-            HttpResponseMessage response = await post("log", new QsoDeleteRequest(config, qdd));
+            HttpResponseMessage response = await post("log", new QsoDeleteRequest(config, qdd), fromQueue);
             if (response == null || !response.IsSuccessStatusCode)
                 return false;
             return true;
@@ -307,10 +307,6 @@ namespace tnxlog
         }
 
 
-        private void saveUnsent()
-        {
-            ProtoBufSerialization.Write<List<QsoDeleteData>>(unsentFilePath + ".del", logQueue.Where(item => item.delete != null).Select(item => item.delete).ToList());
-        }
 
         private void saveSoundRecords()
         {
@@ -333,11 +329,10 @@ namespace tnxlog
             while (!logQueue.IsEmpty && config.token != null)
             {
                 logQueue.TryPeek(out LogRequest req);
-                bool r = req.qso != null ? await _postQso(req.qso) : await _postDeleteQso(req.delete);
+                bool r = req.qso != null ? await _postQso(req.qso, fromQueue: true) : await _postDeleteQso(req.delete, fromQueue: true);
                 if (r)
                 {
                     logQueue.TryDequeue(out req);
-                    saveUnsent();
                 }
                 else
                     break;
@@ -354,7 +349,6 @@ namespace tnxlog
                 {
                     soundRecordsQueue.TryDequeue(out record);
                     File.Delete(record);
-                    saveUnsent();
                 }
                 else
                     break;
