@@ -226,7 +226,6 @@ namespace tnxlog
                             qso[qsoCnt].serverState = ServerState.Accepted;
                         }
                     }
-                    tnxlog.writeQsoList();
                 }
                 catch (Exception e) {
                     logger.Error(e, "Invalid log response");
@@ -252,7 +251,6 @@ namespace tnxlog
         {
             foreach (QSO item in qso)
                 item.serverState = ServerState.Pending;
-            tnxlog.writeQsoList();
             if (logQueue.IsEmpty && config.token != null)
             {
                 if (!await _postQso(qso))
@@ -414,7 +412,7 @@ namespace tnxlog
                         retryFlag = true;
                     }
                 }
-                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                else if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     bool wasLoggedIn = config.token == null;
                     config.token = null;

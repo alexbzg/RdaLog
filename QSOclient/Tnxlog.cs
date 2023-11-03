@@ -1,4 +1,5 @@
 ﻿using HamRadio;
+using LiteDB;
 using NLog;
 using ProtoBuf;
 using SerializationNS;
@@ -26,9 +27,10 @@ namespace tnxlog
 
     public class Tnxlog
     {
-        public static readonly string FfmpegPath = "ffmpeg.exe";
-        public static readonly string FfmpegRecordArgs = "-y -c:a libmp3lame -ar 44100 -b:a 36k -ac 1";
+        public const string FfmpegPath = "ffmpeg.exe";
+        public const string FfmpegRecordArgs = "-y -c:a libmp3lame -ar 44100 -b:a 36k -ac 1";
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private const int QsoBakCount = 3;
 
 
         private FormMain _formMain;
@@ -41,8 +43,9 @@ namespace tnxlog
         internal string dataPath;
         private NLog.Targets.FileTarget logfile;
         private string qsoFilePath;
-        internal BindingList<QSO> qsoList;
+        internal QsoDB qsoDB;
         internal QSOFactory qsoFactory;
+        public BindingList<QSO> qsoList;
         public EventHandler<QthFieldChangeEventArgs> qthFieldChange;
         public EventHandler locChange;
         public EventHandler<QthFieldChangeEventArgs> qthFieldTitleChange;
@@ -130,6 +133,7 @@ namespace tnxlog
             {
                 try
                 {
+                    qsoDB = new QsoDB(Path.Combine(dataPath, "qso.db"));
                     config = XmlConfig.create<TnxlogConfig>(Path.Combine(dataPath, "config.xml"), forceCreate: initFail);
                     for (int field = 0; field < TnxlogConfig.QthFieldCount; field++)
                         qthFields[field] = config.getQthFieldValue(field);
@@ -137,22 +141,27 @@ namespace tnxlog
                     httpService = new HttpService(config.httpService, this);
                     transceiverController = new TransceiverController(config.transceiverController);
                     adifLogWatcher.OnNewAdifEntry += newAdifLogEntry;
-                    qsoFactory = new QSOFactory(this);
-                    qsoList = QSOFactory.ReadList<BindingList<QSO>>(qsoFilePath);
-                    if (qsoList == null)
+
+                    if (qsoDB.qso.Count() == 0 && File.Exists(qsoFilePath))
                     {
-                        qsoList = new BindingList<QSO>();
-                        qsoFactory.no = 1;
+                        List<QSO> qsoList = QSOFactory.ReadList<List<QSO>>(qsoFilePath);
+                        qsoList.Reverse();
+                        foreach (QSO qso in qsoList)
+                            qso._id = new ObjectId();
+                        if (qsoList != null && qsoList.Count > 0)
+                            qsoDB.qso.InsertBulk(qsoList);
                     }
-                    else if (qsoList.Count > 0)
-                        qsoFactory.no = qsoList.First().no + 1;
+
+                    qsoFactory = new QSOFactory(this);
+                    qsoList = new BindingList<QSO>(qsoDB.qso.FindAll().OrderByDescending(qso => qso._id).ToList());
+                    qsoFactory.no = qsoList.Count == 0 ? 1 : qsoList.First().no + 1;
                     qsoList.ListChanged += QsoList_ListChanged;
 
                     _formMain = new FormMain(config.formMain, this);
                     if (config.autoLogin)
                         Task.Run(async () => await httpService.login(true));
 
-                    QSO[] qsosPending = qsoList.Where(item => item.serverState == ServerState.Pending).ToArray();
+                    QSO[] qsosPending = qsoDB.qso.Find(item => item.serverState == ServerState.Pending).ToArray();
                     if (qsosPending.Length > 0)
                     {
                         Task.Run(async () => await httpService.postQso(qsosPending));
@@ -163,7 +172,7 @@ namespace tnxlog
                 }
                 catch (Exception e)
                 {
-                    Logger.Error(e, "Protobuf serialization read exception");
+                    Logger.Error(e, "Tnxlog initialiazion exception");
                     initFail = true;
                 }
             }
@@ -173,7 +182,6 @@ namespace tnxlog
         {
             QSO qso = qsoFactory.fromADIF(e.adif);
             _formMain.DoInvoke(() => { qsoList.Insert(0, qso); });
-            writeQsoList();
             await httpService.postQso(qso);
         }
 
@@ -190,12 +198,16 @@ namespace tnxlog
         public async Task deleteQso(QSO qso)
         {
             qsoList.Remove(qso);
+            qsoDB.qso.Delete(qso._id);
             await httpService.deleteQso(qso);
         }
 
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
         {
-            writeQsoList();
+            if (e.ListChangedType == ListChangedType.ItemAdded)
+                qsoDB.qso.Insert(qsoList[e.NewIndex]);
+            else if (e.ListChangedType == ListChangedType.ItemChanged)
+                qsoDB.qso.Update(qsoList[e.NewIndex]);
         }
 
         public void showFormLog()
@@ -228,15 +240,11 @@ namespace tnxlog
             await httpService.postFreq(QSO.formatFreq(freq));
         }
 
-        public void writeQsoList()
-        {
-            ProtoBufSerialization.Write<BindingList<QSO>>(qsoFilePath, qsoList);
-        }
 
         public void clearQso()
         {
             qsoList.Clear();
-            writeQsoList();
+            qsoDB.qso.DeleteAll();
             qsoFactory.no = 1;
         }
 

@@ -76,7 +76,7 @@ namespace tnxlog
                     dataGridView.Refresh();
                 });
             } 
-            else if (e.ListChangedType == ListChangedType.ItemChanged)
+            else if (e.ListChangedType == ListChangedType.ItemChanged && e.PropertyDescriptor.Name == "serverState")
             {
                 DoInvoke(() =>
                 {
@@ -102,14 +102,11 @@ namespace tnxlog
 
         private void QsoList_ListChanged(object sender, ListChangedEventArgs e)
         {
-            if (e.ListChangedType == ListChangedType.ItemAdded)
+            if (e.ListChangedType == ListChangedType.ItemAdded && qsoFilterPredicate(tnxlog.qsoList[e.NewIndex]))
             {
                 if (bsQSO.DataSource == searchResults)
                     searchResults.Insert(0, tnxlog.qsoList[e.NewIndex]);
-            } else if (e.ListChangedType == ListChangedType.ItemChanged)
-            {
-
-            }
+            } 
         }
 
         private void setRowColors(DataGridViewRow r, Color f, Color b)
@@ -185,6 +182,7 @@ namespace tnxlog
         {
             if (e.RowIndex == -1)
                 return;
+            dataGridView.CurrentCell = dataGridView[e.ColumnIndex == -1 ? 0 : e.ColumnIndex, e.RowIndex];
             menuItemEditCell.Visible = e.ColumnIndex != -1;
             e.ContextMenuStrip = cmsDataGridCell;
         }
@@ -203,7 +201,7 @@ namespace tnxlog
 
         private QSO getCurrentQso()
         {
-            return ((BindingList<QSO>)bsQSO.DataSource)[dataGridView.SelectedCells[0].RowIndex];
+            return ((BindingList<QSO>)bsQSO.DataSource)[dataGridView.CurrentCell.RowIndex];
         }
 
         private QSO getQsoByIndex(int row)
@@ -245,8 +243,8 @@ namespace tnxlog
         {
             if (dataGridView.IsCurrentCellInEditMode)
             {
-                tnxlog.writeQsoList();
                 QSO qso = getCurrentQso();
+                tnxlog.qsoDB.qso.Update(qso);
                 qso.serverState = ServerState.None;
                 await tnxlog.httpService.postQso(getCurrentQso());
             }
@@ -258,16 +256,6 @@ namespace tnxlog
             if (e.ColumnIndex != -1)
                 dataGridView[e.ColumnIndex, e.RowIndex].Selected = true;
             editCell();
-        }
-
-        private void DataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void DataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-
         }
 
         private void DataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

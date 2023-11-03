@@ -13,6 +13,7 @@ using System.Globalization;
 using HamRadio;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using LiteDB;
 
 namespace tnxlog
 {
@@ -48,6 +49,12 @@ namespace tnxlog
         internal bool _deleted = false;
         internal string _sound;
         internal ServerState _serverState = ServerState.None;
+
+        [DataMember]
+        public ObjectId _id
+        {
+            get; set;
+        }
 
         [DataMember, ProtoMember(1)]
         public string ts {
@@ -160,7 +167,7 @@ namespace tnxlog
         }
 
 
-        [IgnoreDataMember]
+        [IgnoreDataMember, BsonIgnore]
         public string qthField0
         {
             get
@@ -178,7 +185,7 @@ namespace tnxlog
             }
         }
 
-        [IgnoreDataMember]
+        [IgnoreDataMember, BsonIgnore]
         public string qthField1
         {
             get
@@ -196,7 +203,7 @@ namespace tnxlog
                     _qth[1] = value;
             }
         }
-        [IgnoreDataMember]
+        [IgnoreDataMember, BsonIgnore]
         public string qthField2
         {
             get
@@ -215,9 +222,14 @@ namespace tnxlog
             }
         }
 
+        public QSO()
+        {
+            _id = new ObjectId();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -361,7 +373,7 @@ namespace tnxlog
                 _rcv = getAdifField(adif, "RST_RCVD"),
                 _freqRx = getAdifField(adif, "FREQ"),
                 _no = no++,
-                _loc = tnxlog.loc,
+                _loc = getAdifField(adif, "MY_GRIDSQUARE"),
                 _loc_rcv = getAdifField(adif, "GRIDSQUARE"),
                 _qth = new string[TnxlogConfig.QthFieldCount]
             };
