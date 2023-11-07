@@ -1,6 +1,6 @@
 open tnxqso.com
 web_ftp
-
+*** ftp password ***
 bin
 cd /tnxqso/static/files
 put c:/works/tnxlog/tnxlog-setup/Release/tnxlog.msi
