@@ -28,7 +28,7 @@
         "Entry"
         {
         "MsmKey" = "8:_22C5F54408FB4A164F15649D81E248B3"
-        "OwnerKey" = "8:_F903A72257AC27E2C8A3346F0A71A95E"
+        "OwnerKey" = "8:_403C9FC571DFA5EF315C4260F26D634F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -64,13 +64,25 @@
         "Entry"
         {
         "MsmKey" = "8:_32817F1D0F1477D15B3B9E0663B9BC0C"
-        "OwnerKey" = "8:_A75FFFAF299F42968B71449366ADF1B7"
+        "OwnerKey" = "8:_D46E14946E8F618402556904AF3BBCE8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_32817F1D0F1477D15B3B9E0663B9BC0C"
-        "OwnerKey" = "8:_D46E14946E8F618402556904AF3BBCE8"
+        "MsmKey" = "8:_36FEAEC17D8F410B9E4BACB02678B44E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3EFE4976A5494928AF726F347FDED50B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_403C9FC571DFA5EF315C4260F26D634F"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -81,37 +93,25 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_4BA7401C36A131115142F09A61C7CAA4"
+        "MsmKey" = "8:_5E579646FC2EC49696F0116C64B8AA1E"
         "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4CBAB0D089B846B3816FBBEE6AE31C98"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_68404FDC1282070D138394B1FCF75E80"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_63E2B75BE517401DA9FFBE1F76B0E0B6"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_7DB89A19C271374340E870AC5F617A12"
+        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_704C1204341542DEBF7C8723C434C81B"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7D16DDF3112C4E58A4D02D30D2BC1617"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A75FFFAF299F42968B71449366ADF1B7"
+        "MsmKey" = "8:_A5A0C0B520D243999E541967B0BF44FA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -123,43 +123,25 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B8D06C43EBE5171F9858A6C3B5563818"
+        "MsmKey" = "8:_B0784E4F156B49A7A4733A21279BCC1A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CADA55E3C1524FED91B4980040C8269B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CF687C307C405D677EC805021872CAB3"
         "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CD224C48A30D450498A92C22079A7727"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CFD249E3352C4B76B558AE09A36FD086"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_D46E14946E8F618402556904AF3BBCE8"
-        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E6B95CDD6809452B9F20C5F87D2A76E8"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F42FF4B593DAE95808F89D83EB9B5DE5"
-        "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F903A72257AC27E2C8A3346F0A71A95E"
         "OwnerKey" = "8:_2F6D37946092437D8276264EEC1878A3"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -178,25 +160,37 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F42FF4B593DAE95808F89D83EB9B5DE5"
+        "OwnerKey" = "8:_36FEAEC17D8F410B9E4BACB02678B44E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F903A72257AC27E2C8A3346F0A71A95E"
+        "OwnerKey" = "8:_68404FDC1282070D138394B1FCF75E80"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4BA7401C36A131115142F09A61C7CAA4"
+        "OwnerKey" = "8:_403C9FC571DFA5EF315C4260F26D634F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B8D06C43EBE5171F9858A6C3B5563818"
+        "OwnerKey" = "8:_5E579646FC2EC49696F0116C64B8AA1E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_CF687C307C405D677EC805021872CAB3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_7DB89A19C271374340E870AC5F617A12"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -511,6 +505,88 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_36FEAEC17D8F410B9E4BACB02678B44E"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:LiteDB, Version=5.0.17.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_36FEAEC17D8F410B9E4BACB02678B44E"
+                    {
+                    "Name" = "8:LiteDB.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\tnxlog\\bin\\Release\\LiteDB.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3EFE4976A5494928AF726F347FDED50B"
+            {
+            "SourcePath" = "8:..\\tnxlog\\bin\\Release\\LiteDB.xml"
+            "TargetName" = "8:LiteDB.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_403C9FC571DFA5EF315C4260F26D634F"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_403C9FC571DFA5EF315C4260F26D634F"
+                    {
+                    "Name" = "8:NLog.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:NLog.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_439091F2B9791EDEC6C4830D7C548C19"
             {
             "AssemblyRegister" = "3:1"
@@ -542,14 +618,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4BA7401C36A131115142F09A61C7CAA4"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5E579646FC2EC49696F0116C64B8AA1E"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_4BA7401C36A131115142F09A61C7CAA4"
+                    "_5E579646FC2EC49696F0116C64B8AA1E"
                     {
                     "Name" = "8:Newtonsoft.Json.dll"
                     "Attributes" = "3:512"
@@ -573,101 +649,72 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4CBAB0D089B846B3816FBBEE6AE31C98"
-            {
-            "SourcePath" = "8:..\\QSOclient\\bin\\Debug\\ffmpeg.exe"
-            "TargetName" = "8:ffmpeg.exe"
-            "Tag" = "8:"
-            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_63E2B75BE517401DA9FFBE1F76B0E0B6"
-            {
-            "SourcePath" = "8:..\\QSOclient\\bin\\Release\\AutoUpdater.NET.pdb"
-            "TargetName" = "8:AutoUpdater.NET.pdb"
-            "Tag" = "8:"
-            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_704C1204341542DEBF7C8723C434C81B"
-            {
-            "SourcePath" = "8:..\\QSOclient\\bin\\Release\\qthValues.json"
-            "TargetName" = "8:qthValues.json"
-            "Tag" = "8:"
-            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7D16DDF3112C4E58A4D02D30D2BC1617"
-            {
-            "SourcePath" = "8:..\\QSOclient\\bin\\Release\\AutoUpdater.NET.xml"
-            "TargetName" = "8:AutoUpdater.NET.xml"
-            "Tag" = "8:"
-            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A75FFFAF299F42968B71449366ADF1B7"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_68404FDC1282070D138394B1FCF75E80"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:TciClientLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:protobuf-net, Version=2.4.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_A75FFFAF299F42968B71449366ADF1B7"
+                    "_68404FDC1282070D138394B1FCF75E80"
                     {
-                    "Name" = "8:TciClientLibrary.dll"
+                    "Name" = "8:protobuf-net.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\QSOclient\\bin\\Release\\TciClientLibrary.dll"
+            "SourcePath" = "8:protobuf-net.dll"
             "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7DB89A19C271374340E870AC5F617A12"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AutoUpdater.NET, Version=1.6.0.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_7DB89A19C271374340E870AC5F617A12"
+                    {
+                    "Name" = "8:AutoUpdater.NET.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:AutoUpdater.NET.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A5A0C0B520D243999E541967B0BF44FA"
+            {
+            "SourcePath" = "8:..\\tnxlog\\bin\\Release\\callsigns.json"
+            "TargetName" = "8:callsigns.json"
             "Tag" = "8:"
             "Folder" = "8:_07A611DB238C4376884334BC497653C3"
             "Condition" = "8:"
@@ -715,20 +762,60 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B8D06C43EBE5171F9858A6C3B5563818"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B0784E4F156B49A7A4733A21279BCC1A"
+            {
+            "SourcePath" = "8:..\\tnxlog\\bin\\Release\\qthValues.json"
+            "TargetName" = "8:qthValues.json"
+            "Tag" = "8:"
+            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CADA55E3C1524FED91B4980040C8269B"
+            {
+            "SourcePath" = "8:..\\tnxlog\\bin\\Debug\\ffmpeg.exe"
+            "TargetName" = "8:ffmpeg.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CF687C307C405D677EC805021872CAB3"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AutoUpdater.NET, Version=1.6.0.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:LiteDB, Version=5.0.17.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_B8D06C43EBE5171F9858A6C3B5563818"
+                    "_CF687C307C405D677EC805021872CAB3"
                     {
-                    "Name" = "8:AutoUpdater.NET.dll"
+                    "Name" = "8:LiteDB.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:AutoUpdater.NET.dll"
+            "SourcePath" = "8:LiteDB.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_07A611DB238C4376884334BC497653C3"
@@ -744,46 +831,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CD224C48A30D450498A92C22079A7727"
-            {
-            "SourcePath" = "8:..\\QSOclient\\bin\\Release\\protobuf-net.xml"
-            "TargetName" = "8:protobuf-net.xml"
-            "Tag" = "8:"
-            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CFD249E3352C4B76B558AE09A36FD086"
-            {
-            "SourcePath" = "8:..\\QSOclient\\bin\\Release\\Newtonsoft.Json.xml"
-            "TargetName" = "8:Newtonsoft.Json.xml"
-            "Tag" = "8:"
-            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D46E14946E8F618402556904AF3BBCE8"
@@ -800,88 +847,6 @@
                     }
                 }
             "SourcePath" = "8:TciClientLibrary.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E6B95CDD6809452B9F20C5F87D2A76E8"
-            {
-            "SourcePath" = "8:..\\QSOclient\\bin\\Release\\callsigns.json"
-            "TargetName" = "8:callsigns.json"
-            "Tag" = "8:"
-            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F42FF4B593DAE95808F89D83EB9B5DE5"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:protobuf-net, Version=2.4.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_F42FF4B593DAE95808F89D83EB9B5DE5"
-                    {
-                    "Name" = "8:protobuf-net.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:protobuf-net.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_07A611DB238C4376884334BC497653C3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F903A72257AC27E2C8A3346F0A71A95E"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_F903A72257AC27E2C8A3346F0A71A95E"
-                    {
-                    "Name" = "8:NLog.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:NLog.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_07A611DB238C4376884334BC497653C3"
@@ -986,15 +951,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TNXLOG"
-        "ProductCode" = "8:{1A8EAEE1-EA32-4B5B-AFC6-3BC46382CCF7}"
-        "PackageCode" = "8:{407D19F0-3F68-4532-BFD4-F2B456295772}"
+        "ProductCode" = "8:{D5113580-5EC5-4498-AFDF-F61EC8D0C60D}"
+        "PackageCode" = "8:{FDA74C21-F3F0-4B56-A0F3-F96992D2141E}"
         "UpgradeCode" = "8:{B0CA3AEB-7084-42FE-9464-94546D3CD25A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.4.9"
+        "ProductVersion" = "8:0.4.10"
         "Manufacturer" = "8:TNXqso"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1010,7 +975,7 @@
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:0"
         "PreBuildEvent" = "8:"
-        "PostBuildEvent" = "8:"
+        "PostBuildEvent" = "8:ftp -s:$(ProjectDir)ftp-upload.txt"
         "RunPostBuildEvent" = "3:0"
         }
         "Registry"
@@ -1536,7 +1501,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2F6D37946092437D8276264EEC1878A3"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\tnxlog\\obj\\Release\\TNXLOG.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_07A611DB238C4376884334BC497653C3"

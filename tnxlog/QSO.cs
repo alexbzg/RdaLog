@@ -50,7 +50,7 @@ namespace tnxlog
         internal string _sound;
         internal ServerState _serverState = ServerState.None;
 
-        [DataMember]
+        [IgnoreDataMember]
         public ObjectId _id
         {
             get; set;

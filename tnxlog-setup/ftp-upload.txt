@@ -1,0 +1,8 @@
+open tnxqso.com
+web_ftp
+nkBux2'$3*\cXUYK
+bin
+cd /tnxqso/static/files
+put c:/works/tnxlog/tnxlog-setup/Release/tnxlog.msi
+put c:/works/tnxlog/tnxlog/bin/Release/tnxlog.xml
+bye
