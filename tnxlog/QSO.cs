@@ -340,7 +340,7 @@ namespace tnxlog
         }
 
 
-        public QSO fromADIF(string adif, string[] qthFields = null, string commentField = "COMMENT")
+        public QSO fromADIF(string adif, string[] qthFields = null, string commentField = "COMMENT", string loc = null)
         {
             string date = getAdifField(adif, "QSO_DATE");
             string time = getAdifField(adif, "TIME_OFF");
@@ -373,7 +373,7 @@ namespace tnxlog
                 _rcv = getAdifField(adif, "RST_RCVD"),
                 _freqRx = getAdifField(adif, "FREQ"),
                 _no = no++,
-                _loc = getAdifField(adif, "MY_GRIDSQUARE"),
+                _loc = loc ?? getAdifField(adif, "MY_GRIDSQUARE"),
                 _loc_rcv = getAdifField(adif, "GRIDSQUARE"),
                 _qth = new string[TnxlogConfig.QthFieldCount]
             };
