@@ -181,6 +181,13 @@ namespace tnxlog
         private async void newAdifLogEntry(object sender, NewAdifEntryEventArgs e)
         {
             QSO qso = qsoFactory.fromADIF(e.adif, loc: loc);
+            if (qsoDB.qso.Exists(Query.And(
+                Query.EQ("ts", qso.ts),
+                Query.EQ("cs", qso.cs),
+                Query.EQ("myCS", qso.myCS),
+                Query.EQ("freq", qso.freq),
+                Query.EQ("mode", qso.mode))))
+                return;
             _formMain.DoInvoke(() => { qsoList.Insert(0, qso); });
             await httpService.postQso(qso);
         }
