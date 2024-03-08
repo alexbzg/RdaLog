@@ -110,6 +110,7 @@ namespace tnxlog
         private FfmpegInterface soundRecordInterface;
         private bool soundRecordQso;
         private string soundRecordCurrentFile;
+        private bool freqValueChanged;
 
         private QsoValues currentQsoValues()
         {
@@ -379,8 +380,8 @@ namespace tnxlog
                 QSO qso = tnxlog.qsoList[e.NewIndex];
                 indexQso(qso, true);
                 DoInvoke(() => {
-                    if (QSO.formatFreq(numericUpDownFreq.Value) != qso.freq)
-                        numericUpDownFreq.Text = qso.freq;
+                    //if (QSO.formatFreq(numericUpDownFreq.Value) != qso.freq)
+                    //    numericUpDownFreq.Text = qso.freq;
                     if (qso.mode != comboBoxMode.SelectedItem.ToString())
                         comboBoxMode.SelectedItem = qso.mode;
                 });
@@ -815,6 +816,11 @@ namespace tnxlog
 
         private void NumericUpDownFreq_TextChanged(object sender, EventArgs e)
         {
+            if (freqValueChanged)
+            {
+                freqValueChanged = false;
+                return;
+            }
             searchDefFreq();
         }
 
@@ -1200,6 +1206,7 @@ namespace tnxlog
 
         private void NumericUpDownFreq_ValueChanged(object sender, EventArgs e)
         {
+            freqValueChanged = true;
             config.freq = numericUpDownFreq.Value;
             config.write();
             setStatFilter();

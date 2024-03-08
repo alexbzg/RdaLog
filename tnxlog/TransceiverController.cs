@@ -13,8 +13,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using XmlConfigNS;
-using ExpertElectronics.Tci.Interfaces;
-using ExpertElectronics.Tci;
+//using ExpertElectronics.Tci.Interfaces;
+//using ExpertElectronics.Tci;
 
 namespace tnxlog
 {
@@ -62,8 +62,8 @@ namespace tnxlog
 
         internal readonly TransceiverControllerConfig config;
         private SerialPort serialPort;
-        private ITciClient tciClient;
-        private ITransceiverController tciTranceiverController;
+        //private ITciClient tciClient;
+        //private ITransceiverController tciTranceiverController;
 
         public bool connected { get { return serialPort != null; } }
         private volatile bool _busy;
@@ -106,15 +106,15 @@ namespace tnxlog
         public void Dispose()
         {
             serialPort?.Close();
-            tciClient?.DisConnectAsync();
+            //tciClient?.DisConnectAsync();
         }
 
         public async void connect()
         {
             if (config.transceiverType == 1)
             {
-                tciClient?.DisConnectAsync();
-                tciClient = null;
+                //tciClient?.DisConnectAsync();
+                //tciClient = null;
                 List<SerialDeviceInfo> devices = SerialDevice.SerialDevice.listSerialDevices();
                 SerialDeviceInfo device = devices.FirstOrDefault(item => item.deviceID == config.serialDeviceId);
                 if (device != null)
@@ -137,6 +137,7 @@ namespace tnxlog
             } else if (config.transceiverType == 2)
             {
                 serialPort?.Close();
+                /*
                 try
                 {
                     tciClient = TciClient.Create(config.tciHost, config.tciPort, _cancellationTokenSource.Token);
@@ -147,7 +148,7 @@ namespace tnxlog
                 {
                     Logger.Error(ex, $"Error opening TCI connection to {config.tciHost}:{config.tciPort} {ex.ToString()}");
                 }
-
+                */
             }
         }
 
@@ -209,12 +210,12 @@ namespace tnxlog
                         _busy = false;
                         initializePort();
                     }
-                } else if (config.transceiverType == 2)
+                } /*else if (config.transceiverType == 2)
                 {
                     tciTranceiverController.CwMacroSpeed = morseDelay;
                     tciTranceiverController.SetMacros(config.tciTrnsNo, line);
                 }
-
+                */
             }
         }
 
@@ -222,7 +223,7 @@ namespace tnxlog
         {
             if (config.transceiverType == 2)
             {
-                tciTranceiverController.SetCwMacrosStop();
+                //tciTranceiverController.SetCwMacrosStop();
             }
         }
 

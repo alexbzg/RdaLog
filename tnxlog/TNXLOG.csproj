@@ -231,12 +231,6 @@
     <None Include="Resources\chat.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\TCILibrary\TciClient\TciClientLibrary.csproj">
-      <Project>{aebe7387-2390-4104-8450-662cc29adebf}</Project>
-      <Name>TciClientLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
