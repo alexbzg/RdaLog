@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TnxlogConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <formMain>
+    <formLocation>
+      <X>0</X>
+      <Y>0</Y>
+    </formLocation>
+    <formSize>
+      <Width>0</Width>
+      <Height>0</Height>
+    </formSize>
+    <topmost>false</topmost>
+    <statFilterAuto>true</statFilterAuto>
+    <freq>14000</freq>
+    <exportPathQth>
+      <string xsi:nil="true" />
+      <string xsi:nil="true" />
+      <string xsi:nil="true" />
+    </exportPathQth>
+    <importQthFields>
+      <string xsi:nil="true" />
+      <string xsi:nil="true" />
+      <string xsi:nil="true" />
+    </importQthFields>
+    <statFilterQth>All</statFilterQth>
+    <statFilterBand>14</statFilterBand>
+    <statFilterMode>CW</statFilterMode>
+    <mode>CW</mode>
+    <callsign>RV9CX/M</callsign>
+    <importCommentField>COMMENT</importCommentField>
+  </formMain>
+  <httpService>
+    <updateIterval>60000</updateIterval>
+  </httpService>
+  <formLog>
+    <formLocation>
+      <X>0</X>
+      <Y>0</Y>
+    </formLocation>
+    <formSize>
+      <Width>0</Width>
+      <Height>0</Height>
+    </formSize>
+    <dataGridColumnsWidth />
+  </formLog>
+  <transceiverController>
+    <transceiverType>0</transceiverType>
+    <tciHost>localhost</tciHost>
+    <tciPort>40001</tciPort>
+    <tciTrnsNo>0</tciTrnsNo>
+    <pinout>
+      <int>0</int>
+      <int>1</int>
+    </pinout>
+    <invertPins>
+      <boolean>false</boolean>
+      <boolean>false</boolean>
+    </invertPins>
+    <morseDelay>100</morseDelay>
+  </transceiverController>
+  <qthFields>
+    <string xsi:nil="true" />
+    <string xsi:nil="true" />
+    <string xsi:nil="true" />
+  </qthFields>
+  <qthFieldTitles>
+    <string>QTH field</string>
+    <string>QTH field</string>
+    <string>QTH field</string>
+  </qthFieldTitles>
+  <qthFieldsAuto>
+    <boolean>false</boolean>
+    <boolean>false</boolean>
+    <boolean>false</boolean>
+  </qthFieldsAuto>
+  <qthAdifFields>
+    <string>QTH_FIELD_1</string>
+    <string>QTH_FIELD_2</string>
+    <string>QTH_FIELD_3</string>
+  </qthAdifFields>
+  <commentAdifField>COMMENT</commentAdifField>
+  <esmMacro>{CALL} TU DE {MY_CALL}</esmMacro>
+  <serMainFormPanels>
+    <SerPropEnable>
+      <name>qsoComments</name>
+      <enabled>true</enabled>
+    </SerPropEnable>
+    <SerPropEnable>
+      <name>qth1_2</name>
+      <enabled>true</enabled>
+    </SerPropEnable>
+    <SerPropEnable>
+      <name>qth3Loc</name>
+      <enabled>true</enabled>
+    </SerPropEnable>
+    <SerPropEnable>
+      <name>statFilter</name>
+      <enabled>true</enabled>
+    </SerPropEnable>
+    <SerPropEnable>
+      <name>callsignId</name>
+      <enabled>true</enabled>
+    </SerPropEnable>
+    <SerPropEnable>
+      <name>soundRecord</name>
+      <enabled>true</enabled>
+    </SerPropEnable>
+    <SerPropEnable>
+      <name>cwMacros</name>
+      <enabled>true</enabled>
+    </SerPropEnable>
+  </serMainFormPanels>
+  <soundRecordDevice />
+  <soundRecordFolder />
+  <watchAdifLog>false</watchAdifLog>
+  <watchAdifLogPath />
+  <autoCqRxPause>3</autoCqRxPause>
+  <autoLogin>true</autoLogin>
+  <cwMacros>
+    <ArrayOfString>
+      <string>CQ</string>
+      <string>CQ {MY_CALL} {MY_CALL}</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>5NN</string>
+      <string>5NN</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>TU</string>
+      <string>{CALL} TU</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>MY</string>
+      <string>{MY_CALL} {MY_CALL}</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>HIS</string>
+      <string>{CALL}</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>USR</string>
+      <string>{USER_FIELD}</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>RDA</string>
+      <string>RDA {RDA}</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>RAF</string>
+      <string>RAFA {RAFA}</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>LOC</string>
+      <string>{LOCATOR} {COMMENT}</string>
+    </ArrayOfString>
+  </cwMacros>
+  <locAuto>false</locAuto>
+  <esm>false</esm>
+</TnxlogConfig>

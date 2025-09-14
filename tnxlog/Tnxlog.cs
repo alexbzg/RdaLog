@@ -140,7 +140,7 @@ namespace tnxlog
                     _loc = config.loc;
                     httpService = new HttpService(config.httpService, this);
                     transceiverController = new TransceiverController(config.transceiverController);
-                    adifLogWatcher.OnNewAdifEntry += newAdifLogEntry;
+                    
 
                     if (qsoDB.qso.Count() == 0 && File.Exists(qsoFilePath))
                     {
@@ -160,6 +160,7 @@ namespace tnxlog
                     _formMain = new FormMain(config.formMain, this);
                     if (config.autoLogin)
                         Task.Run(async () => await httpService.login(true));
+                    adifLogWatcher.OnNewAdifEntry += newAdifLogEntry;
 
                     QSO[] qsosPending = qsoDB.qso.Find(item => item.serverState == ServerState.Pending).ToArray();
                     if (qsosPending.Length > 0)

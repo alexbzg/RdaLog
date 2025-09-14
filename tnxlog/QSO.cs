@@ -356,12 +356,14 @@ namespace tnxlog
             string submode = getAdifField(adif, "SUBMODE");
             if (!string.IsNullOrEmpty(submode) && Mode.Names.Contains(submode))
                 mode = submode;
+            /* substitute qso freq with default value where applies --- disabled
             if (Mode.DefFreq.ContainsKey(mode))
             {
                 decimal defFreq = Mode.DefFreq[mode].FirstOrDefault(item => Band.fromFreq(item) == band);
                 if (defFreq != 0)
                     freq = defFreq;
             }
+            */
             QSO qso = new QSO
             {
                 _ts = $"{date.Substring(0, 4)}-{date.Substring(4, 2)}-{date.Substring(6, 2)} {time.Substring(0, 2)}:{time.Substring(2, 2)}:00",

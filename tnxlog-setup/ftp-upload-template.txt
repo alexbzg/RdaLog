@@ -3,6 +3,6 @@ web_ftp
 *** ftp password ***
 bin
 cd /tnxqso/static/files
-put c:/works/tnxlog/tnxlog-setup/Release/tnxlog.msi
-put c:/works/tnxlog/tnxlog/bin/Release/tnxlog.xml
+put f:/works/tnxlog/tnxlog-setup/Release/tnxlog.msi
+put f:/works/tnxlog/tnxlog/bin/Release/tnxlog.xml
 bye

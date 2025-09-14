@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Collections.Concurrent;
 using FfmpegIinterfaceNS;
+using LiteDB;
 
 namespace tnxlog
 {
@@ -824,10 +825,15 @@ namespace tnxlog
             searchDefFreq();
         }
 
-        private void searchDefFreq()
+        private string getFormFreqInt()
         {
             string sep = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
-            string searchVal = numericUpDownFreq.Text.Split(sep.ToCharArray())[0];
+            return numericUpDownFreq.Text.Split(sep.ToCharArray())[0];
+        }
+
+        private void searchDefFreq()
+        {
+            string searchVal = getFormFreqInt();
             TextBox freqTextBox = numericUpDownFreq.Controls.OfType<TextBox>().FirstOrDefault() as TextBox;
             int selStart = freqTextBox.SelectionStart;
             char[] charSrc = searchVal.ToCharArray();
@@ -1326,6 +1332,38 @@ namespace tnxlog
                 }
             }
         }
+
+        internal async void newAdifLogEntry(object sender, NewAdifEntryEventArgs e)
+        {
+            QSO qso = tnxlog.qsoFactory.fromADIF(e.adif, loc: tnxlog.loc);
+            DoInvoke(() => {
+                string formFreqInt = Convert.ToInt32(numericUpDownFreq.Value).ToString();
+                if (formFreqInt.Length > 3)
+                {
+                    string qsoFreqInt = qso.freq.Split(System.Globalization.NumberFormatInfo.InvariantInfo
+                                                .NumberDecimalSeparator.ToCharArray())[0];
+                    if ((formFreqInt.Length == qsoFreqInt.Length 
+                            && formFreqInt.StartsWith(qsoFreqInt.Substring(0, 2))) ||
+                       MessageBox.Show($"Частота QSO - {qso.freq}.\n" + 
+                                        $"Частота в TNXLOGе - {numericUpDownFreq.Value.ToString()}\n" +
+                                        $"Изменить частоту в TNXLOGе на {numericUpDownFreq.Value.ToString()}?",
+                                        Assembly.GetExecutingAssembly().GetName().Name, 
+                                        MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                       == DialogResult.Yes)
+                       qso.freq = numericUpDownFreq.Text;
+                }
+                if (tnxlog.qsoDB.qso.Exists(Query.And(
+                    Query.EQ("ts", qso.ts),
+                    Query.EQ("cs", qso.cs),
+                    Query.EQ("myCS", qso.myCS),
+                    Query.EQ("freq", qso.freq),
+                    Query.EQ("mode", qso.mode))))
+                    return;
+                tnxlog.qsoList.Insert(0, qso); 
+            });
+            await tnxlog.httpService.postQso(qso);
+        }
+
 
         private async void uploadAllQSOToolStripMenuItem_Click(object sender, EventArgs e)
         {
